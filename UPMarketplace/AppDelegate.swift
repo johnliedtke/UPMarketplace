@@ -15,7 +15,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        // Parse initialization
+        Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
+            clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+        
+        // If you would like all objects to be private by default, remove this line.
+        var defaultACL = PFACL.ACL()
+        defaultACL.setPublicReadAccess(true)
+        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+        
+        // Parse Push Notifications
+//        var userNotificationTypes: UIUserNotificationType = (UIUserNotificationType.Alert |
+//            UIUserNotificationType.Badge |
+//            UIUserNotificationType.Sound)
+//        var settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
+//        
+//        application.registerUserNotificationSettings(settings)
+//        application.registerForRemoteNotifications()
+        
         return true
     }
 

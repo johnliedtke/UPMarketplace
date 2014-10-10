@@ -7,12 +7,24 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		52234A8A19E77E6100E899B8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8919E77E6100E899B8 /* AudioToolbox.framework */; };
+		52234A8C19E77E6A00E899B8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8B19E77E6A00E899B8 /* CFNetwork.framework */; };
+		52234A8E19E77E7500E899B8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8D19E77E7500E899B8 /* CoreGraphics.framework */; };
+		52234A9019E77E8200E899B8 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8F19E77E8200E899B8 /* CoreLocation.framework */; };
+		52234A9219E77E9000E899B8 /* libz.1.1.3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9119E77E9000E899B8 /* libz.1.1.3.dylib */; };
+		52234A9419E77E9900E899B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9319E77E9900E899B8 /* MobileCoreServices.framework */; };
+		52234A9619E77EA300E899B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9519E77EA300E899B8 /* QuartzCore.framework */; };
+		52234A9819E77EAB00E899B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9719E77EAB00E899B8 /* Security.framework */; };
+		52234A9A19E77EB600E899B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9919E77EB600E899B8 /* SystemConfiguration.framework */; };
 		52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */; };
 		52AF3D4B19E77BBF007E0D22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D4A19E77BBF007E0D22 /* ViewController.swift */; };
 		52AF3D4E19E77BBF007E0D22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D4C19E77BBF007E0D22 /* Main.storyboard */; };
 		52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D4F19E77BBF007E0D22 /* Images.xcassets */; };
 		52AF3D5319E77BBF007E0D22 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D5119E77BBF007E0D22 /* LaunchScreen.xib */; };
 		52AF3D5F19E77BBF007E0D22 /* UPMarketplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D5E19E77BBF007E0D22 /* UPMarketplaceTests.swift */; };
+		52AF3D6C19E77D9B007E0D22 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6919E77D9B007E0D22 /* Bolts.framework */; };
+		52AF3D6D19E77D9B007E0D22 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6A19E77D9B007E0D22 /* Parse.framework */; };
+		52AF3D6E19E77D9B007E0D22 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,6 +38,16 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		52234A8919E77E6100E899B8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		52234A8B19E77E6A00E899B8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		52234A8D19E77E7500E899B8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		52234A8F19E77E8200E899B8 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		52234A9119E77E9000E899B8 /* libz.1.1.3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.1.1.3.dylib; path = usr/lib/libz.1.1.3.dylib; sourceTree = SDKROOT; };
+		52234A9319E77E9900E899B8 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		52234A9519E77EA300E899B8 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		52234A9719E77EAB00E899B8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		52234A9919E77EB600E899B8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		52234A9B19E77EE400E899B8 /* UPMarketplace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPMarketplace-Bridging-Header.h"; sourceTree = "<group>"; };
 		52AF3D4319E77BBF007E0D22 /* UPMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UPMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52AF3D4719E77BBF007E0D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -36,6 +58,9 @@
 		52AF3D5819E77BBF007E0D22 /* UPMarketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UPMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		52AF3D5D19E77BBF007E0D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52AF3D5E19E77BBF007E0D22 /* UPMarketplaceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UPMarketplaceTests.swift; sourceTree = "<group>"; };
+		52AF3D6919E77D9B007E0D22 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
+		52AF3D6A19E77D9B007E0D22 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
+		52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +68,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				52234A9A19E77EB600E899B8 /* SystemConfiguration.framework in Frameworks */,
+				52234A9819E77EAB00E899B8 /* Security.framework in Frameworks */,
+				52234A9619E77EA300E899B8 /* QuartzCore.framework in Frameworks */,
+				52234A9419E77E9900E899B8 /* MobileCoreServices.framework in Frameworks */,
+				52234A9219E77E9000E899B8 /* libz.1.1.3.dylib in Frameworks */,
+				52234A9019E77E8200E899B8 /* CoreLocation.framework in Frameworks */,
+				52234A8E19E77E7500E899B8 /* CoreGraphics.framework in Frameworks */,
+				52234A8C19E77E6A00E899B8 /* CFNetwork.framework in Frameworks */,
+				52234A8A19E77E6100E899B8 /* AudioToolbox.framework in Frameworks */,
+				52AF3D6D19E77D9B007E0D22 /* Parse.framework in Frameworks */,
+				52AF3D6C19E77D9B007E0D22 /* Bolts.framework in Frameworks */,
+				52AF3D6E19E77D9B007E0D22 /* ParseFacebookUtils.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -60,6 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				52AF3D4519E77BBF007E0D22 /* UPMarketplace */,
+				52AF3D6819E77CED007E0D22 /* Frameworks */,
 				52AF3D5B19E77BBF007E0D22 /* UPMarketplaceTests */,
 				52AF3D4419E77BBF007E0D22 /* Products */,
 			);
@@ -83,6 +121,7 @@
 				52AF3D4F19E77BBF007E0D22 /* Images.xcassets */,
 				52AF3D5119E77BBF007E0D22 /* LaunchScreen.xib */,
 				52AF3D4619E77BBF007E0D22 /* Supporting Files */,
+				52234A9B19E77EE400E899B8 /* UPMarketplace-Bridging-Header.h */,
 			);
 			path = UPMarketplace;
 			sourceTree = "<group>";
@@ -110,6 +149,26 @@
 				52AF3D5D19E77BBF007E0D22 /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		52AF3D6819E77CED007E0D22 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				52234A9919E77EB600E899B8 /* SystemConfiguration.framework */,
+				52234A9719E77EAB00E899B8 /* Security.framework */,
+				52234A9519E77EA300E899B8 /* QuartzCore.framework */,
+				52234A9319E77E9900E899B8 /* MobileCoreServices.framework */,
+				52234A9119E77E9000E899B8 /* libz.1.1.3.dylib */,
+				52234A8F19E77E8200E899B8 /* CoreLocation.framework */,
+				52234A8D19E77E7500E899B8 /* CoreGraphics.framework */,
+				52234A8B19E77E6A00E899B8 /* CFNetwork.framework */,
+				52234A8919E77E6100E899B8 /* AudioToolbox.framework */,
+				52AF3D6919E77D9B007E0D22 /* Bolts.framework */,
+				52AF3D6A19E77D9B007E0D22 /* Parse.framework */,
+				52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */,
+			);
+			name = Frameworks;
+			path = UPMarketplace;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -336,9 +395,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UPMarketplace",
+				);
 				INFOPLIST_FILE = UPMarketplace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UPMarketplace/UPMarketplace-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -346,9 +412,15 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/UPMarketplace",
+				);
 				INFOPLIST_FILE = UPMarketplace/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "UPMarketplace/UPMarketplace-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -405,6 +477,7 @@
 				52AF3D6419E77BBF007E0D22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		52AF3D6519E77BBF007E0D22 /* Build configuration list for PBXNativeTarget "UPMarketplaceTests" */ = {
 			isa = XCConfigurationList;
@@ -413,6 +486,7 @@
 				52AF3D6719E77BBF007E0D22 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
