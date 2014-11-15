@@ -5,10 +5,10 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--Title-->
+        <!--New Listings-->
         <scene sceneID="Q9k-Ta-Hdi">
             <objects>
-                <collectionViewController id="8wf-0I-Joe" sceneMemberID="viewController">
+                <collectionViewController id="8wf-0I-Joe" customClass="NewListingsViewController" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="Nhd-MM-pso">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -79,7 +79,7 @@
                             <outlet property="delegate" destination="8wf-0I-Joe" id="Wcl-Y6-SEP"/>
                         </connections>
                     </collectionView>
-                    <navigationItem key="navigationItem" title="Title" id="KtT-c0-iP9">
+                    <navigationItem key="navigationItem" title="New Listings" id="KtT-c0-iP9">
                         <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Bs1-FG-K1Y"/>
                     </navigationItem>
                 </collectionViewController>

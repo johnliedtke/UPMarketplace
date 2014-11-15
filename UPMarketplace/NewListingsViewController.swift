@@ -6,5 +6,9 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-import UIKit
-import ListingCollectionView
+import UIKIT
+
+
+class NewListingsViewController: UICollectionViewController {
+    
+}
