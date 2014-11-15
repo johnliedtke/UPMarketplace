@@ -90,7 +90,6 @@
         <!--New Listings-->
         <scene sceneID="uto-xm-rOu">
             <objects>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nkv-dt-T5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <navigationController id="c0n-sF-4To" sceneMemberID="viewController">
                     <tabBarItem key="tabBarItem" title="New Listings" image="New" id="goF-tU-CyY"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6fT-k9-ELG">
@@ -101,6 +100,7 @@
                         <segue destination="8wf-0I-Joe" kind="relationship" relationship="rootViewController" id="Yuw-B6-jpf"/>
                     </connections>
                 </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="nkv-dt-T5Z" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="258" y="60"/>
         </scene>
