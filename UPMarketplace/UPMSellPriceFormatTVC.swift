@@ -73,6 +73,8 @@ class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
           mstring = String(mstringCopy)
         } else {
           var mstringCopy = NSMutableString(string: mstring)
+          mstringCopy.deleteCharactersInRange(range)
+          mstring = String(mstringCopy)
 
         }
       }
