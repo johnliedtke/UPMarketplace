@@ -4,6 +4,16 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Sell.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>SellUI.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>UPMarketplace.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +22,26 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>5255EBAF1A0EC2AE007207C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5255EBB91A0EC2AE007207C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5255EBD41A0EC325007207C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5255EBDE1A0EC325007207C7</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>52AF3D4219E77BBF007E0D22</key>
 		<dict>
 			<key>primary</key>

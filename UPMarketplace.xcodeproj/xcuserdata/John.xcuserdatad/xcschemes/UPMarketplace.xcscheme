@@ -34,6 +34,34 @@
                ReferencedContainer = "container:UPMarketplace.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5255EBB91A0EC2AE007207C7"
+               BuildableName = "SellTests.xctest"
+               BlueprintName = "SellTests"
+               ReferencedContainer = "container:UPMarketplace.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "NO"
+            buildForArchiving = "NO"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5255EBDE1A0EC325007207C7"
+               BuildableName = "SellUITests.xctest"
+               BlueprintName = "SellUITests"
+               ReferencedContainer = "container:UPMarketplace.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
@@ -49,6 +77,26 @@
                BlueprintIdentifier = "52AF3D5719E77BBF007E0D22"
                BuildableName = "UPMarketplaceTests.xctest"
                BlueprintName = "UPMarketplaceTests"
+               ReferencedContainer = "container:UPMarketplace.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5255EBB91A0EC2AE007207C7"
+               BuildableName = "SellTests.xctest"
+               BlueprintName = "SellTests"
+               ReferencedContainer = "container:UPMarketplace.xcodeproj">
+            </BuildableReference>
+         </TestableReference>
+         <TestableReference
+            skipped = "NO">
+            <BuildableReference
+               BuildableIdentifier = "primary"
+               BlueprintIdentifier = "5255EBDE1A0EC325007207C7"
+               BuildableName = "SellUITests.xctest"
+               BlueprintName = "SellUITests"
                ReferencedContainer = "container:UPMarketplace.xcodeproj">
             </BuildableReference>
          </TestableReference>

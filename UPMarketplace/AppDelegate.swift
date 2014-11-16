@@ -18,11 +18,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Parse initialization
         Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
             clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
-        
+      
+      UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
+      UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
+   //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
+      
         // If you would like all objects to be private by default, remove this line.
-        var defaultACL = PFACL.ACL()
-        defaultACL.setPublicReadAccess(true)
-        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+//        var defaultACL = PFACL.def
+  //      defaultACL.setPublicReadAccess(true)
+    //    PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
         
         // Parse Push Notifications
 //        var userNotificationTypes: UIUserNotificationType = (UIUserNotificationType.Alert |
@@ -32,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        application.registerUserNotificationSettings(settings)
 //        application.registerForRemoteNotifications()
-        
+      
         return true
     }
 
