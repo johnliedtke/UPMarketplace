@@ -2,17 +2,16 @@
   "images" : [
     {
       "idiom" : "universal",
-      "scale" : "1x"
+      "scale" : "1x",
+      "filename" : "Kitty-Cats-Cute-Little-Cat-Living-Free-Images.jpg"
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "newSelected@2x.png"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "newSelected@3x.png"
+      "scale" : "3x"
     }
   ],
   "info" : {

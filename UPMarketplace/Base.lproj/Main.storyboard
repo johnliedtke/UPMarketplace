@@ -19,19 +19,15 @@
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
-                        <activityIndicatorView key="backgroundView" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="white" id="IyQ-oe-zw2">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </activityIndicatorView>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="listingViewCell" id="hJV-NU-v1o">
+                            <collectionViewCell clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" reuseIdentifier="listingViewCell" id="hJV-NU-v1o" customClass="NewListingsViewCell" customModule="UPMarketplace" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                     <rect key="frame" x="0.0" y="0.0" width="182" height="240"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Item" translatesAutoresizingMaskIntoConstraints="NO" id="ChD-Je-TsP">
+                                        <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Kitty-Cats-Cute-Little-Cat-Living-Free-Images" translatesAutoresizingMaskIntoConstraints="NO" id="ChD-Je-TsP">
                                             <rect key="frame" x="8" y="8" width="166" height="114"/>
                                         </imageView>
                                         <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Iq-Tr-Ecb">
@@ -72,6 +68,12 @@
                                     <constraint firstItem="grJ-Io-roj" firstAttribute="leading" secondItem="hJV-NU-v1o" secondAttribute="leadingMargin" id="wtP-z6-8BU"/>
                                     <constraint firstItem="ChD-Je-TsP" firstAttribute="trailing" secondItem="hJV-NU-v1o" secondAttribute="trailingMargin" id="xF8-Xg-2hP"/>
                                 </constraints>
+                                <connections>
+                                    <outlet property="listingDescription" destination="7Iq-Tr-Ecb" id="Fmh-nE-Q6Q"/>
+                                    <outlet property="listingPicture" destination="ChD-Je-TsP" id="YF7-eu-dRq"/>
+                                    <outlet property="listingPrice" destination="grJ-Io-roj" id="8UA-ec-N40"/>
+                                    <outlet property="listingReserve" destination="oxH-F4-lEu" id="zL6-Js-oNV"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -85,13 +87,13 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IZo-fA-OcS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="966" y="82"/>
+            <point key="canvasLocation" x="1144" y="16"/>
         </scene>
-        <!--New Listings-->
+        <!--NewNavigationController-->
         <scene sceneID="uto-xm-rOu">
             <objects>
-                <navigationController id="c0n-sF-4To" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="New Listings" image="New" id="goF-tU-CyY"/>
+                <navigationController title="NewNavigationController" id="c0n-sF-4To" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" systemItem="more" id="goF-tU-CyY"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6fT-k9-ELG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -104,10 +106,10 @@
             </objects>
             <point key="canvasLocation" x="258" y="60"/>
         </scene>
-        <!--Tab Bar Controller-->
+        <!--TabBarController-->
         <scene sceneID="2od-Cp-ZJr">
             <objects>
-                <tabBarController id="ALX-8e-cBp" sceneMemberID="viewController">
+                <tabBarController title="TabBarController" id="ALX-8e-cBp" sceneMemberID="viewController">
                     <nil key="simulatedBottomBarMetrics"/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="10L-qb-4gL">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
@@ -124,7 +126,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="Item" width="455" height="256"/>
-        <image name="New" width="32" height="32"/>
+        <image name="Kitty-Cats-Cute-Little-Cat-Living-Free-Images" width="1366" height="768"/>
     </resources>
 </document>

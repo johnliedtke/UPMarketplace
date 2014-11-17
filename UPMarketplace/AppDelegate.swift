@@ -24,7 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         defaultACL.setPublicReadAccess(true)
         PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
         
-        // Parse Push Notifications
+        
+        var tabBarController = self.window?.rootViewController as UITabBarController
+        var tabBar = tabBarController.tabBar
+    
+        
+            // Parse Push Notifications
 //        var userNotificationTypes: UIUserNotificationType = (UIUserNotificationType.Alert |
 //            UIUserNotificationType.Badge |
 //            UIUserNotificationType.Sound)
