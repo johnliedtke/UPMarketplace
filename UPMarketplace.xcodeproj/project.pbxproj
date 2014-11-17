@@ -16,6 +16,12 @@
 		52234A9619E77EA300E899B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9519E77EA300E899B8 /* QuartzCore.framework */; };
 		52234A9819E77EAB00E899B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9719E77EAB00E899B8 /* Security.framework */; };
 		52234A9A19E77EB600E899B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9919E77EB600E899B8 /* SystemConfiguration.framework */; };
+		5228B8621A194CCA004AED8C /* UPMSellPriceFormatTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 525B89881A18271500A7CB6D /* UPMSellPriceFormatTVC.swift */; };
+		5228B8691A19AB0F004AED8C /* UPMSellTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228B8671A19AB0F004AED8C /* UPMSellTitleCell.swift */; };
+		5228B86A1A19AB0F004AED8C /* UPMSellTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5228B8681A19AB0F004AED8C /* UPMSellTitleCell.xib */; };
+		5228B86C1A19B174004AED8C /* UPMSellTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228B8671A19AB0F004AED8C /* UPMSellTitleCell.swift */; };
+		5228B86D1A19B17E004AED8C /* UPMSellTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5228B8681A19AB0F004AED8C /* UPMSellTitleCell.xib */; };
+		5228B86F1A19B4E7004AED8C /* UPMSellTitleTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5228B86E1A19B4E7004AED8C /* UPMSellTitleTVC.swift */; };
 		524F40AA1A104448002B47B6 /* UPMSellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40A91A104448002B47B6 /* UPMSellItem.swift */; };
 		524F40AC1A104D54002B47B6 /* UPMSellItemContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40AB1A104D54002B47B6 /* UPMSellItemContainer.swift */; };
 		524F40B01A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40AF1A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift */; };
@@ -113,6 +119,9 @@
 		52234A9719E77EAB00E899B8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		52234A9919E77EB600E899B8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		52234A9B19E77EE400E899B8 /* UPMarketplace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPMarketplace-Bridging-Header.h"; sourceTree = "<group>"; };
+		5228B8671A19AB0F004AED8C /* UPMSellTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTitleCell.swift; sourceTree = "<group>"; };
+		5228B8681A19AB0F004AED8C /* UPMSellTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMSellTitleCell.xib; sourceTree = "<group>"; };
+		5228B86E1A19B4E7004AED8C /* UPMSellTitleTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTitleTVC.swift; sourceTree = "<group>"; };
 		524F40A91A104448002B47B6 /* UPMSellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellItem.swift; sourceTree = "<group>"; };
 		524F40AB1A104D54002B47B6 /* UPMSellItemContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellItemContainer.swift; sourceTree = "<group>"; };
 		524F40AF1A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellSubClassTVCViewController.swift; sourceTree = "<group>"; };
@@ -220,6 +229,8 @@
 			isa = PBXGroup;
 			children = (
 				5255EBD91A0EC325007207C7 /* SellUI.h */,
+				5228B8671A19AB0F004AED8C /* UPMSellTitleCell.swift */,
+				5228B8681A19AB0F004AED8C /* UPMSellTitleCell.xib */,
 				5255EBF81A0EC38B007207C7 /* UPMSellCell.swift */,
 				5255EBF91A0EC38B007207C7 /* UPMSellCell.xib */,
 				5255EBFC1A0EC450007207C7 /* UPMCircleView.swift */,
@@ -268,6 +279,7 @@
 			children = (
 				5255EC061A0ED58B007207C7 /* UPMSellDescriptionVC.swift */,
 				525B89881A18271500A7CB6D /* UPMSellPriceFormatTVC.swift */,
+				5228B86E1A19B4E7004AED8C /* UPMSellTitleTVC.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -508,6 +520,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5228B86A1A19AB0F004AED8C /* UPMSellTitleCell.xib in Resources */,
 				5255EBFB1A0EC38B007207C7 /* UPMSellCell.xib in Resources */,
 				5255EC041A0ED261007207C7 /* UPMSell.storyboard in Resources */,
 			);
@@ -527,6 +540,7 @@
 				52AF3D5319E77BBF007E0D22 /* LaunchScreen.xib in Resources */,
 				5255EC0B1A0EE0A8007207C7 /* Main.storyboard in Resources */,
 				52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */,
+				5228B86D1A19B17E004AED8C /* UPMSellTitleCell.xib in Resources */,
 				5255EC031A0ED261007207C7 /* UPMSell.storyboard in Resources */,
 				5255EC0A1A0EDD60007207C7 /* UPMSellCell.xib in Resources */,
 			);
@@ -551,6 +565,8 @@
 				5255EBFA1A0EC38B007207C7 /* UPMSellCell.swift in Sources */,
 				525B89801A17F82000A7CB6D /* UPMSellDescriptionTextView.swift in Sources */,
 				525B89811A17FA8C00A7CB6D /* UPMViewControllerExtension.swift in Sources */,
+				5228B8691A19AB0F004AED8C /* UPMSellTitleCell.swift in Sources */,
+				5228B8621A194CCA004AED8C /* UPMSellPriceFormatTVC.swift in Sources */,
 				5255EBFD1A0EC450007207C7 /* UPMCircleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -578,10 +594,12 @@
 				5255EC001A0EC7A6007207C7 /* UPMColorExtension.swift in Sources */,
 				5255EC0F1A0EE382007207C7 /* UPMCircleView.swift in Sources */,
 				524F40B21A10937A002B47B6 /* UPMSellExtension.swift in Sources */,
+				5228B86F1A19B4E7004AED8C /* UPMSellTitleTVC.swift in Sources */,
 				5255EBA71A0EBEBA007207C7 /* UPMSellTVC.swift in Sources */,
 				5255EC0C1A0EE0AE007207C7 /* ViewController.swift in Sources */,
 				52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */,
 				524F40B01A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift in Sources */,
+				5228B86C1A19B174004AED8C /* UPMSellTitleCell.swift in Sources */,
 				5255EBA91A0EBF9A007207C7 /* UPMListing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -13,208 +13,143 @@ protocol UPMSellPriceFormatDelegate {
   func updatedPriceFormat(price: Double, limit: Double?, oBo: Bool)
 }
 
+let MAX_LENGTH = 8
+
 class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
   
   var delegate: UPMSellPriceFormatDelegate?
   var price: Double = 0.00
   var oBO: Bool = false
   var limit: Double = 0.00
+  var alertController = UIAlertController(title: "Error", message: "Problem", preferredStyle: UIAlertControllerStyle.Alert)
   
   @IBOutlet var priceField: UITextField!
   @IBOutlet var oBOSwitch: UISwitch!
   @IBOutlet var limitField: UITextField!
   
+  var maximumFractionDigits: Int = 0
+  var decimalSeparator: NSString = NSString()
+  
 
   override func viewDidLoad() {
       super.viewDidLoad()
     
-    
+    // Done/Cancel buttons
     addDoneButtonToNavigationItemWithSelector("didPressDoneButton:")
     addCancelButtontToNavigationItemWithSelector("didPressCancelButton:")
-    // [yourSwitchObject addTarget:self action:@selector(setState:) forControlEvents:UIControlEventValueChanged];
     oBOSwitch.addTarget(self, action: "didChangeOBOSwitchState:", forControlEvents: UIControlEvents.ValueChanged)
+    // Alert
+    var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+    alertController.addAction(okayAction)
+
     
-  //  priceField.setN
-
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = false
-
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+    // Initialize fields
+    if price > 0 {
+      priceField.text = price.toString()
+    }
+    if oBO {
+      oBOSwitch.on = oBO
+      limitField.text = limit.toString()
+    }
+    
+    var numberFormatter = NSNumberFormatter()
+    numberFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
+    numberFormatter.currencyCode = "USD"
+    maximumFractionDigits = numberFormatter.maximumFractionDigits
+    decimalSeparator = numberFormatter.decimalSeparator!
   }
   
   func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
-    var numberSet = NSCharacterSet.decimalDigitCharacterSet().mutableCopy() as NSMutableCharacterSet
-    numberSet.formIntersectionWithCharacterSet(NSCharacterSet.whitespaceCharacterSet())
-    var nonNumberSet = numberSet.invertedSet
-  
-    
-    
-    var result = false
-    if countElements(string) == 0 {
-      result = true
-    } else if countElements(string.stringByTrimmingCharactersInSet(nonNumberSet)) > 0 {
-      
-    }
-    
-    if (result) {
-      var mstring = textField.text as String
-      
-      if countElements(mstring) == 0 {
-        var locale = NSLocale.currentLocale().objectForKey(NSLocaleCurrencySymbol) as String
-        mstring += locale
-        mstring += string
-       
-      } else {
-        if countElements(string) > 0 {
-          var mstringCopy = NSMutableString(string: mstring)
-//          mstring.insert(string, atIndex: range.location)
-          mstringCopy.insertString(string, atIndex: range.location)
-          mstring = String(mstringCopy)
-        } else {
-          var mstringCopy = NSMutableString(string: mstring)
-          mstringCopy.deleteCharactersInRange(range)
-          mstring = String(mstringCopy)
 
-        }
+    var selectedRange: UITextRange = textField.selectedTextRange!
+    var start: UITextPosition = textField.beginningOfDocument
+    var cursorOffset = textField.offsetFromPosition(start, toPosition: selectedRange.start)
+    // Update the string in the text input
+    var currentString: NSMutableString = NSMutableString(string: textField.text)
+    var currentLength: UInt = UInt(currentString.length)
+    currentString.replaceCharactersInRange(range, withString: string)
+    // Strip out the decimal seperator
+    let r = NSRange(location: 0, length: currentString.length)
+    currentString.replaceOccurrencesOfString(decimalSeparator, withString: "", options: NSStringCompareOptions.LiteralSearch, range: r)
+    // Generate a new string for the text input
+    var currentValue: Int = currentString.integerValue
+    var format: NSString = NSString(format: "%%.%df", maximumFractionDigits)
+    var minotUnitsPerMajor: Double = pow(10.00, Double(maximumFractionDigits))
+    var m = Double(currentValue) / minotUnitsPerMajor
+    var newString: NSString = NSString(format: format, m).stringByReplacingOccurrencesOfString(".", withString: decimalSeparator)
+    if newString.length <= MAX_LENGTH {
+      textField.text = newString
+      // if the cursor was not at the end of the string being entered, restore cursor position
+      if UInt(cursorOffset) != currentLength {
+        var lengthDelta: Int = UInt(newString.length) - currentLength
+        var newCursorOffset: Int = max(0, min(newString.length, cursorOffset + lengthDelta))
+        var newPosition: UITextPosition = textField.positionFromPosition(textField.beginningOfDocument, offset: newCursorOffset)!
+        var newRange = textField.textRangeFromPosition(newPosition, toPosition: newPosition)
+        textField.selectedTextRange = newRange
       }
     }
-
-//    //here we deal with the UITextField on our own
-//    if(result){
-//      //grab a mutable copy of what's currently in the UITextField
-//      NSMutableString* mstring = [[textField text] mutableCopy];
-//      if([mstring length] == 0){
-//        //special case...nothing in the field yet, so set a currency symbol first
-//        [mstring appendString:[[NSLocale currentLocale] objectForKey:NSLocaleCurrencySymbol]];
-//        
-//        //now append the replacement string
-//        [mstring appendString:string];
-//      }
-//      else{
-//        //adding a char or deleting?
-//        if([string length] > 0){
-//          [mstring insertString:string atIndex:range.location];
-//        }
-//        else {
-//          //delete case - the length of replacement string is zero for a delete
-//          [mstring deleteCharactersInRange:range];
-//        }
-//      }
-//      
-//      //to get the grouping separators properly placed
-//      //first convert the string into a number. The function
-//      //will ignore any grouping symbols already present -- NOT in iOS4!
-//      //fix added below - remove locale specific currency separators first
-//      NSString* localeSeparator = [[NSLocale currentLocale]
-//        objectForKey:NSLocaleGroupingSeparator];
-//      NSNumber* number = [currencyFormatter numberFromString:[mstring
-//        stringByReplacingOccurrencesOfString:localeSeparator
-//        withString:@""]];
-//      [mstring release];
-//      
-//      //now format the number back to the proper currency string
-//      //and get the grouping separators added in and put it in the UITextField
-//      [textField setText:[currencyFormatter stringFromNumber:number]];
-//    }
-//    
-//    //always return no since we are manually changing the text field
-//    return NO;
-    
-    return true
-    
+    return false
   }
   
   func textFieldDidEndEditing(textField: UITextField) {
+    var string = NSString(string: textField.text)
+    if textField == priceField {
+      price = string.doubleValue
+    } else if textField == limitField {
+      limit = string.doubleValue
+    }
+   }
+  
+  func alertIfInputIsIncomplete() -> Bool {
+    var errorString = ""
+    var error = false
     
+    if price <= 0.00 {
+      errorString += "Price must be greater than $0.00\n"
+      error = true
+    }
+    
+    if oBO && (limit <= 0.00) {
+      errorString += "Limit must be greater than $0.00"
+      error = true
+    }
+    
+    alertController.message = errorString
+    if error {
+      presentViewController(alertController, animated: true, completion: nil)
+    }
+    return error
   }
   
   func didPressDoneButton(sender: AnyObject) {
+    view.endEditing(true)
+    if alertIfInputIsIncomplete() {
+      return
+    }
+    delegate?.updatedPriceFormat(price, limit: limit, oBo: oBOSwitch.on)
     self.navigationController?.popViewControllerAnimated(true)
-    
   }
   
   func didPressCancelButton(sender: AnyObject) {
     self.navigationController?.popViewControllerAnimated(true)
-    
   }
   
   func didChangeOBOSwitchState(sender: AnyObject) {
+    oBO = oBOSwitch.on
     tableView.reloadData()
-  }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    if oBOSwitch.on {
+      limitField.becomeFirstResponder()
     }
-
+  }
     // MARK: - Table view data source
 
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 1
-    }
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    return 1
+  }
 
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-      return oBOSwitch.on ? 3 : 2
-    }
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    return oBOSwitch.on ? 3 : 2
+  }
 
-    /*
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
-        return cell
-    }
-    */
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
-    }
-    */
-
-    /*
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
-    }
-    */
-
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

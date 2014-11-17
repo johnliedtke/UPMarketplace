@@ -10,6 +10,7 @@ import Foundation
 
 let SellDescriptionStoryboard = "SellDescription"
 let SellPriceFormatStoryboard = "SellPriceFormat"
+let SellTitleStoryboard = "SellTitle"
 let SellStoryboard = "UPMSell"
 
 extension UPMSellTVC {
@@ -27,12 +28,20 @@ extension UPMSellTVC {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
     var priceFormatVC = storyboard.instantiateViewControllerWithIdentifier(SellPriceFormatStoryboard) as UPMSellPriceFormatTVC
     priceFormatVC.delegate = self
-    
     priceFormatVC.price = (listing?.price)!
     priceFormatVC.limit = (listing?.limit)!
     priceFormatVC.oBO = (listing?.oBO)!
 
     navigationController?.pushViewController(priceFormatVC, animated: true)
+  }
+  
+  func pushTitleVC() {
+    let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
+    var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as UPMSellTitleTVC
+    titleVC.delegate = self
+    navigationController?.pushViewController(titleVC, animated: true)
+    
+
   }
   
 }

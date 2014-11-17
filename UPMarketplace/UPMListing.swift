@@ -10,6 +10,7 @@ import UIKit
 
 class UPMListing: PFObject, PFSubclassing {
   
+  var title = ""
   var descriptionS: String = ""
   var price: Double = 0.00
   var oBO: Bool = false

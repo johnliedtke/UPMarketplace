@@ -25,7 +25,7 @@ extension UIColor {
     }
   
   class func standardBackgroundColor() -> UIColor {
-    var standardBackgroundColor = UIColor(red: 250.0/255.0, green: 250.0/255.0, blue: 250.0/255.0, alpha: 1.0)
+    var standardBackgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
     return standardBackgroundColor
   }
 

@@ -27,6 +27,56 @@
             </objects>
             <point key="canvasLocation" x="300" y="147"/>
         </scene>
+        <!--Title-->
+        <scene sceneID="AEH-11-lTm">
+            <objects>
+                <tableViewController storyboardIdentifier="SellTitle" title="Title" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Mr9-a6-1gM" customClass="UPMSellTitleTVC" customModule="UPMarketplace" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="U2q-EX-fjf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <sections>
+                            <tableViewSection id="Ufa-Wb-96e">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="jye-sn-Suw">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jye-sn-Suw" id="c2a-mf-MyS">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="This is quite a long title oh my goodness" translatesAutoresizingMaskIntoConstraints="NO" id="woa-Mk-BIU">
+                                                    <rect key="frame" x="18" y="12" width="564" height="75"/>
+                                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="Mr9-a6-1gM" id="0Ws-mr-zjv"/>
+                                                    </connections>
+                                                </textView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="woa-Mk-BIU" secondAttribute="bottom" constant="4.5" id="7IP-by-nEn"/>
+                                                <constraint firstItem="woa-Mk-BIU" firstAttribute="top" secondItem="c2a-mf-MyS" secondAttribute="topMargin" constant="4" id="Mhi-if-6Lo"/>
+                                                <constraint firstItem="woa-Mk-BIU" firstAttribute="leading" secondItem="c2a-mf-MyS" secondAttribute="leadingMargin" constant="10" id="aMj-a6-amC"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="woa-Mk-BIU" secondAttribute="trailing" constant="10" id="lrk-QO-AnK"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="Mr9-a6-1gM" id="SDl-cq-mOK"/>
+                            <outlet property="delegate" destination="Mr9-a6-1gM" id="uM9-mh-Gzs"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="titleTextView" destination="woa-Mk-BIU" id="uxZ-o7-pcz"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="TlI-kg-NLT" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="341" y="903"/>
+        </scene>
         <!--Description-->
         <scene sceneID="HvF-bN-B4j">
             <objects>
@@ -83,7 +133,7 @@
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="fPg-4a-QOA">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96078431372549022" blue="0.96078431372549022" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <sections>
                             <tableViewSection id="y4m-M9-lav">
                                 <cells>
@@ -102,6 +152,9 @@
                                                     <rect key="frame" x="18" y="37" width="564" height="30.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="6E5-kA-zFg" id="eGD-QJ-RCG"/>
+                                                    </connections>
                                                 </textField>
                                             </subviews>
                                             <constraints>
@@ -164,8 +217,14 @@
                                                     <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offers Lower than:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZY-bn-IzH">
+                                                    <rect key="frame" x="18" y="43" width="119.5" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                                 <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="$0.00" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="hLe-WW-WUO">
-                                                    <rect key="frame" x="145.5" y="43" width="436.5" height="30"/>
+                                                    <rect key="frame" x="145" y="43" width="436.5" height="30"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="363" id="PLd-8v-b6q"/>
                                                         <constraint firstAttribute="width" constant="363" id="zWR-t1-23c"/>
@@ -178,13 +237,10 @@
                                                             <exclude reference="zWR-t1-23c"/>
                                                         </mask>
                                                     </variation>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="6E5-kA-zFg" id="psg-cr-c4d"/>
+                                                    </connections>
                                                 </textField>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Offers Lower than:" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jZY-bn-IzH">
-                                                    <rect key="frame" x="18" y="43" width="119.5" height="30"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="hLe-WW-WUO" firstAttribute="leading" secondItem="jZY-bn-IzH" secondAttribute="trailing" constant="8" id="0CM-8S-Z1J"/>

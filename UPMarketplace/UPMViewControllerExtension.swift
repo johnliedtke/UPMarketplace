@@ -22,7 +22,11 @@ extension UIViewController {
   }
   
   func getNavigationBarHeight() -> CGFloat {
-    return (self.navigationController?.navigationBar.frame.height)!
+    if let height = self.navigationController?.navigationBar.frame.height {
+      return height
+    } else {
+      return 0
+    }
   }
   
   
@@ -31,5 +35,11 @@ extension UIViewController {
 extension String {
   subscript (i: Int) -> String {
     return String(Array(self)[i])
+  }
+}
+
+extension Double {
+  func toString() -> String {
+    return String(format: "%.2f",self)
   }
 }

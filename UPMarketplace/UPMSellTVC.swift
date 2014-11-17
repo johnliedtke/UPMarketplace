@@ -9,22 +9,29 @@
 import UIKit
 import SellUI
 
-class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate {
+class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate {
   let SellCellIdentifier = "UPMSellCell"
+  let SellTitleCelIdentifier = "UPMSellTitleCell"
  
   var requiredItems = UPMSellItemContainer()
+  var optionalItems = UPMSellItemContainer()
 
   enum CellSection: Int {
-    case Required = 0, Optional;
-    static let allValues = [Required, Optional]
+    case Title = 0, Required , Optional;
+    static let allValues = [Title, Required, Optional]
   }
 
   enum RequiredItems: String {
+    case Title = "Title"
     case Photos = "Photos"
     case Description = "Description"
     case PriceFormat = "Price Format"
     case Details = "Details"
     static let allValues = [Photos,Description, PriceFormat, Details]
+  }
+  
+  enum OptionalItems: String {
+    case Tags = "Tags"
   }
   
 
@@ -38,17 +45,20 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   override func viewDidLoad() {
     super.viewDidLoad()
     listing = UPMListing()
-
+    self.tableView.backgroundView = nil
+    self.tableView.backgroundColor = UIColor.redColor()
+    view.backgroundColor = UIColor.blackColor()
+   
     tableView.estimatedRowHeight = 60
     tableView = UITableView(frame: tableView.frame, style: UITableViewStyle.Grouped)
-   
     
-    // Required
+    // Items
     createRequiredItems()
- 
+    createOptionalItems()
     
-    // UPMSellCell
+    // Cells
     tableView.registerNib(UINib(nibName: SellCellIdentifier, bundle: nil), forCellReuseIdentifier: SellCellIdentifier)
+    tableView.registerNib(UINib(nibName: SellTitleCelIdentifier, bundle: nil), forCellReuseIdentifier: SellTitleCelIdentifier)
 
   }
   
@@ -64,17 +74,17 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   
   func createRequiredItems() {
     // Required
+    var titleItem = UPMSellItem(title: RequiredItems.Title.rawValue, description: "Write")
     var photoItem = UPMSellItem(title: RequiredItems.Photos.rawValue, description: "Select")
     var priceFormatItem = UPMSellItem(title: RequiredItems.PriceFormat.rawValue, description: "Select")
     var detailsItem = UPMSellItem(title: RequiredItems.Details.rawValue, description: "Select")
     var descriptionItem = UPMSellItem(title: RequiredItems.Description.rawValue, description: "Write")
-    requiredItems.addItems([photoItem, priceFormatItem, detailsItem, descriptionItem])
-    
+    requiredItems.addItems([titleItem, photoItem, priceFormatItem, detailsItem, descriptionItem])
   }
   
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-      // Dispose of any resources that can be recreated.
+  func createOptionalItems() {
+    var tagsItem = UPMSellItem(title: OptionalItems.Tags.rawValue, description: "Select")
+    optionalItems.addItems([tagsItem])
   }
 
   // MARK: - Table view data source
@@ -87,29 +97,53 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     let Section = CellSection(rawValue: section)
     
     switch Section! {
+    case CellSection.Title:
+      return 1
     case CellSection.Required:
       return requiredItems.count
+    case CellSection.Optional:
+      return optionalItems.count
     default:
       return 0
     }
   }
-
+  
+  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    let s = CellSection(rawValue: section)!
+    switch s {
+    case CellSection.Required:
+      return "Required"
+    case CellSection.Optional:
+      return "Optional"
+    default:
+      return ""
+    }
+  }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
     
-    let Section: CellSection = (CellSection(rawValue: 0))! as CellSection
+    
+    let Section: CellSection = (CellSection(rawValue: indexPath.section))! as CellSection
     
       switch Section {
+      case CellSection.Title:
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellTitleCelIdentifier, forIndexPath: indexPath) as UPMSellTitleCell
+        var titleItem = requiredItems.itemWithTitle(RequiredItems.Title.rawValue)
+        cell.titleLabel.text = titleItem?.itemDescription
+        return cell
       case CellSection.Required:
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
         var i = requiredItems.itemAtIndex(indexPath.row)
         cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         return cell
-        
+      case CellSection.Optional:
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
+        var i = optionalItems.itemAtIndex(indexPath.row)
+        cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
+        return cell
       default:
         NSLog("meow")
       }
-      return cell
   }
   
   /*
@@ -125,29 +159,50 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   }
   
   func updatedPriceFormat(price: Double, limit: Double?, oBo: Bool) {
+    listing?.price = price
+    if oBo {
+      listing?.limit = limit!
+    } else {
+      listing?.limit = 0.00
+    }
+    listing?.oBO = oBo
+    
     var priceFormatItem = requiredItems.itemWithTitle(RequiredItems.PriceFormat.rawValue)
-    priceFormatItem?.itemDescription = "Price: \(price) \(oBo)"
+    var descriptionString = ""
+    if oBo {
+      descriptionString = String(format: "Best Offer, Reserve $%.2f \nDecline offers lower than: $%.2f", price,limit!)
+    } else {
+      descriptionString = String(format: "Reserve $%.2f", price)
+    }
+    priceFormatItem?.itemDescription = descriptionString
     priceFormatItem?.isComplete = true
   }
   
-
+  func didUpdateTitle(title: String) {
+    var titleItem = requiredItems.itemWithTitle(RequiredItems.Title.rawValue)
+    listing?.title = title
+    titleItem?.itemDescription = title
+    titleItem?.isComplete = true
+  }
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    
-    let Section: CellSection = (CellSection(rawValue: 0))! as CellSection
+  func didSelectItemAtIndexPath(indexPath: NSIndexPath) {
+    let Section: CellSection = (CellSection(rawValue: indexPath.section))! as CellSection
     
     
     switch Section {
     case CellSection.Required:
       var item = requiredItems.itemAtIndex(indexPath.row)
-
+      
       switch item.title {
+      case RequiredItems.Title.rawValue:
+        pushTitleVC()
+        
       case RequiredItems.PriceFormat.rawValue:
         pushPriceFormatVC()
         
       case RequiredItems.Description.rawValue:
         pushDescriptionVC()
-      
+        
       default:
         NSLog("meow")
       }
@@ -156,7 +211,11 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       NSLog("meow")
     }
 
-
+    
+  }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    didSelectItemAtIndexPath(indexPath)
   }
   
   

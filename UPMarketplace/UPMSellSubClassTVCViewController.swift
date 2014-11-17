@@ -12,6 +12,7 @@ class UPMSellSubClassTVCViewController: UPMSellTVC {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      tableView.backgroundColor = UIColor.standardBackgroundColor()
 
         // Do any additional setup after loading the view.
     }
