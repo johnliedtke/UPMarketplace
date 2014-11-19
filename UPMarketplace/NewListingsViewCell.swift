@@ -8,6 +8,7 @@
 
 import UIKit
 import QuartzCore
+
 public class NewListingsViewCell: UICollectionViewCell {
     
 
