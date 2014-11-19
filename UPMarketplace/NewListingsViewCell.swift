@@ -14,15 +14,16 @@ public class NewListingsViewCell: UICollectionViewCell {
 
     @IBOutlet weak var listingPicture: UIImageView!
     
-    @IBOutlet weak var listingDescription: UITextView!
+    @IBOutlet weak var listingName: UITextView!
+    
     
     @IBOutlet weak var listingPrice: UILabel!
     
     @IBOutlet weak var listingReserve: UILabel!
     
-    public var image:UIImage? {
+    public var pic:UIImage? {
         didSet {
-            listingPicture.image = image
+            listingPicture.image = pic
         }
     }
 
@@ -35,7 +36,7 @@ public class NewListingsViewCell: UICollectionViewCell {
     
     public var title: String? {
         didSet {
-            listingDescription.text = title
+            listingName.text = title
         }
     }
     

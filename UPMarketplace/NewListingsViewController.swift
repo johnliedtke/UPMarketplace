@@ -33,9 +33,7 @@ class NewListingsViewController:UICollectionViewController, UICollectionViewDele
         }
     }
     
-    @IBAction func refreshListings(sender: AnyObject) {
-        self.queryListings()
-    }
+
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -45,6 +43,7 @@ class NewListingsViewController:UICollectionViewController, UICollectionViewDele
         return 1
     }
     
+
 
     override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.listings.count
@@ -58,8 +57,8 @@ class NewListingsViewController:UICollectionViewController, UICollectionViewDele
             var picture = info["photo"] as PFFile
             picture.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
                 var actualImage = UIImage(data: data)
-                cell.image = nil
-                cell.image = actualImage
+                cell.pic = nil
+                cell.pic = actualImage
             }
         
             cell.title = info["title"] as? String
@@ -68,5 +67,9 @@ class NewListingsViewController:UICollectionViewController, UICollectionViewDele
         return cell
     }
     
+    
+    @IBAction func refreshButton(sender: AnyObject) {
+        self.queryListings()
+    }
 
 }

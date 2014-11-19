@@ -28,40 +28,38 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" image="Kitty-Cats-Cute-Little-Cat-Living-Free-Images" translatesAutoresizingMaskIntoConstraints="NO" id="ChD-Je-TsP">
-                                            <rect key="frame" x="8" y="8" width="166" height="114"/>
+                                            <rect key="frame" x="8" y="8" width="166" height="105"/>
                                         </imageView>
-                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7Iq-Tr-Ecb">
-                                            <rect key="frame" x="9" y="127" width="164" height="38"/>
-                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                            <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                                        </textView>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Price" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="grJ-Io-roj">
-                                            <rect key="frame" x="8" y="173" width="166" height="22"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <rect key="frame" x="8" y="182" width="166" height="17"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Reserve Now" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oxH-F4-lEu">
-                                            <rect key="frame" x="9" y="203" width="165" height="29"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <rect key="frame" x="9" y="209" width="165" height="23"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                             <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
+                                        <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" scrollEnabled="NO" editable="NO" text="Title" translatesAutoresizingMaskIntoConstraints="NO" id="6xX-tH-uVX">
+                                            <rect key="frame" x="8" y="125" width="166" height="44"/>
+                                            <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="13"/>
+                                            <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                        </textView>
                                     </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="oxH-F4-lEu" firstAttribute="leading" secondItem="hJV-NU-v1o" secondAttribute="leadingMargin" constant="1" id="4kE-DT-Ypg"/>
+                                    <constraint firstItem="6xX-tH-uVX" firstAttribute="leading" secondItem="hJV-NU-v1o" secondAttribute="leadingMargin" id="9FJ-KC-qek"/>
                                     <constraint firstItem="ChD-Je-TsP" firstAttribute="leading" secondItem="hJV-NU-v1o" secondAttribute="leadingMargin" id="B59-zh-SOW"/>
-                                    <constraint firstItem="grJ-Io-roj" firstAttribute="top" secondItem="7Iq-Tr-Ecb" secondAttribute="bottom" constant="8" id="D2p-Lh-sgJ"/>
+                                    <constraint firstItem="grJ-Io-roj" firstAttribute="top" secondItem="6xX-tH-uVX" secondAttribute="bottom" constant="3" id="KrG-sm-aW8"/>
+                                    <constraint firstItem="6xX-tH-uVX" firstAttribute="trailing" secondItem="hJV-NU-v1o" secondAttribute="trailingMargin" id="O0Z-Be-HhQ"/>
                                     <constraint firstItem="ChD-Je-TsP" firstAttribute="top" secondItem="hJV-NU-v1o" secondAttribute="topMargin" id="QWY-Cl-TX2"/>
-                                    <constraint firstItem="7Iq-Tr-Ecb" firstAttribute="top" secondItem="ChD-Je-TsP" secondAttribute="bottom" constant="8" id="RnX-vZ-O95"/>
-                                    <constraint firstItem="7Iq-Tr-Ecb" firstAttribute="leading" secondItem="hJV-NU-v1o" secondAttribute="leadingMargin" constant="1" id="S30-yz-jW0"/>
                                     <constraint firstItem="grJ-Io-roj" firstAttribute="trailing" secondItem="hJV-NU-v1o" secondAttribute="trailingMargin" id="SiV-UM-VIx"/>
-                                    <constraint firstAttribute="trailingMargin" secondItem="7Iq-Tr-Ecb" secondAttribute="trailing" constant="1" id="YFX-FJ-ubx"/>
+                                    <constraint firstItem="6xX-tH-uVX" firstAttribute="top" secondItem="ChD-Je-TsP" secondAttribute="bottom" constant="8" id="Z0K-3F-IoG"/>
                                     <constraint firstItem="oxH-F4-lEu" firstAttribute="bottom" secondItem="hJV-NU-v1o" secondAttribute="bottomMargin" id="b1X-Za-gF8"/>
                                     <constraint firstItem="oxH-F4-lEu" firstAttribute="trailing" secondItem="hJV-NU-v1o" secondAttribute="trailingMargin" id="c11-rt-drc"/>
                                     <constraint firstItem="oxH-F4-lEu" firstAttribute="top" secondItem="grJ-Io-roj" secondAttribute="bottom" constant="8" id="mm7-dh-oDT"/>
@@ -69,7 +67,7 @@
                                     <constraint firstItem="ChD-Je-TsP" firstAttribute="trailing" secondItem="hJV-NU-v1o" secondAttribute="trailingMargin" id="xF8-Xg-2hP"/>
                                 </constraints>
                                 <connections>
-                                    <outlet property="listingDescription" destination="7Iq-Tr-Ecb" id="Fmh-nE-Q6Q"/>
+                                    <outlet property="listingName" destination="6xX-tH-uVX" id="bE8-ov-Bfr"/>
                                     <outlet property="listingPicture" destination="ChD-Je-TsP" id="YF7-eu-dRq"/>
                                     <outlet property="listingPrice" destination="grJ-Io-roj" id="8UA-ec-N40"/>
                                     <outlet property="listingReserve" destination="oxH-F4-lEu" id="zL6-Js-oNV"/>
@@ -82,7 +80,11 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="New Listings" id="KtT-c0-iP9">
-                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Bs1-FG-K1Y"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="P7t-4n-2tk">
+                            <connections>
+                                <action selector="refreshButton:" destination="8wf-0I-Joe" id="oMt-QY-jtB"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IZo-fA-OcS" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -93,7 +95,7 @@
         <scene sceneID="uto-xm-rOu">
             <objects>
                 <navigationController title="NewNavigationController" id="c0n-sF-4To" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" systemItem="more" id="goF-tU-CyY"/>
+                    <tabBarItem key="tabBarItem" title="New Listings" image="new" id="goF-tU-CyY"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6fT-k9-ELG">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -127,5 +129,6 @@
     </scenes>
     <resources>
         <image name="Kitty-Cats-Cute-Little-Cat-Living-Free-Images" width="1366" height="768"/>
+        <image name="new" width="32" height="32"/>
     </resources>
 </document>
