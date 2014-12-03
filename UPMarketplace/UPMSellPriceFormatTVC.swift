@@ -52,6 +52,8 @@ class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
       limitField.text = limit.toString()
     }
     
+    priceField.becomeFirstResponder()
+    
     var numberFormatter = NSNumberFormatter()
     numberFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
     numberFormatter.currencyCode = "USD"

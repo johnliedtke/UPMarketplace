@@ -11,6 +11,8 @@ import UIKit
 class UPMSellTitleCell: UITableViewCell {
   @IBOutlet var titleLabel: UILabel!
   @IBOutlet var displayImageView: UIImageView!
+  var topBorder: UIView?
+  var bottomBorder: UIView?
   
   override func awakeFromNib() {
     super.awakeFromNib()
@@ -28,13 +30,19 @@ class UPMSellTitleCell: UITableViewCell {
     self.contentView.backgroundColor = UIColor.clearColor()
     
     // Remove borderes
-    var topBorder = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 1.0))
-    topBorder.backgroundColor = UIColor.standardBackgroundColor()
-    self.addSubview(topBorder)
-    
-    var bottomBorder = UIView(frame: CGRectMake(0, self.frame.height-1, UIScreen.mainScreen().bounds.width, 1.0))
-    bottomBorder.backgroundColor = UIColor.standardBackgroundColor()
-    self.addSubview(bottomBorder)
+    if topBorder == nil || bottomBorder == nil {
+      topBorder = UIView(frame: CGRectMake(0, 0, UIScreen.mainScreen().bounds.width, 1.0))
+      bottomBorder = UIView(frame: CGRectMake(0, self.frame.height-1, UIScreen.mainScreen().bounds.width, 1.0))
+      topBorder?.backgroundColor = UIColor.standardBackgroundColor()
+      bottomBorder?.backgroundColor = UIColor.standardBackgroundColor()
+      addSubview(topBorder!)
+      addSubview(bottomBorder!)
+    }
+
+    #if !TARGET_INTERFACE_BUILDER
+      topBorder?.setNeedsDisplay()
+      bottomBorder?.setNeedsDisplay()
+    #endif
   }
 
   

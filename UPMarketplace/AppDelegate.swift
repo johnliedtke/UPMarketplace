@@ -21,7 +21,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       
       UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
       UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
-   //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
+      
+      
+      
+      
+      
+      
+      // defaultACL.setPublicReadAccess(true)
+      //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+      
+      /* Tab Bar Appearance */
+      var tabBarController = self.window?.rootViewController as UITabBarController
+      var tabBar = tabBarController.tabBar
+      if let items = tabBar.items as? [UITabBarItem] {
+      
+        var sellTabBarItem = items[0]
+        sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        
+      }
+      UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
+      UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      //UPMListing.registerSubclass()
+      //UPMOtherListing.registerSubclass()
+      //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
+      
       
         // If you would like all objects to be private by default, remove this line.
 //        var defaultACL = PFACL.def

@@ -8,21 +8,26 @@
 
 import UIKit
 
-class UPMListing: PFObject, PFSubclassing {
+public class UPMListing: PFObject  {
   
-  var title = ""
-  var descriptionS: String = ""
-  var price: Double = 0.00
-  var oBO: Bool = false
-  var limit: Double = 0.00
+  @NSManaged public var title: String
+  @NSManaged public var descriptionS: String?
+  @NSManaged public var price: Double
+  @NSManaged public var oBO: Bool
+  @NSManaged public var limit: Double
+  @NSManaged public var picture: PFFile?
+  var photo: UIImage?
   
-    
-    class func parseClassName() -> String! {
-        return "UPMListing"
-    }
-    
-    override class func load() {
-        self.registerSubclass()
-    }
+  
+//  class func parseClassName() -> String! {
+//    return "UPMListing"
+//  }
+  
+//  override class func load() {
+//    self.registerSubclass()
+//  }
+  
+
+  
 
 }

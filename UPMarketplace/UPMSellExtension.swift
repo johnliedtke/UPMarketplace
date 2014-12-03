@@ -12,6 +12,7 @@ let SellDescriptionStoryboard = "SellDescription"
 let SellPriceFormatStoryboard = "SellPriceFormat"
 let SellTitleStoryboard = "SellTitle"
 let SellStoryboard = "UPMSell"
+let SellImagePickerStoryboard = "SellImagePicker"
 
 extension UPMSellTVC {
   
@@ -20,7 +21,9 @@ extension UPMSellTVC {
 
     var sellDescriptionVC = storyboard.instantiateViewControllerWithIdentifier(SellDescriptionStoryboard) as UPMSellDescriptionVC
     sellDescriptionVC.delegate = self
-    sellDescriptionVC.descriptionS = (listing?.descriptionS)!
+    if listing?.descriptionS != nil {
+      sellDescriptionVC.descriptionS = (listing?.descriptionS)!
+    }
     navigationController?.pushViewController(sellDescriptionVC, animated: true)
   }
   
@@ -40,7 +43,20 @@ extension UPMSellTVC {
     var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as UPMSellTitleTVC
     titleVC.delegate = self
     navigationController?.pushViewController(titleVC, animated: true)
-    
+  }
+  
+  func pushImagePickerVC() {
+    let Storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
+    var imagePickerVC = Storyboard.instantiateViewControllerWithIdentifier(SellImagePickerStoryboard) as UPMSellImagePickerVC
+    imagePickerVC.delegate = self
+    if let image = listing?.photo {
+      imagePickerVC.image = image
+    }
+    imagePickerVC.hidesBottomBarWhenPushed = true
+    navigationController?.pushViewController(imagePickerVC, animated: true)
+  }
+  
+  func pushDetailsVC() {
 
   }
   

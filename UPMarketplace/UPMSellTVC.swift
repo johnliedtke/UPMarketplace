@@ -9,13 +9,14 @@
 import UIKit
 import SellUI
 
-class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate {
+class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate {
   let SellCellIdentifier = "UPMSellCell"
   let SellTitleCelIdentifier = "UPMSellTitleCell"
  
   var requiredItems = UPMSellItemContainer()
   var optionalItems = UPMSellItemContainer()
-
+  var listing: UPMListing?
+  
   enum CellSection: Int {
     case Title = 0, Required , Optional;
     static let allValues = [Title, Required, Optional]
@@ -34,23 +35,28 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     case Tags = "Tags"
   }
   
-
-  
-  var listing: UPMListing?
-  
   func post() {
-    
+    if  requiredItems.isItemsComplete() {
+      println("Complete")
+    } else {
+      println("Not complete!!!")
+    }
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    listing = UPMListing()
-    self.tableView.backgroundView = nil
-    self.tableView.backgroundColor = UIColor.redColor()
-    view.backgroundColor = UIColor.blackColor()
-   
+    listing = UPMOtherListing()
     tableView.estimatedRowHeight = 60
     tableView = UITableView(frame: tableView.frame, style: UITableViewStyle.Grouped)
+    tableView.backgroundColor = UIColor.standardBackgroundColor()
+    
+    addCancelButtontToNavigationItemWithSelector("didPressCancelButton:")
+    var postButton = UIBarButtonItem(title: "Post", style: UIBarButtonItemStyle.Done, target: self, action: "didPressPostButton:")
+    navigationItem.rightBarButtonItem = postButton
+    self.automaticallyAdjustsScrollViewInsets = false
+    
+    self.edgesForExtendedLayout = UIRectEdge.All;
+    self.tableView.contentInset = UIEdgeInsetsMake(0.0, 0.0, CGRectGetHeight((self.tabBarController?.tabBar.frame)!), 0.0)
     
     // Items
     createRequiredItems()
@@ -62,6 +68,14 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
 
   }
   
+  func didPressCancelButton(sender: AnyObject) {
+    self.navigationController?.popToRootViewControllerAnimated(true)
+  }
+  
+  func didPressPostButton(sender: AnyObject) {
+    post()
+  }
+  
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
   }
@@ -70,7 +84,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     super.viewWillAppear(animated)
     tableView.reloadData()
     
-  }
+}
   
   func createRequiredItems() {
     // Required
@@ -130,6 +144,10 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         let cell = tableView.dequeueReusableCellWithIdentifier(SellTitleCelIdentifier, forIndexPath: indexPath) as UPMSellTitleCell
         var titleItem = requiredItems.itemWithTitle(RequiredItems.Title.rawValue)
         cell.titleLabel.text = titleItem?.itemDescription
+        if listing?.photo != nil {
+          cell.displayImageView.image = listing?.photo
+        }
+
         return cell
       case CellSection.Required:
         let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
@@ -144,6 +162,14 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       default:
         NSLog("meow")
       }
+  }
+  
+  override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+    if section == 0 {
+      return getNavigationBarHeight() + 30
+    } else {
+      return UITableViewAutomaticDimension
+    }
   }
   
   /*
@@ -185,6 +211,15 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     titleItem?.isComplete = true
   }
   
+  func didUpdatePhoto(image: UIImage) {
+    var photoItem = requiredItems.itemWithTitle(RequiredItems.Photos.rawValue)
+    var file: NSData = UIImageJPEGRepresentation(image, 0.5)
+    listing?.picture = PFFile(name: "image.png", data: file)
+    listing?.photo = image
+    photoItem?.itemDescription = "Picture Added"
+    photoItem?.isComplete = true
+  }
+  
   func didSelectItemAtIndexPath(indexPath: NSIndexPath) {
     let Section: CellSection = (CellSection(rawValue: indexPath.section))! as CellSection
     
@@ -202,6 +237,11 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         
       case RequiredItems.Description.rawValue:
         pushDescriptionVC()
+      case RequiredItems.Photos.rawValue:
+        pushImagePickerVC()
+        
+      case RequiredItems.Details.rawValue:
+        pushDetailsVC()
         
       default:
         NSLog("meow")
@@ -217,35 +257,5 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     didSelectItemAtIndexPath(indexPath)
   }
-  
-  
-
-  
-  // MARK: - Navigation
-
-  // In a storyboard-based application, you will often want to do a little preparation before navigation
-//  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//      // Get the new view controller using [segue destinationViewController].
-//      // Pass the selected object to the new view controller.
-//    
-//    
-//    let SegueIdentifier = segue.identifier as String!
-//    let DestinstionController = segue.destinationViewController as UIViewController
-//    
-//    switch SegueIdentifier {
-//    case SellDescriptionSegue:
-//      var descriptionVC = DestinstionController as UPMSellDescriptionVC
-//      descriptionVC.descriptionS = "fuck this shit"
-//      descriptionVC.delegate = self
-//    case SellPriceFormatSegue:
-//      var priceFormatVC = DestinstionController as UPMSellPriceFormatVC
-//      priceFormatVC.delegate = self
-//    default:
-//      NSLog("Meow")
-//
-//    }
-//    
-//  }
-  
 
 }

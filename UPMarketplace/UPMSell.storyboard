@@ -1,10 +1,64 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14A389" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Picture-->
+        <scene sceneID="9id-DX-FFP">
+            <objects>
+                <viewController storyboardIdentifier="SellImagePicker" title="Picture" useStoryboardIdentifierAsRestorationIdentifier="YES" id="cra-aE-kcF" customClass="UPMSellImagePickerVC" customModule="UPMarketplace" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="WFa-b2-z0p"/>
+                        <viewControllerLayoutGuide type="bottom" id="8ZW-MG-1MO"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="nbu-Hw-7XK">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p69-LK-1Z0">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem title="Photo Library" id="Nuu-Pb-r6Z">
+                                        <connections>
+                                            <action selector="showImagePickerForPhotoPicker:" destination="cra-aE-kcF" id="Llu-XT-9hU"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="1GT-sL-8jL"/>
+                                    <barButtonItem systemItem="camera" id="gmV-aQ-iiu">
+                                        <connections>
+                                            <action selector="showImagePickerForCamera:" destination="cra-aE-kcF" id="MpF-wt-les"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="P9n-TM-MLv">
+                                <rect key="frame" x="0.0" y="20" width="600" height="536"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="8ZW-MG-1MO" firstAttribute="top" secondItem="p69-LK-1Z0" secondAttribute="bottom" id="09r-Il-ZaZ"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="p69-LK-1Z0" secondAttribute="trailing" constant="-16" id="1PH-Xp-YFn"/>
+                            <constraint firstItem="8ZW-MG-1MO" firstAttribute="top" secondItem="p69-LK-1Z0" secondAttribute="bottom" id="3gw-yd-EH8"/>
+                            <constraint firstItem="p69-LK-1Z0" firstAttribute="leading" secondItem="nbu-Hw-7XK" secondAttribute="leadingMargin" constant="-16" id="4gm-IB-h1a"/>
+                            <constraint firstItem="P9n-TM-MLv" firstAttribute="bottom" secondItem="p69-LK-1Z0" secondAttribute="bottom" constant="-44" id="RJK-BA-axi"/>
+                            <constraint firstItem="P9n-TM-MLv" firstAttribute="top" secondItem="WFa-b2-z0p" secondAttribute="bottom" id="hLn-3j-NAW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="P9n-TM-MLv" secondAttribute="trailing" constant="-16" id="ily-UO-GP0"/>
+                            <constraint firstItem="P9n-TM-MLv" firstAttribute="leading" secondItem="nbu-Hw-7XK" secondAttribute="leadingMargin" constant="-16" id="xeq-kX-rEn"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="cameraButton" destination="p69-LK-1Z0" id="yLd-ZF-NhG"/>
+                        <outlet property="imageView" destination="P9n-TM-MLv" id="L7e-Jw-TyU"/>
+                        <outlet property="toolBar" destination="p69-LK-1Z0" id="gC1-ph-3cN"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="MQm-bN-Oet" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-340" y="147"/>
+        </scene>
         <!--Sell-->
         <scene sceneID="Pnr-td-skx">
             <objects>
@@ -43,7 +97,7 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jye-sn-Suw" id="c2a-mf-MyS">
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" text="This is quite a long title oh my goodness" translatesAutoresizingMaskIntoConstraints="NO" id="woa-Mk-BIU">
+                                                <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" scrollEnabled="NO" translatesAutoresizingMaskIntoConstraints="NO" id="woa-Mk-BIU">
                                                     <rect key="frame" x="18" y="12" width="564" height="75"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -75,7 +129,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="TlI-kg-NLT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="341" y="903"/>
+            <point key="canvasLocation" x="-340" y="870"/>
         </scene>
         <!--Description-->
         <scene sceneID="HvF-bN-B4j">
@@ -124,7 +178,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="sG1-hp-9cA" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1068" y="147"/>
+            <point key="canvasLocation" x="976" y="147"/>
         </scene>
         <!--Format & Price-->
         <scene sceneID="3GW-HH-yqk">
@@ -275,7 +329,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Eu-ps-6qT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1020" y="903"/>
+            <point key="canvasLocation" x="300" y="870"/>
         </scene>
     </scenes>
 </document>

@@ -64,7 +64,7 @@ public class UPMSellCell: UITableViewCell {
     super.layoutSubviews()
     #if !TARGET_INTERFACE_BUILDER
     circleView.setNeedsDisplay()
-      #endif
+    #endif
 //    contentView.layoutIfNeeded()
 //    detailsLabel.preferredMaxLayoutWidth = detailsLabel.frame.size.width
   }

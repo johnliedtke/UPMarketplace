@@ -55,4 +55,21 @@ class UPMSellItemContainer {
     }
   }
   
+  func isItemsComplete() -> Bool {
+    for i in items {
+      if !i.isComplete {
+        return false
+      }
+    }
+    return true
+  }
+  
+  func description() -> String {
+    var d = ""
+    for item in items {
+      d += "\(item.title): \(item.itemDescription)\n"
+    }
+    return d == "" ? "Select" : d.substringToIndex(advance(d.startIndex, countElements(d)-1))
+  }
+
 }
