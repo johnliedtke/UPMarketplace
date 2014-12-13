@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		521E3A7E1A3CABB600F4E7B8 /* UPMListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521E3A7D1A3CABB600F4E7B8 /* UPMListing.swift */; };
 		52234A8A19E77E6100E899B8 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8919E77E6100E899B8 /* AudioToolbox.framework */; };
 		52234A8C19E77E6A00E899B8 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8B19E77E6A00E899B8 /* CFNetwork.framework */; };
 		52234A8E19E77E7500E899B8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A8D19E77E7500E899B8 /* CoreGraphics.framework */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		521E3A7D1A3CABB600F4E7B8 /* UPMListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMListing.swift; sourceTree = "<group>"; };
 		52234A8919E77E6100E899B8 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		52234A8B19E77E6A00E899B8 /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		52234A8D19E77E7500E899B8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -93,6 +95,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		521E3A7B1A3CAB6E00F4E7B8 /* Listings */ = {
+			isa = PBXGroup;
+			children = (
+				521E3A7C1A3CAB7800F4E7B8 /* Model */,
+			);
+			name = Listings;
+			sourceTree = "<group>";
+		};
+		521E3A7C1A3CAB7800F4E7B8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				521E3A7D1A3CABB600F4E7B8 /* UPMListing.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
 		52AF3D3A19E77BBF007E0D22 = {
 			isa = PBXGroup;
 			children = (
@@ -115,6 +133,7 @@
 		52AF3D4519E77BBF007E0D22 /* UPMarketplace */ = {
 			isa = PBXGroup;
 			children = (
+				521E3A7B1A3CAB6E00F4E7B8 /* Listings */,
 				52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */,
 				52AF3D4A19E77BBF007E0D22 /* ViewController.swift */,
 				52AF3D4C19E77BBF007E0D22 /* Main.storyboard */,
@@ -271,6 +290,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				521E3A7E1A3CABB600F4E7B8 /* UPMListing.swift in Sources */,
 				52AF3D4B19E77BBF007E0D22 /* ViewController.swift in Sources */,
 				52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */,
 			);
