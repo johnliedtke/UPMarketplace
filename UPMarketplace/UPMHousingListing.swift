@@ -1,25 +1,16 @@
 //
-//  UPMTextbookListing.swift
+//  UPMHousingListing.swift
 //  UPMarketplace
 //
-//  Created by John Liedtke on 11/24/14.
+//  Created by John Liedtke on 12/13/14.
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
 import UIKit
 
-/// A UPMTextbookListing is the basic object for a listing of a textbook.
-public class UPMTextbookListing: UPMListing, PFSubclassing {
+public class UPMHousingListing: UPMListing, PFSubclassing {
   
   /// MARK: Properties
-  /// iSBN of the textbook being listed
-  @NSManaged public var iSBN: String?
-  
-  /// The course/class the textbook was used in, e.g. CS301
-  @NSManaged public var course: String?
-  
-  /// The professor who required the textbook
-  @NSManaged public var professor: String?
   
   /// MARK: PFSubclassing Methods
   /// The name of the PFObject subclass as it would appear
@@ -34,5 +25,5 @@ public class UPMTextbookListing: UPMListing, PFSubclassing {
   override public class func load() {
     self.registerSubclass()
   }
-   
+  
 }

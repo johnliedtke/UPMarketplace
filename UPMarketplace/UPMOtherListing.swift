@@ -9,20 +9,25 @@
 import UIKit
 import Foundation
 
-
+/// A UPMOtherListing is the basic object for listing anything that is
+/// not a housing or textbook listing. OtherListings are categorized
+/// by the category propety.
 public class UPMOtherListing: UPMListing, PFSubclassing  {
   
+  /// MARK: Class Properties
+  /// Category for filtering other listings
   @NSManaged public var category: String?
   
-  convenience init(title: String) {
-    self.init()
-    self.title = title
-  }
-  
+  /// MARK: PFSubclassing Methods
+  /// The name of the PFObject subclass as it would appear
+  /// in the data browser.
+  ///
+  /// :returns: The name of the class
   public class func parseClassName() -> String! {
     return "UPMOtherListing"
   }
 
+  /// Registers the subclass with Parse
  override public class func load() {
     self.registerSubclass()
   }
