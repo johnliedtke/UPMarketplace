@@ -20,9 +20,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
         
         // If you would like all objects to be private by default, remove this line.
-        var defaultACL = PFACL.ACL()
-        defaultACL.setPublicReadAccess(true)
-        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+       // var defaultACL = PFACL.ACL()
+//        defaultACL.setPublicReadAccess(true)
+  //      PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
         
         // Parse Push Notifications
 //        var userNotificationTypes: UIUserNotificationType = (UIUserNotificationType.Alert |

@@ -25,7 +25,6 @@
 		52AF3D6C19E77D9B007E0D22 /* Bolts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6919E77D9B007E0D22 /* Bolts.framework */; };
 		52AF3D6D19E77D9B007E0D22 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6A19E77D9B007E0D22 /* Parse.framework */; };
 		52AF3D6E19E77D9B007E0D22 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */; };
-		F10062481A181268006F1EE9 /* NewListingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F10062471A181268006F1EE9 /* NewListingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -62,7 +61,6 @@
 		52AF3D6919E77D9B007E0D22 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		52AF3D6A19E77D9B007E0D22 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
-		F10062471A181268006F1EE9 /* NewListingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewListingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,7 +115,6 @@
 		52AF3D4519E77BBF007E0D22 /* UPMarketplace */ = {
 			isa = PBXGroup;
 			children = (
-				F10062471A181268006F1EE9 /* NewListingsViewController.swift */,
 				52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */,
 				52AF3D4A19E77BBF007E0D22 /* ViewController.swift */,
 				52AF3D4C19E77BBF007E0D22 /* Main.storyboard */,
@@ -274,7 +271,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F10062481A181268006F1EE9 /* NewListingsViewController.swift in Sources */,
 				52AF3D4B19E77BBF007E0D22 /* ViewController.swift in Sources */,
 				52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */,
 			);
