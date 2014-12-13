@@ -17,6 +17,9 @@
 		52234A9619E77EA300E899B8 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9519E77EA300E899B8 /* QuartzCore.framework */; };
 		52234A9819E77EAB00E899B8 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9719E77EAB00E899B8 /* Security.framework */; };
 		52234A9A19E77EB600E899B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52234A9919E77EB600E899B8 /* SystemConfiguration.framework */; };
+		529D60641A3CCEC00045C6A2 /* UPMOtherListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D60631A3CCEC00045C6A2 /* UPMOtherListing.swift */; };
+		529D60661A3CCF930045C6A2 /* UPMTextbookListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D60651A3CCF930045C6A2 /* UPMTextbookListing.swift */; };
+		529D60681A3CCFA40045C6A2 /* UPMHousingListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529D60671A3CCFA40045C6A2 /* UPMHousingListing.swift */; };
 		52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */; };
 		52AF3D4B19E77BBF007E0D22 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D4A19E77BBF007E0D22 /* ViewController.swift */; };
 		52AF3D4E19E77BBF007E0D22 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D4C19E77BBF007E0D22 /* Main.storyboard */; };
@@ -50,6 +53,9 @@
 		52234A9719E77EAB00E899B8 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		52234A9919E77EB600E899B8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		52234A9B19E77EE400E899B8 /* UPMarketplace-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UPMarketplace-Bridging-Header.h"; sourceTree = "<group>"; };
+		529D60631A3CCEC00045C6A2 /* UPMOtherListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMOtherListing.swift; sourceTree = "<group>"; };
+		529D60651A3CCF930045C6A2 /* UPMTextbookListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMTextbookListing.swift; sourceTree = "<group>"; };
+		529D60671A3CCFA40045C6A2 /* UPMHousingListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMHousingListing.swift; sourceTree = "<group>"; };
 		52AF3D4319E77BBF007E0D22 /* UPMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UPMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52AF3D4719E77BBF007E0D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -107,6 +113,9 @@
 			isa = PBXGroup;
 			children = (
 				521E3A7D1A3CABB600F4E7B8 /* UPMListing.swift */,
+				529D60631A3CCEC00045C6A2 /* UPMOtherListing.swift */,
+				529D60651A3CCF930045C6A2 /* UPMTextbookListing.swift */,
+				529D60671A3CCFA40045C6A2 /* UPMHousingListing.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -292,7 +301,10 @@
 			files = (
 				521E3A7E1A3CABB600F4E7B8 /* UPMListing.swift in Sources */,
 				52AF3D4B19E77BBF007E0D22 /* ViewController.swift in Sources */,
+				529D60641A3CCEC00045C6A2 /* UPMOtherListing.swift in Sources */,
 				52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */,
+				529D60661A3CCF930045C6A2 /* UPMTextbookListing.swift in Sources */,
+				529D60681A3CCFA40045C6A2 /* UPMHousingListing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
