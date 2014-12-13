@@ -13,11 +13,11 @@ import Foundation
 /// by the category propety.
 public class UPMOtherListing: UPMListing, PFSubclassing  {
   
-  /// MARK: Class Properties
+  // MARK: Properties
   /// Category for filtering other listings
   @NSManaged public var category: String?
   
-  /// MARK: PFSubclassing Methods
+  // MARK: PFSubclassing Methods
   /// The name of the PFObject subclass as it would appear
   /// in the data browser.
   ///

@@ -10,9 +10,9 @@ import UIKit
 
 public class UPMHousingListing: UPMListing, PFSubclassing {
   
-  /// MARK: Properties
+  // MARK: Properties
   
-  /// MARK: PFSubclassing Methods
+  // MARK: PFSubclassing Methods
   /// The name of the PFObject subclass as it would appear
   /// in the data browser.
   ///

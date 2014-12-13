@@ -17,7 +17,7 @@ import UIKit
 ///
 public class UPMListing: PFObject  {
   
-  /// MARK: Properties
+  // MARK: Properties
   /// Title of the listing
   @NSManaged public var title: String
   

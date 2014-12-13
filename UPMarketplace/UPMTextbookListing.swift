@@ -11,7 +11,7 @@ import UIKit
 /// A UPMTextbookListing is the basic object for a listing of a textbook.
 public class UPMTextbookListing: UPMListing, PFSubclassing {
   
-  /// MARK: Properties
+  // MARK: Properties
   /// iSBN of the textbook being listed
   @NSManaged public var iSBN: String?
   
@@ -21,7 +21,7 @@ public class UPMTextbookListing: UPMListing, PFSubclassing {
   /// The professor who required the textbook
   @NSManaged public var professor: String?
   
-  /// MARK: PFSubclassing Methods
+  // MARK: PFSubclassing Methods
   /// The name of the PFObject subclass as it would appear
   /// in the data browser.
   ///
