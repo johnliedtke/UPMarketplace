@@ -30,7 +30,6 @@
 		524F40B01A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40AF1A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift */; };
 		524F40B21A10937A002B47B6 /* UPMSellExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40B11A10937A002B47B6 /* UPMSellExtension.swift */; };
 		5255EBA71A0EBEBA007207C7 /* UPMSellTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5255EBA61A0EBEBA007207C7 /* UPMSellTVC.swift */; };
-		5255EBA91A0EBF9A007207C7 /* UPMListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5255EBA81A0EBF9A007207C7 /* UPMListing.swift */; };
 		5255EBDA1A0EC325007207C7 /* SellUI.h in Headers */ = {isa = PBXBuildFile; fileRef = 5255EBD91A0EC325007207C7 /* SellUI.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5255EBE01A0EC325007207C7 /* SellUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5255EBD51A0EC325007207C7 /* SellUI.framework */; };
 		5255EBE91A0EC325007207C7 /* SellUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5255EBE81A0EC325007207C7 /* SellUITests.swift */; };
@@ -143,7 +142,6 @@
 		524F40AF1A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellSubClassTVCViewController.swift; sourceTree = "<group>"; };
 		524F40B11A10937A002B47B6 /* UPMSellExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellExtension.swift; sourceTree = "<group>"; };
 		5255EBA61A0EBEBA007207C7 /* UPMSellTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTVC.swift; sourceTree = "<group>"; };
-		5255EBA81A0EBF9A007207C7 /* UPMListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMListing.swift; sourceTree = "<group>"; };
 		5255EBD51A0EC325007207C7 /* SellUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SellUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5255EBD81A0EC325007207C7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5255EBD91A0EC325007207C7 /* SellUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SellUI.h; sourceTree = "<group>"; };
@@ -244,7 +242,6 @@
 		5255EBAA1A0EBF9E007207C7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				5255EBA81A0EBF9A007207C7 /* UPMListing.swift */,
 				52E571691A1DDF0C0056FCD8 /* UPMOtherListing.swift */,
 				52DC22011A2422F9000DC5FC /* UPMTextbookListing.swift */,
 				521E3A7F1A3CBCB000F4E7B8 /* UPMHousingListing.swift */,
@@ -667,7 +664,6 @@
 				52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */,
 				524F40B01A107CD6002B47B6 /* UPMSellSubClassTVCViewController.swift in Sources */,
 				5228B86C1A19B174004AED8C /* UPMSellTitleCell.swift in Sources */,
-				5255EBA91A0EBF9A007207C7 /* UPMListing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
