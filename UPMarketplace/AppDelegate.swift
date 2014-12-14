@@ -23,10 +23,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
       
       
-      
-      
-      
-      
       // defaultACL.setPublicReadAccess(true)
       //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
       
