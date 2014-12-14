@@ -18,7 +18,7 @@ public class UPMHousingListing: UPMListing, PFSubclassing {
   ///
   /// :returns: The name of the class
   public class func parseClassName() -> String! {
-    return "UPMTextbookListing"
+    return "UPMHousingListing"
   }
   
   /// Registers the subclass with Parse
