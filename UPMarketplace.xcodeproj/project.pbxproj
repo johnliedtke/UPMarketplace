@@ -160,6 +160,7 @@
 		52AF3D4719E77BBF007E0D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		52AF3D4A19E77BBF007E0D22 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		52AF3D4D19E77BBF007E0D22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main2.storyboard; sourceTree = "<group>"; };
 		52AF3D4F19E77BBF007E0D22 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		52AF3D5219E77BBF007E0D22 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		52AF3D5819E77BBF007E0D22 /* UPMarketplaceTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UPMarketplaceTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -365,6 +366,9 @@
 			children = (
 				52AF3D4C19E77BBF007E0D22 /* Main2.storyboard */,
 				525B898A1A18994400A7CB6D /* Sell */,
+				52AF3D4A19E77BBF007E0D22 /* ViewController.swift */,
+				5255EC0D1A0EE0DD007207C7 /* DefaultVC.swift */,
+				52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */,
 				52AF3D4A19E77BBF007E0D22 /* ViewController.swift */,
 				52AF3D4F19E77BBF007E0D22 /* Images.xcassets */,
 				52AF3D5119E77BBF007E0D22 /* LaunchScreen.xib */,
@@ -687,6 +691,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		52AF3D4C19E77BBF007E0D22 /* Main2.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				52AF3D4D19E77BBF007E0D22 /* Base */,
+			);
+			name = Main2.storyboard;
+			sourceTree = "<group>";
+		};
 		52AF3D5119E77BBF007E0D22 /* LaunchScreen.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
