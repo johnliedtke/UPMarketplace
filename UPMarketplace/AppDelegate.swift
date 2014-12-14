@@ -18,7 +18,42 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Parse initialization
         Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
             clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+      
+      UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
+      UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
+      
+      
+      // defaultACL.setPublicReadAccess(true)
+      //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+      
+      /* Tab Bar Appearance */
+      var tabBarController = self.window?.rootViewController as UITabBarController
+      var tabBar = tabBarController.tabBar
+      if let items = tabBar.items as? [UITabBarItem] {
+      
+        var sellTabBarItem = items[0]
+        sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+        sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
         
+      }
+      UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
+      UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      //UPMListing.registerSubclass()
+      //UPMOtherListing.registerSubclass()
+      //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
+      
+      
         // If you would like all objects to be private by default, remove this line.
        // var defaultACL = PFACL.ACL()
 //        defaultACL.setPublicReadAccess(true)
@@ -32,7 +67,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        application.registerUserNotificationSettings(settings)
 //        application.registerForRemoteNotifications()
-        
+      
         return true
     }
 
