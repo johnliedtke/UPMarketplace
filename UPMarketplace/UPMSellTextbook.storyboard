@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+    </dependencies>
+    <scenes>
+        <!--ISBN-->
+        <scene sceneID="tTJ-k0-BaY">
+            <objects>
+                <tableViewController storyboardIdentifier="SellTextbookDetailsISBN" title="ISBN" useStoryboardIdentifierAsRestorationIdentifier="YES" id="4BO-av-hbg" customClass="UPMSellTextbookDetailsISBNTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="dAh-p1-fYA">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <sections>
+                            <tableViewSection id="3ad-kb-Muy">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="85" id="LX3-vI-zaJ">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="LX3-vI-zaJ" id="ueP-j4-lcm">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="ISBN" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7i3-XX-s8G">
+                                                    <rect key="frame" x="18" y="13" width="564" height="21"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter ISBN" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Scu-03-kAY">
+                                                    <rect key="frame" x="18" y="39" width="564" height="30"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="4BO-av-hbg" id="A2M-1Q-vik"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailingMargin" secondItem="7i3-XX-s8G" secondAttribute="trailing" constant="10" id="2r5-2C-YLP"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="Scu-03-kAY" secondAttribute="trailing" constant="10" id="OKM-Vt-bxV"/>
+                                                <constraint firstItem="Scu-03-kAY" firstAttribute="leading" secondItem="ueP-j4-lcm" secondAttribute="leadingMargin" constant="10" id="U9Z-P4-nar"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="Scu-03-kAY" secondAttribute="bottom" constant="7.5" id="Vzw-fU-4AG"/>
+                                                <constraint firstItem="Scu-03-kAY" firstAttribute="top" secondItem="7i3-XX-s8G" secondAttribute="bottom" constant="5" id="WJU-9b-h1l"/>
+                                                <constraint firstItem="7i3-XX-s8G" firstAttribute="leading" secondItem="ueP-j4-lcm" secondAttribute="leadingMargin" constant="10" id="sKG-Eq-eOH"/>
+                                                <constraint firstItem="7i3-XX-s8G" firstAttribute="top" secondItem="ueP-j4-lcm" secondAttribute="topMargin" constant="5" id="tTq-0R-0su"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="4BO-av-hbg" id="L5I-iK-f98"/>
+                            <outlet property="delegate" destination="4BO-av-hbg" id="6sx-9d-pZK"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="iSBNField" destination="Scu-03-kAY" id="gst-Rn-DI2"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="fq8-7g-59c" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="415" y="153"/>
+        </scene>
+    </scenes>
+</document>

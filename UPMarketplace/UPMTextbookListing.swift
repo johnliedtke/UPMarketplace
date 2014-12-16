@@ -12,14 +12,13 @@ import UIKit
 public class UPMTextbookListing: UPMListing, PFSubclassing {
   
   // MARK: Properties
-  /// iSBN of the textbook being listed
-  @NSManaged public var iSBN: String?
+  /// Textbook associated with listing
+  @NSManaged public var textbook: UPMTextbook?
   
-  /// The course/class the textbook was used in, e.g. CS301
-  @NSManaged public var course: String?
-  
-  /// The professor who required the textbook
-  @NSManaged public var professor: String?
+  override init() {
+    super.init()
+    textbook = UPMTextbook()
+  }
   
   // MARK: PFSubclassing Methods
   /// The name of the PFObject subclass as it would appear

@@ -30,6 +30,5 @@ public class UPMOtherListing: UPMListing, PFSubclassing  {
   override public class func load() {
     self.registerSubclass()
   }
-  
-  
+
 }
