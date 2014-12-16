@@ -135,8 +135,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-    
-    
     let Section: CellSection = (CellSection(rawValue: indexPath.section))! as CellSection
     
       switch Section {

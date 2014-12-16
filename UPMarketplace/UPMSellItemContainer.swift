@@ -46,6 +46,22 @@ class UPMSellItemContainer {
     return nil
   }
   
+  /// Updates the an item given with a given title. Does nothing if item 
+  /// does not exist.
+  ///
+  /// :param: title Title of item to be updated
+  /// :param: description New description for item
+  /// :param: isComplete New isComplete status
+  func updateItemWithTitle(title: String, description: String, isComplete: Bool) {
+    var item = itemWithTitle(title)
+    if item == nil {
+      return;
+    } else {
+      item?.itemDescription = description
+      item?.isComplete = isComplete
+    }
+  }
+  
   func removeItemWithTitle(title: String) {
     for i in 0..<count {
       if itemAtIndex(i).title == title {
