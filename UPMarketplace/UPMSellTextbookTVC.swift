@@ -36,7 +36,7 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   }
   
   func didDetailsUpdate(details: String, isComplete: Bool) {
-    
+    requiredItems.updateItemWithTitle(RequiredItems.Details.rawValue, description: details, isComplete: isComplete)
   }
   
   override func pushDetailsVC() {

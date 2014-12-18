@@ -9,8 +9,9 @@
 import UIKit
 
 let SellTextbookDetailsISBNStoryboard = "SellTextbookDetailsISBN"
+let SellTextbookDetailsCourseStoryboard = "SellTextbookDetailsCourse"
 
-class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDelegate {
+class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDelegate, UPMSellTextbookDetailsCourseDelegate {
   // MARK: Properties
   var textbookListing: UPMTextbookListing = UPMTextbookListing()
   override var listing: UPMListing {
@@ -33,7 +34,8 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
   
   override func createRequiredItems() {
     func initializeRequiredItems() {
-      
+      didCourseUpdate(textbookListing.textbook?.course)
+      didCourseUpdate(textbookListing.textbook?.iSBN)
     }
     var iSBNItem = UPMSellItem(title: RequiredItem.ISBN.rawValue, description: "Select")
     var courseItem = UPMSellItem(title: RequiredItem.Course.rawValue, description: "Select")
@@ -50,22 +52,33 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
         iSBNVC.iSBN = iSBN
       }
       iSBNVC.delegate = self
-      navigationController?.pushViewController(iSBNVC, animated: true) 
+      navigationController?.pushViewController(iSBNVC, animated: true)
+    case RequiredItem.Course.rawValue:
+      var courseTVC = TextBookStoryboard.instantiateViewControllerWithIdentifier(SellTextbookDetailsCourseStoryboard) as UPMSellTextbookDetailsCourseTVC
+      if let course = textbookListing.textbook?.course {
+        courseTVC.course = course
+      }
+      courseTVC.delegate = self
+      navigationController?.pushViewController(courseTVC, animated: true)
     default:
       println("Default Select")
     }
   }
-
   
   // MARK: Delegate Methods
   
-  func didISBNUpdate(unformattedISBN: String) {
-    requiredItems.updateItemWithTitle(RequiredItem.ISBN.rawValue, description: unformattedISBN, isComplete: true)
-    textbookListing.textbook?.iSBN = unformattedISBN
+  func didISBNUpdate(unformattedISBN: String?) {
+    if let iSBN = unformattedISBN {
+      requiredItems.updateItemWithTitle(RequiredItem.ISBN.rawValue, description: iSBN, isComplete: true)
+      textbookListing.textbook?.iSBN = unformattedISBN
+    }
   }
-
-
   
-
+  func didCourseUpdate(course: String?) {
+    if let course = course {
+      requiredItems.updateItemWithTitle(RequiredItem.Course.rawValue, description: course, isComplete: true)
+      textbookListing.textbook?.course = course
+    }
+  }
   
 }

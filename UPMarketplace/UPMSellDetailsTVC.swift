@@ -13,7 +13,6 @@ protocol UPMSellDetailsTVCDelegate {
   func didDetailsUpdate(details: String, isComplete: Bool)
 }
 
-
 class UPMSellDetailsTVC: UITableViewController {
   let SellCellIdentifier = "UPMSellCell"
   

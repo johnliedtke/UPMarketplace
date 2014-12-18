@@ -48,7 +48,7 @@ class UPMSellOtherDetailsTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate
   override func didSelectItem(item: UPMSellItem) {
     switch item.title {
     case RequiredItem.Category.rawValue:
-      let Storyboard = UIStoryboard(name: "Main", bundle: nil)
+      let Storyboard = UIStoryboard(name: "SellMain", bundle: nil)
       var categoryVC = Storyboard.instantiateViewControllerWithIdentifier(OtherListingCategoryStoryboard) as UPMOtherListingCategoryTVC
       categoryVC.delegate = self
       navigationController?.pushViewController(categoryVC, animated: true)

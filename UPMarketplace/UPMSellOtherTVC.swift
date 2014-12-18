@@ -52,30 +52,21 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   }
   
   override func post() {
-    otherListng.saveInBackgroundWithBlock { (success: Bool, error: NSError!) -> Void in
-      if success {
-        var alertController = UIAlertController(title: "Success!", message: "Your listing has been posted.", preferredStyle: UIAlertControllerStyle.Alert)
-        let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: {
-          action in
-          self.navigationController?.popToRootViewControllerAnimated(true)
-          return
-          }
-        )
-        alertController.addAction(okayAction)
-        self.presentViewController(alertController, animated: true, completion: nil)
+    if requiredItems.isItemsComplete() {
+      otherListng.saveInBackgroundWithBlock { (success: Bool, error: NSError!) -> Void in
+        if success {
+          var alertController = UIAlertController(title: "Success!", message: "Your listing has been posted.", preferredStyle: UIAlertControllerStyle.Alert)
+          let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: {
+            action in
+            self.navigationController?.popToRootViewControllerAnimated(true)
+            return
+            }
+          )
+          alertController.addAction(okayAction)
+          self.presentViewController(alertController, animated: true, completion: nil)
+        }
       }
     }
   }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+  
 }
