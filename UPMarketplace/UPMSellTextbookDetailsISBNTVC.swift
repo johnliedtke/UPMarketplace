@@ -7,12 +7,12 @@ protocol UPMSellTextbookDetailsISBNDelegate {
   /// the navigation stack.
   ///
   /// :returns: An updated unformatted ISBN.
-  func didISBNUpdate(unformattedISBN: String)
+  func didISBNUpdate(unformattedISBN: String?)
 }
 
 /// Used to collect and update the ISBN of a UPMTextbook. Contains
 /// one textfield used to collect user-input of an ISBN.
-class UPMSellTextbookDetailsISBNTVC: UITableViewController, UITextFieldDelegate {
+class UPMSellTextbookDetailsISBNTVC: UITableViewController, UITextFieldDelegate, UPMSellCheckInput {
   
   // MARK: Properties
   /// Delegate controller to handle ISBN updates
@@ -26,11 +26,14 @@ class UPMSellTextbookDetailsISBNTVC: UITableViewController, UITextFieldDelegate 
   /// * Set before being pushed.
   var iSBN: String = ""
   
+  var alertController = UIAlertController(title: "Error", message: "Problem", preferredStyle: UIAlertControllerStyle.Alert)
+  
+  
   // MARK: Methods
   override func viewDidLoad() {
     super.viewDidLoad()
     addDoneButtonToNavigationItemWithSelector("didPressDoneButton:")
-    addCancelButtontToNavigationItemWithSelector("didPressDoneButton:")
+    addCancelButtontToNavigationItemWithSelector("didPressCancelButton:")
     tableView.backgroundColor = UIColor.standardBackgroundColor()
     iSBNField.becomeFirstResponder()
     iSBNField.text = iSBN
@@ -48,15 +51,27 @@ class UPMSellTextbookDetailsISBNTVC: UITableViewController, UITextFieldDelegate 
     navigationController?.popViewControllerAnimated(true)
   }
   
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-  }
-  
   // MARK: Delegate Methods
   func textFieldDidEndEditing(textField: UITextField) {
     if textField == iSBNField {
       iSBN = textField.text
     }
   }
+  
+  // TODO: Validation
+  
+  func alertIfInputError() -> Bool {
+    return true;
+  }
+  
+  func validateInput() -> String {
+    return ""
+  }
+  
+  func addActionItemsToAlertController() {
+    
+  }
+  
+  
 
 }

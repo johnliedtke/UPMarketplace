@@ -10,11 +10,19 @@ import UIKit
 import SellUI
 
 class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate {
+  
+  // MARK: - Constants
   let SellCellIdentifier = "UPMSellCell"
   let SellTitleCelIdentifier = "UPMSellTitleCell"
- 
+  
+  // MARK: - Properties
+  /// Container for all required items (attributes) of a listing.
   var requiredItems = UPMSellItemContainer()
+  
+  /// Container for optional items (attributes) of a listing.
   var optionalItems = UPMSellItemContainer()
+  
+  /// Listing to be posted. Should be overriden and return subclass.
   var listing: UPMListing?
   
   enum CellSection: Int {
@@ -35,13 +43,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     case Tags = "Tags"
   }
   
-  func post() {
-    if  requiredItems.isItemsComplete() {
-      println("Complete")
-    } else {
-      println("Not complete!!!")
-    }
-  }
+  // MARK: - Methods
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -68,24 +70,43 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
 
   }
   
+  /// Calls post() if required items are complete. Otherwise displays
+  /// an alert view with missing items.
+  func postIfComplete() {
+    if requiredItems.isItemsComplete() {
+      post()
+    } else {
+      var alertController = UIAlertController(title: "Error", message: requiredItems.missingDescription(), preferredStyle: UIAlertControllerStyle.Alert)
+      var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+      alertController.addAction(okayAction);
+      presentViewController(alertController, animated: true, completion: nil)
+    }
+  }
+  
+  /// Should be overriden to post specific listing to parse
+  func post() {
+    if  requiredItems.isItemsComplete() {
+      println("Complete")
+    } else {
+      println("Not complete!!!")
+    }
+  }
+  
+  /// Called when post button is pushed
+  func didPressPostButton(sender: AnyObject) {
+    postIfComplete()
+  }
+  
   func didPressCancelButton(sender: AnyObject) {
     self.navigationController?.popToRootViewControllerAnimated(true)
   }
-  
-  func didPressPostButton(sender: AnyObject) {
-    post()
-  }
-  
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-  }
-  
+
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     tableView.reloadData()
-    
-}
+  }
   
+  /// Creates default required items
   func createRequiredItems() {
     // Required
     var titleItem = UPMSellItem(title: RequiredItems.Title.rawValue, description: "Write")
@@ -169,10 +190,8 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       return UITableViewAutomaticDimension
     }
   }
-  
-  /*
-  * Delegate Methods
-  */
+
+  // MARK: - Delegate Methods
   func descriptionUpdated(description: String)  {
     var descriptionItem = requiredItems.itemWithTitle(RequiredItems.Description.rawValue)
     if description != "" {
@@ -220,7 +239,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   
   func didSelectItemAtIndexPath(indexPath: NSIndexPath) {
     let Section: CellSection = (CellSection(rawValue: indexPath.section))! as CellSection
-    
     
     switch Section {
     case CellSection.Required:

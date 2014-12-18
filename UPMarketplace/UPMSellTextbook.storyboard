@@ -63,5 +63,64 @@
             </objects>
             <point key="canvasLocation" x="415" y="153"/>
         </scene>
+        <!--Course-->
+        <scene sceneID="A8Y-oL-4ga">
+            <objects>
+                <tableViewController storyboardIdentifier="SellTextbookDetailsCourse" title="Course" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vV7-U9-GnA" customClass="UPMSellTextbookDetailsCourseTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="M2a-ef-ds1">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <color key="sectionIndexBackgroundColor" red="0.90196078430000004" green="0.90196078430000004" blue="0.90196078430000004" alpha="1" colorSpace="calibratedRGB"/>
+                        <sections>
+                            <tableViewSection id="oOK-0e-URA">
+                                <cells>
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="85" id="bOd-Ee-ebX">
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bOd-Ee-ebX" id="eBL-FN-xji">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter Course:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dgY-zT-y1T">
+                                                    <rect key="frame" x="18" y="13" width="564" height="20.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="e.g. CS301" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="vfF-5E-yUE">
+                                                    <rect key="frame" x="18" y="38.5" width="564" height="30.5"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="allCharacters" autocorrectionType="no" spellCheckingType="no" returnKeyType="done"/>
+                                                    <connections>
+                                                        <outlet property="delegate" destination="vV7-U9-GnA" id="5MC-nW-0iq"/>
+                                                    </connections>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="vfF-5E-yUE" firstAttribute="leading" secondItem="eBL-FN-xji" secondAttribute="leadingMargin" constant="10" id="7FS-Qo-npd"/>
+                                                <constraint firstItem="dgY-zT-y1T" firstAttribute="top" secondItem="eBL-FN-xji" secondAttribute="topMargin" constant="5" id="Fvt-aR-7zo"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="dgY-zT-y1T" secondAttribute="trailing" constant="10" id="Meo-3c-05s"/>
+                                                <constraint firstAttribute="bottomMargin" secondItem="vfF-5E-yUE" secondAttribute="bottom" constant="7.5" id="Zhd-xb-FX8"/>
+                                                <constraint firstItem="dgY-zT-y1T" firstAttribute="leading" secondItem="eBL-FN-xji" secondAttribute="leadingMargin" constant="10" id="gMw-hj-vge"/>
+                                                <constraint firstItem="vfF-5E-yUE" firstAttribute="top" secondItem="dgY-zT-y1T" secondAttribute="bottom" constant="5" id="sFu-i6-hea"/>
+                                                <constraint firstAttribute="trailingMargin" secondItem="vfF-5E-yUE" secondAttribute="trailing" constant="10" id="x4u-oV-1We"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
+                        <connections>
+                            <outlet property="dataSource" destination="vV7-U9-GnA" id="Z9x-Eu-e7x"/>
+                            <outlet property="delegate" destination="vV7-U9-GnA" id="zxk-1b-oD4"/>
+                        </connections>
+                    </tableView>
+                    <connections>
+                        <outlet property="courseField" destination="vfF-5E-yUE" id="UNQ-9L-HKk"/>
+                    </connections>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dj3-hN-avf" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1041" y="153"/>
+        </scene>
     </scenes>
 </document>

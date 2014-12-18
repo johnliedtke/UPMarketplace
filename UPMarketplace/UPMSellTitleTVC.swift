@@ -17,10 +17,6 @@ class UPMSellTitleTVC: UITableViewController, UITextViewDelegate {
   var titleS = ""
   @IBOutlet var titleTextView: UITextView!
   
-  
-  
-  
-  
   override func viewDidLoad() {
     super.viewDidLoad()
     titleTextView.textContainerInset = UIEdgeInsetsZero
@@ -48,11 +44,6 @@ class UPMSellTitleTVC: UITableViewController, UITextViewDelegate {
     navigationController?.popViewControllerAnimated(true)
     
   }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
 
 
 }

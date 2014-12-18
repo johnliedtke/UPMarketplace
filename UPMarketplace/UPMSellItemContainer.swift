@@ -80,12 +80,29 @@ class UPMSellItemContainer {
     return true
   }
   
+  /// Creates a description of all items in container
   func description() -> String {
     var d = ""
     for item in items {
-      d += "\(item.title): \(item.itemDescription)\n"
+      if item.isComplete {
+        d += "\(item.title): \(item.itemDescription)\n"
+      } else {
+        d += "\(item.title): Missing\n"
+      }
     }
     return d == "" ? "Select" : d.substringToIndex(advance(d.startIndex, countElements(d)-1))
   }
+  
+  /// Creates a description of missing items 
+  func missingDescription() -> String {
+    var d = ""
+    for item in items {
+      if item.isComplete == false {
+        d += "\(item.title): Missing\n"
+      }
+    }
+    return d.substringToIndex(advance(d.startIndex, countElements(d)-1))
+  }
+
 
 }
