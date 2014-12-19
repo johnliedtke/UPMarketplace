@@ -12,7 +12,7 @@ let SellTextbookDetailsISBNStoryboard = "SellTextbookDetailsISBN"
 let SellTextbookDetailsCourseStoryboard = "SellTextbookDetailsCourse"
 
 class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDelegate, UPMSellTextbookDetailsCourseDelegate {
-  // MARK: Properties
+  // MARK: - Properties
   var textbookListing: UPMTextbookListing = UPMTextbookListing()
   override var listing: UPMListing {
     get {
@@ -30,7 +30,7 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
     case Course = "Course"
   }
   
-  // MARK: Methods
+  // MARK: - Methods
   
   override func createRequiredItems() {
     func initializeRequiredItems() {
@@ -65,7 +65,7 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
     }
   }
   
-  // MARK: Delegate Methods
+  // MARK: - Delegate Methods
   
   func didISBNUpdate(unformattedISBN: String?) {
     if let iSBN = unformattedISBN {

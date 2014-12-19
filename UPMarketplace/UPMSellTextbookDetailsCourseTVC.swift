@@ -1,12 +1,3 @@
-//
-//  UPMSellTextbookDetailsCourceTVC.swift
-//  UPMarketplace
-//
-//  Created by John Liedtke on 12/18/14.
-//  Copyright (c) 2014 UP Marketplace. All rights reserved.
-//
-
-
 import UIKit
 
 /// Used to communicate changes to a textbook's course
