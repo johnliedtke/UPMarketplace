@@ -29,11 +29,6 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     // Do any additional setup after loading the view.
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-  
   override func pushDetailsVC() {
     var detailsVC = UPMSellOtherDetailsTVC()
     detailsVC.listing = listing

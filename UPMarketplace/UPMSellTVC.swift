@@ -149,12 +149,14 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
           self.navigationController?.popViewControllerAnimated(true)
           return
       }
+    } else {
+      alertIfMissingRequiredItems()
     }
   }
   
   /// Displays an alert if required items are not complete.
   func alertIfMissingRequiredItems() {
-    if requiredItems.isItemsComplete() {
+    if !requiredItems.isItemsComplete() {
       var alertController = UIAlertController(title: "Error", message: requiredItems.missingDescription(), preferredStyle: UIAlertControllerStyle.Alert)
       var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
       alertController.addAction(okayAction);
