@@ -15,6 +15,7 @@ protocol UPMSellPriceFormatDelegate {
 
 let MAX_LENGTH = 8
 
+/// Used to collect user-input for the price of a UPMListing.
 class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
   
   var delegate: UPMSellPriceFormatDelegate?
@@ -53,7 +54,6 @@ class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
     }
     
     priceField.becomeFirstResponder()
-    
     var numberFormatter = NSNumberFormatter()
     numberFormatter.numberStyle = NSNumberFormatterStyle.CurrencyStyle
     numberFormatter.currencyCode = "USD"
@@ -141,6 +141,8 @@ class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
     tableView.reloadData()
     if oBOSwitch.on {
       limitField.becomeFirstResponder()
+    } else {
+      priceField.becomeFirstResponder()
     }
   }
     // MARK: - Table view data source

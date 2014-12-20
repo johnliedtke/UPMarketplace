@@ -6,10 +6,12 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
+/// ABSTRACT
+
 import UIKit
 import SellUI
 
-class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate {
+class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate, MBProgressHUDDelegate {
   
   // MARK: - Constants
   let SellCellIdentifier = "UPMSellCell"
@@ -25,6 +27,9 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   /// Listing to be posted. Should be overriden and return subclass.
   var listing: UPMListing?
   
+  /// Displays status when posting
+  var progresHUD: MBProgressHUD
+  
   enum CellSection: Int {
     case Title = 0, Required , Optional;
     static let allValues = [Title, Required, Optional]
@@ -36,7 +41,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     case Description = "Description"
     case PriceFormat = "Price Format"
     case Details = "Details"
-    static let allValues = [Photos,Description, PriceFormat, Details]
+    static let allValues = [Photos, Description, PriceFormat, Details]
   }
   
   enum OptionalItems: String {
@@ -44,10 +49,27 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   }
   
   // MARK: - Methods
+  override init() {
+      progresHUD = MBProgressHUD()
+      super.init()
+  }
+
+  required init(coder aDecoder: NSCoder) {
+    progresHUD = MBProgressHUD()
+    super.init(coder: aDecoder)
+  }
+  
+  func setupProgressHUD() {
+    progresHUD = MBProgressHUD(view: self.navigationController?.view)
+    progresHUD.delegate = self
+    progresHUD.labelText = "Posting..."
+  }
+  
 
   override func viewDidLoad() {
     super.viewDidLoad()
     listing = UPMOtherListing()
+    setupProgressHUD()
     tableView.estimatedRowHeight = 60
     tableView = UITableView(frame: tableView.frame, style: UITableViewStyle.Grouped)
     tableView.backgroundColor = UIColor.standardBackgroundColor()
@@ -70,32 +92,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
 
   }
   
-  /// Calls post() if required items are complete. Otherwise displays
-  /// an alert view with missing items.
-  func postIfComplete() {
-    if requiredItems.isItemsComplete() {
-      post()
-    } else {
-      var alertController = UIAlertController(title: "Error", message: requiredItems.missingDescription(), preferredStyle: UIAlertControllerStyle.Alert)
-      var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
-      alertController.addAction(okayAction);
-      presentViewController(alertController, animated: true, completion: nil)
-    }
-  }
-  
-  /// Should be overriden to post specific listing to parse
-  func post() {
-    if  requiredItems.isItemsComplete() {
-      println("Complete")
-    } else {
-      println("Not complete!!!")
-    }
-  }
-  
-  /// Called when post button is pushed
-  func didPressPostButton(sender: AnyObject) {
-    postIfComplete()
-  }
+ 
   
   func didPressCancelButton(sender: AnyObject) {
     self.navigationController?.popToRootViewControllerAnimated(true)
@@ -120,6 +117,62 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   func createOptionalItems() {
     var tagsItem = UPMSellItem(title: OptionalItems.Tags.rawValue, description: "Select")
     optionalItems.addItems([tagsItem])
+  }
+  
+  
+  // MARK: - Posting Methods
+  
+  /// Calls post() if required items are complete. Otherwise displays
+  /// an alert view with missing items.
+  func postIfComplete() {
+    if requiredItems.isItemsComplete() {
+      post()
+    } else {
+      alertIfMissingRequiredItems()
+    }
+  }
+  
+  /// Checks if required items are complete and alerts if there are missing items.
+  /// Displays progress HUD while executing post().
+  ///
+  /// * Assumes post() is using the main thread and not running in background.
+  /// * When complete, pops the controller from navigation stack.
+  func postWithProgressHUD() {
+    if requiredItems.isItemsComplete() {
+      navigationController?.view.addSubview(progresHUD)
+      progresHUD.showAnimated(true, whileExecutingBlock: { () -> Void in
+        self.post()
+        self.progresHUD.labelText = "Success"
+        sleep(1)
+        return
+        }) { () -> Void in
+          self.navigationController?.popViewControllerAnimated(true)
+          return
+      }
+    } else {
+      alertIfMissingRequiredItems()
+    }
+  }
+  
+  /// Displays an alert if required items are not complete.
+  func alertIfMissingRequiredItems() {
+    if !requiredItems.isItemsComplete() {
+      var alertController = UIAlertController(title: "Error", message: requiredItems.missingDescription(), preferredStyle: UIAlertControllerStyle.Alert)
+      var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+      alertController.addAction(okayAction);
+      presentViewController(alertController, animated: true, completion: nil)
+    }
+  }
+  
+  /// Saves the listing to parse. If overriden, other post methods
+  /// may need to be overriden as well.
+  func post() {
+    listing?.save()
+  }
+  
+  /// Calls postWithProgressHUD() when done button is pressed
+  func didPressPostButton(sender: AnyObject) {
+    postWithProgressHUD()
   }
 
   // MARK: - Table view data source

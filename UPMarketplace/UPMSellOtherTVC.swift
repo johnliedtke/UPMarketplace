@@ -29,11 +29,6 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     // Do any additional setup after loading the view.
   }
 
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    // Dispose of any resources that can be recreated.
-  }
-  
   override func pushDetailsVC() {
     var detailsVC = UPMSellOtherDetailsTVC()
     detailsVC.listing = listing
@@ -42,30 +37,10 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   }
   
   func didDetailsUpdate(details: String, isComplete: Bool) {
-
     if isComplete {
       let detailsItem = requiredItems.itemWithTitle(RequiredItems.Details.rawValue)
       detailsItem?.isComplete = isComplete
       detailsItem?.itemDescription = details
-    }
-
-  }
-  
-  override func post() {
-    if requiredItems.isItemsComplete() {
-      otherListng.saveInBackgroundWithBlock { (success: Bool, error: NSError!) -> Void in
-        if success {
-          var alertController = UIAlertController(title: "Success!", message: "Your listing has been posted.", preferredStyle: UIAlertControllerStyle.Alert)
-          let okayAction = UIAlertAction(title: "Okay", style: .Default, handler: {
-            action in
-            self.navigationController?.popToRootViewControllerAnimated(true)
-            return
-            }
-          )
-          alertController.addAction(okayAction)
-          self.presentViewController(alertController, animated: true, completion: nil)
-        }
-      }
     }
   }
   
