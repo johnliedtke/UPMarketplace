@@ -14,52 +14,72 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
 
 
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Parse initialization
-        Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
-            clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+  func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+    // Parse initialization
+    Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
+        clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+    
+    /**
+    Tab Bar Navigation
+    Create the entire navigation for the application.
+    - New Listings
+    - Buy
+    - iWant
+    - Sell
+    - Account
+    */
+    var tabBarController = self.window?.rootViewController as UITabBarController
+    var tabBar = tabBarController.tabBar
+    if let items = tabBar.items as? [UITabBarItem] {
       
-      UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
-      UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
+      // New Listings
       
+      // Buy
       
-      // defaultACL.setPublicReadAccess(true)
-      //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+      // iWant
       
-      /* Tab Bar Appearance */
-      var tabBarController = self.window?.rootViewController as UITabBarController
-      var tabBar = tabBarController.tabBar
-      if let items = tabBar.items as? [UITabBarItem] {
+      // Sell
+      var sellTabBarItem = items[0]
+      sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+      sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
       
-        var sellTabBarItem = items[0]
-        sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-        
-      }
-      UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
-      UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
+      // Account
       
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      
-      //UPMListing.registerSubclass()
-      //UPMOtherListing.registerSubclass()
-      //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
-      
-      
-        // If you would like all objects to be private by default, remove this line.
+    }
+    
+    // Global apperances
+    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
+    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
+    UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
+    UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
+
+    
+    
+    /**
+    Parse Stuff
+    */
+    
+    // defaultACL.setPublicReadAccess(true)
+    //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+    
+    
+    
+    
+    
+    
+    
+    
+    //UPMListing.registerSubclass()
+    //UPMOtherListing.registerSubclass()
+    //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
+    
+    
+      // If you would like all objects to be private by default, remove this line.
 //        var defaultACL = PFACL.def
-  //      defaultACL.setPublicReadAccess(true)
-    //    PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
-        
-        // Parse Push Notifications
+//      defaultACL.setPublicReadAccess(true)
+  //    PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
+      
+      // Parse Push Notifications
 //        var userNotificationTypes: UIUserNotificationType = (UIUserNotificationType.Alert |
 //            UIUserNotificationType.Badge |
 //            UIUserNotificationType.Sound)
@@ -67,9 +87,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        
 //        application.registerUserNotificationSettings(settings)
 //        application.registerForRemoteNotifications()
-      
-        return true
-    }
+    
+      return true
+  }
 
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
