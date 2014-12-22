@@ -9,7 +9,11 @@
 import Foundation
 import UIKit
 
-
+/**
+Extra colors for the application. Defined are the standard colors the 
+application will use throughtout the app. All are class methods that can
+be accessed via the UIColor class. e.g. UIColor.flatLightGrayColor()
+*/
 extension UIColor {
     
   convenience init(red: Int, green: Int, blue: Int) {
@@ -24,8 +28,9 @@ extension UIColor {
     self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
   }
   
+  /// Background color of basically every view.
   class func standardBackgroundColor() -> UIColor {
-    var standardBackgroundColor = UIColor(red: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 1.0)
+    var standardBackgroundColor = UIColor(red: 240.0/255.0, green: 240.0/255.0, blue: 240.0/255.0, alpha: 1.0)
     return standardBackgroundColor
   }
 

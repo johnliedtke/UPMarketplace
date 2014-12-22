@@ -28,7 +28,7 @@ public class UPMListing: PFObject  {
   @NSManaged public var price: Double
   
   /// Indicator for Or Best Offer (OBO)
-  @NSManaged public var oBO: Bool
+  @NSManaged public var oBO: ObjCBool
   
   /// Auto-reject limit for OBO
   ///
@@ -40,5 +40,10 @@ public class UPMListing: PFObject  {
   
   /// Returns the image for a listing
   var photo: UIImage?
+  
+  /// Displays the price in human-readable form, e.g. $50.00
+  func displayPrice() -> String {
+    return String(format: "$%.2f", price)
+  }
   
 }

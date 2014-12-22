@@ -28,8 +28,6 @@ extension UIViewController {
       return 0
     }
   }
-  
-  
 }
 
 extension String {

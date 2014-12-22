@@ -33,7 +33,7 @@ extension UPMSellTVC {
     priceFormatVC.delegate = self
     priceFormatVC.price = (listing?.price)!
     priceFormatVC.limit = (listing?.limit)!
-    priceFormatVC.oBO = (listing?.oBO)!
+    priceFormatVC.oBO = ((listing?.oBO)?.boolValue)!
 
     navigationController?.pushViewController(priceFormatVC, animated: true)
   }

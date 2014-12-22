@@ -15,7 +15,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   var isLoading: Bool = false
   
   /// Should objects be seperated into pages, that load automatically.
-  var paginationEnabled: Bool = false
+  var paginationEnabled: Bool = true
   
   /// All of the currenlty fetched objects.
   var objects: [PFObject] = [PFObject]()
@@ -100,7 +100,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   }
   
   /**
-  Must override to provide to a UICollectionViewCel
+  Must override to provide to a UICollectionViewCell
   
   :param: indexPath The indexPath the cell will be displayed at
   :param: collectionView The collection view requesting the cell.

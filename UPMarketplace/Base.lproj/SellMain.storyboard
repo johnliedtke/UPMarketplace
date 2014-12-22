@@ -1,10 +1,26 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="WVm-kC-ge1">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="n0v-Cu-473">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="Cv3-d8-bZm">
+            <objects>
+                <navigationController id="n0v-Cu-473" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="PFn-OZ-7jR">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="oAt-HX-Vfm" kind="relationship" relationship="rootViewController" id="TDW-5V-7zV"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="HHW-YK-tkB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-376" y="668"/>
+        </scene>
         <!--Sell-->
         <scene sceneID="vGK-b2-Ua3">
             <objects>
@@ -145,41 +161,6 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Q8W-uA-Wuk" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1025" y="668"/>
-        </scene>
-        <!--Tab Bar Controller-->
-        <scene sceneID="agd-zv-bF9">
-            <objects>
-                <tabBarController id="WVm-kC-ge1" sceneMemberID="viewController">
-                    <nil key="simulatedBottomBarMetrics"/>
-                    <tabBar key="tabBar" contentMode="scaleToFill" id="y9d-0r-jtc">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="49"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    </tabBar>
-                    <connections>
-                        <segue destination="DeN-Z3-cXn" kind="relationship" relationship="viewControllers" id="JEl-Yv-6id"/>
-                    </connections>
-                </tabBarController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="7fD-aQ-QIV" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-1155" y="690"/>
-        </scene>
-        <!--Sell-->
-        <scene sceneID="xtU-Fr-jh6">
-            <objects>
-                <navigationController id="DeN-Z3-cXn" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Sell" id="iT5-dE-OzZ"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="mqC-Mo-XUM">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="oAt-HX-Vfm" kind="relationship" relationship="rootViewController" id="ZAl-K6-ipA"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ejQ-n6-7xS" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="-354" y="668"/>
         </scene>
         <!--Sell-->
         <scene sceneID="bZg-9U-kF3">

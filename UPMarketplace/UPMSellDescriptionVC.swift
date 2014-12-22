@@ -20,7 +20,8 @@ class UPMSellDescriptionVC: UIViewController, UITextViewDelegate {
   var descriptionS = ""
   var delegate: UPMSellDescriptionDelegate?
   var errorAlertController = UIAlertController(title: "Error", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-  
+
+
   override func viewDidLoad() {
     super.viewDidLoad()
     descriptionTextView.text = descriptionS

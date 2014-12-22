@@ -261,7 +261,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     } else {
       listing?.limit = 0.00
     }
-    listing?.oBO = oBo
+    listing?.oBO = ObjCBool(oBo)
     
     var priceFormatItem = requiredItems.itemWithTitle(RequiredItems.PriceFormat.rawValue)
     var descriptionString = ""

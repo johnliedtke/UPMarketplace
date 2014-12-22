@@ -17,7 +17,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Parse initialization
     Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
-        clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+      clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+    
+    
+    // Global apperances
+    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
+    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
+    UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
+    UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
     
     /**
     Tab Bar Navigation
@@ -28,32 +35,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     - Sell
     - Account
     */
-    var tabBarController = self.window?.rootViewController as UITabBarController
-    var tabBar = tabBarController.tabBar
-    if let items = tabBar.items as? [UITabBarItem] {
-      
-      // New Listings
-      
-      // Buy
-      
-      // iWant
-      
-      // Sell
-      var sellTabBarItem = items[0]
-      sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-      sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-      
-      // Account
-      
-    }
+    var controllers = [UIViewController]()
     
-    // Global apperances
-    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
-    UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
-    UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
-    UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
+    // Buy
+    let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)
+    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as UINavigationController
+    controllers.append(buyNewListingsVC)
+    
+    // Sell
+    let SellStoryboard = UIStoryboard(name: Constants.SellStoryboard.MainStoryboard, bundle: nil)
+    var sellVC = SellStoryboard.instantiateInitialViewController() as UINavigationController
+    controllers.append(sellVC)
+    var sellTabBarItem = sellVC.tabBarItem
+    sellTabBarItem.title = "Sell"
+    sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    
 
+    var mainTabBarController = UITabBarController()
+    mainTabBarController.viewControllers = controllers
     
+    window?.rootViewController = mainTabBarController
     
     /**
     Parse Stuff
