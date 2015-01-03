@@ -8,11 +8,18 @@
 
 import UIKit
 
+/**
+ The UPMHousingListing class is a subclass of UPMListing used to
+ display listings related to housing on the UPMarketplace.
+*/
+
+//TODO: Implement class
 public class UPMHousingListing: UPMListing, PFSubclassing {
   
-  // MARK: Properties
+  // MARK: - Public Properties
   
-  // MARK: PFSubclassing Methods
+  // MARK: - PFSubclassing Methods
+  
   /// The name of the PFObject subclass as it would appear
   /// in the data browser.
   ///

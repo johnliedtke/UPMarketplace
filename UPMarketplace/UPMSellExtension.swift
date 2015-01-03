@@ -14,6 +14,10 @@ let SellTitleStoryboard = "SellTitle"
 let SellStoryboard = "UPMSell"
 let SellImagePickerStoryboard = "SellImagePicker"
 
+/**
+  Abstracts part of the UPMSellTVC. This extension handles pushing the default 
+  view controllers for collection user-input.
+*/
 extension UPMSellTVC {
   
   func pushDescriptionVC() {

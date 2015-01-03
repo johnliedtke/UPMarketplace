@@ -6,18 +6,19 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 import UIKit
+/**
+ Abstract class that provides the base for all
+ marketplace listings. Must be subclassed. Steps to properly subclass:
 
-/// Abstract class that provides the base for all
-/// marketplace listings. Must be subclassed. Steps to properly subclass:
-///
-/// 1. Adopt the PFSubclassing protocol
-/// 2. Fullfill required methods parseClassName()
-/// 3. Register subclass with Parse by overridng load() and calling
-///    self.registerSubclass()
-///
+ 1. Adopt the PFSubclassing protocol
+ 2. Fullfill required methods parseClassName()
+ 3. Register subclass with Parse by overridng load() and calling
+    self.registerSubclass()
+*/
 public class UPMListing: PFObject  {
   
   // MARK: Properties
+  
   /// Title of the listing
   @NSManaged public var title: String
   

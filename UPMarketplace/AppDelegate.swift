@@ -11,8 +11,7 @@ import UIKit
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
-    var window: UIWindow?
-
+  var window: UIWindow?
 
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Parse initialization
@@ -51,6 +50,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     sellTabBarItem.image = UIImage(named: "sell.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     sellTabBarItem.selectedImage = UIImage(named: "sellSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     
+    // test barcode
+    var navigationController = UINavigationController()
+    var barcodeScanner = UPMBarcodeScanner(nibName: "UPMBarcodeScanner", bundle: nil)
+    navigationController.viewControllers = [barcodeScanner]
+    controllers.append(navigationController)
 
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
@@ -63,13 +67,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // defaultACL.setPublicReadAccess(true)
     //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
-    
-    
-    
-    
-    
-    
-    
     
     //UPMListing.registerSubclass()
     //UPMOtherListing.registerSubclass()

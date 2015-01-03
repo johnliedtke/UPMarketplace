@@ -8,6 +8,11 @@
 
 import UIKit
 
+//TODO: Implement the class...
+
+/**
+  The UPMBuyOtherGridCVC displays all UPMOtherListing currently on Parse.
+*/
 class UPMBuyOtherGridCVC: UPMBuyGridCVC {
 
     override func viewDidLoad() {
@@ -22,14 +27,6 @@ class UPMBuyOtherGridCVC: UPMBuyGridCVC {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  
 
 }

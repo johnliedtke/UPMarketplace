@@ -8,16 +8,19 @@
 import UIKit
 import Foundation
 
-/// A UPMOtherListing is the basic object for listing anything that is
-/// not a housing or textbook listing. OtherListings are categorized
-/// by the category propety.
+/**
+ A UPMOtherListing is the basic object for listing anything that is
+ not a housing or textbook listing. OtherListings are categorized
+ by the category propety. It is a subclass of UPMListing.
+*/
 public class UPMOtherListing: UPMListing, PFSubclassing  {
   
-  // MARK: Properties
-  /// Category for filtering other listings
+  // MARK: - Public Properties
+  
+  /// Category for filtering the different other listings.
   @NSManaged public var category: String?
   
-  // MARK: PFSubclassing Methods
+  // MARK: -  PFSubclassing Methods
   /// The name of the PFObject subclass as it would appear
   /// in the data browser.
   ///

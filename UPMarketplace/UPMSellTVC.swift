@@ -6,11 +6,21 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-/// ABSTRACT
-
 import UIKit
 import SellUI
 
+/**
+  The UPMSellTVC is an abstract class used to post UPMListings to the marketplace. It gathers
+  user-input through various controllers. It provides the following base controllers for gathering
+  input:
+    - UPMSellPriceFormatTVC, the price for a listing.
+    - UPMSellDescriptionVC, :description of a listing.
+    - UPMSellTitleTVC, the :title: of a listing.
+    - UPMSellImagePickerVC, the :picture: of a listing.
+  The delegatge methods of each of these controllers are implemented by this class. These can easily
+  be removed by modifying the requiredItems container. Additional attributes can either be added in 
+  the requiredItems and  optionalItems container or through the UPMSellDetailsTVC.
+*/
 class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate, MBProgressHUDDelegate {
   
   // MARK: - Constants
@@ -35,6 +45,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     static let allValues = [Title, Required, Optional]
   }
 
+  /// Default requiredItems
   enum RequiredItems: String {
     case Title = "Title"
     case Photos = "Photos"
@@ -48,23 +59,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     case Tags = "Tags"
   }
   
-  // MARK: - Methods
-  override init() {
-      progresHUD = MBProgressHUD()
-      super.init()
-  }
-
-  required init(coder aDecoder: NSCoder) {
-    progresHUD = MBProgressHUD()
-    super.init(coder: aDecoder)
-  }
-  
-  func setupProgressHUD() {
-    progresHUD = MBProgressHUD(view: self.navigationController?.view)
-    progresHUD.delegate = self
-    progresHUD.labelText = "Posting..."
-  }
-  
+  // MARK: - Public  Methods
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -103,7 +98,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     tableView.reloadData()
   }
   
-  /// Creates default required items
+  /// Creates default required items, can be overriden to provide custom required items.
   func createRequiredItems() {
     // Required
     var titleItem = UPMSellItem(title: RequiredItems.Title.rawValue, description: "Write")
@@ -114,10 +109,30 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     requiredItems.addItems([titleItem, photoItem, priceFormatItem, detailsItem, descriptionItem])
   }
   
+  /// Creates the default optional items, can be overriden to provide custom optional items.
   func createOptionalItems() {
+    //TODO: Implement a tags controller
     var tagsItem = UPMSellItem(title: OptionalItems.Tags.rawValue, description: "Select")
     optionalItems.addItems([tagsItem])
   }
+  
+  // MARK: Private Methods
+  override init() {
+    progresHUD = MBProgressHUD()
+    super.init()
+  }
+  
+  required init(coder aDecoder: NSCoder) {
+    progresHUD = MBProgressHUD()
+    super.init(coder: aDecoder)
+  }
+  
+  private func setupProgressHUD() {
+    progresHUD = MBProgressHUD(view: self.navigationController?.view)
+    progresHUD.delegate = self
+    progresHUD.labelText = "Posting..."
+  }
+
   
   
   // MARK: - Posting Methods
@@ -181,6 +196,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     return CellSection.allValues.count
   }
 
+  //TODO: Make it possible to remove title/image cell
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let Section = CellSection(rawValue: section)
     
@@ -306,6 +322,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         
       case RequiredItems.Description.rawValue:
         pushDescriptionVC()
+        
       case RequiredItems.Photos.rawValue:
         pushImagePickerVC()
         
@@ -313,14 +330,12 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         pushDetailsVC()
         
       default:
-        NSLog("meow")
+        NSLog("")
       }
       
     default:
-      NSLog("meow")
+      NSLog("")
     }
-
-    
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

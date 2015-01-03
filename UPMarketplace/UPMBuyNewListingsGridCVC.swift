@@ -8,6 +8,11 @@
 
 import UIKit
 
+/**
+  The UPMBuyNewListingsGridCVC displays the most recent UPMListings that have
+  been posted in the marketplace. These include UPMTextbookListing, UPMOtherListing,
+  and UPMHousingListing.
+*/
 class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
   
@@ -19,6 +24,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   override func changeDefaults() {
   }
   
+  //TODO: Change query to retrieve the three major UPMListing types.
   override func query() -> PFQuery {
     var listingQuery = PFQuery(className: "UPMOtherListing")
     listingQuery.orderByDescending("createdAt")

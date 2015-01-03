@@ -9,11 +9,11 @@
 import UIKit
 
 /**
-The basic template for browsing UPMListing's in the marketplace. This controller displays 
-listings in a grid format. Aproximately 4.2 listings will be visible on the screen.To work 
-property one should override the following methods.
-  - parseListingClassName()
-  - query() if special query 
+  The basic template for browsing UPMListing's in the marketplace. This controller displays
+  listings in a grid format. It is a subclass of UPMPFObjectCVC. Aproximately 4.2 listings
+  will be visible on the screen.To work property one should override the following methods:
+    - query() to provide a specific query.
+    - changeDefaults() If the default behavior of UPMPFObjectCVC should be changed.
 
 */
 class UPMBuyGridCVC: UPMPFObjectCVC {
@@ -29,35 +29,48 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
   }
   
   // MARK: - Public Methods
+  
   /// Override to provide the UPMListing subclass name for a PFQuery
   func parseListingClassName() -> String {
     return ""
   }
   
+  /**
+  If you want the default behavior of the UPMPFObjectCVC changed, it should
+  be done in this method. It is automatically called in viewDidLoad().
+  */
   override func changeDefaults() {
     objectsPerPage = UInt(ListingsPerPage)
   }
   
+  /**
+  The query for a UPMListings. Should be overriden to provide a customized
+  PFQuery.
+  */
   override func query() -> PFQuery {
     var listingQuery = PFQuery(className: parseListingClassName())
     listingQuery.orderByDescending("createdAt")
     return listingQuery
   }
   
+  // MARK: - CollectionView Delegate
   
+  /**
+  Provide UPMPFObjectCVC with our custom UPMBuyCell. Images are automatically
+  loaded asynchronously.
+  */
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UICollectionViewCell {
     
     let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as UPMBuyGridCell
     
-    //var price = object["photo"] as Int
-    let listing = object as UPMListing// *** Can't do this ***
-    
-    
+    let listing = object as UPMListing
     
     // Grab the picture-file and retrieve it from parse
     var picture = object["picture"] as? PFFile
     cell.listingImageView.file = listing.picture
     cell.listingImageView.loadInBackground()
+    
+    //TODO: Change details
     cell.configureCell(listing.title, price: listing.displayPrice(), details: "Reserve Now")
     
     return cell

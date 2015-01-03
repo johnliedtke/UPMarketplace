@@ -13,6 +13,11 @@ protocol UPMSellDetailsTVCDelegate {
   func didDetailsUpdate(details: String, isComplete: Bool)
 }
 
+/**
+  The UPMSellDetailsTVC class is used to collect various attributes of a sublclass
+  UPMListing. Functions similarily to a UPMSellTVC except there are no default optional
+  or required UPMSellItems.
+*/
 class UPMSellDetailsTVC: UITableViewController {
   let SellCellIdentifier = "UPMSellCell"
   
@@ -38,11 +43,13 @@ class UPMSellDetailsTVC: UITableViewController {
     // Cells
     tableView.registerNib(UINib(nibName: SellCellIdentifier, bundle: nil), forCellReuseIdentifier: SellCellIdentifier)
   }
-    
+  
+  /// Override to create the required UPMSellItems.
   func createRequiredItems() {
     
   }
   
+  /// Override to create the optional UPMSellItems.
   func createOptionalItems() {
     
   }

@@ -1,8 +1,8 @@
 import UIKit
 
 /**
-Used to display PFObjects from parse. Fetches data in a "pagination" style.
-However, pages are automatically loaded for an endless-scroll feel.
+  Used to display PFObjects from parse. Fetches data in a "pagination" style.
+  However, pages are automatically loaded for an endless-scroll feel.
   */
 class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
   
@@ -36,7 +36,6 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   
   /// Pull to refresh control
   var refreshControl: UIRefreshControl!
-  
 
   // MARK: - Public Methods
   

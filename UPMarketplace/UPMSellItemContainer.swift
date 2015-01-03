@@ -8,28 +8,43 @@
 
 import UIKit
 
+/**
+  Container class for UPMSellItems.
+*/
 class UPMSellItemContainer {
   
-  var items = [UPMSellItem]()
-  var count: Int {
+  // MARK: Public Properties
+  
+  /// The number of items in the container.
+   var count: Int {
     get {
       return items.count
     }
   }
+  
+  // MARK: - Private Properties
+  
+  /// Used to store the
+  private var items = [UPMSellItem]()
+  
   
   convenience init(items: [UPMSellItem]) {
     self.init()
     self.items += items
   }
   
+  /// Adds a UPMSellItem.
   func addItem(item: UPMSellItem) {
     items.append(item)
   }
   
+  /// Add UPMSellItems from an array.
   func addItems(items: [UPMSellItem]) {
     self.items += items
   }
   
+  /// Retrieve item by index position, returns first item if
+  /// invalid index.
   func itemAtIndex(index: Int) -> UPMSellItem {
     if index > items.count {
       return items[0]
@@ -37,6 +52,7 @@ class UPMSellItemContainer {
     return items[index]
   }
   
+  /// Retrieve item by title.
   func itemWithTitle(title: String) -> UPMSellItem? {
     for i in items {
       if i.title == title {
@@ -46,12 +62,14 @@ class UPMSellItemContainer {
     return nil
   }
   
-  /// Updates the an item given with a given title. Does nothing if item 
-  /// does not exist.
-  ///
-  /// :param: title Title of item to be updated
-  /// :param: description New description for item
-  /// :param: isComplete New isComplete status
+  /**
+  Updates the an item given with a given title. Does nothing if item
+  does not exist.
+  
+  :param: title Title of item to be updated
+  :param: description New description for item
+  :param: isComplete New isComplete status
+  */
   func updateItemWithTitle(title: String, description: String, isComplete: Bool) {
     var item = itemWithTitle(title)
     if item == nil {
@@ -62,6 +80,7 @@ class UPMSellItemContainer {
     }
   }
   
+  /// Remove item by title, does nothing if no item has the title.
   func removeItemWithTitle(title: String) {
     for i in 0..<count {
       if itemAtIndex(i).title == title {
@@ -71,6 +90,11 @@ class UPMSellItemContainer {
     }
   }
   
+  /**
+  Check if all items in container are marked complete.
+  
+  :returns: True if all items are complete.
+  */
   func isItemsComplete() -> Bool {
     for i in items {
       if !i.isComplete {
@@ -80,7 +104,7 @@ class UPMSellItemContainer {
     return true
   }
   
-  /// Creates a description of all items in container
+  /// Creates a description of all items in container.
   func description() -> String {
     var d = ""
     for item in items {

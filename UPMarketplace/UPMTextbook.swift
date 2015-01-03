@@ -8,10 +8,10 @@
 
 import Foundation
 
-
-/// A UPMOtherListing is the basic object for listing anything that is
-/// not a housing or textbook listing. OtherListings are categorized
-/// by the category propety.
+/**
+ The UPMTextbook class represents a textbook that can be sold on the 
+ marketplace. It is closely associated with a UPMTextbookListing.
+*/
 public class UPMTextbook: PFObject, PFSubclassing  {
   
   // MARK: Properties
@@ -30,20 +30,26 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   /// The course the textbook was used in. e.g. CS301
   @NSManaged public var course: String?
   
-  // MARK: Methods
-  /// Creates a more readable ISBN number for humans. Formatted to the
-  /// standards.
-  ///
-  /// :returns: Formatted iSBN
+  // MARK: - Public Methods
+  
+  /**
+  Creates a more readable ISBN number for humans. Formatted to the
+  standards.
+
+  :returns: Formatted iSBN
+  */
   public func getFormattedISBN() -> String {
     return iSBN!
   }
   
-  // MARK: PFSubclassing Methods
-  /// The name of the PFObject subclass as it would appear
-  /// in the data browser.
-  ///
-  /// :returns: The name of the class
+  // MARK: - PFSubclassing Methods
+  
+  /**
+  The name of the PFObject subclass as it would appear
+  in the Parse data browser.
+
+  :returns: The name of the class
+  */
   public class func parseClassName() -> String! {
     return "UPMTextbook"
   }
