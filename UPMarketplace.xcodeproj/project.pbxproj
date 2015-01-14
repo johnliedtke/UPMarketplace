@@ -93,6 +93,7 @@
 		52E571681A1DD8B90056FCD8 /* UPMSellOtherTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E571671A1DD8B90056FCD8 /* UPMSellOtherTVC.swift */; };
 		52E5716E1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5716D1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift */; };
 		52E571701A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */; };
+		52FEAAE81A67094300240E25 /* UPMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FEAAE71A67094300240E25 /* UPMUser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -220,6 +221,7 @@
 		52E571671A1DD8B90056FCD8 /* UPMSellOtherTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellOtherTVC.swift; sourceTree = "<group>"; };
 		52E5716D1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellDetailsTVC.swift; sourceTree = "<group>"; };
 		52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellOtherDetailsTVC.swift; sourceTree = "<group>"; };
+		52FEAAE71A67094300240E25 /* UPMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMUser.swift; sourceTree = "<group>"; };
 		577B26F9312C66E604906FFB /* Pods-UPMarketplace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UPMarketplace.release.xcconfig"; path = "Pods/Target Support Files/Pods-UPMarketplace/Pods-UPMarketplace.release.xcconfig"; sourceTree = "<group>"; };
 		DFCBB97A5E01AB1A2B1026A8 /* libPods-UPMarketplace.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-UPMarketplace.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EA4EF60533F3C4156943DC96 /* Pods-UPMarketplace.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UPMarketplace.debug.xcconfig"; path = "Pods/Target Support Files/Pods-UPMarketplace/Pods-UPMarketplace.debug.xcconfig"; sourceTree = "<group>"; };
@@ -458,6 +460,7 @@
 		52AF3D4519E77BBF007E0D22 /* UPMarketplace */ = {
 			isa = PBXGroup;
 			children = (
+				52FEAAE61A67082000240E25 /* User */,
 				5255EBFE1A0EC72A007207C7 /* Extensions */,
 				52AF3D4C19E77BBF007E0D22 /* SellMain.storyboard */,
 				5213298C1A3E2C7B003E345A /* Listings */,
@@ -521,6 +524,14 @@
 			);
 			name = Frameworks;
 			path = UPMarketplace;
+			sourceTree = "<group>";
+		};
+		52FEAAE61A67082000240E25 /* User */ = {
+			isa = PBXGroup;
+			children = (
+				52FEAAE71A67094300240E25 /* UPMUser.swift */,
+			);
+			name = User;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -800,6 +811,7 @@
 				529BDB211A241FC400F4E8EE /* UPMSellTextbookTVC.swift in Sources */,
 				5255EBA71A0EBEBA007207C7 /* UPMSellTVC.swift in Sources */,
 				5255EC0C1A0EE0AE007207C7 /* ViewController.swift in Sources */,
+				52FEAAE81A67094300240E25 /* UPMUser.swift in Sources */,
 				5266C65F1A46A22D0061FFFB /* UPMPFObjectCVC.swift in Sources */,
 				5200D4A31A47C69F0079ED9A /* UILabelVertical.swift in Sources */,
 				52E5716E1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift in Sources */,
