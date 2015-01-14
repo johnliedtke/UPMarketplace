@@ -1,6 +1,6 @@
 //
 //  UPMBarcodeScanner.swift
-//  
+//
 //
 //  Created by John Liedtke on 12/22/14.
 //
@@ -10,39 +10,81 @@ import UIKit
 import AVFoundation
 //TODO: Implement a delegate method to alert controller of reading a barcode...
 
+public protocol UPMBarcodeScannerDelegate {
+  
+  /**
+  Called when a barcode is found. Reading has been halted when this method is called.
+  
+  :param: barcode String represenation of barcode.
+  */
+  func didReadBarcode(barcode: String) -> Void
+  
+}
 
 /**
-A simple barcode scanner that retrieves the number from a barcode using
-the camera of the iOS device. 
+  A simple barcode scanner that retrieves the number from a barcode using
+  the camera of the iOS device.
 */
-class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
+public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UPMBarcodeScannerDelegate {
   
-  // MARK: - Properties Public
+  // MARK: - Public Properties
   @IBOutlet var previewView: UIView!
   @IBOutlet var statusLabel: UILabel!
   var highlightView: UIView!
-
-  //TODO: MEOW MOEW MOEW
-  ///
-  var captureDevice: AVCaptureDevice!
   
-  /// Indicates whether the controler is currently scanning for a barcode
-  var isReading: Bool = true
-  
-  /// Capture session to read barcodes
-  var captureSession: AVCaptureSession!
-  
-  /// Displays the video stream
-  var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+  /// Receives notifications when a code is read
+  public var delegate: UPMBarcodeScannerDelegate?
   
   /// What kind of barcodes to read?
-  var allowedBarcodeTypes = [AVMetadataObjectTypeEAN13Code]
+  public var allowedBarcodeTypes = [AVMetadataObjectTypeEAN13Code]
   
-  // MARK: Private
-  var isFound = false
+  // MARK: - Private Properties
+  
+  /// Found a barcode
+  private var isFound = false
+  
+  /// Device for capturing video.
+  private var captureDevice: AVCaptureDevice!
+  
+  /// Indicates whether the controler is currently scanning for a barcode
+  private var isReading: Bool = true
+  
+  /// Capture session to read barcodes
+  private var captureSession: AVCaptureSession!
+  
+  /// Displays the video stream
+  private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
+
   
   // MARK: - Public Methods
-  func startReading() -> Bool {
+  
+  override public func viewDidLoad() {
+    super.viewDidLoad()
+    
+    var barcodeBox = UPMBarcodeBox()
+    barcodeBox.frame = previewView.frame
+    view.addSubview(barcodeBox)
+    
+    delegate = self
+    
+    startReading()
+    // Do any additional setup after loading the view.
+  }
+  
+  /// Halts capture session and stops reading barcodes.
+  public func stopReading() -> Void {
+    captureSession.stopRunning()
+    captureSession = nil
+    videoPreviewLayer.removeFromSuperlayer()
+  }
+  
+  /**
+  Begin reading bar codes. Finds a camera device to read bar codes, does nothing
+  if no camera device is found.
+  
+  :returns: Found a camera device and began reading
+  */
+  public func startReading() -> Bool {
     var error: NSError?
     
     captureDevice = AVCaptureDevice.defaultDeviceWithMediaType(AVMediaTypeVideo)
@@ -85,16 +127,9 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
     return true
     
   }
-  
 
-  
-  func stopReading() -> Void {
-    captureSession.stopRunning()
-    captureSession = nil
-    videoPreviewLayer.removeFromSuperlayer()
-  }
-  
-  func isAllowedType(type: String) -> Bool {
+  /// Checks if the barcode scanned was a valid barcode.
+  private func isAllowedType(type: String) -> Bool {
     for t in allowedBarcodeTypes {
       if t == type {
         return true
@@ -103,8 +138,8 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
     return false
   }
   
-  // MARK: Delegate
-  func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
+  // MARK: - Delegate
+  public func captureOutput(captureOutput: AVCaptureOutput!, didOutputMetadataObjects metadataObjects: [AnyObject]!, fromConnection connection: AVCaptureConnection!) {
     
     var highlightViewRect = CGRectZero
     
@@ -118,13 +153,15 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
           // do some task
           self.isReading = false
           self.isFound = true
-          //self.stopReading()
-
+          
+          self.stopReading()
+          self.delegate?.didReadBarcode(metaDataObject.stringValue)
+          
 
           
           dispatch_async(dispatch_get_main_queue()) {
             highlightViewRect = metaDataObject.bounds
-            self.highlightView.frame = self.videoPreviewLayer.transformedMetadataObjectForMetadataObject(metaDataObject).bounds
+            //self.highlightView.frame = self.videoPreviewLayer.transformedMetadataObjectForMetadataObject(metaDataObject).bounds
             self.statusLabel.text = metaDataObject.stringValue
           }
         }
@@ -141,27 +178,25 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
     }
   }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      
-      var barcodeBox = UPMBarcodeBox()
-      barcodeBox.frame = previewView.frame
-      view.addSubview(barcodeBox)
-
-      startReading()
-        // Do any additional setup after loading the view.
+  
+  public func didReadBarcode(barcode: String) {
+    var alertController = UIAlertController(title: "Found!", message: barcode, preferredStyle: UIAlertControllerStyle.Alert)
+    var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) { (a: UIAlertAction!) -> Void in
+      self.startReading()
+      return
     }
-
-    override func didReceiveMemoryWarning() {
+    alertController.addAction(okayAction)
+    presentViewController(alertController, animated: true, completion: nil)
+  }
+  
+  override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
   
+  // MARK: - Camera Focus
   
-  
-  // MARK: Camera Focus
-  
-  func setupCameraFocus() -> Void {
+  private func setupCameraFocus() -> Void {
     
     var error: NSError?
     // Lock hardware for configuration
@@ -182,7 +217,7 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
   }
   
   // Auto-focus on touch
-  override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+  override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
     var touch = touches.anyObject() as UITouch
     var pointInView = touch.locationInView(previewView)
     
@@ -204,17 +239,4 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
     
   }
   
-  
-  
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

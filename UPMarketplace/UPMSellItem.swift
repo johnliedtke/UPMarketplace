@@ -26,8 +26,10 @@ class UPMSellItem {
   /// Indicates whether the attribute is optional.
   var isOptional: Bool = false
   
-  /// Indicates whether the attribute is complete. (The user has filled
-  /// in all information pertaining to the attribute)
+  /**
+  Indicates whether the attribute is complete. (The user has filled
+  in all information pertaining to the attribute)
+  */
   var isComplete: Bool = false
   
   

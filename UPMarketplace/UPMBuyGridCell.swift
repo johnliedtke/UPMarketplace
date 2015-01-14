@@ -15,7 +15,7 @@ import UIKit
   UPMBuy.storyboard
 */
 class UPMBuyGridCell: UICollectionViewCell {
-
+  
   // MARK: - Public Properties
   
   /// Reference to the imageView at the top of the cell.
