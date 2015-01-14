@@ -10,6 +10,7 @@ import UIKit
 
 class BuyChosenCategoryViewController: NewListingsViewController{
     
+    var category: String?
    
     override func queryListings() {
         var query = PFQuery(className: "Listing")

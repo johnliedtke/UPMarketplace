@@ -13,6 +13,8 @@ class BuyViewController: UICollectionViewController,UICollectionViewDelegateFlow
     var categories = ["Textbooks", "Housing", "Other"]
     var pictures = ["Textbooks.png", "Housing.png", "Other.png"]
    
+    let reuseidentifer = "BuyViewCell"
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -33,7 +35,7 @@ class BuyViewController: UICollectionViewController,UICollectionViewDelegateFlow
     }
     
     override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("buyViewCategoryCell", forIndexPath: indexPath) as BuyViewCategoryCell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseidentifer, forIndexPath: indexPath) as BuyViewCategoryCell
     
         cell.pic = UIImage(named: pictures[indexPath.row])
         cell.title = categories[indexPath.row]
@@ -41,7 +43,26 @@ class BuyViewController: UICollectionViewController,UICollectionViewDelegateFlow
         
         return cell
     }
+    
+    func collectionView(collection: UICollectionView, selectedItemIndex: NSIndexPath)
+    {
+        
+        self.performSegueWithIdentifier("chooseCategory", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "chooseCategory"){
+            let destinationVC = segue.destinationViewController as BuyChosenCategoryViewController
+   
+            let indexPaths : NSArray = self.collectionView!.indexPathsForSelectedItems()
+            let indexPath : NSIndexPath = indexPaths[0] as NSIndexPath
+            
+           destinationVC.category = categories[indexPath.row]
+            
 
+                 }
+    }
+    
   
     
 }

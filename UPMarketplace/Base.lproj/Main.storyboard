@@ -142,7 +142,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="buyViewCategoryCell" id="XNT-DF-hNP" customClass="BuyViewCategoryCell" customModule="UPMarketplace" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BuyViewCell" id="XNT-DF-hNP" customClass="BuyViewCategoryCell" customModule="UPMarketplace" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -165,7 +165,7 @@
                                 <connections>
                                     <outlet property="listingCategory" destination="qTN-eI-B4j" id="pdj-Ct-MSN"/>
                                     <outlet property="listingPicture" destination="6Po-Ji-ikX" id="eO1-mW-3ZH"/>
-                                    <segue destination="0ol-zA-Sp2" kind="show" id="RX3-NT-wI2"/>
+                                    <segue destination="BZn-y2-1gh" kind="show" identifier="chooseCategory" id="CY8-Qz-aw6"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -202,22 +202,6 @@
                 </searchDisplayController>
             </objects>
             <point key="canvasLocation" x="933" y="1040"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="jb6-qj-9QN">
-            <objects>
-                <navigationController id="0ol-zA-Sp2" sceneMemberID="viewController">
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="htq-eq-q76">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <connections>
-                        <segue destination="BZn-y2-1gh" kind="relationship" relationship="rootViewController" id="Z5H-V9-GbJ"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="gJZ-fo-iuZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="551" y="1736"/>
         </scene>
         <!--BuyCategoryViewController-->
         <scene sceneID="0Pi-Bf-P2S">
