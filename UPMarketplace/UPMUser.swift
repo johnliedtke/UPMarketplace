@@ -8,6 +8,17 @@
 
 import UIKit
 
-class UPMUser: PFUser {
+class UPMUser: PFUser, PFSubclassing {
+  
+  
+  /// User's first and last name e.g. John Slade
+  @NSManaged var fullName: String!
+  
+  
+  
+  /// Register subclass
+  override class func load() {
+    self.registerSubclass()
+  }
    
 }
