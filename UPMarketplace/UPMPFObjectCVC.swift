@@ -48,8 +48,8 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
       refreshControl = UIRefreshControl()
       refreshControl.tintColor = UIColor.grayColor()
       refreshControl.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
-      collectionView?.addSubview(refreshControl)
-      collectionView?.alwaysBounceVertical = true
+      collectionView.addSubview(refreshControl)
+      collectionView.alwaysBounceVertical = true
     }
   }
   
@@ -63,7 +63,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
     messageLabel.textAlignment = NSTextAlignment.Center
     messageLabel.font = UIFont.systemFontOfSize(16.0)
     
-    collectionView?.backgroundView = messageLabel;
+    collectionView.backgroundView = messageLabel;
 
   }
   
@@ -189,7 +189,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
     refreshControl.endRefreshing()
     
     // Reload that data
-    collectionView?.reloadData()
+    collectionView.reloadData()
   }
   
   // MARK: Sroll View Delegate

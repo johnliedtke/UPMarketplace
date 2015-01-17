@@ -41,6 +41,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as UINavigationController
     controllers.append(buyNewListingsVC)
     
+    //Buy Workflow
+    let BuyWorkflowStoryboard = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
+    var buyCategoryVC = BuyWorkflowStoryboard.instantiateInitialViewController() as UINavigationController
+    controllers.append(buyCategoryVC)
+    
     // Sell
     let SellStoryboard = UIStoryboard(name: Constants.SellStoryboard.MainStoryboard, bundle: nil)
     var sellVC = SellStoryboard.instantiateInitialViewController() as UINavigationController
