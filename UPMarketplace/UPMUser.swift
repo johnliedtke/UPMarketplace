@@ -8,8 +8,11 @@
 
 import UIKit
 
+struct UPMUserConstants {
+  static let className = "UPMUser"
+}
+
 class UPMUser: PFUser, PFSubclassing {
-  
   
   /// User's first and last name e.g. John Slade
   @NSManaged var fullName: String!

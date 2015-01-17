@@ -24,9 +24,76 @@ extension UIColor {
     self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
   }
   
-  convenience init(netHex:Int) {
-    self.init(red:(netHex >> 16) & 0xff, green:(netHex >> 8) & 0xff, blue:netHex & 0xff)
+  /**
+  Converts a hexadecimal represenation of a color to a UIColor
+  
+  :param: hex Hex triplet
+  */
+  convenience init(hex:Int) {
+    self.init(red:(hex >> 0x10) & 0xff, green:(hex >> 0x8) & 0xff, blue:hex & 0xff)
   }
+  
+  // MARK: Flat UI Colors 
+  
+  class func flatLightRedColor() -> UIColor {
+    return self.init(hex:0xe74c3c)
+  }
+  
+  class func flatDarkRedColor() -> UIColor {
+    return self.init(hex: 0xc0392b)
+  }
+  
+  class func flatLightOrangeColor() -> UIColor {
+    return self.init(hex: 0xe67e22)
+  }
+  
+  class func flatDarkOrangeColor() -> UIColor {
+    return self.init(hex: 0xd35400)
+  }
+  
+  class func flatLightGreenColor() -> UIColor {
+    return self.init(hex: 0x2ecc71)
+  }
+  
+  class func flatDarkGreenColor() -> UIColor {
+    return self.init(hex: 0x27ae60)
+  }
+  
+  class func flatLightTealColor() -> UIColor {
+    return self.init(hex: 0x1abc9c)
+  }
+  
+  class func flatDarkTealColor() -> UIColor {
+    return self.init(hex: 0x16a085)
+  }
+  
+  class func flatLightBlueColor() -> UIColor {
+    return self.init(hex: 0x3498db)
+  }
+  
+  class func flatDarkBlueColor() -> UIColor {
+    return self.init(hex: 0x2980b9)
+  }
+  
+  class func flatLightPurpleColor() -> UIColor {
+    return self.init(hex: 0x9b59b6)
+  }
+  
+  class func flatDarkPurpleColor() -> UIColor {
+    return self.init(hex: 0x8e44ad)
+  }
+  
+  class func flatLightWhiteColor() -> UIColor {
+    return self.init(hex: 0xecf0f1)
+  }
+  
+  /// Varient of light orange
+  class func flatLightYellowColor() -> UIColor {
+    return self.init(hex: 0xf39c12)
+  }
+  
+  
+  
   
   /// Background color of basically every view.
   class func standardBackgroundColor() -> UIColor {
@@ -39,12 +106,13 @@ extension UIColor {
   }
   
   class func flatLightGrayColor() -> UIColor {
-      return UIColor(netHex: 0xbdc3c7)
+      return UIColor(hex: 0xbdc3c7)
   }
   
   class func lightPurpleColor() -> UIColor {
-    var lightPurpleColor = UIColor(red: 134.0/255.0, green: 92.0/255.0, blue: 168.0/255.0, alpha: 1.0)
-    return lightPurpleColor
+    return UIColor.flatLightPurpleColor()
+    //var lightPurpleColor = UIColor(red: 134.0/255.0, green: 92.0/255.0, blue: 168.0/255.0, alpha: 1.0)
+    //return lightPurpleColor
   }
   
   class func darkPurpleColor() -> UIColor {

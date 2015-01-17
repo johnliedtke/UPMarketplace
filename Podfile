@@ -6,6 +6,10 @@ pod 'MBProgressHUD', '~> 0.8'
 pod 'Facebook-iOS-SDK', '~> 3.15.1'
 pod "AFNetworking", "~> 2.0"
 
+# Solves the keyboard hiding the textfield problem :)
+pod 'IQKeyboardManager'
+
+
 end
 
 
