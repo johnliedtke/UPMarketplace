@@ -52,7 +52,7 @@
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="password" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Hnb-kv-464">
                                         <rect key="frame" x="16" y="174" width="568" height="30"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dLS-wd-jXn" customClass="UPMButton" customModule="UPMarketplace" customModuleProvider="target">
                                         <rect key="frame" x="246" y="232" width="107" height="30"/>
@@ -128,7 +128,14 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" title="Sign In" id="hAi-px-l6v"/>
+                    <navigationItem key="navigationItem" title="Sign In" id="hAi-px-l6v">
+                        <barButtonItem key="rightBarButtonItem" title="Sign In" id="704-kC-zLh">
+                            <color key="tintColor" red="0.60784313725490191" green="0.34901960784313724" blue="0.043137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="signInPressed:" destination="yiO-0h-CXr" id="9Xz-s7-Zza"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                     <connections>
                         <outlet property="emailField" destination="rra-UB-jnr" id="Pqn-Xf-eNN"/>
                         <outlet property="logoImageView" destination="pfo-jS-PJp" id="Gyf-YQ-FFC"/>

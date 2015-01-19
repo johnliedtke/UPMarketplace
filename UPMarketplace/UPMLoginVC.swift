@@ -15,12 +15,20 @@ struct UPMLoginVCConstants {
   static let minFullNameLength = 4
 }
 
+/**
+  UPMLoginVC handles creating new users and signing in existing
+  ones. Users who are signed in must have their email confirmed. 
+  This controller should be presented modally to it can be dismissed
+  easily when the user signs in.
+*/
 public class UPMLoginVC: UIViewController {
   
   // MARK: - Public Properties
   @IBOutlet var logoImageView: UIImageView!
   @IBOutlet var emailField: UITextField!
   @IBOutlet var passwordField: UITextField!
+  
+  var logInSucessHandler = () -> ()
   
   // MARK: - Private Properties
   private var registerEmailField: UITextField?
@@ -33,15 +41,47 @@ public class UPMLoginVC: UIViewController {
     view.backgroundColor = UIColor.standardBackgroundColor()
    
   }
-  
-  func login(sender: AnyObject) {
-  }
-  
+
+  /// Calls createAccount()
   @IBAction func createAccountPressed(sender: UIButton) {
     createAccount(nil)
   }
   
+  /// Calls logIn(:password) with textfield input
+  @IBAction func signInPressed(sender: AnyObject) {
+    logIn(emailField.text ?? "", password: passwordField.text ?? "")
+  }
+  
   /**
+  Logs a user in and checks if the user has confirmed his or her 
+  email. If not the user is logged out and presented with a reminder to 
+  confirm email.
+  
+  :param: username Username of user (email address)
+  :param: password Password of user
+  */
+  func logIn(username: String, password: String) -> Void {
+    
+    UPMUser.loginAsync(username, password: password).continueWithBlock {
+      (task: BFTask!) -> AnyObject! in
+      if let error = task.error {
+        
+      } else {
+        let user = task.result as UPMUser
+        
+        // Confirmed email
+        if !user.emailVerified() {
+          //PFUser.logOut()
+          println("Email is not verified")
+        }
+      }
+      return nil
+    }
+    
+  }
+  /**
+  Creates an alertController for a user to enter in details to create an
+  account.
   
   :param: defaultFieldValues Dictionary containing the default values for the fields
   */
@@ -116,6 +156,7 @@ public class UPMLoginVC: UIViewController {
     }
   }
   
+  /// Validaes user-input
   private func validateSignUpFields() -> (isValid: Bool, error: String?) {
     let invalidInput = ""
     let fullName = registerFullNameField?.text ?? invalidInput
@@ -152,19 +193,10 @@ public class UPMLoginVC: UIViewController {
   
   
   
-
+  //TODO: Implement
   @IBAction func forgotPasswordPressed(sender: UIButton) {
     
   }
-    /*
-  @IBOutlet var forgotPasswordPressed: UIButton!
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

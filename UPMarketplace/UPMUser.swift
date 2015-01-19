@@ -23,5 +23,25 @@ class UPMUser: PFUser, PFSubclassing {
   override class func load() {
     self.registerSubclass()
   }
+  
+  
+  
+  func emailVerified() -> Bool {
+    return self["emailVerified"] as Bool
+  }
+  
+  class func loginAsync(username: String, password: String) -> BFTask {
+    let task = BFTaskCompletionSource()
+    
+    PFUser.logInWithUsernameInBackground(username, password: password) {
+      (user, error) -> Void in
+      if error == nil {
+        task.setResult(user)
+      } else {
+        task.setError(error)
+      }
+    }
+    return task.task
+  }
    
 }
