@@ -308,11 +308,13 @@
 		5255EBAA1A0EBF9E007207C7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				52FEAAE41A65B3B600240E25 /* Barcode */,
 				524F40A91A104448002B47B6 /* UPMSellItem.swift */,
 				524F40AB1A104D54002B47B6 /* UPMSellItemContainer.swift */,
 				5246638E1A4365B100CB18B9 /* UPMSellCheckInput.swift */,
 				52A7E0381A536BB5004FA345 /* UPMGoogleBookHTTPClient.swift */,
+				5200D4A81A48FE2D0079ED9A /* UPMBarcodeScanner.swift */,
+				5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */,
+				5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -519,16 +521,6 @@
 			);
 			name = Frameworks;
 			path = UPMarketplace;
-			sourceTree = "<group>";
-		};
-		52FEAAE41A65B3B600240E25 /* Barcode */ = {
-			isa = PBXGroup;
-			children = (
-				5200D4A81A48FE2D0079ED9A /* UPMBarcodeScanner.swift */,
-				5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */,
-				5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */,
-			);
-			name = Barcode;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
