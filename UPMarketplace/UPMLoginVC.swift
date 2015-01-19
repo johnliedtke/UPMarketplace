@@ -28,9 +28,12 @@ public class UPMLoginVC: UIViewController {
   @IBOutlet var emailField: UITextField!
   @IBOutlet var passwordField: UITextField!
   
-  var logInSucessHandler = () -> ()
   
-  // MARK: - Private Properties
+  // Called when a user sucessfully logs in
+  var logInSuccessfulHandler: ((sender: AnyObject) -> ())!
+
+
+    // MARK: - Private Properties
   private var registerEmailField: UITextField?
   private var registerFullNameField: UITextField?
   private var registerPasswordField: UITextField?
@@ -74,6 +77,8 @@ public class UPMLoginVC: UIViewController {
           //PFUser.logOut()
           println("Email is not verified")
         }
+        // Notify of success
+        self.logInSuccessfulHandler(sender: self)
       }
       return nil
     }
