@@ -18,7 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
       clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
     
-    
     // Global apperances
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
@@ -55,9 +54,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var barcodeScanner = UPMBarcodeScanner(nibName: "UPMBarcodeScanner", bundle: nil)
     navigationController.viewControllers = [barcodeScanner]
     controllers.append(navigationController)
+    
+    // test login
+    var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
+    
+    var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
+    controllers.append(loginVC)
 
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
+    
     
     window?.rootViewController = mainTabBarController
     
