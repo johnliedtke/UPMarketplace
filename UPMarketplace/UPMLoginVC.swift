@@ -73,7 +73,7 @@ public class UPMLoginVC: UIViewController {
         let user = task.result as UPMUser
         
         // Confirmed email
-        if !user.emailVerified() {
+        if !user.isEmailVerified() {
           //PFUser.logOut()
           println("Email is not verified")
         }
