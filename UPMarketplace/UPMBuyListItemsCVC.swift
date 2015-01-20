@@ -19,7 +19,6 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.registerClass(UPMBuyGridCell.self, forCellWithReuseIdentifier: reuseIdentifier)
   }
   
 

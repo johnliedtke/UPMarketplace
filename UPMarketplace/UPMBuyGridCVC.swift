@@ -20,20 +20,20 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
 
   // MARK: - Constants
   let ListingsPerPage = 24
-  let reuseIdentifier = "UPMBuyGridCell"
 
   // MARK: - Public Properties
-  
-  override func viewDidLoad() {
-    super.viewDidLoad()
-    
-  }
   
   // MARK: - Public Methods
   
   /// Override to provide the UPMListing subclass name for a PFQuery
   func parseListingClassName() -> String {
     return ""
+  }
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    // Register grid cell
+    collectionView?.registerNib(UINib(nibName: UPMBuyGridCellConstants.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: UPMBuyGridCellConstants.reuseIdentifier)
   }
   
   /**
@@ -62,7 +62,7 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
   */
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UICollectionViewCell {
     
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseIdentifier, forIndexPath: indexPath) as UPMBuyGridCell
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(UPMBuyGridCellConstants.reuseIdentifier, forIndexPath: indexPath) as UPMBuyGridCell
     
     let listing = object as UPMListing
     

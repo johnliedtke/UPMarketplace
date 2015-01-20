@@ -8,11 +8,13 @@
 
 import UIKit
 
+struct UPMBuyGridCellConstants {
+  static let reuseIdentifier = "UPMBuyGridCell"
+}
 
 /**
   Used to display UPMListings in UICollectionView. Specifically used with
-  a UPMBuyGridCVC. The cell is linked to the UICollectionView found in
-  UPMBuy.storyboard
+  a UPMBuyGridCVC. The cell is linked to the UPMBuyGrideCell.xib
 */
 class UPMBuyGridCell: UICollectionViewCell {
 
