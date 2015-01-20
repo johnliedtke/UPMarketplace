@@ -147,8 +147,9 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
       var barcodeBox = UPMBarcodeBox()
       barcodeBox.frame = previewView.frame
       view.addSubview(barcodeBox)
-
-      startReading()
+      
+      modalLogin()
+      //startReading()
         // Do any additional setup after loading the view.
     }
 
@@ -157,7 +158,12 @@ class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegat
         // Dispose of any resources that can be recreated.
     }
   
-  
+  //TODO: Delete this
+  func modalLogin() -> Void {
+    var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
+    var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
+    presentViewController(loginVC, animated: true, completion: nil)
+  }
   
   // MARK: Camera Focus
   

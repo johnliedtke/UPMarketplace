@@ -24,7 +24,7 @@
         <!--Sign In-->
         <scene sceneID="2JA-n9-Fud">
             <objects>
-                <viewController storyboardIdentifier="UPMLogin" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yiO-0h-CXr" customClass="UPMLoginVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UPMLogin" hidesBottomBarWhenPushed="YES" useStoryboardIdentifierAsRestorationIdentifier="YES" id="yiO-0h-CXr" customClass="UPMLoginVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="3oD-an-5kk"/>
                         <viewControllerLayoutGuide type="bottom" id="4tP-HN-ciU"/>

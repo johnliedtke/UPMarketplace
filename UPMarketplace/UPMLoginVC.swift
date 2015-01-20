@@ -18,8 +18,9 @@ struct UPMLoginVCConstants {
 /**
   UPMLoginVC handles creating new users and signing in existing
   ones. Users who are signed in must have their email confirmed. 
-  This controller should be presented modally to it can be dismissed
-  easily when the user signs in.
+  This controller should be presented modally pushed onto a 
+  navigation controller so it can be dismissed easily when the 
+  user signs in.
 */
 public class UPMLoginVC: UIViewController {
   
@@ -29,21 +30,16 @@ public class UPMLoginVC: UIViewController {
   @IBOutlet var passwordField: UITextField!
   
   
-  // Called when a user sucessfully logs in
+  // Handle when a user sucessfully logs in, perhaps dismiss?
   var logInSuccessfulHandler: ((sender: AnyObject) -> ())!
 
-
-    // MARK: - Private Properties
+  // MARK: - Private Properties
   private var registerEmailField: UITextField?
   private var registerFullNameField: UITextField?
   private var registerPasswordField: UITextField?
   private var registerPasswordConfirmationField: UITextField?
   
-  override public func viewDidLoad() {
-    super.viewDidLoad()
-    view.backgroundColor = UIColor.standardBackgroundColor()
-   
-  }
+  // MARK: - Public Methods
 
   /// Calls createAccount()
   @IBAction func createAccountPressed(sender: UIButton) {
@@ -53,6 +49,29 @@ public class UPMLoginVC: UIViewController {
   /// Calls logIn(:password) with textfield input
   @IBAction func signInPressed(sender: AnyObject) {
     logIn(emailField.text ?? "", password: passwordField.text ?? "")
+  }
+  
+  override public func viewDidLoad() {
+    super.viewDidLoad()
+    view.backgroundColor = UIColor.standardBackgroundColor()
+    
+    var barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "pop")
+    navigationItem.leftBarButtonItem = barButtonItem
+    
+  }
+  func pop() -> Void {
+    dismissViewControllerAnimated(true, completion: nil)
+  }
+  
+  
+  override public func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    //tabBarController?.tabBar.hidden = true
+  }
+  
+  override public func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+   // tabBarController?.tabBar.hidden = false
   }
   
   /**
@@ -84,6 +103,7 @@ public class UPMLoginVC: UIViewController {
     }
     
   }
+  
   /**
   Creates an alertController for a user to enter in details to create an
   account.
@@ -130,15 +150,13 @@ public class UPMLoginVC: UIViewController {
     presentViewController(signUpAlert, animated: true, completion: nil)
   }
   
+  // MARK: - Private Methods
+  
   func signUp() -> Void {
     
     if !validateSignUpFields().isValid {
       // handle error
-      var defaultFieldValues = [String: String]()
-      defaultFieldValues["fullName"] = registerFullNameField?.text
-      defaultFieldValues["email"] = registerEmailField?.text
-      defaultFieldValues["message"] = validateSignUpFields().error
-      createAccount(defaultFieldValues)
+      createAccountText()
       return;
     }
     
@@ -149,19 +167,46 @@ public class UPMLoginVC: UIViewController {
     user.fullName = registerFullNameField?.text
     user.password = registerPasswordField?.text
     
+    
     // Sign up user
     user.signUpInBackgroundWithBlock { (success: Bool, error: NSError!) -> Void in
       
       if success {
         println("User signed up")
       } else {
-        println("Failure")
+        var alertError = UIAlertController(title: "Error", message: "", preferredStyle: UIAlertControllerStyle.Alert)
+        var userInfo: [NSObject: AnyObject?] = error.userInfo!
+        var message = (error.userInfo!["error"]) as NSString
+
+        var errorAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {
+          (alert: UIAlertAction!) -> Void in
+          self.createAccountText()
+        })
+        alertError.addAction(errorAction)
+        self.presentViewController(alertError, animated: true, completion: nil)
+
       }
 
     }
   }
   
-  /// Validaes user-input
+  private func createAccountText() {
+    var defaultFieldValues = [String: String]()
+    defaultFieldValues["fullName"] = registerFullNameField?.text
+    defaultFieldValues["email"] = registerEmailField?.text
+    defaultFieldValues["message"] = validateSignUpFields().error
+    createAccount(defaultFieldValues)
+  }
+
+  
+  /**
+  Validates the user input in the createAccount fields. Checks length and
+  that the passwords match. Back-end handles the rest of checking. Returns
+  a tuple with a possible error and whether the input is valid.
+  
+  :return: isValid Is valid input
+  :return: error Possible error with input
+  */
   private func validateSignUpFields() -> (isValid: Bool, error: String?) {
     let invalidInput = ""
     let fullName = registerFullNameField?.text ?? invalidInput

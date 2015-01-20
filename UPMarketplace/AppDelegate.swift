@@ -55,7 +55,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.viewControllers = [barcodeScanner]
     controllers.append(navigationController)
     
-    // test login
+    // test login modal
+    
     var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
     
     var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
