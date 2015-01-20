@@ -56,21 +56,32 @@ class UPMBuyOtherGridCVC: UPMBuyGridCVC {
     
     func collectionView(collection: UICollectionView, selectedItemIndex: NSIndexPath)
     {
-        
         self.performSegueWithIdentifier("viewItemDetail", sender: self)
     }
+    
+//    override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+//       // var listing = objects[indexPath.row]
+//    }
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "viewItemDetail"){
             
             let indexPaths : NSArray = self.collectionView.indexPathsForSelectedItems()!
             let indexPath : NSIndexPath = indexPaths[0] as NSIndexPath
+            var listing = objects[indexPath.row]["picture"] as? PFFile
             
-            
+           // var pic = listing["photo"] as PFFile
+            //pic.getDataInBackgroundWithBlock { (data: NSData!, error: NSError!) -> Void in
+            //    var actualImage = UIImage(data: data)
+                
+                
             let destinationVC = segue.destinationViewController as UPMBuyItemDetailsTVC
-            
-            
-            
+        //    destinationVC.selectedImage.file = listing
+            //let info = self.collectionView(collectionView, cellForItemAtIndexPath: indexPath, object: 
+            //objects[indexPath.row]) as UPMItemCategoryCell
+           
+            //var pic = listing["picture"] as? UPMItemCategoryCell
+            //destinationVC.selectedImage = listing.photo
             
             
         }

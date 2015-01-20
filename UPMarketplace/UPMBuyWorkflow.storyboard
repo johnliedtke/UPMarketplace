@@ -45,7 +45,7 @@
                                 <connections>
                                     <outlet property="listingCategory" destination="45Z-2t-JQH" id="yTl-sP-y7C"/>
                                     <outlet property="listingPicture" destination="veg-BW-Yus" id="6ph-Ma-Nsd"/>
-                                    <segue destination="Anz-sg-7uX" kind="show" identifier="choseCategory" id="fFJ-hB-Eeq"/>
+                                    <segue destination="2cU-QL-kRh" kind="show" id="tZX-6N-I0V"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -58,7 +58,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="cip-qG-Wf5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="816" y="320"/>
+            <point key="canvasLocation" x="636" y="354"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="hqN-rQ-Yzm">
@@ -207,6 +207,31 @@
             </objects>
             <point key="canvasLocation" x="1620" y="80"/>
         </scene>
+        <!--Buy List ItemsCVC-->
+        <scene sceneID="l9q-aq-wNy">
+            <objects>
+                <collectionViewController id="2cU-QL-kRh" customClass="UPMBuyListItemsCVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LoZ-9K-f4L">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
+                        <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="NPE-eX-Fvb">
+                            <size key="itemSize" width="50" height="50"/>
+                            <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                            <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        </collectionViewFlowLayout>
+                        <cells/>
+                        <connections>
+                            <outlet property="dataSource" destination="2cU-QL-kRh" id="JJb-G7-QFA"/>
+                            <outlet property="delegate" destination="2cU-QL-kRh" id="t4f-Rw-G9u"/>
+                        </connections>
+                    </collectionView>
+                </collectionViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kie-Q1-7yt" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1436" y="769"/>
+        </scene>
         <!--Buy Item DetailsTVC-->
         <scene sceneID="pCG-5n-iLZ">
             <objects>
@@ -215,7 +240,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="GlE-KI-cJ7">
+                        <imageView key="tableHeaderView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" id="GlE-KI-cJ7" customClass="PFImageView">
                             <rect key="frame" x="0.0" y="64" width="600" height="199"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         </imageView>
@@ -233,7 +258,7 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="selectedImage" destination="qn2-gz-Tw8" id="g25-gz-26C"/>
+                        <outlet property="selectedImage" destination="GlE-KI-cJ7" id="la7-UQ-3L3"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BLz-a5-mdb" userLabel="First Responder" sceneMemberID="firstResponder"/>

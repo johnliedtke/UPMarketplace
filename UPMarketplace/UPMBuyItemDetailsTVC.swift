@@ -10,5 +10,9 @@ import UIKit
 
 class UPMBuyItemDetailsTVC: UITableViewController {
 
-    @IBOutlet var selectedImage: UITableView!
+    @IBOutlet var selectedImage: PFImageView!
+    var cellInfo: UICollectionViewCell!
+    
+    
+    
 }

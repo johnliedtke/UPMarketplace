@@ -26,6 +26,7 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
   }
   
   // MARK: - Public Methods
@@ -67,6 +68,7 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
     
     // Grab the picture-file and retrieve it from parse
     var picture = object["picture"] as? PFFile
+    
     cell.listingImageView.file = listing.picture
     cell.listingImageView.loadInBackground()
     

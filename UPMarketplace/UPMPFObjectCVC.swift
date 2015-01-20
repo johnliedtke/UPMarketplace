@@ -114,6 +114,8 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
 
     return self.collectionView(collectionView, cellForItemAtIndexPath: indexPath, object: objects[indexPath.row])
   }
+    
+   
   
   // MARK: - Private Methods
   func refreshControlAction(sender: AnyObject) {
