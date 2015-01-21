@@ -8,18 +8,23 @@
 
 import UIKit
 
+
+
 class UPMBuyItemDetailsTVC: UITableViewController {
 
 
 
-   // var itemObject: PFObject
+   //var itemObject: PFObject
     @IBOutlet var selectedImage: PFImageView!
+
 
 
     required init(coder aDecoder: NSCoder!)
     {
         super.init(coder: aDecoder)
     }
+    
+    
     
 
     

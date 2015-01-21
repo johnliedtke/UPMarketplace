@@ -25,8 +25,7 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
            var listing = objects[indexPath.row]
            //var picture = listing["picture"] as? PFFile
            // var title = listing["title"] as? String
-            
-            self.performSegueWithIdentifier("viewItemDetail", sender: self)
+        self.performSegueWithIdentifier("viewItemDetail", sender: self)
             
         }
 //    func collectionView(collection: UICollectionView, selectedItemIndex: NSIndexPath)
