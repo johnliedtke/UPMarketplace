@@ -235,7 +235,14 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         if listing?.photo != nil {
           cell.displayImageView.image = listing?.photo
         }
-
+        cell.displayImageViewTapped = { (sender: AnyObject) -> Void in
+          self.pushImagePickerVC()
+          return
+        }
+        cell.titleLabelTapped = { (sender: AnyObject) -> Void in
+          self.pushTitleVC()
+          return;
+        }
         return cell
       case CellSection.Required:
         let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell

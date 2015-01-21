@@ -17,7 +17,7 @@ struct UPMBuyGridCellConstants {
   a UPMBuyGridCVC. The cell is linked to the UPMBuyGrideCell.xib
 */
 class UPMBuyGridCell: UICollectionViewCell {
-
+  
   // MARK: - Public Properties
   
   /// Reference to the imageView at the top of the cell.

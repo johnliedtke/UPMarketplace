@@ -38,7 +38,7 @@ public class UPMListing: PFObject  {
   
   /// The image for a listing stored as a PFFile
   @NSManaged public var picture: PFFile?
-  
+
   /// Returns the image for a listing
   var photo: UIImage?
   

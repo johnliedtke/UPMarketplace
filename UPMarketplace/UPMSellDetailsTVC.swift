@@ -9,7 +9,18 @@
 import UIKit
 import SellUI
 
+/**
+  Delegate protocol to be followed by a controller that wants to recieve updates
+  about changes made in in UPMSellDetailsTVC subclass.
+*/
 protocol UPMSellDetailsTVCDelegate {
+  
+  /**
+  Receives updates that are made in a UPMSellDetailsTVC subclass
+  
+  :param: details Updated description of details.
+  :param: isComplete Whether all required items are complete.
+  */
   func didDetailsUpdate(details: String, isComplete: Bool)
 }
 

@@ -3,6 +3,12 @@ import UIKit
 /**
   Used to display PFObjects from parse. Fetches data in a "pagination" style.
   However, pages are automatically loaded for an endless-scroll feel.
+  Notes:
+
+    - Must override collectionView(_:didSelectItemAtIndexPath:withObject:) to provide
+      a cell to the datasource.
+    - Override collectionView(_:didSelectItemAtIndexPath:withObject:) to handle
+      selection of cells.
   */
 class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
   
@@ -53,7 +59,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
     }
   }
   
-  /// Display label when there is no data
+  /// Display message label when there is no data
   func displayNoDataAvailable() -> Void {
     var messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: view.bounds.size.height))
     
@@ -97,6 +103,18 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
       }
       return objects.count
   }
+
+  /// Obtains cell from other method... Provides object.
+  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+
+    return self.collectionView(collectionView, cellForItemAtIndexPath: indexPath, object: objects[indexPath.row])
+  }
+  
+  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    self.collectionView(collectionView, didSelectItemAtIndexPath: indexPath, withObject: objects[indexPath.row])
+  }
+  
+  // MARK: - Methods to Override
   
   /**
   Must override to provide to a UICollectionViewCell
@@ -108,22 +126,32 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UICollectionViewCell {
     return UICollectionViewCell()
   }
-
-  /// Obtains cell from other method... Provides object.
-  override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-
-    return self.collectionView(collectionView, cellForItemAtIndexPath: indexPath, object: objects[indexPath.row])
+  
+  /**
+  Override to handle selection of cells.
+  
+  :param: indexPath The indexPath of the selected cell.
+  :param: collectionView The collection view of the selected cell.
+  :param: object PFObject corresponding to selected cell/indexPath.
+  */
+  func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
+    
   }
     
    
   
   // MARK: - Private Methods
+  
+  /// Pull to refresh action
   func refreshControlAction(sender: AnyObject) {
     isRefreshing = true
     performQuery()
   }
-  
-  /// Uses performQuery() to fetch data from parse in background.
+
+  /**
+  Fetches PFObjects according to the query returned from query(). Handles
+  both pullToRefresh and auto-loading from bottom.
+  */
   func performQuery() -> Void {
     var queryToPeform = query()
     
@@ -152,12 +180,13 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
       } else {
         // error
       }
-      //self.objects.removeAll(keepCapacity: false)
       self.objectsDidLoad(error)
     } // end block
-  }
+  } // end performQuery()
   
-  /// Prepare for fetching data from parse
+  /**
+  Prepare for fetching data from parse by displaying an activity indicator.
+  */
   func objectsWillLoad() -> Void {
     // Begin loading objects
     isLoading = true
@@ -194,7 +223,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
     collectionView.reloadData()
   }
   
-  // MARK: Sroll View Delegate
+  // MARK: - Sroll View Delegate
   
   /// When we hit the end of the scrollView, fetch more items!
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
