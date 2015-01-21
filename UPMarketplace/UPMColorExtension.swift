@@ -10,9 +10,9 @@ import Foundation
 import UIKit
 
 /**
-Extra colors for the application. Defined are the standard colors the 
-application will use throughtout the app. All are class methods that can
-be accessed via the UIColor class. e.g. UIColor.flatLightGrayColor()
+  Extra colors for the application. Defined are the standard colors the
+  application will use throughtout the app. All are class methods that can
+  be accessed via the UIColor class. e.g. UIColor.flatLightGrayColor()
 */
 extension UIColor {
     
@@ -124,7 +124,5 @@ extension UIColor {
     return UIColor(red: 155.0/255.0, green: 155.0/255.0, blue: 155.0/255.0, alpha: 1.0)
   }
 
-
-  
   
 }
