@@ -10,6 +10,11 @@ import UIKit
 
 class UPMBuyItemDetailsTVC: UITableViewController {
 
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+
+    var itemObject: PFObject
     @IBOutlet var selectedImage: PFImageView!
     var cellInfo: UICollectionViewCell!
     

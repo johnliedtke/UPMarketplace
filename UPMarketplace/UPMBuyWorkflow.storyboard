@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nVZ-M8-68S">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6250" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nVZ-M8-68S">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -193,7 +193,6 @@
                                     <outlet property="itemImage" destination="bcE-Xb-gfQ" id="ONu-3F-ffX"/>
                                     <outlet property="itemPrice" destination="FVh-gU-oXM" id="tha-zr-HZ9"/>
                                     <outlet property="itemTitle" destination="ZMU-2t-Yc3" id="oNc-xd-IGm"/>
-                                    <segue destination="Os4-Iu-AOT" kind="show" identifier="viewItemDetail" id="h8a-W3-g61"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -205,7 +204,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aak-Ug-UcT" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1620" y="80"/>
+            <point key="canvasLocation" x="1304" y="12"/>
         </scene>
         <!--Buy List ItemsCVC-->
         <scene sceneID="l9q-aq-wNy">
@@ -227,10 +226,13 @@
                             <outlet property="delegate" destination="2cU-QL-kRh" id="t4f-Rw-G9u"/>
                         </connections>
                     </collectionView>
+                    <connections>
+                        <segue destination="Os4-Iu-AOT" kind="show" identifier="viewItemDetail" id="dyc-IQ-5Gz"/>
+                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kie-Q1-7yt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1436" y="769"/>
+            <point key="canvasLocation" x="1292" y="703"/>
         </scene>
         <!--Buy Item DetailsTVC-->
         <scene sceneID="pCG-5n-iLZ">
@@ -263,7 +265,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BLz-a5-mdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2484" y="244"/>
+            <point key="canvasLocation" x="2079" y="693"/>
         </scene>
     </scenes>
     <resources>

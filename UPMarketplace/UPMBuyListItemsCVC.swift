@@ -20,10 +20,33 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
   override func viewDidLoad() {
     super.viewDidLoad()
   }
-  
-
-
-
+    
+        override func collectionView(collectionView: UICollectionView, didDeselectItemAtIndexPath indexPath: NSIndexPath) {
+           var listing = objects[indexPath.row]
+           var picture = listing["picture"] as? PFFile
+            var title = listing["title"] as? String
+           // cell.listingImageView.file = listing.picture
+           // let destinationVC = segue.destinationViewController as UPMBuyItemDetailsTVC
+            
+        }
+    func collectionView(collection: UICollectionView, selectedItemIndex: NSIndexPath)
+    {
+        self.performSegueWithIdentifier("viewItemDetail", sender: self)
+    }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if (segue.identifier == "viewItemDetail"){
+//            
+//            let indexPaths : NSArray = (self.collectionView.indexPathsForSelectedItems())!
+//            let indexPath : NSIndexPath = indexPaths[0] as NSIndexPath
+//            
+//            var listing = objects[indexPath.row]
+//            let destinationVC = segue.destinationViewController as UPMBuyItemDetailsTVC
+//            
+//            
+//
+//        }
+//    }
 
 
     

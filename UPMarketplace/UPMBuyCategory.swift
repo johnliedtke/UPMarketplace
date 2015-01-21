@@ -46,34 +46,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       return cell
   }
 
-  func collectionView(collection: UICollectionView, selectedItemIndex: NSIndexPath)
-  {
-      
-      self.performSegueWithIdentifier("choseCategory", sender: self)
-  }
 
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-      if (segue.identifier == "choseCategory"){
-          
-          let indexPaths : NSArray = (self.collectionView?.indexPathsForSelectedItems())!
-          let indexPath : NSIndexPath = indexPaths[0] as NSIndexPath
-          
-          var chosenCategory = categories[indexPath.row]
-          let destinationVC = segue.destinationViewController as UPMBuyOtherGridCVC
-          if (chosenCategory == categories[2]){
-          
-              destinationVC.chosenCategory = "UPMOtherListing"
-          }
-          else{
-              destinationVC.chosenCategory = "Listing"
-          }
-          
-          
-          
-          
-          
-      }
-  }
 
 
 

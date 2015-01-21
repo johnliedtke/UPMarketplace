@@ -66,7 +66,7 @@ class UPMBuyOtherGridCVC: UPMBuyGridCVC {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "viewItemDetail"){
             
-            let indexPaths : NSArray = (self.collectionView?.indexPathsForSelectedItems())!
+            let indexPaths : NSArray = (self.collectionView.indexPathsForSelectedItems())!
             let indexPath : NSIndexPath = indexPaths[0] as NSIndexPath
             var listing = objects[indexPath.row]["picture"] as? PFFile
             
