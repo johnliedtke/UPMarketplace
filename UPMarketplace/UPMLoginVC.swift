@@ -55,6 +55,12 @@ public class UPMLoginVC: UIViewController {
     super.viewDidLoad()
     view.backgroundColor = UIColor.standardBackgroundColor()
     
+    var currentUser = PFUser.currentUser()
+    
+    if currentUser == nil {
+      println("No User")
+    }
+    
     var barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "pop")
     navigationItem.leftBarButtonItem = barButtonItem
     
@@ -172,21 +178,24 @@ public class UPMLoginVC: UIViewController {
     user.signUpInBackgroundWithBlock { (success: Bool, error: NSError!) -> Void in
       
       if success {
-        println("User signed up")
+        // Log out user and notify of email verification requirment
+        PFUser.logOut()
+        var emailAlert = UIAlertController(title: "Success!", message: "You have signed up sucessfully. Please check your email to verify.", preferredStyle: .Alert)
+        var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
+        emailAlert.addAction(okayAction)
+        
       } else {
-        var alertError = UIAlertController(title: "Error", message: "", preferredStyle: UIAlertControllerStyle.Alert)
-        var userInfo: [NSObject: AnyObject?] = error.userInfo!
-        var message = (error.userInfo!["error"]) as NSString
-
+        // Display error
+        var errorString = error.userInfo?[NSString(string: "error")] as NSString
+        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle: UIAlertControllerStyle.Alert)
         var errorAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {
           (alert: UIAlertAction!) -> Void in
+          // Show them registeration again
           self.createAccountText()
         })
         alertError.addAction(errorAction)
         self.presentViewController(alertError, animated: true, completion: nil)
-
       }
-
     }
   }
   
