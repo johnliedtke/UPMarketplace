@@ -178,16 +178,12 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
     }
   }
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-      
-      var barcodeBox = UPMBarcodeBox()
-      barcodeBox.frame = previewView.frame
-      view.addSubview(barcodeBox)
-      
-      modalLogin()
-      //startReading()
-        // Do any additional setup after loading the view.
+  
+  public func didReadBarcode(barcode: String) {
+    var alertController = UIAlertController(title: "Found!", message: barcode, preferredStyle: UIAlertControllerStyle.Alert)
+    var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) { (a: UIAlertAction!) -> Void in
+      self.startReading()
+      return
     }
     alertController.addAction(okayAction)
     presentViewController(alertController, animated: true, completion: nil)
@@ -198,12 +194,7 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
         // Dispose of any resources that can be recreated.
     }
   
-  //TODO: Delete this
-  func modalLogin() -> Void {
-    var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
-    var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
-    presentViewController(loginVC, animated: true, completion: nil)
-  }
+  // MARK: - Camera Focus
   
   // MARK: Camera Focus
   
