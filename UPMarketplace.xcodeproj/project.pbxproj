@@ -468,10 +468,13 @@
 		52AF3D4519E77BBF007E0D22 /* UPMarketplace */ = {
 			isa = PBXGroup;
 			children = (
+				52FEAB261A6853AF00240E25 /* UPMTextField.swift */,
+				52FEAB221A68514100240E25 /* UPMLoginVC.swift */,
+				52998E9A1A68DFD600E35242 /* UPMButton.swift */,
+				52FEAB241A68520900240E25 /* UPMLogin.storyboard */,
 				52FEAAE61A67082000240E25 /* User */,
 				5255EBFE1A0EC72A007207C7 /* Extensions */,
 				52AF3D4C19E77BBF007E0D22 /* SellMain.storyboard */,
-				52FEAB1F1A684A9200240E25 /* Login */,
 				5213298C1A3E2C7B003E345A /* Listings */,
 				5266C65D1A46A1430061FFFB /* Buy */,
 				525B898A1A18994400A7CB6D /* Sell */,
@@ -541,17 +544,6 @@
 				52FEAAE71A67094300240E25 /* UPMUser.swift */,
 			);
 			name = User;
-			sourceTree = "<group>";
-		};
-		52FEAB1F1A684A9200240E25 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				52FEAB261A6853AF00240E25 /* UPMTextField.swift */,
-				52FEAB221A68514100240E25 /* UPMLoginVC.swift */,
-				52998E9A1A68DFD600E35242 /* UPMButton.swift */,
-				52FEAB241A68520900240E25 /* UPMLogin.storyboard */,
-			);
-			name = Login;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
