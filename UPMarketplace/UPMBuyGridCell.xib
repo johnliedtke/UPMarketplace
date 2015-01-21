@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14C94b" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
@@ -52,8 +52,8 @@
                         <nil key="highlightedColor"/>
                         <variation key="default">
                             <mask key="constraints">
-                                <exclude reference="KZv-Ls-N47"/>
                                 <exclude reference="Eia-nL-ifX"/>
+                                <exclude reference="KZv-Ls-N47"/>
                             </mask>
                         </variation>
                     </label>
@@ -91,16 +91,16 @@
             </constraints>
             <variation key="default">
                 <mask key="constraints">
+                    <exclude reference="35o-EG-FQJ"/>
                     <exclude reference="5uC-1H-IBJ"/>
                     <exclude reference="fEB-33-nn1"/>
-                    <exclude reference="35o-EG-FQJ"/>
-                    <exclude reference="pqp-JX-aMv"/>
-                    <exclude reference="lMR-rS-MfY"/>
+                    <exclude reference="4ko-Dg-sre"/>
+                    <exclude reference="HgS-rd-4iD"/>
                     <exclude reference="MCT-cO-dWp"/>
                     <exclude reference="OLK-Ur-uDx"/>
                     <exclude reference="ZFM-kU-i98"/>
-                    <exclude reference="4ko-Dg-sre"/>
-                    <exclude reference="HgS-rd-4iD"/>
+                    <exclude reference="lMR-rS-MfY"/>
+                    <exclude reference="pqp-JX-aMv"/>
                     <exclude reference="hVF-24-EUV"/>
                     <exclude reference="lr1-aH-U5R"/>
                 </mask>

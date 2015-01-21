@@ -227,7 +227,7 @@
                         </connections>
                     </collectionView>
                     <connections>
-                        <segue destination="Os4-Iu-AOT" kind="show" identifier="viewItemDetail" id="dyc-IQ-5Gz"/>
+                        <segue destination="Os4-Iu-AOT" kind="show" identifier="viewItemDetail" id="ai8-dj-ItX"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kie-Q1-7yt" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -265,7 +265,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BLz-a5-mdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2079" y="693"/>
+            <point key="canvasLocation" x="1900" y="654"/>
         </scene>
     </scenes>
     <resources>
