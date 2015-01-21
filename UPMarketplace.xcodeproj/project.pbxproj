@@ -14,6 +14,9 @@
 		5200D4AB1A48FE2D0079ED9A /* UPMBarcodeScanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */; };
 		5200D4AD1A4903210079ED9A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5200D4AC1A4903210079ED9A /* AVFoundation.framework */; };
 		5200D4AF1A50A63A0079ED9A /* UPMBarcodeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */; };
+		521313171A70450500F67813 /* UPMLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521313141A70450500F67813 /* UPMLoginVC.swift */; };
+		521313181A70450500F67813 /* UPMLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521313151A70450500F67813 /* UPMLogin.storyboard */; };
+		521313191A70450500F67813 /* UPMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521313161A70450500F67813 /* UPMButton.swift */; };
 		521329881A3E2B1A003E345A /* UPMListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521329841A3E2B1A003E345A /* UPMListing.swift */; };
 		521329891A3E2B1A003E345A /* UPMTextbookListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521329851A3E2B1A003E345A /* UPMTextbookListing.swift */; };
 		5213298A1A3E2B1A003E345A /* UPMOtherListing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521329861A3E2B1A003E345A /* UPMOtherListing.swift */; };
@@ -153,6 +156,9 @@
 		5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBarcodeScanner.xib; sourceTree = "<group>"; };
 		5200D4AC1A4903210079ED9A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBarcodeBox.swift; sourceTree = "<group>"; };
+		521313141A70450500F67813 /* UPMLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMLoginVC.swift; sourceTree = "<group>"; };
+		521313151A70450500F67813 /* UPMLogin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UPMLogin.storyboard; sourceTree = "<group>"; };
+		521313161A70450500F67813 /* UPMButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMButton.swift; sourceTree = "<group>"; };
 		521329841A3E2B1A003E345A /* UPMListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMListing.swift; sourceTree = "<group>"; };
 		521329851A3E2B1A003E345A /* UPMTextbookListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMTextbookListing.swift; sourceTree = "<group>"; };
 		521329861A3E2B1A003E345A /* UPMOtherListing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMOtherListing.swift; sourceTree = "<group>"; };
@@ -475,6 +481,9 @@
 		52AF3D4519E77BBF007E0D22 /* UPMarketplace */ = {
 			isa = PBXGroup;
 			children = (
+				521313141A70450500F67813 /* UPMLoginVC.swift */,
+				521313151A70450500F67813 /* UPMLogin.storyboard */,
+				521313161A70450500F67813 /* UPMButton.swift */,
 				52FEAAE61A67082000240E25 /* User */,
 				5255EBFE1A0EC72A007207C7 /* Extensions */,
 				52AF3D4C19E77BBF007E0D22 /* SellMain.storyboard */,
@@ -714,6 +723,7 @@
 				5266C6631A46ADA60061FFFB /* UPMBuy.storyboard in Resources */,
 				52176EC01A6ECE3400ACCFA9 /* UPMBuyGridCell.xib in Resources */,
 				52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */,
+				521313181A70450500F67813 /* UPMLogin.storyboard in Resources */,
 				521329901A3E38EC003E345A /* UPMSellTextbook.storyboard in Resources */,
 				5228B86D1A19B17E004AED8C /* UPMSellTitleCell.xib in Resources */,
 				5200D4AB1A48FE2D0079ED9A /* UPMBarcodeScanner.xib in Resources */,
@@ -805,6 +815,7 @@
 				52176EBF1A6ECE3400ACCFA9 /* UPMBuyGridCell.swift in Sources */,
 				5200D4AA1A48FE2D0079ED9A /* UPMBarcodeScanner.swift in Sources */,
 				5266C6691A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift in Sources */,
+				521313171A70450500F67813 /* UPMLoginVC.swift in Sources */,
 				525B89821A17FC9E00A7CB6D /* UPMSellDescriptionTextView.swift in Sources */,
 				F12FCE3A1A68F7AA00D5A441 /* UPMBuyCategoryCell.swift in Sources */,
 				524F40AC1A104D54002B47B6 /* UPMSellItemContainer.swift in Sources */,
@@ -818,6 +829,7 @@
 				5255EC001A0EC7A6007207C7 /* UPMColorExtension.swift in Sources */,
 				5266C6611A46A3D30061FFFB /* UPMBuyGridCVC.swift in Sources */,
 				52E571681A1DD8B90056FCD8 /* UPMSellOtherTVC.swift in Sources */,
+				521313191A70450500F67813 /* UPMButton.swift in Sources */,
 				521329891A3E2B1A003E345A /* UPMTextbookListing.swift in Sources */,
 				5213298A1A3E2B1A003E345A /* UPMOtherListing.swift in Sources */,
 				5228B8711A1D34F7004AED8C /* UPMSellImagePickerVC.swift in Sources */,
