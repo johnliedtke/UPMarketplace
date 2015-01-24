@@ -19,6 +19,12 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    //TODO: DELETE
+    var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
+    var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
+    presentViewController(loginVC, animated: true, completion: nil)
+    
   }
   
   override func changeDefaults() {
