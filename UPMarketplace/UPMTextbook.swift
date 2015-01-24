@@ -26,7 +26,7 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   
   /// The professor that assigned the textbook
   @NSManaged public var professor: String?
-  
+
   /// The course the textbook was used in. e.g. CS301
   @NSManaged public var course: String?
   
