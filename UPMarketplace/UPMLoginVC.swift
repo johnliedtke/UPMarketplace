@@ -64,6 +64,21 @@ public class UPMLoginVC: UIViewController {
     var barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "pop")
     navigationItem.leftBarButtonItem = barButtonItem
     
+    
+    
+    
+    
+    
+    
+    //TODO: DELETE
+    var dict = ["to": "jcliedtke@gmail.com", "from": "liedtke15@up.edu", "subject": "Meow meow", "message": "Hello World!"]
+    PFCloud.callFunction("sendEmail", withParameters: dict)
+    PFCloud.callFunctionInBackground("sendEmail", withParameters: dict) { (result, error) -> Void in
+      println(error.localizedDescription)
+    }
+
+    
+    
   }
   func pop() -> Void {
     dismissViewControllerAnimated(true, completion: nil)
@@ -183,6 +198,7 @@ public class UPMLoginVC: UIViewController {
         var emailAlert = UIAlertController(title: "Success!", message: "You have signed up sucessfully. Please check your email to verify.", preferredStyle: .Alert)
         var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil)
         emailAlert.addAction(okayAction)
+        self.presentViewController(emailAlert, animated: true, completion: nil)
         
       } else {
         // Display error
@@ -249,11 +265,9 @@ public class UPMLoginVC: UIViewController {
     return (error == "", error)
   }
   
-  
-  
-  
   //TODO: Implement
   @IBAction func forgotPasswordPressed(sender: UIButton) {
+
     
   }
 
