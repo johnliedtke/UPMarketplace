@@ -130,6 +130,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   /**
   Override to handle selection of cells.
   
+
   :param: indexPath The indexPath of the selected cell.
   :param: collectionView The collection view of the selected cell.
   :param: object PFObject corresponding to selected cell/indexPath.
