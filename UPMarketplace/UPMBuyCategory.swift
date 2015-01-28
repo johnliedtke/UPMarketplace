@@ -45,7 +45,19 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       
       return cell
   }
-
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
+        
+//        var listing = object as UPMListing
+//        
+//        let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
+//        var buyCategoryVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyList")
+//        buyCategoryVC.chosenCategory = listing
+//        
+//        //var picture = listing["picture"] as? PFFile
+//        // var title = listing["title"] as? String
+//        self.performSegueWithIdentifier("viewItemDetail", sender: self)
+    }
 
 
 
