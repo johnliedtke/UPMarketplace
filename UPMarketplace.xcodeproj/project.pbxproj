@@ -112,6 +112,14 @@
 		F12FCE361A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F12FCE351A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard */; };
 		F12FCE381A68F6AB00D5A441 /* UPMBuyCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12FCE371A68F6AB00D5A441 /* UPMBuyCategory.swift */; };
 		F12FCE3A1A68F7AA00D5A441 /* UPMBuyCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */; };
+		F1478DC61A7983B0008C3621 /* UPMBuyItemImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */; };
+		F1478DC71A7983B0008C3621 /* UPMBuyItemImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */; };
+		F1478DCA1A7983D1008C3621 /* UPMBuyItemTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */; };
+		F1478DCB1A7983D1008C3621 /* UPMBuyItemTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DC91A7983D1008C3621 /* UPMBuyItemTitleCell.xib */; };
+		F1478DCE1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DCC1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift */; };
+		F1478DCF1A7983FC008C3621 /* UPMBuyItemDescriptionCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DCD1A7983FC008C3621 /* UPMBuyItemDescriptionCell.xib */; };
+		F1478DD21A798447008C3621 /* UPMBuyItemFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DD01A798447008C3621 /* UPMBuyItemFieldCell.swift */; };
+		F1478DD31A798447008C3621 /* UPMBuyItemFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DD11A798447008C3621 /* UPMBuyItemFieldCell.xib */; };
 		F1497C4B1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift */; };
 		F14BDB6E1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */; };
 /* End PBXBuildFile section */
@@ -263,6 +271,14 @@
 		F12FCE351A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UPMBuyWorkflow.storyboard; sourceTree = "<group>"; };
 		F12FCE371A68F6AB00D5A441 /* UPMBuyCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyCategory.swift; sourceTree = "<group>"; };
 		F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyCategoryCell.swift; sourceTree = "<group>"; };
+		F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemImageCell.swift; sourceTree = "<group>"; };
+		F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBuyItemImageCell.xib; sourceTree = "<group>"; };
+		F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemTitleCell.swift; sourceTree = "<group>"; };
+		F1478DC91A7983D1008C3621 /* UPMBuyItemTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBuyItemTitleCell.xib; sourceTree = "<group>"; };
+		F1478DCC1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemDescriptionCell.swift; sourceTree = "<group>"; };
+		F1478DCD1A7983FC008C3621 /* UPMBuyItemDescriptionCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBuyItemDescriptionCell.xib; sourceTree = "<group>"; };
+		F1478DD01A798447008C3621 /* UPMBuyItemFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemFieldCell.swift; sourceTree = "<group>"; };
+		F1478DD11A798447008C3621 /* UPMBuyItemFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBuyItemFieldCell.xib; sourceTree = "<group>"; };
 		F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyListItemsCVC.swift; sourceTree = "<group>"; };
 		F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemDetailsTVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -458,6 +474,14 @@
 				F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */,
 				F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift */,
 				F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */,
+				F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */,
+				F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */,
+				F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */,
+				F1478DC91A7983D1008C3621 /* UPMBuyItemTitleCell.xib */,
+				F1478DCC1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift */,
+				F1478DCD1A7983FC008C3621 /* UPMBuyItemDescriptionCell.xib */,
+				F1478DD01A798447008C3621 /* UPMBuyItemFieldCell.swift */,
+				F1478DD11A798447008C3621 /* UPMBuyItemFieldCell.xib */,
 			);
 			name = Buy;
 			sourceTree = "<group>";
@@ -784,10 +808,14 @@
 				52176EC01A6ECE3400ACCFA9 /* UPMBuyGridCell.xib in Resources */,
 				52CA48F41A743D7F00073F2F /* UPMContact.storyboard in Resources */,
 				52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */,
+				F1478DC71A7983B0008C3621 /* UPMBuyItemImageCell.xib in Resources */,
 				521313181A70450500F67813 /* UPMLogin.storyboard in Resources */,
 				521329901A3E38EC003E345A /* UPMSellTextbook.storyboard in Resources */,
 				5228B86D1A19B17E004AED8C /* UPMSellTitleCell.xib in Resources */,
+				F1478DCF1A7983FC008C3621 /* UPMBuyItemDescriptionCell.xib in Resources */,
 				5200D4AB1A48FE2D0079ED9A /* UPMBarcodeScanner.xib in Resources */,
+				F1478DCB1A7983D1008C3621 /* UPMBuyItemTitleCell.xib in Resources */,
+				F1478DD31A798447008C3621 /* UPMBuyItemFieldCell.xib in Resources */,
 				F12FCE361A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard in Resources */,
 				5255EC031A0ED261007207C7 /* UPMSell.storyboard in Resources */,
 				5228B8731A1D3C5D004AED8C /* UPMSellImageOverlay.xib in Resources */,
@@ -898,8 +926,10 @@
 				521313191A70450500F67813 /* UPMButton.swift in Sources */,
 				521329891A3E2B1A003E345A /* UPMTextbookListing.swift in Sources */,
 				5213298A1A3E2B1A003E345A /* UPMOtherListing.swift in Sources */,
+				F1478DD21A798447008C3621 /* UPMBuyItemFieldCell.swift in Sources */,
 				5228B8711A1D34F7004AED8C /* UPMSellImagePickerVC.swift in Sources */,
 				52CA48F61A743DBD00073F2F /* UPMContactVC.swift in Sources */,
+				F1478DCA1A7983D1008C3621 /* UPMBuyItemTitleCell.swift in Sources */,
 				5213298E1A3E3898003E345A /* UPMSellTextbookDetailsISBNTVC.swift in Sources */,
 				5255EC0F1A0EE382007207C7 /* UPMCircleView.swift in Sources */,
 				52CA48F81A743E0B00073F2F /* UPMBuyItemDetailsOtherTVC.swift in Sources */,
@@ -914,6 +944,7 @@
 				5255EC0C1A0EE0AE007207C7 /* ViewController.swift in Sources */,
 				52FEAAE81A67094300240E25 /* UPMUser.swift in Sources */,
 				5266C65F1A46A22D0061FFFB /* UPMPFObjectCVC.swift in Sources */,
+				F1478DC61A7983B0008C3621 /* UPMBuyItemImageCell.swift in Sources */,
 				5200D4A31A47C69F0079ED9A /* UILabelVertical.swift in Sources */,
 				52E5716E1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift in Sources */,
 				521329881A3E2B1A003E345A /* UPMListing.swift in Sources */,
@@ -923,6 +954,7 @@
 				F12FCE381A68F6AB00D5A441 /* UPMBuyCategory.swift in Sources */,
 				5246638F1A4365B100CB18B9 /* UPMSellCheckInput.swift in Sources */,
 				5200D4A51A47D20F0079ED9A /* UPMConstants.swift in Sources */,
+				F1478DCE1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift in Sources */,
 				52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */,
 				5228B86C1A19B174004AED8C /* UPMSellTitleCell.swift in Sources */,
 			);
