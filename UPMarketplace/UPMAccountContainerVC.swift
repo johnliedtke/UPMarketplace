@@ -8,8 +8,31 @@
 
 import UIKit
 
-class UPMAccountContainerVC: UPMContainerVC {
+struct UPMAccountConstants {
+  static let accountStoryboardIdentifier = "UPMAccount"
+  
+}
 
+class UPMAccountContainerVC: UPMContainerVC {
+  
+  // MARK: - Public Properties
+  
+  @IBOutlet var segmentedControl: UISegmentedControl!
+  
+  @IBOutlet var accountView: UIView!
+  
+  // MARK: - Private Properties 
+
+  // MARK: - Public Methods
+  
+  override func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController]) {
+    var accountActivityTVC = UPMAccountActivityTVC()
+    return (accountView, [accountActivityTVC])
+  }
+  
+  @IBAction func segmentedControlDidChange(sender: AnyObject) {
+    
+  }
     override func viewDidLoad() {
         super.viewDidLoad()
 

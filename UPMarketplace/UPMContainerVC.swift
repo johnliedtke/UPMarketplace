@@ -30,7 +30,7 @@ public class UPMContainerVC: UIViewController {
   
   // MARK: - Private Properties
   
-  /// Holds co
+  /// Child controllers
   private var containerViewControllers = [UIViewController]()
   
   /// Is the controller in a state of changing child controllers

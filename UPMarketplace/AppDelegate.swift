@@ -61,12 +61,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controllers.append(navigationController)
     
     // test login modal
+    var accountStoryboard = UIStoryboard(name: UPMAccountConstants.accountStoryboardIdentifier, bundle: nil)
+    var accountNavigation = accountStoryboard.instantiateInitialViewController() as UINavigationController
+    controllers.append(accountNavigation)
     
-    var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
-    
-    var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
-    controllers.append(loginVC)
-
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
     
