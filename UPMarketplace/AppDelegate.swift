@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Buy
     let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)
     var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as UINavigationController
+    var buyNewListingsItem = buyNewListingsVC.tabBarItem
+    buyNewListingsItem.title = "New Listings"
+    buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)
+    buyNewListingsItem.selectedImage = UIImage(named: "newSelected.png")!.imageWithRenderingMode(.AlwaysOriginal)
     controllers.append(buyNewListingsVC)
     
     //Buy Workflow

@@ -130,7 +130,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Sign In" id="hAi-px-l6v">
                         <barButtonItem key="rightBarButtonItem" title="Sign In" id="704-kC-zLh">
-                            <color key="tintColor" red="0.60784313725490191" green="0.34901960784313724" blue="0.043137254901960784" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="tintColor" red="0.60784313725490191" green="0.34901960784313724" blue="0.71372549019607845" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
                                 <action selector="signInPressed:" destination="yiO-0h-CXr" id="9Xz-s7-Zza"/>
                             </connections>

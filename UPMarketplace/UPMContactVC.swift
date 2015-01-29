@@ -19,6 +19,14 @@ class UPMContactVC: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
+  
+  
+  
+  func sendEmail() {
+    
+    PFCloud.callFunction("sendEmail", withParameters: nil)
+    
+  }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
