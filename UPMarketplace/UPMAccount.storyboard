@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="vd9-3Y-eHb">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -32,23 +33,45 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="THe-Xm-grF">
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="THe-Xm-grF">
                                 <rect key="frame" x="8" y="72" width="584" height="29"/>
                                 <segments>
                                     <segment title="Activity"/>
                                     <segment title="Reserved"/>
                                     <segment title="Selling"/>
                                 </segments>
+                                <color key="tintColor" red="0.60784313729999995" green="0.34901960780000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="segmentedControlDidChange:" destination="uGp-e5-TzM" eventType="valueChanged" id="0bE-dU-TDj"/>
                                 </connections>
                             </segmentedControl>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="evF-Rq-I4G">
-                                <rect key="frame" x="8" y="108" width="584" height="472"/>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="evF-Rq-I4G">
+                                <rect key="frame" x="0.0" y="108" width="600" height="492"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="48c-TY-Fqh" firstAttribute="top" secondItem="evF-Rq-I4G" secondAttribute="bottom" constant="20" id="2wK-0k-PfZ"/>
+                            <constraint firstItem="THe-Xm-grF" firstAttribute="top" secondItem="IkE-ro-KtS" secondAttribute="bottom" constant="8" id="BAc-98-Y9y"/>
+                            <constraint firstItem="THe-Xm-grF" firstAttribute="leading" secondItem="s95-gR-8d7" secondAttribute="leadingMargin" constant="-8" id="Rky-So-oME"/>
+                            <constraint firstItem="48c-TY-Fqh" firstAttribute="top" secondItem="evF-Rq-I4G" secondAttribute="bottom" id="Sjd-Yd-LvA"/>
+                            <constraint firstItem="evF-Rq-I4G" firstAttribute="top" secondItem="THe-Xm-grF" secondAttribute="bottom" constant="8" id="X5G-Xa-bo8"/>
+                            <constraint firstItem="evF-Rq-I4G" firstAttribute="leading" secondItem="s95-gR-8d7" secondAttribute="leadingMargin" constant="-8" id="ZcL-Tt-U3R"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="THe-Xm-grF" secondAttribute="trailing" constant="-8" id="cxI-Z7-NUj"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="evF-Rq-I4G" secondAttribute="trailing" constant="-8" id="dlS-sW-siU"/>
+                            <constraint firstItem="evF-Rq-I4G" firstAttribute="leading" secondItem="s95-gR-8d7" secondAttribute="leading" id="g9X-an-Xwm"/>
+                            <constraint firstItem="evF-Rq-I4G" firstAttribute="top" secondItem="THe-Xm-grF" secondAttribute="bottom" constant="8" id="lLT-Rt-QIV"/>
+                            <constraint firstAttribute="trailing" secondItem="evF-Rq-I4G" secondAttribute="trailing" id="pUa-y5-qZW"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="X5G-Xa-bo8"/>
+                                <exclude reference="ZcL-Tt-U3R"/>
+                                <exclude reference="dlS-sW-siU"/>
+                                <exclude reference="2wK-0k-PfZ"/>
+                            </mask>
+                        </variation>
                     </view>
                     <navigationItem key="navigationItem" title="Account" id="qdg-gf-Jfj"/>
                     <connections>

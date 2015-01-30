@@ -1,12 +1,30 @@
 //
-//  UPMContainerVC.swift
-//  UPMarketplace
+//  ViewController.swift
+//  ContainerViews
 //
-//  Created by John Liedtke on 1/28/15.
-//  Copyright (c) 2015 UP Marketplace. All rights reserved.
+//  Created by John Liedtke on 1/27/15.
+//  Copyright (c) 2015 John Liedtke. All rights reserved.
 //
 
 import UIKit
+
+
+/**
+Subclasses of UPMContainerVC should adhere to this protocol.
+*/
+public protocol UPMContainerDelegate {
+  /**
+  Initialize all container controllers and return them along with the view to be used
+  for the container view. Method gets called in viewDidLoad() of UPMContainerVC.
+  - Do not call this method on your own.
+  - Other customization may be done here, e.g. adjusting transitionDuration
+  
+  :returns: containerView View to display view controllers
+  :returns: controllers View controllers to display in containerView
+  */
+  func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController])
+}
+
 
 /**
 A view controller with extended functionality for easily managing
@@ -17,7 +35,13 @@ public class UPMContainerVC: UIViewController {
   // MARK: - Public Properties
   
   /// Where you want to display the child controller's view
-  var containerView: UIView!
+  
+  /// Delegate
+  var delegate: UPMContainerDelegate! {
+    didSet {
+      addInitialController()
+    }
+  }
   
   /// Enable left and right transitions
   var isLeftRightTransition = true
@@ -30,41 +54,25 @@ public class UPMContainerVC: UIViewController {
   
   // MARK: - Private Properties
   
-  /// Child controllers
-  private var containerViewControllers = [UIViewController]()
+  /// Holds co
+  lazy private var containerViewControllers: [UIViewController] = {
+    var controllers = self.delegate.setUpViewControllers().controllers
+    return controllers
+    }()
+  
+  lazy private var containerView: UIView = {
+    var view = self.delegate.setUpViewControllers().containerView
+    return view
+    }()
+  
   
   /// Is the controller in a state of changing child controllers
   private var isTransitioning = false
   
   // MARK: - Public Methods
   
-  /**
-  MUST OVERRIDE
-  Initialize all container controllers and return them along with the view to be used
-  for the container view. Method gets called in viewDidLoad() once.
-  - Do not call this method on your own.
-  - Other customization may be done here, e.g. adjusting transitionDuration
-  
-  :returns: containerView View to display view controllers
-  :returns: controllers View controllers to display in containerView
-  */
-  public func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController]) {
-    
-    return (UIView(), [UIViewController]())
-  }
-  
   override public func viewDidLoad() {
     super.viewDidLoad()
-    // Load child view controllers
-    containerView = setUpViewControllers().containerView
-    containerViewControllers = setUpViewControllers().controllers
-    
-    // Add initial controller
-    currentViewController = containerControllerAtIndex(0)
-    addChildViewController(currentViewController)
-    containerView.addSubview(currentViewController.view)
-    currentViewController.didMoveToParentViewController(self)
-    
   }
   
   /**
@@ -140,6 +148,13 @@ public class UPMContainerVC: UIViewController {
   }
   
   // MARK: - Private Methods
+  
+  private func addInitialController() {
+    currentViewController = containerControllerAtIndex(0)
+    addChildViewController(currentViewController)
+    containerView.addSubview(currentViewController.view)
+    currentViewController.didMoveToParentViewController(self)
+  }
   
   private func containerControllerAtIndex(index: Int) -> UIViewController? {
     if index < 0 && index > containerViewControllers.count {

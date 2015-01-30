@@ -87,12 +87,12 @@ public class UPMLoginVC: UIViewController {
     
     
     //TODO: DELETE
-    var dict = ["to": "jcliedtke@gmail.com", "from": "liedtke15@up.edu", "subject": "Meow meow", "message": "Hello World!"]
-    PFCloud.callFunction("sendEmail", withParameters: dict)
-    PFCloud.callFunctionInBackground("sendEmail", withParameters: dict) { (result, error) -> Void in
-      println(error.localizedDescription)
-    }
-
+//    var dict = ["to": "jcliedtke@gmail.com", "from": "liedtke15@up.edu", "subject": "Meow meow", "message": "Hello World!"]
+//    PFCloud.callFunction("sendEmail", withParameters: dict)
+//    PFCloud.callFunctionInBackground("sendEmail", withParameters: dict) { (result, error) -> Void in
+//      println(error.localizedDescription)
+//    }
+//
     
     
   }
