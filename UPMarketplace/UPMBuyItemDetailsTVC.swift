@@ -16,6 +16,8 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   let titleCellIdentifier = "UPMBuyItemTitleCell"
   let fieldCellIdentifier = "UPMBuyItemFieldCell"
   let descriptionCellIdentifier = "UPMBuyItemDescriptionCell"
+  
+  var numberOfAttributes = 0
 
   // MARK: - Public Properties
   var listing: UPMListing?
@@ -41,10 +43,18 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    var testButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "")
+   
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+    var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+    var barItems = [contactButton, reserveButton ]
     
-    navigationController?.setToolbarItems([testButton], animated: true)
+    self.setToolbarItems(barItems, animated: true)
     navigationController?.toolbarHidden = false
+    tableView.reloadData()
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -101,8 +111,22 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
+    let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
+    switch Section{
+      
+      case tableCellSection.DescriptionSection:
+        let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
+        var buyDescriptionVC: UPMBuyItemDescriptionVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyItemDescriptionVC") as UPMBuyItemDescriptionVC
+    
+    
+    buyDescriptionVC.descriptionS = (listing?.descriptionS)!
+        navigationController?.pushViewController(buyDescriptionVC, animated: true)
+      
+      
+    default:
+      break
+    }
   }
-  
 //  override func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
 //  {
 //    
