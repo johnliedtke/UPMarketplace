@@ -5,8 +5,6 @@
 #import <Parse/Parse.h>
 #import <Parse/PFObject+Subclass.h>
 #import "MBProgressHUD.h"
-#import "AFNetworking.h"
-#import "AFHTTPSessionManager.h"
 #import "IQUIView+IQKeyboardToolbar.h"
 #import "IQBarButtonItem.h"
 #import <Bolts/Bolts.h>

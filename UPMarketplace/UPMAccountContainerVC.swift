@@ -8,18 +8,40 @@
 
 import UIKit
 
-class UPMAccountContainerVC: UPMContainerVC {
+struct UPMAccountConstants {
+  static let accountStoryboardIdentifier = "UPMAccount"
+  
+}
 
+class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
+  
+  // MARK: - Public Properties
+  
+  @IBOutlet var segmentedControl: UISegmentedControl!
+  
+  @IBOutlet var accountView: UIView!
+  
+  // MARK: - Private Properties 
+  
+  // MARK: - Public Methods
+  
+  func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController]) {
+    var accountActivityTVC = UPMAccountActivityTVC(style: .Plain, className: "UPMOtherListing")
+      accountActivityTVC.view.frame = CGRectMake(0, 0, accountView.bounds.width, accountView.bounds.height)
+    return (accountView, [accountActivityTVC])
+  }
+  
+  @IBAction func segmentedControlDidChange(sender: AnyObject) {
+    
+  }
     override func viewDidLoad() {
-        super.viewDidLoad()
+      super.viewDidLoad()
+      delegate = self
 
         // Do any additional setup after loading the view.
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
+
     
 
     /*

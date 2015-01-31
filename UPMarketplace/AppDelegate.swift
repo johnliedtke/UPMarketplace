@@ -38,6 +38,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Buy
     let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)
     var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as UINavigationController
+    var buyNewListingsItem = buyNewListingsVC.tabBarItem
+    buyNewListingsItem.title = "New Listings"
+    buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)
+    buyNewListingsItem.selectedImage = UIImage(named: "newSelected.png")!.imageWithRenderingMode(.AlwaysOriginal)
     controllers.append(buyNewListingsVC)
     
     //Buy Workflow
@@ -61,12 +65,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controllers.append(navigationController)
     
     // test login modal
+    var accountStoryboard = UIStoryboard(name: UPMAccountConstants.accountStoryboardIdentifier, bundle: nil)
+    var accountNavigation = accountStoryboard.instantiateInitialViewController() as UINavigationController
+    controllers.append(accountNavigation)
     
-    var loginStoryboard = UIStoryboard(name: "UPMLogin", bundle: nil)
-    
-    var loginVC = loginStoryboard.instantiateInitialViewController() as UINavigationController
-    controllers.append(loginVC)
-
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
     

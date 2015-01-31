@@ -32,7 +32,7 @@ class UPMUser: PFUser, PFSubclassing {
   :return: Email verified
   */
   func isEmailVerified() -> Bool {
-    self["emailVerified"].fetchIfNeeded()
+    //self["emailVerified"].fetchIfNeeded()
     return self["emailVerified"] as Bool
   }
   
