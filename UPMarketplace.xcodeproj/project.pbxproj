@@ -91,7 +91,6 @@
 		52A3DAFC1A7D76A200D8E485 /* UPMAccountActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A3DAFB1A7D76A200D8E485 /* UPMAccountActivityCell.swift */; };
 		52A3DAFE1A7D76F100D8E485 /* UPMAccountListingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A3DAFD1A7D76F100D8E485 /* UPMAccountListingCell.swift */; };
 		52A3DB011A7D77AF00D8E485 /* UPMPFQueryTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A3DB001A7D77AF00D8E485 /* UPMPFQueryTableVC.swift */; };
-		52A7E0391A536BB5004FA345 /* UPMGoogleBookHTTPClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52A7E0381A536BB5004FA345 /* UPMGoogleBookHTTPClient.swift */; };
 		52AF3D4919E77BBF007E0D22 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */; };
 		52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D4F19E77BBF007E0D22 /* Images.xcassets */; };
 		52AF3D5319E77BBF007E0D22 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D5119E77BBF007E0D22 /* LaunchScreen.xib */; };
@@ -250,7 +249,6 @@
 		52A3DAFB1A7D76A200D8E485 /* UPMAccountActivityCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMAccountActivityCell.swift; sourceTree = "<group>"; };
 		52A3DAFD1A7D76F100D8E485 /* UPMAccountListingCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMAccountListingCell.swift; sourceTree = "<group>"; };
 		52A3DB001A7D77AF00D8E485 /* UPMPFQueryTableVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMPFQueryTableVC.swift; sourceTree = "<group>"; };
-		52A7E0381A536BB5004FA345 /* UPMGoogleBookHTTPClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMGoogleBookHTTPClient.swift; sourceTree = "<group>"; };
 		52AF3D4319E77BBF007E0D22 /* UPMarketplace.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UPMarketplace.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		52AF3D4719E77BBF007E0D22 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		52AF3D4819E77BBF007E0D22 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -390,7 +388,6 @@
 				524F40A91A104448002B47B6 /* UPMSellItem.swift */,
 				524F40AB1A104D54002B47B6 /* UPMSellItemContainer.swift */,
 				5246638E1A4365B100CB18B9 /* UPMSellCheckInput.swift */,
-				52A7E0381A536BB5004FA345 /* UPMGoogleBookHTTPClient.swift */,
 				5200D4A81A48FE2D0079ED9A /* UPMBarcodeScanner.swift */,
 				5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */,
 				5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */,
@@ -950,7 +947,6 @@
 				5255EC0E1A0EE0DD007207C7 /* DefaultVC.swift in Sources */,
 				524663891A3F683E00CB18B9 /* UPMTextbook.swift in Sources */,
 				525B89891A18271500A7CB6D /* UPMSellPriceFormatTVC.swift in Sources */,
-				52A7E0391A536BB5004FA345 /* UPMGoogleBookHTTPClient.swift in Sources */,
 				529F391A1A79889B000ED764 /* UPMAccountContainerVC.swift in Sources */,
 				525C31091A10A08800C47790 /* UPMViewControllerExtension.swift in Sources */,
 				524663911A43814F00CB18B9 /* UPMSellTextbookDetailsCourseTVC.swift in Sources */,
