@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var buyNewListingsItem = buyNewListingsVC.tabBarItem
     buyNewListingsItem.title = "New Listings"
     buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)
-    buyNewListingsItem.selectedImage = UIImage(named: "newSelected.png")!.imageWithRenderingMode(.AlwaysOriginal)
+    buyNewListingsItem.selectedImage = UIImage(named: "NewSelected.png")!.imageWithRenderingMode(.AlwaysOriginal)
     controllers.append(buyNewListingsVC)
     
     //Buy Workflow
