@@ -21,7 +21,7 @@ class UPMBuyItemTitleCell: UITableViewCell {
     label.numberOfLines = 0
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
-    label.backgroundColor = UIColor.flatDarkBlueColor()
+    
     label.text = "title Label"
     
     return label
@@ -32,7 +32,7 @@ class UPMBuyItemTitleCell: UITableViewCell {
     label.numberOfLines = 0
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
-    label.backgroundColor = UIColor.darkPurpleColor()
+    
     label.text = "Price Label"
     return label
     }()
