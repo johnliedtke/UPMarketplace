@@ -13,12 +13,86 @@ struct UPMBuyItemTitleCellConstants {
   static let reuseIdentifier = "UPMBuyItemTitleCell"
 }
 
-
+@IBDesignable
 class UPMBuyItemTitleCell: UITableViewCell {
-
-  @IBOutlet weak var itemTitleLabel: UILabel!
   
-  @IBOutlet weak var itemPriceLabel: UILabel!
+  lazy var titleLabel: UILabel = {
+    var label = UILabelVertical()
+    label.numberOfLines = 0
+    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    self.contentView.addSubview(label)
+    label.backgroundColor = UIColor.flatDarkBlueColor()
+    label.text = "title Label"
+    
+    return label
+  }()
+  
+  lazy var priceLabel: UILabel = {
+    var label = UILabelVertical()
+    label.numberOfLines = 0
+    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    self.contentView.addSubview(label)
+    label.backgroundColor = UIColor.darkPurpleColor()
+    label.text = "Price Label"
+    return label
+    }()
+  
+  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    
+    
+    
+    var ed = NSDictionary(dictionary: ["priceLabel": priceLabel, "titleLabel": titleLabel])
+    
+    
+    // Horizontal Layout
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-[titleLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-[priceLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+    
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "V:|-[titleLabel]-[priceLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+  }
+
+  required init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    
+    
+    var ed = NSDictionary(dictionary: ["priceLabel": priceLabel, "titleLabel": titleLabel])
+    
+    
+    // Horizontal Layout
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-[titleLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-[priceLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+    
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "V:|-[titleLabel]-[priceLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+  }
   
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -32,8 +106,8 @@ class UPMBuyItemTitleCell: UITableViewCell {
     }
   
   func configureCell(title: String!, price: String!) {
-    itemTitleLabel.text = title
-    itemPriceLabel.text = price
+    titleLabel.text = title
+    priceLabel.text = price
   }
     
 }

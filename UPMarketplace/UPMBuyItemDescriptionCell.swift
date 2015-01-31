@@ -9,6 +9,9 @@
 import UIKit
 
 class UPMBuyItemDescriptionCell: UITableViewCell {
+  
+  
+  
 
     override func awakeFromNib() {
         super.awakeFromNib()

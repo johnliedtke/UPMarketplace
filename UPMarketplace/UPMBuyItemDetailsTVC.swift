@@ -32,10 +32,28 @@ class UPMBuyItemDetailsTVC: UITableViewController {
    // selectedImage.file = listing?.picture
    // selectedImage.loadInBackground()
     
+
+    
+   
+    
+    
     tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
     
     tableView.registerNib(UINib(nibName: titleCellIdentifier, bundle: nil), forCellReuseIdentifier: titleCellIdentifier)
     
+  }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    var testButton = UIBarButtonItem(title: "CONTACT SDFLSADFADSF", style: UIBarButtonItemStyle.Bordered, target: self, action: "")
+    
+    navigationController?.setToolbarItems([testButton], animated: true)
+    navigationController?.toolbarHidden = false
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.toolbarHidden = true
   }
   
   
@@ -75,18 +93,18 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
   }
   
-  override func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
-  {
-    
-    let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
-    switch Section{
-    case tableCellSection.ImageSection:
-      return tableView.frame.height * 0.30
-    default:
-      return UITableViewAutomaticDimension
-    }
-    
-  }
+//  override func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
+//  {
+//    
+//    let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
+//    switch Section{
+//    case tableCellSection.ImageSection:
+//      return tableView.frame.height * 0.30
+//    default:
+//      return UITableViewAutomaticDimension
+//    }
+//    
+//  }
   
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int{

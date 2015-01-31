@@ -14,8 +14,12 @@
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="UPMBuyItemImageCell" translatesAutoresizingMaskIntoConstraints="NO" id="Iew-rv-Bl4" customClass="PFImageView">
+                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="UPMBuyItemImageCell" translatesAutoresizingMaskIntoConstraints="NO" id="Iew-rv-Bl4" customClass="PFImageView">
                         <rect key="frame" x="0.0" y="0.0" width="395" height="201"/>
+                        <constraints>
+                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="201" id="IvI-Bm-iSk"/>
+                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="395" id="sQX-ff-sd2"/>
+                        </constraints>
                     </imageView>
                 </subviews>
                 <constraints>

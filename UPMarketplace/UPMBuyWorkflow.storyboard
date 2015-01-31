@@ -237,10 +237,20 @@
         <!--BuyItemDetails-->
         <scene sceneID="pCG-5n-iLZ">
             <objects>
-                <tableViewController storyboardIdentifier="UPMBuyItemDetails" title="BuyItemDetails" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Os4-Iu-AOT" customClass="UPMBuyItemDetailsTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController"/>
+                <tableViewController storyboardIdentifier="UPMBuyItemDetails" title="BuyItemDetails" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Os4-Iu-AOT" customClass="UPMBuyItemDetailsTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="awj-Ct-rUe">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                        <connections>
+                            <outlet property="dataSource" destination="Os4-Iu-AOT" id="p9z-Qe-aua"/>
+                            <outlet property="delegate" destination="Os4-Iu-AOT" id="sjE-7r-Y5l"/>
+                        </connections>
+                    </tableView>
+                </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BLz-a5-mdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2090" y="687"/>
+            <point key="canvasLocation" x="2213" y="623"/>
         </scene>
     </scenes>
     <resources>
