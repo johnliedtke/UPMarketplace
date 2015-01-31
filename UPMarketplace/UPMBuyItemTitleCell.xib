@@ -2,17 +2,46 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14C106a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="KGk-i7-Jjw" customClass="UPMBuyItemTitleCell" customModule="UPMarketplace" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+        <tableViewCell userInteractionEnabled="NO" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="UPMBuyItemTitleCell" rowHeight="46" id="KGk-i7-Jjw" customClass="UPMBuyItemTitleCell" customModule="UPMarketplace" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="320" height="46"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rTD-kg-iV2">
+                        <rect key="frame" x="0.0" y="1" width="320" height="31"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sgy-Qq-RbO">
+                        <rect key="frame" x="8" y="24" width="93" height="21"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                        <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Sgy-Qq-RbO" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" id="DxP-ak-vcc"/>
+                    <constraint firstItem="rTD-kg-iV2" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-7" id="R2A-dI-bB5"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="rTD-kg-iV2" secondAttribute="trailing" constant="-8" id="Y1b-Os-9kw"/>
+                    <constraint firstItem="rTD-kg-iV2" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="c3I-lb-crg"/>
+                    <constraint firstAttribute="trailingMargin" secondItem="Sgy-Qq-RbO" secondAttribute="trailing" constant="211" id="dpf-82-Lvp"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="Sgy-Qq-RbO" secondAttribute="bottom" constant="-9" id="gIT-oM-4jf"/>
+                    <constraint firstAttribute="bottomMargin" secondItem="rTD-kg-iV2" secondAttribute="bottom" constant="4" id="nHE-4o-6px"/>
+                </constraints>
             </tableViewCellContentView>
+            <connections>
+                <outlet property="itemPriceLabel" destination="Sgy-Qq-RbO" id="sie-MS-BHu"/>
+                <outlet property="itemTitleLabel" destination="rTD-kg-iV2" id="eCC-iV-TwE"/>
+            </connections>
+            <point key="canvasLocation" x="285" y="220"/>
         </tableViewCell>
     </objects>
 </document>

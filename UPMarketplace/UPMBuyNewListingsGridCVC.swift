@@ -36,6 +36,20 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     listingQuery.orderByDescending("createdAt")
     return listingQuery
   }
+  
+  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
+    var listing = object as UPMOtherListing
+    
+    let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
+    var buyDetailVC: UPMBuyItemDetailsTVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyItemDetails") as UPMBuyItemDetailsTVC
+    
+    
+    buyDetailVC.listing = listing
+    navigationController?.pushViewController(buyDetailVC, animated: true)
+    
+    
+  }
+
 
 
 

@@ -237,62 +237,13 @@
         <!--BuyItemDetails-->
         <scene sceneID="pCG-5n-iLZ">
             <objects>
-                <tableViewController storyboardIdentifier="UPMBuyItemDetails" title="BuyItemDetails" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Os4-Iu-AOT" customClass="UPMBuyItemDetailsTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="qn2-gz-Tw8">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <imageView key="tableFooterView" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="picturePlaceHolder" id="GlE-KI-cJ7" customClass="PFImageView">
-                            <rect key="frame" x="0.0" y="64" width="600" height="199"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        </imageView>
-                        <prototypes>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="pIg-No-hMF">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="pIg-No-hMF" id="mCk-i2-zZ8">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HNu-6Z-rZ9">
-                                            <rect key="frame" x="24" y="8" width="33" height="21"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                            <nil key="highlightedColor"/>
-                                        </label>
-                                    </subviews>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="lvz-aq-dPj">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="lvz-aq-dPj" id="jeE-dA-xbJ">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="drc-np-pN0">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="drc-np-pN0" id="K3h-1u-LYo">
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="Os4-Iu-AOT" id="j0x-1h-tmP"/>
-                            <outlet property="delegate" destination="Os4-Iu-AOT" id="U2d-83-GLW"/>
-                        </connections>
-                    </tableView>
-                    <connections>
-                        <outlet property="selectedImage" destination="GlE-KI-cJ7" id="la7-UQ-3L3"/>
-                    </connections>
-                </tableViewController>
+                <tableViewController storyboardIdentifier="UPMBuyItemDetails" title="BuyItemDetails" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Os4-Iu-AOT" customClass="UPMBuyItemDetailsTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController"/>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="BLz-a5-mdb" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2090" y="687"/>
         </scene>
     </scenes>
     <resources>
-        <image name="picturePlaceHolder" width="100" height="100"/>
         <image name="textbook" width="32" height="32"/>
     </resources>
 </document>

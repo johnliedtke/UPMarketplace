@@ -37,7 +37,7 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
 
     let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
     var buyDetailVC: UPMBuyItemDetailsTVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyItemDetails") as UPMBuyItemDetailsTVC
-    var picture = object["picture"] as? PFFile
+    
 
     buyDetailVC.listing = listing
     navigationController?.pushViewController(buyDetailVC, animated: true)

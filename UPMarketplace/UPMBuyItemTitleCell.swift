@@ -8,8 +8,18 @@
 
 import UIKit
 
+
+struct UPMBuyItemTitleCellConstants {
+  static let reuseIdentifier = "UPMBuyItemTitleCell"
+}
+
+
 class UPMBuyItemTitleCell: UITableViewCell {
 
+  @IBOutlet weak var itemTitleLabel: UILabel!
+  
+  @IBOutlet weak var itemPriceLabel: UILabel!
+  
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
@@ -20,5 +30,10 @@ class UPMBuyItemTitleCell: UITableViewCell {
 
         // Configure the view for the selected state
     }
+  
+  func configureCell(title: String!, price: String!) {
+    itemTitleLabel.text = title
+    itemPriceLabel.text = price
+  }
     
 }
