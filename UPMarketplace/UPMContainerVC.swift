@@ -138,6 +138,21 @@ public class UPMContainerVC: UIViewController {
       self.currentViewController.view.frame = CGRectMake(0-width, 0, width, height)
       nextViewController.view.frame = CGRectMake(0, 0, width, height)
       
+      var nextView = nextViewController.view
+      nextView.setTranslatesAutoresizingMaskIntoConstraints(false)
+      
+      var elementsDict = NSDictionary(dictionary: ["nextView": nextView])
+      
+      self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[nextView]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: elementsDict))
+      
+      self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[nextView]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: elementsDict))
+      
+
+
+
+
+
+      
       }) { (finished) -> Void in
         
         self.currentViewController.removeFromParentViewController()
