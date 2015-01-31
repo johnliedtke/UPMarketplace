@@ -100,6 +100,8 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
       objectsInSection?.append(rowIndex)
       sectionIndices[currentSectionKey] = objectsInSection!
     }
+    // Need to refresh to show table cells
+    tableView.reloadData()
   }
   
   override public func objectAtIndexPath(indexPath: NSIndexPath!) -> PFObject! {

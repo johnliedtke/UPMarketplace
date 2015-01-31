@@ -28,10 +28,21 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
   func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController]) {
     var accountActivityTVC = UPMAccountActivityTVC(style: .Plain, className: "UPMOtherListing")
       accountActivityTVC.view.frame = CGRectMake(0, 0, accountView.bounds.width, accountView.bounds.height)
-    return (accountView, [accountActivityTVC])
+    
+    
+    var accountReservedTVC = UPMAccountReservedTVC(style: .Plain, className: "UPMOtherListing")
+    
+  
+    isLeftRightTransition = false
+    
+    
+    
+    return (accountView, [accountActivityTVC, accountReservedTVC])
   }
   
   @IBAction func segmentedControlDidChange(sender: AnyObject) {
+    transitionToViewControllerAtIndex(segmentedControl.selectedSegmentIndex)
+    
     
   }
     override func viewDidLoad() {
@@ -40,8 +51,7 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
 
         // Do any additional setup after loading the view.
     }
-
-
+  
     
 
     /*

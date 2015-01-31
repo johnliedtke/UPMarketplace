@@ -75,6 +75,10 @@ public class UPMContainerVC: UIViewController {
     super.viewDidLoad()
   }
   
+  public override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+  }
+  
   /**
   Transitions to the next view controller in a "circular way".
   */
@@ -135,21 +139,29 @@ public class UPMContainerVC: UIViewController {
     
     transitionFromViewController(currentViewController, toViewController: nextViewController, duration: transitionDuration, options: nil, animations: { () -> Void in
       
-      self.currentViewController.view.frame = CGRectMake(0-width, 0, width, height)
-      nextViewController.view.frame = CGRectMake(0, 0, width, height)
       
       var nextView = nextViewController.view
       nextView.setTranslatesAutoresizingMaskIntoConstraints(false)
       
       var elementsDict = NSDictionary(dictionary: ["nextView": nextView])
+      self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+        "H:|[nextView]|",
+        options: NSLayoutFormatOptions.DirectionLeftToRight,
+        metrics: nil,
+        views: elementsDict))
       
-      self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[nextView]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: elementsDict))
+      self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+        "V:|[nextView]|",
+        options: NSLayoutFormatOptions.DirectionLeftToRight,
+        metrics: nil,
+        views: elementsDict))
       
-      self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[nextView]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: elementsDict))
+      if self.isLeftRightTransition {
+        self.currentViewController.view.frame = CGRectMake(0-width, 0, width, height)
+        nextViewController.view.frame = CGRectMake(0, 0, width, height)
+      }
+
       
-
-
-
 
 
       
@@ -165,10 +177,33 @@ public class UPMContainerVC: UIViewController {
   // MARK: - Private Methods
   
   private func addInitialController() {
+    
     currentViewController = containerControllerAtIndex(0)
     addChildViewController(currentViewController)
     containerView.addSubview(currentViewController.view)
     currentViewController.didMoveToParentViewController(self)
+    
+    
+    var acv = currentViewController.view
+    currentViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
+    var elementsDict = NSDictionary(dictionary: ["acv": acv])
+    
+    
+    containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|[acv]|",
+      options: NSLayoutFormatOptions.DirectionLeftToRight,
+      metrics: nil,
+      views: elementsDict))
+    
+    containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "V:|[acv]|",
+      options: NSLayoutFormatOptions.DirectionLeftToRight,
+      metrics: nil,
+      views: elementsDict))
+    
+
+    
+    
   }
   
   private func containerControllerAtIndex(index: Int) -> UIViewController? {

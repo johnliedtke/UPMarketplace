@@ -63,9 +63,17 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
     cell.statusLabel.text = "Status: Accepted"
     cell.titleLabel.text = listing.title
 
+   // cell.layoutIfNeeded()
     
     return cell
   }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    tableView.reloadData()
+    
+  }
+  
 
   
   

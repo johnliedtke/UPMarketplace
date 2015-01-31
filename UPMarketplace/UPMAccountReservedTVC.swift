@@ -8,38 +8,64 @@
 
 import UIKit
 
-class UPMAccountReservedTVC: UITableViewController {
+class UPMAccountReservedTVC: UPMPFQueryTableVC {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+  // MARK: - Public Properties
+  
+  // MARK: UPMPFQueryTableVC
+  
+  override func queryForTable() -> PFQuery! {
+    var query = PFQuery(className: "UPMOtherListing")
+    
+    return query
+  }
+  
+  // MARK: - Private Properties
+  
+  // MARK: - Public Methods
+  
+  override init!(style: UITableViewStyle, className aClassName: String!) {
+    super.init(style: style, className: "UPMOtherListing")
+    
+  }
+  
+  required internal init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+  }
+  
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+  }
+  
+  
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+  }
+  
+  // MARK - Private Methods
+  
+  
+  // MARK: - Table view data source
+  
+  
+  override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
+    var listing = object as UPMOtherListing
+    
+    if indexPath.section == objects.count {
+      var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
+      return loadMoreCell as PFTableViewCell
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    // MARK: - Table view data source
-
-    override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
-    }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
-        // Return the number of rows in the section.
-        return 0
-    }
-
-    /*
+    
+    //var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")
+    var cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "Meow")
+    
+    cell.statusLabel.text = "RESERVED TVC"
+    cell.titleLabel.text = listing.title
+    
+    
+    return cell
+  }    /*
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
 

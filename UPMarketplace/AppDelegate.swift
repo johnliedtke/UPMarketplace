@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var buyNewListingsItem = buyNewListingsVC.tabBarItem
     buyNewListingsItem.title = "New Listings"
     buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)
-    buyNewListingsItem.selectedImage = UIImage(named: "newSelected.png")!.imageWithRenderingMode(.AlwaysOriginal)
+    buyNewListingsItem.selectedImage = UIImage(named: "NewSelected.png")!.imageWithRenderingMode(.AlwaysOriginal)
     controllers.append(buyNewListingsVC)
     
     //Buy Workflow
@@ -64,10 +64,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     navigationController.viewControllers = [barcodeScanner]
     controllers.append(navigationController)
     
-    // test login modal
+    // Account
     var accountStoryboard = UIStoryboard(name: UPMAccountConstants.accountStoryboardIdentifier, bundle: nil)
     var accountNavigation = accountStoryboard.instantiateInitialViewController() as UINavigationController
     controllers.append(accountNavigation)
+    
+    var accountItem = accountNavigation.tabBarItem
+    accountItem.title = "Account"
+    accountItem.image = UIImage(named: "account.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    
+   // accountItem.selectedImage = UIImage(named: "accountSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+
+    
+    
+    
+    
     
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
