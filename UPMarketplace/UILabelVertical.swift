@@ -26,7 +26,7 @@ stackoverflow
         setNeedsDisplay()
       }
     }
-    
+
     
     override func textRectForBounds(bounds: CGRect, limitedToNumberOfLines: Int) -> CGRect {
       let rect = super.textRectForBounds(bounds, limitedToNumberOfLines: limitedToNumberOfLines)

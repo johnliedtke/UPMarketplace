@@ -8,8 +8,20 @@
 
 import UIKit
 
+struct UPMBuyItemImageCellConstants {
+  static let reuseIdentifier = "UPMBuyItemImageCell"
+}
 class UPMBuyItemImageCell: UITableViewCell {
 
+  @IBOutlet weak var buyItemImage: PFImageView!
+  
+ 
+  
+  override func layoutSubviews() {
+    super.layoutSubviews()
+    buyItemImage.clipsToBounds = true
+     
+  }
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

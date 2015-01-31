@@ -130,6 +130,7 @@
 		F1478DD31A798447008C3621 /* UPMBuyItemFieldCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DD11A798447008C3621 /* UPMBuyItemFieldCell.xib */; };
 		F1497C4B1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift */; };
 		F14BDB6E1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */; };
+		F19573991A7D8B6E00B88538 /* UPMBuyItemDescriptionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = F19573981A7D8B6E00B88538 /* UPMBuyItemDescriptionVC.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -297,6 +298,7 @@
 		F1478DD11A798447008C3621 /* UPMBuyItemFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBuyItemFieldCell.xib; sourceTree = "<group>"; };
 		F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyListItemsCVC.swift; sourceTree = "<group>"; };
 		F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemDetailsTVC.swift; sourceTree = "<group>"; };
+		F19573981A7D8B6E00B88538 /* UPMBuyItemDescriptionVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemDescriptionVC.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -489,6 +491,7 @@
 				F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */,
 				F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsCVC.swift */,
 				F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */,
+				F19573981A7D8B6E00B88538 /* UPMBuyItemDescriptionVC.swift */,
 				F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */,
 				F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */,
 				F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */,
@@ -949,6 +952,7 @@
 				525B89891A18271500A7CB6D /* UPMSellPriceFormatTVC.swift in Sources */,
 				529F391A1A79889B000ED764 /* UPMAccountContainerVC.swift in Sources */,
 				525C31091A10A08800C47790 /* UPMViewControllerExtension.swift in Sources */,
+				F19573991A7D8B6E00B88538 /* UPMBuyItemDescriptionVC.swift in Sources */,
 				524663911A43814F00CB18B9 /* UPMSellTextbookDetailsCourseTVC.swift in Sources */,
 				52C0631F1A1F02000088907E /* UPMOtherListingCategoryTVC.swift in Sources */,
 				52176EBF1A6ECE3400ACCFA9 /* UPMBuyGridCell.swift in Sources */,
