@@ -14,7 +14,7 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
   
   
   var chosenCategory: String!
-  var queryClassName: String!
+
   
   //TODO: Change query to retrieve the three major UPMListing types.
   override func query() -> PFQuery {
@@ -25,9 +25,7 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
-//  queryClassName = chosenCategory
- // chosenCategory = queryClassName
+
   }
   override func parseListingClassName() -> String {
     return chosenCategory
