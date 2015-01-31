@@ -12,15 +12,25 @@ Displays all UPMOtherListings in a grid format.
 */
 class UPMBuyListItemsCVC: UPMBuyGridCVC {
   
+  
+  var chosenCategory: String!
+  var queryClassName: String!
+  
   //TODO: Change query to retrieve the three major UPMListing types.
   override func query() -> PFQuery {
-    var listQuery = PFQuery(className: "UPMOtherListing")
+    var listQuery = PFQuery(className: chosenCategory)
     listQuery.orderByDescending("createdAt")
     return listQuery
   }
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+//  queryClassName = chosenCategory
+ // chosenCategory = queryClassName
+  }
+  override func parseListingClassName() -> String {
+    return chosenCategory
   }
 
 

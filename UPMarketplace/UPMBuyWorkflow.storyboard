@@ -45,7 +45,7 @@
                                 <connections>
                                     <outlet property="listingCategory" destination="45Z-2t-JQH" id="yTl-sP-y7C"/>
                                     <outlet property="listingPicture" destination="veg-BW-Yus" id="6ph-Ma-Nsd"/>
-                                    <segue destination="2cU-QL-kRh" kind="show" id="tZX-6N-I0V"/>
+                                    <segue destination="2cU-QL-kRh" kind="show" identifier="showBuyList" id="tZX-6N-I0V"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -206,10 +206,10 @@
             </objects>
             <point key="canvasLocation" x="1304" y="12"/>
         </scene>
-        <!--Buy List ItemsCVC-->
+        <!--UPMBuyList-->
         <scene sceneID="l9q-aq-wNy">
             <objects>
-                <collectionViewController storyboardIdentifier="UPMBuyList" id="2cU-QL-kRh" customClass="UPMBuyListItemsCVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="UPMBuyList" title="UPMBuyList" id="2cU-QL-kRh" customClass="UPMBuyListItemsCVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LoZ-9K-f4L">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -17,7 +17,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   var listing: UPMListing?
   
   
- //var itemObject: PFObject
+ 
   @IBOutlet var selectedImage: PFImageView!
 
 

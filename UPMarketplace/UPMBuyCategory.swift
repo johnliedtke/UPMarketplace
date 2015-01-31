@@ -46,19 +46,32 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       return cell
   }
     
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
-        
-//        var listing = object as UPMListing
-//        
-//        let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
-//        var buyCategoryVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyList")
-//        buyCategoryVC.chosenCategory = listing
-//        
-//        //var picture = listing["picture"] as? PFFile
-//        // var title = listing["title"] as? String
-//        self.performSegueWithIdentifier("viewItemDetail", sender: self)
-    }
 
+  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+    if(segue.identifier == "showBuyList"){
+
+      
+      let indexPath: NSIndexPath! = collectionView.indexPathForCell(sender as UPMBuyCategoryCell)
+      var category:String! = categories[indexPath.row]
+      
+      var sendCategory: String?
+      if(category == "Housing"){
+        sendCategory = "UPMHousingListing"
+      }
+      else if (category == "Textbooks"){
+        sendCategory = "UPMTextbookListing"
+      }
+      else if (category == "Other"){
+        sendCategory = "UPMOtherListing"
+      }
+      let theDestination = (segue.destinationViewController as UPMBuyListItemsCVC)
+      theDestination.chosenCategory = sendCategory
+
+      
+    }
+    
+    
+  }
 
 
 
