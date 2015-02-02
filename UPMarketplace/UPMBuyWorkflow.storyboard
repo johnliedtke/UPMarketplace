@@ -226,9 +226,6 @@
                             <outlet property="delegate" destination="2cU-QL-kRh" id="t4f-Rw-G9u"/>
                         </connections>
                     </collectionView>
-                    <connections>
-                        <segue destination="Os4-Iu-AOT" kind="show" identifier="viewItemDetail" id="ai8-dj-ItX"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kie-Q1-7yt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

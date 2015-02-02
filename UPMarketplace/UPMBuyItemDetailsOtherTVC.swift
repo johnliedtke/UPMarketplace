@@ -6,9 +6,21 @@
 //  Copyright (c) 2015 UP Marketplace. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 
-class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC {
+class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC{
+  
+  var numRows = 1
+  var listingOther: UPMOtherListing?
+  
+  override func changeDefaults() {
+    numberOfAttributes = numRows
+  }
+  
+  override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
+    cell.configureCell("Category:", second: listingOther?.category)
+  }
+
   
 }

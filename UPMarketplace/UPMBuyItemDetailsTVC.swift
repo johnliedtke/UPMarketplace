@@ -17,7 +17,8 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   let fieldCellIdentifier = "UPMBuyItemFieldCell"
   let descriptionCellIdentifier = "UPMBuyItemDescriptionCell"
   
-  var numberOfAttributes = 0
+  var numberOfAttributes = 3
+  
 
   // MARK: - Public Properties
   var listing: UPMListing?
@@ -27,10 +28,16 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     case ImageSection = 0, TitleSection, FieldSection, DescriptionSection;
     static let allValues = [ImageSection, TitleSection, FieldSection, DescriptionSection]
   }
+  
+  /// Override to change the default values before the first data is fetched
+  func changeDefaults() -> Void {
+    
+  }
 
   // MARK: - Public Methods
   override func viewDidLoad() {
-
+    super.viewDidLoad()
+    changeDefaults()
     tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
     
     tableView.registerNib(UINib(nibName: titleCellIdentifier, bundle: nil), forCellReuseIdentifier: titleCellIdentifier)
@@ -48,7 +55,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-
+    changeDefaults()
      var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
     var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
     var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
@@ -64,6 +71,10 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     navigationController?.toolbarHidden = true
   }
   
+
+  override init(){
+    super.init()
+  }
   
   
   required init(coder aDecoder: NSCoder)
@@ -78,7 +89,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     switch Section{
     case tableCellSection.FieldSection:
-      return 3
+      return numberOfAttributes
     default:
       return 1
     }
@@ -104,12 +115,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       return cell
     case tableCellSection.FieldSection:
        let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as UPMBuyItemFieldCell
-       if (indexPath.row == 0){
-       cell.configureCell("Category",second: "More Information")
-       }
-       else{
-        cell.configureCell("Hello There", second: "Mehh")
-       }
+       
+       configureFieldCells(cell, indexPath: indexPath)
+
       return cell
     
     case tableCellSection.DescriptionSection:
@@ -123,6 +131,14 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
   }
   
+  func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath){
+    if (indexPath.row == 0){
+      cell.configureCell("Category",second: "More Information")
+    }
+    else{
+      cell.configureCell("Hello There", second: "Mehh")
+    }
+  }
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
     let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
