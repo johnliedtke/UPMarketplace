@@ -16,6 +16,7 @@ class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC{
   
   override func changeDefaults() {
     numberOfAttributes = numRows
+    listing = listingOther
   }
   
   override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {

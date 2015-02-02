@@ -76,6 +76,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     super.init()
   }
   
+  override init(style: UITableViewStyle) { super.init(style: style) }
   
   required init(coder aDecoder: NSCoder)
   {
@@ -83,7 +84,10 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     
   }
-  
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    // Custom initialization
+  }
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let Section = tableCellSection(rawValue: section)! as tableCellSection
     
