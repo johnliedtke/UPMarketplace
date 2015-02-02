@@ -39,14 +39,13 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   }
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
-    var listing = object as UPMOtherListing
-    
-    let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
-    var buyDetailVC: UPMBuyItemDetailsTVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyItemDetails") as UPMBuyItemDetailsTVC
-    
-    
-    buyDetailVC.listing = listing
-    navigationController?.pushViewController(buyDetailVC, animated: true)
+
+    if(object.parseClassName == "UPMOtherListing"){
+      var listing = object as UPMOtherListing
+      let viewController = UPMBuyItemDetailsOtherTVC()
+      viewController.listingOther = listing
+      navigationController?.pushViewController(viewController, animated: true)
+    }
     
     
   }

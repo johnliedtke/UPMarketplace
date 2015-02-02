@@ -16,6 +16,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   let titleCellIdentifier = "UPMBuyItemTitleCell"
   let fieldCellIdentifier = "UPMBuyItemFieldCell"
   let descriptionCellIdentifier = "UPMBuyItemDescriptionCell"
+  
+  var numberOfAttributes = 3
+  
 
   // MARK: - Public Properties
   var listing: UPMListing?
@@ -25,10 +28,16 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     case ImageSection = 0, TitleSection, FieldSection, DescriptionSection;
     static let allValues = [ImageSection, TitleSection, FieldSection, DescriptionSection]
   }
+  
+  /// Override to change the default values before the first data is fetched
+  func changeDefaults() -> Void {
+    
+  }
 
   // MARK: - Public Methods
   override func viewDidLoad() {
-
+    super.viewDidLoad()
+    changeDefaults()
     tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
     
     tableView.registerNib(UINib(nibName: titleCellIdentifier, bundle: nil), forCellReuseIdentifier: titleCellIdentifier)
@@ -41,10 +50,20 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
-    var testButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "")
+   
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    changeDefaults()
+     var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+    var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+    var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
     
-    navigationController?.setToolbarItems([testButton], animated: true)
+    self.setToolbarItems(barItems, animated: true)
     navigationController?.toolbarHidden = false
+    tableView.reloadData()
   }
   
   override func viewWillDisappear(animated: Bool) {
@@ -52,7 +71,12 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     navigationController?.toolbarHidden = true
   }
   
+
+  override init(){
+    super.init()
+  }
   
+  override init(style: UITableViewStyle) { super.init(style: style) }
   
   required init(coder aDecoder: NSCoder)
   {
@@ -60,9 +84,20 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     
   }
-  
+  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    // Custom initialization
+  }
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    
+    switch Section{
+    case tableCellSection.FieldSection:
+      return numberOfAttributes
+    default:
       return 1
+    }
+
   }
   
 
@@ -82,10 +117,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       let cell = tableView.dequeueReusableCellWithIdentifier(titleCellIdentifier, forIndexPath: indexPath) as UPMBuyItemTitleCell
       cell.configureCell(listing?.title, price: listing?.displayPrice())
       return cell
-      
     case tableCellSection.FieldSection:
        let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as UPMBuyItemFieldCell
-       cell.configureCell("Category",second: "More Information")
+       
+       configureFieldCells(cell, indexPath: indexPath)
+
       return cell
     
     case tableCellSection.DescriptionSection:
@@ -99,26 +135,68 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
   }
   
+  func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath){
+    if (indexPath.row == 0){
+      cell.configureCell("Category",second: "More Information")
+    }
+    else{
+      cell.configureCell("Hello There", second: "Mehh")
+    }
+  }
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
+    let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
+    switch Section{
+      
+      case tableCellSection.DescriptionSection:
+        let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
+        var buyDescriptionVC: UPMBuyItemDescriptionVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyItemDescriptionVC") as UPMBuyItemDescriptionVC
+    
+    
+    buyDescriptionVC.descriptionS = (listing?.descriptionS)!
+        navigationController?.pushViewController(buyDescriptionVC, animated: true)
+      
+      
+    default:
+      break
+    }
   }
-  
-//  override func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
-//  {
-//    
-//    let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
-//    switch Section{
-//    case tableCellSection.ImageSection:
-//      return tableView.frame.height * 0.30
-//    default:
-//      return UITableViewAutomaticDimension
-//    }
-//    
-//  }
-  
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int{
-    return 4
+    return tableCellSection.allValues.count
   }
-    
+  
+
+  override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    switch Section{
+    case tableCellSection.ImageSection:
+      return 0.00001
+    case tableCellSection.TitleSection:
+      return 0.00001
+    case tableCellSection.FieldSection:
+      return 4.0
+    case tableCellSection.DescriptionSection:
+      return 4.0
+    default:
+      return 0.00001
+    }
+  }
+
+  override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    switch Section{
+    case tableCellSection.ImageSection:
+      return 0.00001
+    case tableCellSection.TitleSection:
+      return 0.00001
+    case tableCellSection.FieldSection:
+      return 4.0
+    case tableCellSection.DescriptionSection:
+      return 4.0
+    default:
+      return 0.00001
+    }
+  
+  }
 }

@@ -226,9 +226,6 @@
                             <outlet property="delegate" destination="2cU-QL-kRh" id="t4f-Rw-G9u"/>
                         </connections>
                     </collectionView>
-                    <connections>
-                        <segue destination="Os4-Iu-AOT" kind="show" identifier="viewItemDetail" id="ai8-dj-ItX"/>
-                    </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="kie-Q1-7yt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -252,10 +249,10 @@
             </objects>
             <point key="canvasLocation" x="2061" y="627"/>
         </scene>
-        <!--Buy Item DescriptionVC-->
+        <!--Item Description-->
         <scene sceneID="pfJ-H1-pXR">
             <objects>
-                <viewController id="laD-aa-dMD" customClass="UPMBuyItemDescriptionVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UPMBuyItemDescriptionVC" title="Item Description" id="laD-aa-dMD" customClass="UPMBuyItemDescriptionVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c8N-vo-5KA"/>
                         <viewControllerLayoutGuide type="bottom" id="1wN-Am-ef9"/>
@@ -263,12 +260,30 @@
                     <view key="view" contentMode="scaleToFill" id="6sE-vU-XkY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uz-3r-Vor">
+                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="3uz-3r-Vor" firstAttribute="top" secondItem="c8N-vo-5KA" secondAttribute="bottom" id="9aE-KM-SWi"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="3uz-3r-Vor" secondAttribute="trailing" constant="-16" id="UEM-LC-Il7"/>
+                            <constraint firstItem="3uz-3r-Vor" firstAttribute="leading" secondItem="6sE-vU-XkY" secondAttribute="leadingMargin" constant="-16" id="wx6-Ra-6Zm"/>
+                            <constraint firstItem="1wN-Am-ef9" firstAttribute="top" secondItem="3uz-3r-Vor" secondAttribute="bottom" id="zAp-7D-IRJ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="descriptiontextView" destination="3uz-3r-Vor" id="Pqw-XC-77r"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMJ-Lx-ibt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2800" y="627"/>
+            <point key="canvasLocation" x="2822" y="476"/>
         </scene>
     </scenes>
     <resources>
