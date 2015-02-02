@@ -48,9 +48,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
+
+     var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
     var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
     var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
-    var barItems = [contactButton, reserveButton ]
+    var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
     
     self.setToolbarItems(barItems, animated: true)
     navigationController?.toolbarHidden = false
@@ -72,7 +74,15 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    
+    switch Section{
+    case tableCellSection.FieldSection:
+      return 3
+    default:
       return 1
+    }
+
   }
   
 
@@ -92,10 +102,14 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       let cell = tableView.dequeueReusableCellWithIdentifier(titleCellIdentifier, forIndexPath: indexPath) as UPMBuyItemTitleCell
       cell.configureCell(listing?.title, price: listing?.displayPrice())
       return cell
-      
     case tableCellSection.FieldSection:
        let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as UPMBuyItemFieldCell
+       if (indexPath.row == 0){
        cell.configureCell("Category",second: "More Information")
+       }
+       else{
+        cell.configureCell("Hello There", second: "Mehh")
+       }
       return cell
     
     case tableCellSection.DescriptionSection:
@@ -127,22 +141,42 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       break
     }
   }
-//  override func tableView(tableView:UITableView, heightForRowAtIndexPath indexPath:NSIndexPath)->CGFloat
-//  {
-//    
-//    let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
-//    switch Section{
-//    case tableCellSection.ImageSection:
-//      return tableView.frame.height * 0.30
-//    default:
-//      return UITableViewAutomaticDimension
-//    }
-//    
-//  }
-  
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int{
-    return 4
+    return tableCellSection.allValues.count
   }
-    
+  
+
+  override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    switch Section{
+    case tableCellSection.ImageSection:
+      return 0.00001
+    case tableCellSection.TitleSection:
+      return 0.00001
+    case tableCellSection.FieldSection:
+      return 4.0
+    case tableCellSection.DescriptionSection:
+      return 4.0
+    default:
+      return 0.00001
+    }
+  }
+
+  override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    switch Section{
+    case tableCellSection.ImageSection:
+      return 0.00001
+    case tableCellSection.TitleSection:
+      return 0.00001
+    case tableCellSection.FieldSection:
+      return 4.0
+    case tableCellSection.DescriptionSection:
+      return 4.0
+    default:
+      return 0.00001
+    }
+  
+  }
 }
