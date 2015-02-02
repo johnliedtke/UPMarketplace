@@ -10,7 +10,7 @@ import UIKit
 
 
 /**
-Subclasses of UPMContainerVC should adhere to this protocol.
+  Subclasses of UPMContainerVC should adhere to this protocol.
 */
 public protocol UPMContainerDelegate {
   /**
@@ -73,6 +73,7 @@ public class UPMContainerVC: UIViewController {
   
   override public func viewDidLoad() {
     super.viewDidLoad()
+    
   }
   
   public override func viewWillAppear(animated: Bool) {
@@ -114,13 +115,12 @@ public class UPMContainerVC: UIViewController {
   */
   public func transitionToViewControllerAtIndex(index: Int) {
     
-    var nextViewController: UIViewController! = (containerControllerAtIndex(index))
-    
-    if nextViewController == nil || isTransitioning {
+    if isTransitioning || currentControllerIndex() == index {
       return
     }
     isTransitioning = true
-    
+    var nextViewController: UIViewController! = (containerControllerAtIndex(index))
+
     addChildViewController(nextViewController)
     currentViewController.willMoveToParentViewController(nil)
     
@@ -137,10 +137,13 @@ public class UPMContainerVC: UIViewController {
       }
     }
     
+    
+    //nextViewController.view.alpha = 0.5
     transitionFromViewController(currentViewController, toViewController: nextViewController, duration: transitionDuration, options: nil, animations: { () -> Void in
       
       
       var nextView = nextViewController.view
+      nextView.alpha = 1.0
       nextView.setTranslatesAutoresizingMaskIntoConstraints(false)
       
       var elementsDict = NSDictionary(dictionary: ["nextView": nextView])
@@ -156,23 +159,22 @@ public class UPMContainerVC: UIViewController {
         metrics: nil,
         views: elementsDict))
       
+      
       if self.isLeftRightTransition {
         self.currentViewController.view.frame = CGRectMake(0-width, 0, width, height)
         nextViewController.view.frame = CGRectMake(0, 0, width, height)
       }
 
-      
 
-
-      
       }) { (finished) -> Void in
-        
-        self.currentViewController.removeFromParentViewController()
         nextViewController.didMoveToParentViewController(self)
+        self.currentViewController.removeFromParentViewController()
         self.currentViewController = nextViewController
         self.isTransitioning = false
     }
   }
+  
+  
   
   // MARK: - Private Methods
   
@@ -200,9 +202,6 @@ public class UPMContainerVC: UIViewController {
       options: NSLayoutFormatOptions.DirectionLeftToRight,
       metrics: nil,
       views: elementsDict))
-    
-
-    
     
   }
   

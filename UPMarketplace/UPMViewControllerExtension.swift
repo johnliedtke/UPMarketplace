@@ -8,6 +8,32 @@
 
 import Foundation
 
+extension UITextField {
+  convenience init(forAutoLayout: Bool) {
+    self.init()
+    setTranslatesAutoresizingMaskIntoConstraints(false)
+  }
+}
+
+extension UIView {
+  
+  func addBottomBorderWithColor(color: UIColor, andThickness thickness: CGFloat) {
+    var border = CALayer()
+    var frame = self.frame
+    border.backgroundColor = color.CGColor
+    border.frame = CGRectMake(0, self.frame.size.height - thickness, self.frame.size.width, thickness)
+    layer.addSublayer(border)
+  }
+}
+
+extension UILabel {
+  convenience init(forAutoLayout: Bool) {
+    self.init()
+    setTranslatesAutoresizingMaskIntoConstraints(false)
+  }
+}
+
+
 extension UIViewController {
   
   func addCancelButtontToNavigationItemWithSelector(selector: String) {

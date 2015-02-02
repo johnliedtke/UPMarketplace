@@ -6,7 +6,6 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-import Foundation
 import UIKit
 
 /**
@@ -87,6 +86,27 @@ extension UIColor {
     return self.init(hex: 0xecf0f1)
   }
   
+  class func flatDarkWhiteColor() -> UIColor {
+    return self.init(hex: 0xbdc3c7)
+  }
+  
+  class func flatLightGrayColor() -> UIColor {
+    return self.init(hex: 0x95a5a6)
+  }
+  
+  class func flatDarkGrayColor() -> UIColor {
+    return self.init(hex: 0x7f8c8d)
+  }
+  
+  class func flatLightBlackColor() -> UIColor {
+    return self.init(hex: 0x34495e)
+  }
+  
+  class func flatDarkBlackColor() -> UIColor {
+    return self.init(hex: 0x2c3e50)
+  }
+  
+  
   /// Varient of light orange
   class func flatLightYellowColor() -> UIColor {
     return self.init(hex: 0xf39c12)
@@ -105,9 +125,9 @@ extension UIColor {
       return UIColor(red: 46.0/255.0, green: 204.0/255.0, blue: 113.0/255.0, alpha: 1.0)
   }
   
-  class func flatLightGrayColor() -> UIColor {
-      return UIColor(hex: 0xbdc3c7)
-  }
+//  class func flatLightGrayColor() -> UIColor {
+//      return UIColor(hex: 0xbdc3c7)
+//  }
   
   class func lightPurpleColor() -> UIColor {
     return UIColor.flatLightPurpleColor()

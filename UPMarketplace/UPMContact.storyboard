@@ -4,10 +4,10 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
     </dependencies>
     <scenes>
-        <!--View Controller-->
+        <!--ContactVC-->
         <scene sceneID="mGq-79-DlQ">
             <objects>
-                <viewController id="Nld-52-sQW" sceneMemberID="viewController">
+                <viewController id="Nld-52-sQW" customClass="UPMContactVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wcm-9E-bKu"/>
                         <viewControllerLayoutGuide type="bottom" id="L9b-Vs-AeE"/>

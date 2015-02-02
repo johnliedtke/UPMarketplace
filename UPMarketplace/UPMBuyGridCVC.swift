@@ -33,7 +33,7 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
   override func viewDidLoad() {
     super.viewDidLoad()
     // Register grid cell
-    collectionView.registerNib(UINib(nibName: UPMBuyGridCellConstants.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: UPMBuyGridCellConstants.reuseIdentifier)
+    collectionView?.registerNib(UINib(nibName: UPMBuyGridCellConstants.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: UPMBuyGridCellConstants.reuseIdentifier)
   }
   
   /**

@@ -41,7 +41,28 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.estimatedRowHeight = 50.0
   }
+
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    tableView.userInteractionEnabled = true
+    
+    
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    tableView.estimatedRowHeight = 50.0
+    tableView.userInteractionEnabled = false
+    
+  }
+  
+
+  
+  
+  
   
   // MARK - Private Methods
   

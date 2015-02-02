@@ -10,7 +10,7 @@ import UIKit
 
 /**
 @abstract 
-Modified PFQueryTableViewController to support sections.
+  Modified PFQueryTableViewController to support sections.
 */
 public class UPMPFQueryTableVC: PFQueryTableViewController {
   

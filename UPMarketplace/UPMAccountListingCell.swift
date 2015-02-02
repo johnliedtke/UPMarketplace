@@ -19,6 +19,7 @@ public class UPMAccountListingCell: PFTableViewCell {
     label.numberOfLines = 0
     label.font = UIFont.boldSystemFontOfSize(16.0)
     //label.backgroundColor = UIColor.flatLightOrangeColor()
+    
     return label
   }()
   

@@ -6,11 +6,11 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-import Foundation
-
+import UIKit
 
 struct Constants {
   struct SellStoryboard {
   static let MainStoryboard = "SellMain"
   }
 }
+

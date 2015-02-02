@@ -19,7 +19,8 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
 
   override func viewDidLoad() {
       super.viewDidLoad()
-      
+    
+    
   }
 
   override func didReceiveMemoryWarning() {
@@ -45,13 +46,13 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       
       return cell
   }
-    
+  
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
     if(segue.identifier == "showBuyList"){
 
       
-      let indexPath: NSIndexPath! = collectionView.indexPathForCell(sender as UPMBuyCategoryCell)
+      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as UPMBuyCategoryCell)
       var category:String! = categories[indexPath.row]
       
       var sendCategory: String?

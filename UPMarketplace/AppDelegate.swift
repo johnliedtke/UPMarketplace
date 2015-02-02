@@ -60,8 +60,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // test barcode
     var navigationController = UINavigationController()
-    var barcodeScanner = UPMBarcodeScanner(nibName: "UPMBarcodeScanner", bundle: nil)
-    navigationController.viewControllers = [barcodeScanner]
+//    var barcodeScanner = UPMBarcodeScanner(nibName: "UPMBarcodeScanner", bundle: nil)
+//    navigationController.viewControllers = [barcodeScanner]
+    var contactVC = UPMContactVC()
+    navigationController.viewControllers = [contactVC]
     controllers.append(navigationController)
     
     // Account

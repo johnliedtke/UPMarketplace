@@ -70,9 +70,19 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
-    tableView.reloadData()
+    tableView.userInteractionEnabled = true
+
     
   }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    tableView.estimatedRowHeight = 50.0
+    tableView.userInteractionEnabled = false
+
+  }
+  
+
   
 
   
