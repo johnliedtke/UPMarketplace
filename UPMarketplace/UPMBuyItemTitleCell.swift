@@ -14,16 +14,17 @@ struct UPMBuyItemTitleCellConstants {
 }
 
 @IBDesignable
-class UPMBuyItemTitleCell: UITableViewCell {
+public class UPMBuyItemTitleCell: UITableViewCell {
+  
+  // MARK: - UI Elements
   
   lazy var titleLabel: UILabel = {
     var label = UILabelVertical()
     label.numberOfLines = 0
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
-    
-    label.text = "title Label"
-    
+    label.text = "Listing Title"
+    label.font = UIFont.standardHeaderOneFont()
     return label
   }()
   
@@ -32,82 +33,67 @@ class UPMBuyItemTitleCell: UITableViewCell {
     label.numberOfLines = 0
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
-    
+    label.font = UIFont.standardTitleFont()
     label.text = "Price Label"
     return label
     }()
   
-  override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
-    super.init(style: style, reuseIdentifier: reuseIdentifier)
-    
-    
-    
-    var ed = NSDictionary(dictionary: ["priceLabel": priceLabel, "titleLabel": titleLabel])
-    
-    
-    // Horizontal Layout
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[titleLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
-    
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[priceLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
-    
-    
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "V:|-[titleLabel]-[priceLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
-  }
-
-  required init(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-    
-    
-    var ed = NSDictionary(dictionary: ["priceLabel": priceLabel, "titleLabel": titleLabel])
-    
-    
-    // Horizontal Layout
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[titleLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
-    
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[priceLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
-    
-    
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "V:|-[titleLabel]-[priceLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
-  }
+  // MARK: - Public Methods
   
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
+  /**
+  Convenience method for configuring the cell.
   
-  func configureCell(title: String!, price: String!) {
+  :param: title Sets the titleLabel text
+  :param: price Sets the priceLabel text
+  */
+  public func configureCell(title: String!, price: String!) {
     titleLabel.text = title
     priceLabel.text = price
   }
+  
+  // MARK: - Init
+  
+  override public init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+    super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setupConstraints()
+  }
+
+  required public init(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
+    setupConstraints()
+  }
+  
+  // MARK: - Private Methods
+  
+  /**
+  Sets up the layout of the cell.
+  */
+  private func setupConstraints() -> Void {
     
+    var ed = NSDictionary(dictionary: ["priceLabel": priceLabel, "titleLabel": titleLabel])
+    
+    
+    // Horizontal Layout
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[titleLabel]-(hrp)-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: ed))
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[priceLabel]-(hrp)-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: ed))
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "V:|-[titleLabel]-[priceLabel]-|",
+      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
+      metrics: nil,
+      views: ed))
+
+  }
+  
+  
+  
 }

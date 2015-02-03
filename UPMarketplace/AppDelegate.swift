@@ -60,11 +60,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // test barcode
     var navigationController = UINavigationController()
-//    var barcodeScanner = UPMBarcodeScanner(nibName: "UPMBarcodeScanner", bundle: nil)
-//    navigationController.viewControllers = [barcodeScanner]
-    var contactVC = UPMContactVC()
-    navigationController.viewControllers = [contactVC]
-    controllers.append(navigationController)
     
     // Account
     var accountStoryboard = UIStoryboard(name: UPMAccountConstants.accountStoryboardIdentifier, bundle: nil)
@@ -74,8 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var accountItem = accountNavigation.tabBarItem
     accountItem.title = "Account"
     accountItem.image = UIImage(named: "account.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
-    
-   // accountItem.selectedImage = UIImage(named: "accountSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    accountItem.selectedImage = UIImage(named: "accountSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
 
     
     

@@ -26,10 +26,89 @@ extension UIView {
   }
 }
 
+/**
+Standards for things such as autolayout
+*/
+struct UPMStandards {
+  
+  /**
+  Standard spacing for autolayout to pass in for metrics.
+  
+  hlp - Horizontal left padding
+  hrp - Horizontal right padding
+  vlp - Vertical left padding
+  vrp - Vertical left padding
+  */
+  static let autoLayoutMetrics = ["hlp": 15.0, "hrp": 15.0, "vlp": 8.0, "vrp": 8.0]
+}
+
+
+/** 
+Use the following fonts when creating UILabel and UITextView objects.
+*/
+extension UIFont {
+  
+  class func standardFontOfSize(fontSize: CGFloat) -> UIFont {
+    return UIFont.systemFontOfSize(fontSize)
+  }
+  
+  class func standardBoldFontOfSize(fontSize: CGFloat) -> UIFont {
+    return UIFont.boldSystemFontOfSize(fontSize)
+  }
+  
+  class func standardTitleFont() -> UIFont {
+    return standardFontOfSize(20.0)
+  }
+  
+  class func standardBoldTitleFont() -> UIFont {
+    return standardFontOfSize(20.0)
+  }
+  
+  class func standardHeaderOneFont() -> UIFont {
+    return standardFontOfSize(17.0)
+  }
+  
+  class func standardBoldHeaderOneFont() -> UIFont {
+    return standardBoldFontOfSize(17.0)
+  }
+  
+  class func standardHeaderTwoFont() -> UIFont {
+    return standardFontOfSize(16.0)
+  }
+  
+  class func standardBoldHeaderTwoFont() -> UIFont {
+    return standardBoldFontOfSize(16.0)
+  }
+  
+  class func standardTextFont() -> UIFont {
+    return standardFontOfSize(14.0)
+  }
+  
+  class func standardBolTextFont() -> UIFont {
+    return standardBoldFontOfSize(14.0)
+  }
+}
+
+
 extension UILabel {
+  
+  /**
+  Prepares the label for autoLayout by setting
+  setTranslatesAutoresizingMaskIntoConstraints to false.
+  */
   convenience init(forAutoLayout: Bool) {
     self.init()
     setTranslatesAutoresizingMaskIntoConstraints(false)
+  }
+  
+  /**
+  Creates a UILabel with the proper font and text color.
+  */
+  class func standardCaptionLabel(forAutoLayout: Bool) -> UILabel {
+    var label = UILabel(forAutoLayout: forAutoLayout)
+    label.font = UIFont.standardTextFont()
+    label.textColor = UIColor.flatDarkGrayColor()
+    return label
   }
 }
 

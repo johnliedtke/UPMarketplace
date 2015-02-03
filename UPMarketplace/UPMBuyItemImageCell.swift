@@ -20,6 +20,7 @@ class UPMBuyItemImageCell: UITableViewCell {
   override func layoutSubviews() {
     super.layoutSubviews()
     buyItemImage.clipsToBounds = true
+    buyItemImage.backgroundColor = UIColor.flatLightWhiteColor()
      
   }
     override func awakeFromNib() {

@@ -9,7 +9,10 @@
 import UIKit
 
 
-
+/**
+UPMBuyItemDetailsTVC class handles displaying the details
+of a UPMListing. Subclass to customize for different listings.
+*/
 class UPMBuyItemDetailsTVC: UITableViewController {
 
   let imageCellIdentifier = "UPMBuyItemImageCell"
@@ -35,6 +38,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   }
 
   // MARK: - Public Methods
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     changeDefaults()
@@ -46,6 +50,18 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     tableView.registerNib(UINib(nibName: descriptionCellIdentifier, bundle: nil), forCellReuseIdentifier: descriptionCellIdentifier)
     
+    // Background
+    tableView.backgroundColor = UIColor.standardBackgroundColor()
+    // Title
+    navigationItem.title = "Listing"
+    
+  }
+  
+  func contactSeller() {
+    //TODO: Use real seller
+    var contactVC = UPMContactVC(user: PFUser.currentUser(), withSubject: "Question about: \(listing!.title)")
+    var navigation = UINavigationController(rootViewController: contactVC)
+    presentViewController(navigation, animated: true, completion: nil)
   }
   
   override func viewDidAppear(animated: Bool) {
@@ -57,7 +73,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     super.viewWillAppear(animated)
     changeDefaults()
      var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+    
+    
+    
+    // Contact!
+    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "contactSeller")
     var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
     var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
     
@@ -76,11 +96,13 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     super.init()
   }
   
-  override init(style: UITableViewStyle) { super.init(style: style) }
+  override init(style: UITableViewStyle)
+  { super.init(style: .Grouped) }
   
   required init(coder aDecoder: NSCoder)
   {
       super.init(coder: aDecoder)
+
     
     
   }
@@ -88,6 +110,8 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
     // Custom initialization
   }
+  
+  
   override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     let Section = tableCellSection(rawValue: section)! as tableCellSection
     
@@ -100,6 +124,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
 
   }
   
+  // MARK: - TableView Datasource
 
   override func tableView(tableView: UITableView,cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     
@@ -166,6 +191,14 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     return tableCellSection.allValues.count
   }
   
+  override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+    if section == tableCellSection.FieldSection.rawValue {
+      return "Details"
+    } else {
+      return nil
+    }
+  }
+  
 
   override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
     let Section = tableCellSection(rawValue: section)! as tableCellSection
@@ -175,9 +208,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     case tableCellSection.TitleSection:
       return 0.00001
     case tableCellSection.FieldSection:
-      return 4.0
+      return UITableViewAutomaticDimension
     case tableCellSection.DescriptionSection:
-      return 4.0
+      return 0.00001
     default:
       return 0.00001
     }
@@ -191,9 +224,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     case tableCellSection.TitleSection:
       return 0.00001
     case tableCellSection.FieldSection:
-      return 4.0
+      return 0.00001
     case tableCellSection.DescriptionSection:
-      return 4.0
+      return 0.00001
     default:
       return 0.00001
     }

@@ -14,53 +14,50 @@ struct UPMBuyItemFieldCellConstants {
 
 @IBDesignable
 class UPMBuyItemFieldCell: UITableViewCell {
+  
+  // MARK: - UI Elements
 
   lazy var firstColumnLabel: UILabel = {
-    var label = UILabelVertical()
+    var label = UILabel.standardCaptionLabel(true)
     label.numberOfLines = 0
-    label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
-    
     label.text = "First Item"
-    
     return label
     }()
   
   lazy var secondColumnLabel: UILabel = {
-    var label = UILabelVertical()
+    var label = UILabel(forAutoLayout: true)
     label.numberOfLines = 0
-    label.setTranslatesAutoresizingMaskIntoConstraints(false)
+    label.font = UIFont.standardTextFont()
     self.contentView.addSubview(label)
-    
     label.text = "Second Item"
     return label
     }()
+  
+  // MARK: - Init
 
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     setupConstraints()
-
   }
   
   required init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
     setupConstraints()
-  
   }
   
   func setupConstraints() {
     
     var ed = NSDictionary(dictionary: ["firstColumnLabel": firstColumnLabel, "secondColumnLabel": secondColumnLabel])
     
-    
-    
-    // Horizontal Layout
+    // Horizontal layout
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[firstColumnLabel(75)]-[secondColumnLabel]-|",
+      "H:|-(hlp)-[firstColumnLabel(75)]-[secondColumnLabel]-(hrp)-|",
       options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
+      metrics: UPMStandards.autoLayoutMetrics,
       views: ed))
     
+    // Vertical layout
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "V:|-[firstColumnLabel]-|",
       options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
@@ -72,24 +69,8 @@ class UPMBuyItemFieldCell: UITableViewCell {
       options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
       metrics: nil,
       views: ed))
-    
-   
-    
-    
   }
   
-  
-  
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-
-        // Configure the view for the selected state
-    }
   
   func configureCell(first: String!, second: String!){
     firstColumnLabel.text = first

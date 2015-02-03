@@ -22,8 +22,9 @@ class UPMBuyItemDescriptionCell: UITableViewCell {
     label.numberOfLines = 0
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
-    label.font = label.font.fontWithSize(12)
-    label.text = "Item Description:"
+    label.font = UIFont.systemFontOfSize(14.0)
+    label.textColor = UIColor.flatDarkGrayColor()
+    label.text = "Item Description"
     
     return label
     }()
@@ -33,6 +34,7 @@ class UPMBuyItemDescriptionCell: UITableViewCell {
     label.numberOfLines = 2
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
+    label.font = UIFont.systemFontOfSize(14.0)
     label.text = "This is a fake description. This is a fake description. This is a fake description. This is a fake description. This is a fake description. This is a fake description. This is a fake description."
     return label
     }()
@@ -54,15 +56,15 @@ class UPMBuyItemDescriptionCell: UITableViewCell {
     var ed = NSDictionary(dictionary: ["titleLabel": titleLabel, "descriptionLabel": descriptionLabel])
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[titleLabel]-|",
+      "H:|-(hlp)-[titleLabel]-(hrp)-|",
       options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
+      metrics: UPMStandards.autoLayoutMetrics,
       views: ed))
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[descriptionLabel]-|",
+      "H:|-(hlp)-[descriptionLabel]-|",
       options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
+      metrics: UPMStandards.autoLayoutMetrics,
       views: ed))
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
@@ -70,6 +72,8 @@ class UPMBuyItemDescriptionCell: UITableViewCell {
       options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
       metrics: nil,
       views: ed))
+    
+    accessoryType = UITableViewCellAccessoryType.DisclosureIndicator
   
     
   }

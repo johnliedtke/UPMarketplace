@@ -9,44 +9,46 @@
 import UIKit
 
 
-
+/**
+Used for sending emails to other users.
+  - Should be presented modally and with a UINavigationcontroller.
+  - Dismisses when the email is sucessfully sent.
+*/
 public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
   
+  
+  /// Body
+  
+  // MARK: - Public Properties
   
   /// Who to send the email to
   public var user: PFUser!
   
   /// Subject of the email
   public var subject: String?
-  
-  /// Body
-  
-  // MARK: - Public Properties
-  
+
+  // MARK: - UI Elements
   public lazy var toField: UITextField = {
     var field = UITextField(forAutoLayout: true)
-    field.text = "liedtke15"
-    field.font = UIFont.systemFontOfSize(15.0)
-    //field.textColor = UIColor.flatLightGrayColor()
+    field.font = UIFont.standardTextFont()
+    field.userInteractionEnabled = false
     return field
   }()
   
   public lazy var subjectField: UITextField = {
     var field = UITextField(forAutoLayout: true)
-    field.text = "Lawn Chair"
-    field.font = UIFont.systemFontOfSize(15.0)
-    //field.textColor = UIColor.flatLightGrayColor()
+    field.font = UIFont.standardTextFont()
     return field
   }()
   
   public lazy var bodyTextView: UITextView = {
     var textView = UITextView()
-    textView.text = "Email body"
+    textView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    textView.text = ""
     textView.scrollEnabled = false
     textView.textContainerInset = UIEdgeInsetsMake(-3,-5,0,0)
-    textView.font = UIFont.systemFontOfSize(15.0)
+    textView.font = UIFont.standardTextFont()
     textView.backgroundColor = UIColor.clearColor()
-    textView.setTranslatesAutoresizingMaskIntoConstraints(false)
     return textView
   }()
   
@@ -54,6 +56,17 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
   // MARK: - Private Properties
   
   // MARK: - Public Methods
+  
+  convenience init(user: PFUser, withSubject subject: String) {
+    self.init()
+    self.user = user
+    self.subject = subject
+  }
+  
+  public override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    view.endEditing(true)
+  }
   
   // MARK: - Private Methods
 
@@ -64,45 +77,56 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     view.addSubview(subjectField)
     view.addSubview(bodyTextView)
     
-    let padding = 10.0
+    // Initialize fields
+    toField.text = user.username
+    subjectField.text = subject
 
-    var toLabel = UILabel()
-    toLabel.addBottomBorderWithColor(UIColor.flatLightOrangeColor(), andThickness: 3.0)
-    toLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-    toLabel.textColor = UIColor.flatDarkGrayColor()
+    var toLabel = UILabel.standardCaptionLabel(true)
     toLabel.text = "To"
-    toLabel.font = UIFont.systemFontOfSize(15.0)
     toLabel.setContentHuggingPriority(800, forAxis: UILayoutConstraintAxis.Horizontal)
     toField.setContentHuggingPriority(100, forAxis: UILayoutConstraintAxis.Horizontal)
     view.addSubview(toLabel)
     
-    var fromLabel = UILabel()
-    fromLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-    fromLabel.textColor = UIColor.flatDarkGrayColor()
-    fromLabel.text = "Subject"
-    fromLabel.font = UIFont.systemFontOfSize(15.0)
-    fromLabel.setContentHuggingPriority(800, forAxis: UILayoutConstraintAxis.Horizontal)
+    var subjectLabel = UILabel.standardCaptionLabel(true)
+    subjectLabel.text = "Subject"
+    subjectLabel.setContentHuggingPriority(800, forAxis: UILayoutConstraintAxis.Horizontal)
     subjectField.setContentHuggingPriority(100, forAxis: UILayoutConstraintAxis.Horizontal)
-    view.addSubview(fromLabel)
+    subjectLabel.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+
+    view.addSubview(subjectLabel)
     
-    var messageLabel = UILabel(forAutoLayout: true)
-    messageLabel.textColor = UIColor.flatDarkGrayColor()
+    var messageLabel = UILabel.standardCaptionLabel(true)
     messageLabel.text = "Message"
-    messageLabel.font = UIFont.systemFontOfSize(15.0)
     view.addSubview(messageLabel)
     
    
-    var elements = NSDictionary(dictionary: ["toField": toField, "topLayoutGuide": topLayoutGuide, "view": view, "toLabel": toLabel, "fromLabel": fromLabel, "fromField": subjectField, "bodyTextView": bodyTextView, "messageLabel": messageLabel])
+    var elements = NSDictionary(dictionary: ["toField": toField, "topLayoutGuide": topLayoutGuide, "view": view, "toLabel": toLabel, "fromLabel": subjectLabel, "fromField": subjectField, "bodyTextView": bodyTextView, "messageLabel": messageLabel])
 
     
     // Horizontal layout
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[toLabel]-[toField]-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[toLabel]-[toField]-(hrp)-|",
+      options: .DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: elements))
     
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[fromLabel]-[fromField]-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[fromLabel]-[fromField]-(hrp)-|",
+      options: .DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: elements))
 
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[bodyTextView]-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[bodyTextView]-(hrp)-|",
+      options: .DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: elements))
     
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[messageLabel]-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[messageLabel]-(hrp)-|",
+      options: .DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: elements))
     
     // Vertical layout
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[toField]-[fromField]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
@@ -112,7 +136,7 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     // Center labels
     view.addConstraint(NSLayoutConstraint(item: toLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: .Equal, toItem: toField, attribute: .CenterY, multiplier: 1.0, constant: 0))
     
-    view.addConstraint(NSLayoutConstraint(item: fromLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: .Equal, toItem: subjectField, attribute: .CenterY, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: subjectLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: .Equal, toItem: subjectField, attribute: .CenterY, multiplier: 1.0, constant: 0))
     
     // TextView Height
     view.addConstraint(NSLayoutConstraint(item: bodyTextView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: view, attribute: NSLayoutAttribute.Height, multiplier: 0.33, constant: 0))
@@ -135,20 +159,46 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
   func didPushSendButton(sender: AnyObject) {
     sendEmail()
   }
-  
-  
-  func validateEmail() {
+    
+  func validateEmail() -> (error: Bool, errorMessage: String?) {
+    var error = ""
+    view.endEditing(true)
+    
+    if countElements(subjectField.text) <= 1 {
+      error += "Please enter a subject. "
+    }
+    
+    if countElements(bodyTextView.text) <= 1{
+      error += "Please enter a message. "
+    }
+    return error == "" ? (false, nil) : (true, error)
   }
   
+  /**
+  Checks if the email is valid and then sends email to the user
+  specified by user variable.
+  */
   func sendEmail() {
+    
+    if validateEmail().error {
+      var invalidEmailAlert = UIAlertController(title: "Invaild Email", message: validateEmail().errorMessage, preferredStyle: .Alert)
+      var okayAction = UIAlertAction(title: "Okay", style: .Default, handler: {
+        (action) -> Void in
+        self.bodyTextView.becomeFirstResponder()
+        return
+      })
+      invalidEmailAlert.addAction(okayAction)
+      presentViewController(invalidEmailAlert, animated: true, completion: nil)
+      return
+    }
     
     // create dictionary to send
     var currentUser = PFUser.currentUser()
-    let email: [String: String] = ["to": "jcliedtke@gmail.com", "from": currentUser.email, "subject": "Testing Contact Controller", "message": bodyTextView.text]
+    let email: [String: String] = ["to": "jcliedtke@gmail.com", "from": currentUser.email, "subject": subjectField.text, "message": bodyTextView.text]
     
+    // Progress HUD
     var progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
     progressHUD.labelText = "Sending email..."
-
     
     PFCloudExt.callFunctionAsync(PFCloudExtConstants.sendEmailFunction, withParameters: email).continueWithBlock {
       (task: BFTask!) -> AnyObject! in
@@ -156,9 +206,9 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
       if task.error == nil { // success
         progressHUD.labelText = "Success"
         progressHUD.hide(true)
-
-        println("Sucess, email was sent!")
+        self.dismissViewControllerAnimated(true, completion: nil)
         return nil
+        
       } else { // handle error or timeout
         progressHUD.labelText = "Error"
         progressHUD.hide(true)
@@ -171,14 +221,5 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     }
   }
   
-  public func hudWasHidden(hud: MBProgressHUD!) {
-    
-  }
-  
-  func handleTimeout(timer: NSTimer) {
-    var timeoutAlert = UIAlertController(title: "Network Problem", message: "Could not establish a connection, please try again.", preferredStyle: .Alert)
-    var okayAction = UIAlertAction(title: "Okay", style: .Default, handler: nil)
-    timeoutAlert.addAction(okayAction)
-  }
 
 }

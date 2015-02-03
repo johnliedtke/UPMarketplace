@@ -17,7 +17,7 @@ public class UPMAccountListingCell: PFTableViewCell {
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
     label.numberOfLines = 0
-    label.font = UIFont.boldSystemFontOfSize(16.0)
+    label.font = UIFont.systemFontOfSize(16.0)
     //label.backgroundColor = UIColor.flatLightOrangeColor()
     
     return label
@@ -28,9 +28,9 @@ public class UPMAccountListingCell: PFTableViewCell {
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
     label.numberOfLines = 0
-    label.font = UIFont.systemFontOfSize(14.0)
+    label.font = UIFont.boldSystemFontOfSize(14.0)
     label.textColor = UIColor.flatDarkGreenColor()
-    //label.backgroundColor = UIColor.flatDarkTealColor()
+
     return label
   }()
   

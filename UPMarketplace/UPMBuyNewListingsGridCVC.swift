@@ -19,7 +19,8 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+//    navigationController?.navigationBar.backItem.title = "Back!"
+    navigationController?.navigationBar.backItem?.title = "Back"
     // Check if a user is logged in
     UPMLoginVC.displayLoginInController(self)
     
