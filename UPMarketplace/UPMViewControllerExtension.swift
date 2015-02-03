@@ -34,10 +34,10 @@ struct UPMStandards {
   /**
   Standard spacing for autolayout to pass in for metrics.
   
-  hlp - Horizontal left padding
-  hrp - Horizontal right padding
-  vlp - Vertical left padding
-  vrp - Vertical left padding
+  - hlp Horizontal left padding
+  - hrp Horizontal right padding
+  - vlp Vertical left padding
+  - vrp Vertical left padding
   */
   static let autoLayoutMetrics = ["hlp": 15.0, "hrp": 15.0, "vlp": 8.0, "vrp": 8.0]
 }

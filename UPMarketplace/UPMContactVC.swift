@@ -159,8 +159,14 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
   func didPushSendButton(sender: AnyObject) {
     sendEmail()
   }
-    
-  func validateEmail() -> (error: Bool, errorMessage: String?) {
+  
+  /**
+  Validates the email email by checking if a minimum length is met for 
+  the subject and body.
+  
+  :returns: error - Valid email or not and a possible error message.
+  */
+  private func validateEmail() -> (error: Bool, errorMessage: String?) {
     var error = ""
     view.endEditing(true)
     

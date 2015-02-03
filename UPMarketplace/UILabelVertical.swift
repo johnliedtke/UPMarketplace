@@ -12,9 +12,7 @@ import UIKit
 Aligns the text of a UILabel to the top-left corner. Code from 
 stackoverflow
 */
-
-
-  class UILabelVertical: UILabel {
+class UILabelVertical: UILabel {
     enum VerticalAlignment : Int {
       case VerticalAlignmentTop = 0
       case VerticalAlignmentMiddle = 1
