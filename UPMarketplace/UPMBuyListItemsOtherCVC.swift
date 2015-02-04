@@ -1,5 +1,5 @@
 //
-//  UPMBuyListItemsCVC.swift
+//  UPMBuyListItemsOtherCVC.swift
 //  UPMarketplace
 //
 //  Created by Krismy on 1/19/15.
@@ -10,7 +10,7 @@ import UIKit
 /**
 Displays all UPMOtherListings in a grid format.
 */
-class UPMBuyListItemsCVC: UPMBuyGridCVC {
+class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   
   
   var chosenCategory: String!
@@ -25,6 +25,7 @@ class UPMBuyListItemsCVC: UPMBuyGridCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionView.backgroundColor = UIColor.standardBackgroundColor()
 
   }
   override func parseListingClassName() -> String {

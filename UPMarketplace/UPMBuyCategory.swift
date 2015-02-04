@@ -12,13 +12,14 @@ import UIKit
 
 class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLayout{
     
-  var categories = ["Textbooks", "Housing", "Other"]
-  var pictures = ["NewSelected.png", "NewSelected.png", "NewSelected.png"]
+  var categories = ["Textbooks", "Housing", "Furniture & Other"]
+  var pictures = ["textbook.png", "housing.png", "furniture.png"]
 
   let reuseidentifer = "BuyCategoryCell"
 
   override func viewDidLoad() {
       super.viewDidLoad()
+    collectionView.backgroundColor = UIColor.standardBackgroundColor()
     
     
   }
@@ -52,7 +53,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     if(segue.identifier == "showBuyList"){
 
       
-      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as UPMBuyCategoryCell)
+      let indexPath: NSIndexPath! = collectionView.indexPathForCell(sender as UPMBuyCategoryCell)
       var category:String! = categories[indexPath.row]
       
       var sendCategory: String?
@@ -62,7 +63,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       else if (category == "Textbooks"){
         sendCategory = "UPMTextbookListing"
       }
-      else if (category == "Other"){
+      else if (category == "Furniture & Other"){
         sendCategory = "UPMOtherListing"
       }
       let theDestination = (segue.destinationViewController as UPMBuyListItemsCVC)
