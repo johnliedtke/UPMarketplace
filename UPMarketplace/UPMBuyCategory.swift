@@ -66,7 +66,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       else if (category == "Furniture & Other"){
         sendCategory = "UPMOtherListing"
       }
-      let theDestination = (segue.destinationViewController as UPMBuyListItemsCVC)
+      let theDestination = (segue.destinationViewController as UPMBuyListItemsOtherCVC)
       theDestination.chosenCategory = sendCategory
 
       
