@@ -81,6 +81,10 @@
 		5266C6611A46A3D30061FFFB /* UPMBuyGridCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5266C6601A46A3D30061FFFB /* UPMBuyGridCVC.swift */; };
 		5266C6631A46ADA60061FFFB /* UPMBuy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5266C6621A46ADA60061FFFB /* UPMBuy.storyboard */; };
 		5266C6691A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5266C6681A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift */; };
+		526937FB1A81AAD000C32401 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937F91A81AAD000C32401 /* ParseUI.framework */; };
+		526937FC1A81AAD000C32401 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937FA1A81AAD000C32401 /* ParseCrashReporting.framework */; };
+		526937FE1A81AD4200C32401 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937FD1A81AD4200C32401 /* libstdc++.6.dylib */; };
+		526938001A81AD8200C32401 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937FF1A81AD8200C32401 /* libsqlite3.dylib */; };
 		528840731A7988190082CC86 /* UPMAccountActivityTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528840721A7988190082CC86 /* UPMAccountActivityTVC.swift */; };
 		529BDB211A241FC400F4E8EE /* UPMSellTextbookTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529BDB201A241FC400F4E8EE /* UPMSellTextbookTVC.swift */; };
 		529F39141A79885A000ED764 /* UPMAccountReservedTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 529F39131A79885A000ED764 /* UPMAccountReservedTVC.swift */; };
@@ -240,6 +244,10 @@
 		5266C6601A46A3D30061FFFB /* UPMBuyGridCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyGridCVC.swift; sourceTree = "<group>"; };
 		5266C6621A46ADA60061FFFB /* UPMBuy.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UPMBuy.storyboard; sourceTree = "<group>"; };
 		5266C6681A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyNewListingsGridCVC.swift; sourceTree = "<group>"; };
+		526937F91A81AAD000C32401 /* ParseUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseUI.framework; sourceTree = "<group>"; };
+		526937FA1A81AAD000C32401 /* ParseCrashReporting.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseCrashReporting.framework; sourceTree = "<group>"; };
+		526937FD1A81AD4200C32401 /* libstdc++.6.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.6.dylib"; path = "usr/lib/libstdc++.6.dylib"; sourceTree = SDKROOT; };
+		526937FF1A81AD8200C32401 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		528840721A7988190082CC86 /* UPMAccountActivityTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMAccountActivityTVC.swift; sourceTree = "<group>"; };
 		529BDB201A241FC400F4E8EE /* UPMSellTextbookTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTextbookTVC.swift; sourceTree = "<group>"; };
 		529F39131A79885A000ED764 /* UPMAccountReservedTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMAccountReservedTVC.swift; sourceTree = "<group>"; };
@@ -321,6 +329,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				526938001A81AD8200C32401 /* libsqlite3.dylib in Frameworks */,
+				526937FE1A81AD4200C32401 /* libstdc++.6.dylib in Frameworks */,
+				526937FC1A81AAD000C32401 /* ParseCrashReporting.framework in Frameworks */,
+				526937FB1A81AAD000C32401 /* ParseUI.framework in Frameworks */,
 				5200D4AD1A4903210079ED9A /* AVFoundation.framework in Frameworks */,
 				5265D3931A44B08F008D60E7 /* Accounts.framework in Frameworks */,
 				5265D3911A44B084008D60E7 /* Social.framework in Frameworks */,
@@ -633,6 +645,10 @@
 		52AF3D6819E77CED007E0D22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				526937FF1A81AD8200C32401 /* libsqlite3.dylib */,
+				526937FD1A81AD4200C32401 /* libstdc++.6.dylib */,
+				526937F91A81AAD000C32401 /* ParseUI.framework */,
+				526937FA1A81AAD000C32401 /* ParseCrashReporting.framework */,
 				5200D4AC1A4903210079ED9A /* AVFoundation.framework */,
 				5265D3921A44B08F008D60E7 /* Accounts.framework */,
 				5265D3901A44B084008D60E7 /* Social.framework */,

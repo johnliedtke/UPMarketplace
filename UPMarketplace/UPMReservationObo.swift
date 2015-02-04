@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 UP Marketplace. All rights reserved.
 //
 
-import Foundation
+
 
 
 /**
@@ -17,6 +17,5 @@ public class UPMReservationObo: UPMReservation {
   /// An associated message written by the reserver
   @NSManaged public var offer: Double
   
-
 
 }

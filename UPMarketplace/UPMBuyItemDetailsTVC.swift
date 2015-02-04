@@ -78,12 +78,31 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     // Contact!
     var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "contactSeller")
-    var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: nil)
+    var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: "reserveListing")
     var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
     
     self.setToolbarItems(barItems, animated: true)
     navigationController?.toolbarHidden = false
     tableView.reloadData()
+  }
+  
+  /**
+  User has attempted to reserve the listing.
+  */
+  func reserveListing() {
+    listing?.reserveInBackground(PFUser.currentUser() as UPMUser, message: "Reserving").continueWithBlock({
+      (task: BFTask!) -> AnyObject! in
+      var alertController: UIAlertController!
+      if task.error == nil {
+        alertController = UIAlertController(title: "Success", message: "You have reserved this listing. Please contact the seller to set up arrangements. Seller will be notified via email.", preferredStyle: .Alert)
+      } else {
+        alertController = UIAlertController(title: "Error", message: task.error.localizedDescription, preferredStyle: .Alert)
+      }
+      alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+      self.presentViewController(alertController, animated: true, completion: nil)
+      return nil
+    })
+    
   }
   
   override func viewWillDisappear(animated: Bool) {

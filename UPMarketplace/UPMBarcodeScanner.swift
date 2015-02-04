@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+
 //TODO: Implement a delegate method to alert controller of reading a barcode...
 
 public protocol UPMBarcodeScannerDelegate {

@@ -6,9 +6,6 @@
 //  Copyright (c) 2015 UP Marketplace. All rights reserved.
 //
 
-import Foundation
-
-
 /**
  A UPMReservation is an object containing information pertinent to a reservation of UPMListing and
  is used for sending notifications.
@@ -17,13 +14,12 @@ public class UPMReservation: PFObject, PFSubclassing  {
 
   // MARK: - Enum Def
   
-  enum reservationStatus {
+  enum reservationStatus: Int {
     case Rejected, Accepted, Waiting
   }
   
   // MARK: - Properties
-  
-  
+
   /// The time that the reservation object was created
   @NSManaged public var reserveTime: NSDate
   
@@ -33,7 +29,24 @@ public class UPMReservation: PFObject, PFSubclassing  {
   /// An associated message written by the reserver
   @NSManaged public var message: String
   
+  /// Associated listing of reservation
+  @NSManaged public var listing: UPMListing
+  
+  /// Status of reservation
+  @NSManaged public var status: Int
+  
   // MARK: - Methods
+  
+  /**
+  Creates a UPMReservation with a default state of waitig.
+  */
+  convenience init(reserver: UPMUser, listing: UPMListing, message: String) {
+    self.init()
+    self.reserver = reserver
+    self.message = message
+    self.reserveTime = NSDate()
+    self.status = reservationStatus.Waiting.rawValue
+  }
   
   /// returns the reserver{
   internal func getReserver() -> UPMUser

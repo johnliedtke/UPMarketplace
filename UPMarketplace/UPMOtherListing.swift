@@ -5,8 +5,6 @@
 //  Created by John Liedtke on 12/13/14.
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
-import UIKit
-import Foundation
 
 /**
  A UPMOtherListing is the basic object for listing anything that is

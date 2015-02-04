@@ -33,10 +33,10 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     super.init(coder: aDecoder)
   }
   
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
-  
+//  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+//    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//  }
+//  
   
   
   override func viewDidLoad() {

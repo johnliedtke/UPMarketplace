@@ -35,9 +35,9 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   
   
   // MARK: - Init
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-  }
+//  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
+//    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+//  }
   
   // MARK: Private Methods
   
@@ -51,12 +51,12 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     return sectionToKeyMap[section]!
   }
   
-  override init() {
-    super.init()
-    self.pullToRefreshEnabled = true
-    self.paginationEnabled = true
-    self.objectsPerPage = 25
-  }
+//  override init() {
+//    super.init()
+//    self.pullToRefreshEnabled = true
+//    self.paginationEnabled = true
+//    self.objectsPerPage = 25
+//  }
   
   
   // MARK: - Init
@@ -69,13 +69,13 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     super.init(style: style, className: aClassName)
   }
   
-  override init(style: UITableViewStyle) {
-    super.init(style: style)
-    
-    self.pullToRefreshEnabled = true
-    self.paginationEnabled = true
-    self.objectsPerPage = 5
-  }
+//  override init(style: UITableViewStyle) {
+//    super.init(style: style)
+//    
+//    self.pullToRefreshEnabled = true
+//    self.paginationEnabled = true
+//    self.objectsPerPage = 5
+//  }
   
   
   

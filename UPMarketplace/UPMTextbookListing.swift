@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-import UIKit
+
 
 /**
  A UPMTextbookListing is the basic object for a listing of a textbook. It

@@ -5,8 +5,8 @@
 //  Created by John Liedtke on 11/9/14.
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
-
 import Foundation
+
 
 extension UITextField {
   convenience init(forAutoLayout: Bool) {
@@ -14,6 +14,7 @@ extension UITextField {
     setTranslatesAutoresizingMaskIntoConstraints(false)
   }
 }
+
 
 extension UIView {
   

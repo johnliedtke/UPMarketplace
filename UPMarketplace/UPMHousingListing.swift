@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-import UIKit
+
 
 /**
  The UPMHousingListing class is a subclass of UPMListing used to
