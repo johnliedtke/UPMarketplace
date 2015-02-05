@@ -25,7 +25,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    collectionView.backgroundColor = UIColor.standardBackgroundColor()
+    collectionView?.backgroundColor = UIColor.standardBackgroundColor()
 
   }
   override func parseListingClassName() -> String {
