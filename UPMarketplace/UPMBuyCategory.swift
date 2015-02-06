@@ -19,7 +19,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
 
   override func viewDidLoad() {
       super.viewDidLoad()
-    collectionView.backgroundColor = UIColor.standardBackgroundColor()
+    collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     
     
   }
@@ -53,7 +53,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     if(segue.identifier == "showBuyList"){
 
       
-      let indexPath: NSIndexPath! = collectionView.indexPathForCell(sender as UPMBuyCategoryCell)
+      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as UPMBuyCategoryCell)
       var category:String! = categories[indexPath.row]
       
       var sendCategory: String?

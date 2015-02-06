@@ -22,11 +22,12 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
 //    navigationController?.navigationBar.backItem.title = "Back!"
     navigationController?.navigationBar.backItem?.title = "Back"
     // Check if a user is logged in
-    UPMLoginVC.displayLoginInController(self)
-    
   }
-  
-  
+
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    UPMLoginVC.displayLoginInController(self)
+  }
     
   
   override func changeDefaults() {

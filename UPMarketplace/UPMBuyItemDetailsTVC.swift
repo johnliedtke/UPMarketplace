@@ -154,7 +154,24 @@ class UPMBuyItemDetailsTVC: UITableViewController {
         let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as UPMBuyItemImageCell
       
         cell.buyItemImage.file = listing?.picture
-       cell.buyItemImage.loadInBackground()
+        cell.buyItemImage.loadInBackground()
+        cell.displayImageViewTapped = { (sender) in
+          var imageVC = UPMBuyItemDetailsImageVC()
+          
+          self.providesPresentationContextTransitionStyle = true
+          self.definesPresentationContext = true
+          self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+          self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+          self.view.opaque = false
+          self.tableView.opaque = false
+          
+          imageVC.image = cell.buyItemImage.image
+          self.navigationController?.presentViewController(imageVC, animated: true, completion: nil)
+        }
+        
+        
+        
+        
       return cell
       
     case tableCellSection.TitleSection:
@@ -252,3 +269,77 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   }
 }
+
+
+class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
+  
+  var image: UIImage?
+  
+  lazy var imageView: UIImageView = {
+    var imageView = UIImageView()
+    imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    imageView.contentMode = .ScaleAspectFill
+    return imageView
+  }()
+  
+  lazy var scrollView: UIScrollView = {
+    var scrollView = UIScrollView()
+    scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    scrollView.delegate = self
+    scrollView.maximumZoomScale = CGFloat(4.0)
+    scrollView.backgroundColor = UIColor.blackColor()
+    return scrollView
+  }()
+  
+  lazy var swpipeUpGestureRecognizer: UISwipeGestureRecognizer = {
+    var gr = UISwipeGestureRecognizer(target: self, action: "didSwipeUp:")
+    gr.direction = .Up
+    return gr
+  }()
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(scrollView)
+    scrollView.addSubview(imageView)
+    
+    if let image = image {
+      imageView.image = image
+    }
+    
+    var elements = NSDictionary(dictionary: ["scrollView": scrollView, "imageView": imageView])
+    
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|[scrollView]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
+    
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[scrollView]|", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+    
+    scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|[imageView]|", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+    
+    scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[imageView]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
+    
+    scrollView.addConstraint(NSLayoutConstraint(item: imageView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: scrollView, attribute: NSLayoutAttribute.Height, multiplier: 1.0, constant: 0))
+    
+    scrollView.addConstraint(NSLayoutConstraint(item: imageView, attribute: .Width, relatedBy: .Equal, toItem: scrollView, attribute: .Width, multiplier: 1.0, constant: 0))
+    
+    scrollView.addGestureRecognizer(swpipeUpGestureRecognizer)
+    
+  }
+  
+  func didSwipeUp(sender: AnyObject) {
+
+    var height = scrollView.frame.height
+
+   self.dismissViewControllerAnimated(true, completion: nil)
+    
+    println("Did swipe up")
+  }
+  
+  func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
+    return imageView
+  }
+  
+}
+
+
+
+

@@ -75,25 +75,9 @@ public class UPMLoginVC: UIViewController {
     view.backgroundColor = UIColor.standardBackgroundColor()
     
     var currentUser = PFUser.currentUser()
-    
-    
+
     var barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "pop")
     navigationItem.leftBarButtonItem = barButtonItem
-    
-    
-    
-    
-    
-    
-    
-    //TODO: DELETE
-//    var dict = ["to": "jcliedtke@gmail.com", "from": "liedtke15@up.edu", "subject": "Meow meow", "message": "Hello World!"]
-//    PFCloud.callFunction("sendEmail", withParameters: dict)
-//    PFCloud.callFunctionInBackground("sendEmail", withParameters: dict) { (result, error) -> Void in
-//      println(error.localizedDescription)
-//    }
-//
-    
     
   }
   func pop() -> Void {
