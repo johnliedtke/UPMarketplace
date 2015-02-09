@@ -69,8 +69,15 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
     // Grab the picture-file and retrieve it from parse
     var picture = object["picture"] as? PFFile
     
-    cell.listingImageView.file = listing.picture
-    cell.listingImageView.loadInBackground()
+    if let thumbnail = object["pictureThumbnail"] as? PFFile {
+      cell.listingImageView.file = thumbnail
+      cell.listingImageView.loadInBackground()
+    } else {
+      cell.listingImageView.file = listing.picture
+      cell.listingImageView.loadInBackground()
+    }
+    
+    
     
     //TODO: Change details
     cell.configureCell(listing.title, price: listing.displayPrice(), details: "Reserve Now")

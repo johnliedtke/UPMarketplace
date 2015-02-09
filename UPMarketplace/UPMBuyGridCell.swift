@@ -64,6 +64,7 @@ class UPMBuyGridCell: UICollectionViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
+    contentView.clipsToBounds = true
     contentView.addSubview(listingImageView)
     contentView.addSubview(titleLabel)
     contentView.addSubview(priceLabel)
@@ -97,16 +98,22 @@ class UPMBuyGridCell: UICollectionViewCell {
       views: elements))
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "V:|[listingImageView]-[titleLabel]",
+      "V:|[listingImageView]-[titleLabel]-(>=8)-[priceLabel][detailsLabel]-|",
       options: .DirectionLeadingToTrailing,
       metrics: nil,
       views: elements))
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "V:[priceLabel][detailsLabel]-|",
-      options: .DirectionLeadingToTrailing,
-      metrics: nil,
-      views: elements))
+    priceLabel.setContentCompressionResistancePriority(900, forAxis: UILayoutConstraintAxis.Vertical)
+    detailsLabel.setContentCompressionResistancePriority(900, forAxis: UILayoutConstraintAxis.Vertical)
+    titleLabel.setContentCompressionResistancePriority(400, forAxis: UILayoutConstraintAxis.Vertical)
+
+
+//
+//    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+//      "V:[priceLabel][detailsLabel]-|",
+//      options: .DirectionLeadingToTrailing,
+//      metrics: nil,
+//      views: elements))
     
     contentView.addConstraint(NSLayoutConstraint(item: listingImageView, attribute: .Height, relatedBy: .Equal, toItem: contentView, attribute: .Height, multiplier: 0.55, constant: 0))
     
