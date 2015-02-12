@@ -211,13 +211,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       
       case tableCellSection.DescriptionSection:
         let BuyItem = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
-        var buyDescriptionVC: UPMBuyItemDescriptionVC = BuyItem.instantiateViewControllerWithIdentifier("UPMBuyItemDescriptionVC") as UPMBuyItemDescriptionVC
-    
-    
-    buyDescriptionVC.descriptionS = (listing?.descriptionS)!
+        var buyDescriptionVC = UPMBuyItemDescriptionVC(desc: (listing?.descriptionS)!)
         navigationController?.pushViewController(buyDescriptionVC, animated: true)
-      
-      
+
     default:
       break
     }

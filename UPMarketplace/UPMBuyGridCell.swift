@@ -106,14 +106,6 @@ class UPMBuyGridCell: UICollectionViewCell {
     priceLabel.setContentCompressionResistancePriority(900, forAxis: UILayoutConstraintAxis.Vertical)
     detailsLabel.setContentCompressionResistancePriority(900, forAxis: UILayoutConstraintAxis.Vertical)
     titleLabel.setContentCompressionResistancePriority(400, forAxis: UILayoutConstraintAxis.Vertical)
-
-
-//
-//    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-//      "V:[priceLabel][detailsLabel]-|",
-//      options: .DirectionLeadingToTrailing,
-//      metrics: nil,
-//      views: elements))
     
     contentView.addConstraint(NSLayoutConstraint(item: listingImageView, attribute: .Height, relatedBy: .Equal, toItem: contentView, attribute: .Height, multiplier: 0.55, constant: 0))
     

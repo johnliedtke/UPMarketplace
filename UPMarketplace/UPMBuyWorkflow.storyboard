@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14B25" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nVZ-M8-68S">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6254" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="nVZ-M8-68S">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6247"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
@@ -260,26 +260,8 @@
                     <view key="view" contentMode="scaleToFill" id="6sE-vU-XkY">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3uz-3r-Vor">
-                                <rect key="frame" x="0.0" y="20" width="600" height="580"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="3uz-3r-Vor" firstAttribute="top" secondItem="c8N-vo-5KA" secondAttribute="bottom" id="9aE-KM-SWi"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="3uz-3r-Vor" secondAttribute="trailing" constant="-16" id="UEM-LC-Il7"/>
-                            <constraint firstItem="3uz-3r-Vor" firstAttribute="leading" secondItem="6sE-vU-XkY" secondAttribute="leadingMargin" constant="-16" id="wx6-Ra-6Zm"/>
-                            <constraint firstItem="1wN-Am-ef9" firstAttribute="top" secondItem="3uz-3r-Vor" secondAttribute="bottom" id="zAp-7D-IRJ"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="descriptiontextView" destination="3uz-3r-Vor" id="Pqw-XC-77r"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="YMJ-Lx-ibt" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

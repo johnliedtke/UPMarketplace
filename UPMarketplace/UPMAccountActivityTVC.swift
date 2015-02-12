@@ -32,15 +32,48 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
   required internal init(coder aDecoder: NSCoder) {
       super.init(coder: aDecoder)
   }
-
-//  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-//    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//  }
-//
   
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    
+    
+    var reservationsQuery = PFQuery(className: "UPMReservation")
+    reservationsQuery.whereKey("reserver", equalTo: PFUser.currentUser())
+
+    reservationsQuery.findObjectsInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
+      
+      var reservations = task.result as [UPMReservation]
+      
+      var listingsQuery = PFQuery(className: "UPMOtherListing")
+      listingsQuery.whereKey("reservations", containedIn: reservations)
+
+      
+      
+      return listingsQuery.findObjectsInBackground()
+      }.continueWithBlock { (task: BFTask!) -> AnyObject! in
+        if task.error == nil {
+          var result = task.result as [UPMListing]
+          println("Success")
+          return PFObject.fetchAllInBackground(result)
+        } else {
+          return task.error
+        }
+      }.continueWithBlock { (task: BFTask!) -> AnyObject! in
+        if task.error == nil {
+          var result = task.result as [UPMListing]
+          for l in result {
+            var desc = l.price
+            println(desc)
+          }
+          println("Success")
+          return nil
+        } else {
+          return task.error
+        }
+    }
+    
   }
 
   // MARK - Private Methods
