@@ -48,29 +48,35 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       return cell
   }
   
+  override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+    let viewController = UPMBuyListItemsOtherCVC()
+    navigationController?.pushViewController(viewController, animated: true)
+
+  }
 
   override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    if(segue.identifier == "showBuyList"){
+//    if(segue.identifier == "showBuyList"){
+//
+//      
+//      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as! UPMBuyCategoryCell)
+//      var category:String! = categories[indexPath.row]
+//      
+//      var sendCategory: String?
+//      if(category == "Housing"){
+//        sendCategory = "UPMHousingListing"
+//      }
+//      else if (category == "Textbooks"){
+//        sendCategory = "UPMTextbookListing"
+//      }
+//      else if (category == "Furniture & Other"){
+//        sendCategory = "UPMOtherListing"
+//      }
+//      let theDestination = (segue.destinationViewController as! UPMBuyListItemsOtherCVC)
+//      theDestination.chosenCategory = sendCategory
+//
+//      
+//    }
 
-      
-      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as! UPMBuyCategoryCell)
-      var category:String! = categories[indexPath.row]
-      
-      var sendCategory: String?
-      if(category == "Housing"){
-        sendCategory = "UPMHousingListing"
-      }
-      else if (category == "Textbooks"){
-        sendCategory = "UPMTextbookListing"
-      }
-      else if (category == "Furniture & Other"){
-        sendCategory = "UPMOtherListing"
-      }
-      let theDestination = (segue.destinationViewController as! UPMBuyListItemsOtherCVC)
-      theDestination.chosenCategory = sendCategory
-
-      
-    }
     
     
   }
