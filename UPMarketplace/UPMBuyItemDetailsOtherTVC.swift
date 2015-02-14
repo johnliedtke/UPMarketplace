@@ -11,7 +11,7 @@ import UIKit
 
 class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC{
   
-  var numRows = 1
+  var numRows = 2
   var listingOther: UPMOtherListing?
   
   override func changeDefaults() {
@@ -20,7 +20,17 @@ class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC{
   }
   
   override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
-    cell.configureCell("Category:", second: listingOther?.category)
+    switch(indexPath.row){
+    case 0:
+      cell.configureCell("Category:", second: listingOther?.category)
+      break
+    case 1:
+      cell.configureCell("Posted:", second: super.fixDateFormat((listingOther?.createdAt)!))
+      break
+    default:
+      break
+    }
+    
   }
 
   

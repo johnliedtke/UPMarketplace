@@ -14,6 +14,8 @@ import UIKit
   of a UPMListing. Subclass to customize for different listings.
 */
 class UPMBuyItemDetailsTVC: UITableViewController {
+  
+  //TODO: Needs real name for seller
 
   // MARK: - Constants 
   
@@ -21,6 +23,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   let titleCellIdentifier = "UPMBuyItemTitleCell"
   let fieldCellIdentifier = "UPMBuyItemFieldCell"
   let descriptionCellIdentifier = "UPMBuyItemDescriptionCell"
+  let sellerCellIdentifier = "UPMBuyItemFieldCell"
   
   // MARK: - Public Properties
   
@@ -39,8 +42,8 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   }()
   
   enum tableCellSection: Int {
-    case ImageSection = 0, TitleSection, FieldSection, DescriptionSection;
-    static let allValues = [ImageSection, TitleSection, FieldSection, DescriptionSection]
+    case ImageSection = 0, TitleSection, FieldSection, DescriptionSection, SellerSection;
+    static let allValues = [ImageSection, TitleSection, FieldSection, DescriptionSection, SellerSection]
   }
   
   /// Override to change the default values before the first data is fetched
@@ -59,6 +62,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     tableView.registerNib(UINib(nibName: titleCellIdentifier, bundle: nil), forCellReuseIdentifier: titleCellIdentifier)
     tableView.registerNib(UINib(nibName: fieldCellIdentifier, bundle: nil), forCellReuseIdentifier: fieldCellIdentifier)
     tableView.registerNib(UINib(nibName: descriptionCellIdentifier, bundle: nil), forCellReuseIdentifier: descriptionCellIdentifier)
+    tableView.registerNib(UINib(nibName: fieldCellIdentifier, bundle: nil), forCellReuseIdentifier: sellerCellIdentifier)
     
     // Background
     tableView.backgroundColor = UIColor.standardBackgroundColor()
@@ -191,6 +195,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       cell.setDescription(listing?.descriptionS)
       return cell
       
+    case tableCellSection.SellerSection:
+      let cell = tableView.dequeueReusableCellWithIdentifier(sellerCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemFieldCell
+      configureSellerCells(cell, indexPath: indexPath)
+      return cell
+      
     default:
       println("not one of the sections")
     }
@@ -222,6 +231,19 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     }
   }
   
+  func configureSellerCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath){
+
+      cell.configureCell("Seller", second: "Seller Name")
+
+  }
+  
+  func fixDateFormat(date: NSDate) -> String{
+    var formatter: NSDateFormatter = NSDateFormatter()
+    formatter.dateFormat = "dd-MM-yyyy"
+    var stringDate: String = formatter.stringFromDate(date)
+    return stringDate
+  }
+  
   // MARK: - TableView Delegate
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
@@ -242,7 +264,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     if section == tableCellSection.FieldSection.rawValue {
       return "Details"
-    } else {
+    }
+    if section == tableCellSection.SellerSection.rawValue {
+      return "Seller Information"
+    }
+    else {
       return nil
     }
   }

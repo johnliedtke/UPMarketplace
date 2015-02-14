@@ -28,8 +28,13 @@ class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
         break
       case 2:
         cell.configureCell("Course:", second: listingTextbook?.textbook?.course)
+        break
       case 3:
         cell.configureCell("Professor:", second: listingTextbook?.textbook?.professor)
+        break
+      case 4:
+        cell.configureCell("Posted:", second:fixDateFormat((listingTextbook?.createdAt)!))
+        break
       default:
         break
         
