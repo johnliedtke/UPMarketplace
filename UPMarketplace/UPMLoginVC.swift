@@ -105,17 +105,12 @@ public class UPMLoginVC: UIViewController {
   */
   func logIn(username: String, password: String) -> Void {
     
-    UPMUser.loginAsync(username.lowercaseString, password: password).continueWithBlock {
+    PFUser.logInWithUsernameInBackground(username, password: password).continueWithBlock {
       (task: BFTask!) -> AnyObject! in
-      if let error = task.error {
-        // Display error
-        var errorString = error.userInfo?[NSString(string: "error")] as! NSString
-        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
-        alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
-        self.presentViewController(alertError, animated: true, completion: nil)
+      
+      if task.error == nil {
         
-      } else {
-        let user = task.result as! UPMUser
+        let user = task.result as! PFUser
         
         // Confirm that the user has a verified email address
         if !user.isEmailVerified() {
@@ -126,10 +121,16 @@ public class UPMLoginVC: UIViewController {
         } else {
           self.logInSuccessfulHandler(sender: self)
         }
+      } else {
+        // Display error
+        let error = task.error
+        var errorString = error.userInfo?[NSString(string: "error")] as! NSString
+        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
+        alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
+        self.presentViewController(alertError, animated: true, completion: nil)
       }
       return nil
     }
-    
   }
   
   /**
