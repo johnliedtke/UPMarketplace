@@ -49,6 +49,47 @@ extension PFObject {
 
 }
 
+extension PFUser {
+  
+  /**
+  Checks if the user has a verfified email.
+  
+  :return: Email verified
+  */
+  func isEmailVerified() -> Bool {
+    //self["emailVerified"].fetchIfNeeded()
+    return self["emailVerified"] as! Bool
+  }
+  
+  /**
+  A task for loggin in a user given a username and password in the
+  background.
+  
+  :param: username User's Username (email)
+  :param: password User's password
+  */
+  class func loginAsync(username: String, password: String) -> BFTask {
+    let task = BFTaskCompletionSource()
+    
+    PFUser.logInWithUsernameInBackground(username, password: password) {
+      (user, error) -> Void in
+      if error == nil {
+        task.setResult(user)
+      } else {
+        task.setError(error)
+      }
+    }
+    return task.task
+  }
+
+}
+
+
+
+
+
+
+
 
 
 
