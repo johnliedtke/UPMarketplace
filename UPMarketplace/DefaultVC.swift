@@ -16,7 +16,7 @@ class DefaultVC: UIViewController {
 //    MyNewViewController *myVC = (MyNewViewController *)[storyboard instantiateViewControllerWithIdentifier:@"myViewCont"];
     
     let SellStoryboard = UIStoryboard(name: MainSellStoryboardIdentifier, bundle: nil)
-    var sellTVC = SellStoryboard.instantiateViewControllerWithIdentifier(SellStoryboardIdentifier) as UPMSellTVC
+    var sellTVC = SellStoryboard.instantiateViewControllerWithIdentifier(SellStoryboardIdentifier) as! UPMSellTVC
       navigationController?.pushViewController(sellTVC, animated: true)
   }
 

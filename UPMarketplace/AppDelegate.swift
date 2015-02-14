@@ -18,6 +18,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
       clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
     
+    UPMTextbookListing.registerSubclass()
+    UPMOtherListing.registerSubclass()
+    UPMHousingListing.registerSubclass()
+    UPMReservation.registerSubclass()
+    UPMTextbook.registerSubclass()
+    UPMUser.registerSubclass()
+    UPMActivity.registerSubclass()
+    
+  
+    
     // Global apperances
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
@@ -37,7 +47,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Buy
     let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)
-    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as UINavigationController
+    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as! UINavigationController
     var buyNewListingsItem = buyNewListingsVC.tabBarItem
     buyNewListingsItem.title = "New Listings"
     buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)
@@ -46,12 +56,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //Buy Workflow
     let BuyWorkflowStoryboard = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
-    var buyCategoryVC = BuyWorkflowStoryboard.instantiateInitialViewController() as UINavigationController
+    var buyCategoryVC = BuyWorkflowStoryboard.instantiateInitialViewController() as! UINavigationController
     controllers.append(buyCategoryVC)
     
     // Sell
     let SellStoryboard = UIStoryboard(name: Constants.SellStoryboard.MainStoryboard, bundle: nil)
-    var sellVC = SellStoryboard.instantiateInitialViewController() as UINavigationController
+    var sellVC = SellStoryboard.instantiateInitialViewController() as! UINavigationController
     controllers.append(sellVC)
     var sellTabBarItem = sellVC.tabBarItem
     sellTabBarItem.title = "Sell"
@@ -63,7 +73,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Account
     var accountStoryboard = UIStoryboard(name: UPMAccountConstants.accountStoryboardIdentifier, bundle: nil)
-    var accountNavigation = accountStoryboard.instantiateInitialViewController() as UINavigationController
+    var accountNavigation = accountStoryboard.instantiateInitialViewController() as! UINavigationController
     controllers.append(accountNavigation)
     
     var accountItem = accountNavigation.tabBarItem

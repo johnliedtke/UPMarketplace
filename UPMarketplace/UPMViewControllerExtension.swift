@@ -5,7 +5,7 @@
 //  Created by John Liedtke on 11/9/14.
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
-import Foundation
+import UIKit
 
 
 extension UITextField {
@@ -14,7 +14,6 @@ extension UITextField {
     setTranslatesAutoresizingMaskIntoConstraints(false)
   }
 }
-
 
 extension UIView {
   
@@ -40,7 +39,7 @@ struct UPMStandards {
   - vlp Vertical left padding
   - vrp Vertical left padding
   */
-  static let autoLayoutMetrics = ["hlp": 15.0, "hrp": 15.0, "vlp": 8.0, "vrp": 8.0]
+  static let autoLayoutMetrics = ["hlp": 15.0, "hrp": 15.0, "vlp": 8.0, "vrp": 8.0] as [NSObject: AnyObject]
 }
 
 

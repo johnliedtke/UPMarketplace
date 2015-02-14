@@ -23,5 +23,4 @@ class UPMButton: UIButton {
     super.layoutSubviews()
     setTitleColor(UIColor.lightPurpleColor(), forState: UIControlState.Normal)
   }
-
 }

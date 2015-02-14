@@ -18,8 +18,8 @@ class UPMAccountActivityCell: PFTableViewCell {
     return label
     }()
   
-  lazy var iconImageView: UIImageView = {
-    var iv = UIImageView()
+  lazy var iconImageView: PFImageView = {
+    var iv = PFImageView()
     iv.setTranslatesAutoresizingMaskIntoConstraints(false)
     iv.backgroundColor = UIColor.purpleColor()
     self.contentView.addSubview(iv)
@@ -30,7 +30,7 @@ class UPMAccountActivityCell: PFTableViewCell {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
     
     // Elements dictionary, holds all subviews
-    var ed = NSDictionary(dictionary: ["messageLabel": messageLabel, "iconImageView": iconImageView])
+    var ed: [NSObject : AnyObject] = ["messageLabel": messageLabel, "iconImageView": iconImageView]
     
     // Layout
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(

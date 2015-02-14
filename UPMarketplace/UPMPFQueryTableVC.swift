@@ -17,7 +17,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   // MARK: - Public Properties
   
   /// The key used on fetched PFObjects to put them into sections
-  public var sectionKey: String = "category"
+  public var sectionKey: String = "message"
   
   // MARK: - Private Properties
   
@@ -67,6 +67,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   
   override init!(style: UITableViewStyle, className aClassName: String!) {
     super.init(style: style, className: aClassName)
+    
   }
   
 //  override init(style: UITableViewStyle) {
@@ -88,8 +89,8 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     sectionToKeyMap.removeAll(keepCapacity: false)
     
     var section = 0
-    for (rowIndex, object) in enumerate(objects as [PFObject]) {
-      var currentSectionKey = object.objectForKey(sectionKey) as String
+    for (rowIndex, object) in enumerate(objects as! [PFObject]) {
+      var currentSectionKey = object.objectForKey(sectionKey) as! String
       var objectsInSection = sectionIndices[currentSectionKey]
       
       // First time we've seen sectionKey
@@ -109,7 +110,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     var rowIndicesInSection = sectionIndices[currentSectionKey]!
     
     var rowIndex = rowIndicesInSection[indexPath.row]
-    return objects[rowIndex] as PFObject
+    return objects[rowIndex] as! PFObject
   }
   
   // MARK: - UITableViewDatasource

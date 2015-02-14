@@ -48,7 +48,7 @@ class UPMBuyItemFieldCell: UITableViewCell {
   
   func setupConstraints() {
     
-    var ed = NSDictionary(dictionary: ["firstColumnLabel": firstColumnLabel, "secondColumnLabel": secondColumnLabel])
+    var ed: [NSObject : AnyObject] = ["firstColumnLabel": firstColumnLabel, "secondColumnLabel": secondColumnLabel]
     
     // Horizontal layout
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(

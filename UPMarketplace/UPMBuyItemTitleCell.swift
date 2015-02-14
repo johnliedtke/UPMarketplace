@@ -70,7 +70,11 @@ public class UPMBuyItemTitleCell: UITableViewCell {
   */
   private func setupConstraints() -> Void {
     
-    var ed = NSDictionary(dictionary: ["priceLabel": priceLabel, "titleLabel": titleLabel])
+    var ed: [NSObject : AnyObject] = ["priceLabel": priceLabel, "titleLabel": titleLabel]
+    
+    
+    priceLabel.setContentCompressionResistancePriority(900, forAxis: UILayoutConstraintAxis.Vertical)
+    titleLabel.setContentCompressionResistancePriority(900, forAxis: UILayoutConstraintAxis.Vertical)
     
     
     // Horizontal Layout

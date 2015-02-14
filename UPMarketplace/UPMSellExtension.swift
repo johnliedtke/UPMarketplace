@@ -23,7 +23,7 @@ extension UPMSellTVC {
   func pushDescriptionVC() {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
 
-    var sellDescriptionVC = storyboard.instantiateViewControllerWithIdentifier(SellDescriptionStoryboard) as UPMSellDescriptionVC
+    var sellDescriptionVC = storyboard.instantiateViewControllerWithIdentifier(SellDescriptionStoryboard) as! UPMSellDescriptionVC
     sellDescriptionVC.delegate = self
     if listing?.descriptionS != nil {
       sellDescriptionVC.descriptionS = (listing?.descriptionS)!
@@ -33,7 +33,7 @@ extension UPMSellTVC {
   
   func pushPriceFormatVC() {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
-    var priceFormatVC = storyboard.instantiateViewControllerWithIdentifier(SellPriceFormatStoryboard) as UPMSellPriceFormatTVC
+    var priceFormatVC = storyboard.instantiateViewControllerWithIdentifier(SellPriceFormatStoryboard) as! UPMSellPriceFormatTVC
     priceFormatVC.delegate = self
     priceFormatVC.price = (listing?.price)!
     priceFormatVC.limit = (listing?.limit)!
@@ -44,14 +44,14 @@ extension UPMSellTVC {
   
   func pushTitleVC() {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
-    var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as UPMSellTitleTVC
+    var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as! UPMSellTitleTVC
     titleVC.delegate = self
     navigationController?.pushViewController(titleVC, animated: true)
   }
   
   func pushImagePickerVC() {
     let Storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
-    var imagePickerVC = Storyboard.instantiateViewControllerWithIdentifier(SellImagePickerStoryboard) as UPMSellImagePickerVC
+    var imagePickerVC = Storyboard.instantiateViewControllerWithIdentifier(SellImagePickerStoryboard) as! UPMSellImagePickerVC
     imagePickerVC.delegate = self
     if let image = listing?.photo {
       imagePickerVC.image = image

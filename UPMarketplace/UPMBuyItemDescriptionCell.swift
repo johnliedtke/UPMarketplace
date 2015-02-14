@@ -53,7 +53,7 @@ class UPMBuyItemDescriptionCell: UITableViewCell {
   
   func setupConstraints() {
     
-    var ed = NSDictionary(dictionary: ["titleLabel": titleLabel, "descriptionLabel": descriptionLabel])
+    var ed: [NSObject : AnyObject] = ["titleLabel": titleLabel, "descriptionLabel": descriptionLabel]
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "H:|-(hlp)-[titleLabel]-(hrp)-|",

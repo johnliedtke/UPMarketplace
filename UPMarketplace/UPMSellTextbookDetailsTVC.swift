@@ -14,13 +14,13 @@ let SellTextbookDetailsCourseStoryboard = "SellTextbookDetailsCourse"
 class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDelegate, UPMSellTextbookDetailsCourseDelegate {
   // MARK: - Properties
   var textbookListing: UPMTextbookListing = UPMTextbookListing()
-  override var listing: UPMListing {
+  override var listing: UPMListing? {
     get {
       return textbookListing
     }
     set {
       if newValue is UPMTextbookListing {
-        textbookListing = newValue as UPMTextbookListing
+        textbookListing = newValue as! UPMTextbookListing
       }
     }
   }
@@ -47,14 +47,14 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
     let TextBookStoryboard = UIStoryboard(name: "UPMSellTextbook", bundle: nil)
     switch item.title {
     case RequiredItem.ISBN.rawValue:
-      var iSBNVC = TextBookStoryboard.instantiateViewControllerWithIdentifier(SellTextbookDetailsISBNStoryboard) as UPMSellTextbookDetailsISBNTVC
+      var iSBNVC = TextBookStoryboard.instantiateViewControllerWithIdentifier(SellTextbookDetailsISBNStoryboard) as! UPMSellTextbookDetailsISBNTVC
       if let iSBN = textbookListing.textbook?.iSBN {
         iSBNVC.iSBN = iSBN
       }
       iSBNVC.delegate = self
       navigationController?.pushViewController(iSBNVC, animated: true)
     case RequiredItem.Course.rawValue:
-      var courseTVC = TextBookStoryboard.instantiateViewControllerWithIdentifier(SellTextbookDetailsCourseStoryboard) as UPMSellTextbookDetailsCourseTVC
+      var courseTVC = TextBookStoryboard.instantiateViewControllerWithIdentifier(SellTextbookDetailsCourseStoryboard) as! UPMSellTextbookDetailsCourseTVC
       if let course = textbookListing.textbook?.course {
         courseTVC.course = course
       }

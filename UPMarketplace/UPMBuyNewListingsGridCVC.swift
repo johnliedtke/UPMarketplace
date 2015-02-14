@@ -37,13 +37,16 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   override func query() -> PFQuery {
     var listingQuery = PFQuery(className: "UPMOtherListing")
     listingQuery.orderByDescending("createdAt")
+    listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
+    listingQuery.includeKey("blackListedUsers")
+    listingQuery.includeKey("reservations")
     return listingQuery
   }
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
 
     if(object.parseClassName == "UPMOtherListing"){
-      var listing = object as UPMOtherListing
+      var listing = object as! UPMOtherListing
       let viewController = UPMBuyItemDetailsOtherTVC()
       viewController.listingOther = listing
       navigationController?.pushViewController(viewController, animated: true)

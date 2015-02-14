@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="6250" systemVersion="14C106a" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6244"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
@@ -13,25 +12,7 @@
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
                 <rect key="frame" x="0.0" y="0.0" width="320" height="43"/>
                 <autoresizingMask key="autoresizingMask"/>
-                <subviews>
-                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" restorationIdentifier="UPMBuyItemImageCell" translatesAutoresizingMaskIntoConstraints="NO" id="Iew-rv-Bl4" customClass="PFImageView">
-                        <rect key="frame" x="0.0" y="0.0" width="395" height="201"/>
-                        <constraints>
-                            <constraint firstAttribute="height" relation="lessThanOrEqual" constant="201" id="IvI-Bm-iSk"/>
-                            <constraint firstAttribute="width" relation="lessThanOrEqual" constant="395" id="sQX-ff-sd2"/>
-                        </constraints>
-                    </imageView>
-                </subviews>
-                <constraints>
-                    <constraint firstAttribute="trailingMargin" secondItem="Iew-rv-Bl4" secondAttribute="trailing" constant="-8" id="1m1-u8-eid"/>
-                    <constraint firstItem="Iew-rv-Bl4" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leadingMargin" constant="-8" id="SYz-hr-XHR"/>
-                    <constraint firstItem="Iew-rv-Bl4" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="topMargin" constant="-8" id="Xu3-F3-vja"/>
-                    <constraint firstAttribute="bottomMargin" secondItem="Iew-rv-Bl4" secondAttribute="bottom" constant="-9" id="orN-rL-wmB"/>
-                </constraints>
             </tableViewCellContentView>
-            <connections>
-                <outlet property="buyItemImage" destination="Iew-rv-Bl4" id="Rcc-yY-8L0"/>
-            </connections>
             <point key="canvasLocation" x="430.5" y="302.5"/>
         </tableViewCell>
     </objects>

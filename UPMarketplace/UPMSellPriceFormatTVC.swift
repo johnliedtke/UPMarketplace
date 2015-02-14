@@ -72,18 +72,18 @@ class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
     currentString.replaceCharactersInRange(range, withString: string)
     // Strip out the decimal seperator
     let r = NSRange(location: 0, length: currentString.length)
-    currentString.replaceOccurrencesOfString(decimalSeparator, withString: "", options: NSStringCompareOptions.LiteralSearch, range: r)
+    currentString.replaceOccurrencesOfString(decimalSeparator as! String, withString: "", options: NSStringCompareOptions.LiteralSearch, range: r)
     // Generate a new string for the text input
     var currentValue: Int = currentString.integerValue
     var format: NSString = NSString(format: "%%.%df", maximumFractionDigits)
     var minotUnitsPerMajor: Double = pow(10.00, Double(maximumFractionDigits))
     var m = Double(currentValue) / minotUnitsPerMajor
-    var newString: NSString = NSString(format: format, m).stringByReplacingOccurrencesOfString(".", withString: decimalSeparator)
+    var newString: NSString = NSString(format: format, m).stringByReplacingOccurrencesOfString(".", withString: decimalSeparator as! String)
     if newString.length <= MAX_LENGTH {
-      textField.text = newString
+      textField.text = newString as! String
       // if the cursor was not at the end of the string being entered, restore cursor position
       if UInt(cursorOffset) != currentLength {
-        var lengthDelta: Int = UInt(newString.length) - currentLength
+        var lengthDelta: Int = newString.length - Int(currentLength)
         var newCursorOffset: Int = max(0, min(newString.length, cursorOffset + lengthDelta))
         var newPosition: UITextPosition = textField.positionFromPosition(textField.beginningOfDocument, offset: newCursorOffset)!
         var newRange = textField.textRangeFromPosition(newPosition, toPosition: newPosition)

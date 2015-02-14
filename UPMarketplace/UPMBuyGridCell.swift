@@ -70,8 +70,8 @@ class UPMBuyGridCell: UICollectionViewCell {
     contentView.addSubview(priceLabel)
     contentView.addSubview(detailsLabel)
     
-    var elements = NSDictionary(dictionary:["listingImageView": listingImageView, "titleLabel": titleLabel,
-        "priceLabel": priceLabel, "detailsLabel": detailsLabel])
+    var elements: [NSObject : AnyObject] = ["listingImageView": listingImageView, "titleLabel": titleLabel,
+        "priceLabel": priceLabel, "detailsLabel": detailsLabel]
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "H:|[listingImageView]|",

@@ -12,20 +12,22 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   
   
   var otherListng: UPMOtherListing = UPMOtherListing()
-  override var listing: UPMListing {
+  override var listing: UPMListing? {
     get {
       return otherListng
     }
     set {
       if newValue is UPMOtherListing {
-        otherListng = newValue as UPMOtherListing
+        otherListng = newValue as! UPMOtherListing
       }
     }
   }
 
   override func viewDidLoad() {
     super.viewDidLoad()
-  tableView.backgroundColor = UIColor.standardBackgroundColor()
+    tableView.backgroundColor = UIColor.standardBackgroundColor()
+    tableView.estimatedRowHeight = 100
+
     // Do any additional setup after loading the view.
   }
 

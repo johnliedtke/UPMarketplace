@@ -24,8 +24,8 @@ class PFCloudExt: PFCloud {
       let p = BFTaskCompletionSource()
       
       self.callFunctionInBackground(
-        name,
-        withParameters: parameters,
+        name as! String,
+        withParameters: parameters as! [NSObject : AnyObject],
         block: {
           (result: AnyObject!, error: NSError!) -> Void in
           

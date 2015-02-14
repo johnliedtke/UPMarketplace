@@ -45,8 +45,8 @@ public class UPMAccountListingCell: PFTableViewCell {
     return label
   }()
   
-  lazy var displayImageView: UIImageView = {
-    var iv = UIImageView()
+  lazy var displayImageView: PFImageView = {
+    var iv = PFImageView()
     iv.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(iv)
     iv.backgroundColor = UIColor.flatLightPurpleColor()
@@ -71,7 +71,7 @@ public class UPMAccountListingCell: PFTableViewCell {
     let bottomMargin = 8.0
     
     // View dictionary
-    var ed = NSDictionary(dictionary: ["titleLabel": titleLabel, "statusLabel": statusLabel, "displayImageView": displayImageView, "priceLabel": priceLabel])
+    var ed: [NSObject : AnyObject] = ["titleLabel": titleLabel, "statusLabel": statusLabel, "displayImageView": displayImageView, "priceLabel": priceLabel]
     
     
     // Horizontal layout
@@ -122,7 +122,7 @@ public class UPMAccountListingCell: PFTableViewCell {
     case .Accepted:
       statusLabel.textColor = UIColor.flatDarkGreenColor()
     case .Waiting:
-      statusLabel.textColor = UIColor.flatDarkOrangeColor()
+      statusLabel.textColor = UIColor.flatLightOrangeColor()
     case .Rejected:
       statusLabel.textColor = UIColor.flatDarkRedColor()
     default:

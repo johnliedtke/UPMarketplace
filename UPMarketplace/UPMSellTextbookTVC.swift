@@ -11,12 +11,12 @@ import UIKit
 class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   
   var textbookListing: UPMTextbookListing = UPMTextbookListing()
-  override var listing: UPMListing {
+  override var listing: UPMListing? {
     get {
       return textbookListing
     } set {
       if newValue is UPMTextbookListing {
-        textbookListing = newValue as UPMTextbookListing
+        textbookListing = newValue as! UPMTextbookListing
       }
     }
   }

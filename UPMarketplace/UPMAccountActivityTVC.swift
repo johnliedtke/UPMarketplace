@@ -10,17 +10,27 @@ import UIKit
 
 class UPMAccountActivityTVC: UPMPFQueryTableVC {
 
-  // MARK: - Public Properties
+  // MARK: - Public Propertie
   
   // MARK: UPMPFQueryTableVC
   
   override func queryForTable() -> PFQuery! {
-    var query = PFQuery(className: "UPMOtherListing")
-    
+    var query = PFQuery(className: "UPMActivity")
+    query.whereKey("user", equalTo: PFUser.currentUser())
+    query.cachePolicy = kPFCachePolicyNetworkElseCache
+    query.orderByDescending("createdAt")
     return query
   }
   
   // MARK: - Private Properties 
+  
+  /// Progress HUD 
+  lazy var progressHUD: MBProgressHUD = {
+    var ph = MBProgressHUD()
+    self.view.addSubview(self.progressHUD)
+    ph.userInteractionEnabled = false
+    return ph
+  }()
   
   // MARK: - Public Methods
   
@@ -33,104 +43,131 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
       super.init(coder: aDecoder)
   }
   
+  // MARK: - View Methods
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.estimatedRowHeight = 50.0
     
     
-    
-    var reservationsQuery = PFQuery(className: "UPMReservation")
-    reservationsQuery.whereKey("reserver", equalTo: PFUser.currentUser())
 
-    reservationsQuery.findObjectsInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
-      
-      var reservations = task.result as [UPMReservation]
-      
-      var listingsQuery = PFQuery(className: "UPMOtherListing")
-      listingsQuery.whereKey("reservations", containedIn: reservations)
-
-      
-      
-      return listingsQuery.findObjectsInBackground()
-      }.continueWithBlock { (task: BFTask!) -> AnyObject! in
-        if task.error == nil {
-          var result = task.result as [UPMListing]
-          println("Success")
-          return PFObject.fetchAllInBackground(result)
-        } else {
-          return task.error
-        }
-      }.continueWithBlock { (task: BFTask!) -> AnyObject! in
-        if task.error == nil {
-          var result = task.result as [UPMListing]
-          for l in result {
-            var desc = l.price
-            println(desc)
-          }
-          println("Success")
-          return nil
-        } else {
-          return task.error
-        }
-    }
-    
-  }
-
-  // MARK - Private Methods
-  
- 
-  // MARK: - Table view data source
-
-  
-  override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
-    var listing = object as UPMOtherListing
-    
-    if indexPath.section == objects.count {
-      var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-      return loadMoreCell as PFTableViewCell
-    }
-
-    //var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")
-    var cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "Meow")
-    
-    cell.statusLabel.text = "Status: Accepted"
-    cell.titleLabel.text = listing.title
-
-   // cell.layoutIfNeeded()
-    
-    return cell
   }
   
   override func viewWillAppear(animated: Bool) {
     super.viewWillAppear(animated)
     tableView.userInteractionEnabled = true
-
-    
   }
   
   override func viewWillDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
     tableView.estimatedRowHeight = 50.0
     tableView.userInteractionEnabled = false
+  }
+  
+
+  // MARK - Private Methods
+  var isDisplayingActionSheet = false
+  
+ 
+  // MARK: - Table view data source
+
+  
+  override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
+    var activity = object as! UPMActivity
+    
+    if indexPath.section == objects.count {
+      var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
+      return loadMoreCell as! PFTableViewCell
+    }
+
+    var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")
+    cell.messageLabel.text = activity.activityDescription
+    
+    return cell
+  }
+  
+  
+  /**
+  Handle long press of cells.
+  */
+  func handleLongPress(sender: UILongPressGestureRecognizer) {
+    if sender.state == .Ended { // No second press
+     return
+    }
+    isDisplayingActionSheet = true
+    
+
+
+
+    
+    // Grab the cell long pressed
+    var point = sender.locationInView(tableView)
+    var indexPath = tableView.indexPathForRowAtPoint(point)
+    var reservation = objectAtIndexPath(indexPath) as! UPMReservation
+    
+    var actionSheet = UIAlertController(title: "Reservation Options", message: "", preferredStyle: .ActionSheet)
+    
+    // Contact action
+    var contactAction = UIAlertAction(title: "Contact Seller", style: .Default) {
+      (action: UIAlertAction!) -> Void in
+      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser(), withSubject: "Question about: \(reservation.getListing().title)")
+      self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
+    }
+    
+    // Delete reservation action
+    var deleteReservationAction = UIAlertAction(title: "Delete Reservation", style: .Default) {
+      (action: UIAlertAction!) -> Void in
+      
+      // Network connection
+      if UPMReachabilityManager.isUnreachable() {
+        UPMReachabilityManager.alertOfNoNetworkConnectionInController(self.navigationController!)
+        return
+      }
+      
+      MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+      
+       // delete reservation
+        reservation.getListing().deleteReservationInBackground(reservation, blackList: true).continueWithBlock {
+        (task: BFTask!) -> AnyObject! in
+        //self.progressHUD.hide(true)
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: false)
+        if task.error == nil {
+          self.loadObjects()
+        } else {
+          
+        }
+          return nil
+        }
+    }
+    
+    // Dismiss action
+    var dismissAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
+    
+    // Add actions
+    actionSheet.addAction(contactAction)
+    actionSheet.addAction(deleteReservationAction)
+    actionSheet.addAction(dismissAction)
+    
+    // Present
+    navigationController?.presentViewController(actionSheet, animated: true, completion: { () -> Void in
+      self.isDisplayingActionSheet = false
+    })
+    
+  }
+  
+  func deleteReservation() -> Void {
+    self.progressHUD.show(true)
 
   }
   
 
   
-
-  
-  
-  
-
-    /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
         // Return NO if you do not want the specified item to be editable.
         return true
     }
-    */
 
-    /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
@@ -140,7 +177,7 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
             // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
         }    
     }
-    */
+  
 
     /*
     // Override to support rearranging the table view.

@@ -34,7 +34,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
 
  
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
-    var listing = object as UPMOtherListing
+    var listing = object as! UPMOtherListing
     let viewController = UPMBuyItemDetailsOtherTVC()
     viewController.listingOther = listing
     navigationController?.pushViewController(viewController, animated: true)

@@ -57,6 +57,24 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
   
   // MARK: - Public Methods
   
+  /**
+  Creates a UPMContactVC with a navigation controller.
+  
+  :param: subject Subject of email
+  :param: user Recipient of email
+  :returns: navigation controller with a UPMContactVC as root controller
+  */
+  class func initWithNavigationController(user: PFUser, withSubject subject: String) -> UINavigationController {
+    var contactVC = UPMContactVC(user: user, withSubject: subject)
+    var navigationController = UINavigationController(rootViewController: contactVC)
+    return navigationController
+  }
+  
+  /**
+
+  :param: subject Subject of email
+  :param: user Recipient of email
+  */
   convenience init(user: PFUser, withSubject subject: String) {
     self.init()
     self.user = user
@@ -100,7 +118,7 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     view.addSubview(messageLabel)
     
    
-    var elements = NSDictionary(dictionary: ["toField": toField, "topLayoutGuide": topLayoutGuide, "view": view, "toLabel": toLabel, "fromLabel": subjectLabel, "fromField": subjectField, "bodyTextView": bodyTextView, "messageLabel": messageLabel])
+    var elements: [NSObject : AnyObject] = ["toField": toField, "topLayoutGuide": topLayoutGuide, "view": view, "toLabel": toLabel, "fromLabel": subjectLabel, "fromField": subjectField, "bodyTextView": bodyTextView, "messageLabel": messageLabel]
 
     
     // Horizontal layout
@@ -170,11 +188,11 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     var error = ""
     view.endEditing(true)
     
-    if countElements(subjectField.text) <= 1 {
+    if count(subjectField.text) <= 1 {
       error += "Please enter a subject. "
     }
     
-    if countElements(bodyTextView.text) <= 1{
+    if count(bodyTextView.text) <= 1{
       error += "Please enter a message. "
     }
     return error == "" ? (false, nil) : (true, error)
@@ -218,7 +236,7 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
       } else { // handle error or timeout
         progressHUD.labelText = "Error"
         progressHUD.hide(true)
-        var errorString = task.error.userInfo?[NSString(string: "error")] as NSString
+        var errorString = task.error.userInfo?[NSString(string: "error")] as! NSString
         var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
         alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
         self.presentViewController(alertError, animated: true, completion: nil)

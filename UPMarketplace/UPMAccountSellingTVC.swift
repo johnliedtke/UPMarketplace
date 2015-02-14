@@ -52,11 +52,11 @@ class UPMAccountSellingTVC: UPMPFQueryTableVC {
   
   
   override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
-    var listing = object as UPMOtherListing
+    var listing = object as! UPMOtherListing
     
     if indexPath.section == objects.count {
       var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-      return loadMoreCell as PFTableViewCell
+      return loadMoreCell as! PFTableViewCell
     }
     
     //var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")

@@ -10,23 +10,34 @@ import UIKit
 
 
 /**
-UPMBuyItemDetailsTVC class handles displaying the details
-of a UPMListing. Subclass to customize for different listings.
+  UPMBuyItemDetailsTVC class handles displaying the details
+  of a UPMListing. Subclass to customize for different listings.
 */
 class UPMBuyItemDetailsTVC: UITableViewController {
 
+  // MARK: - Constants 
+  
   let imageCellIdentifier = "UPMBuyItemImageCell"
   let titleCellIdentifier = "UPMBuyItemTitleCell"
   let fieldCellIdentifier = "UPMBuyItemFieldCell"
   let descriptionCellIdentifier = "UPMBuyItemDescriptionCell"
   
+  // MARK: - Public Properties
+  
+  /// Number of attributes to display
   var numberOfAttributes = 3
   
-
-  // MARK: - Public Properties
-  var listing: UPMListing?
+  /// The listing to display details of.
+  var listing: UPMListing!
   
-
+  // MARK: - Private Properties
+  
+  /// Reference to the reserve button
+  lazy private var reserveButton: UIBarButtonItem = {
+    var button = UIBarButtonItem(title: "RESERVE", style: .Bordered, target: self, action: "reserveListing")
+    return button
+  }()
+  
   enum tableCellSection: Int {
     case ImageSection = 0, TitleSection, FieldSection, DescriptionSection;
     static let allValues = [ImageSection, TitleSection, FieldSection, DescriptionSection]
@@ -37,60 +48,74 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
   }
 
-  // MARK: - Public Methods
+  // MARK: - View Methods  
   
   override func viewDidLoad() {
     super.viewDidLoad()
     changeDefaults()
+    
+    // Register table cells
     tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
-    
     tableView.registerNib(UINib(nibName: titleCellIdentifier, bundle: nil), forCellReuseIdentifier: titleCellIdentifier)
-    
     tableView.registerNib(UINib(nibName: fieldCellIdentifier, bundle: nil), forCellReuseIdentifier: fieldCellIdentifier)
-    
     tableView.registerNib(UINib(nibName: descriptionCellIdentifier, bundle: nil), forCellReuseIdentifier: descriptionCellIdentifier)
     
     // Background
     tableView.backgroundColor = UIColor.standardBackgroundColor()
+    
+    // Auto-layout
+    tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    tableView.estimatedRowHeight = 1000 // fix for auto-layout
+    
     // Title
     navigationItem.title = "Listing"
-    
+    toggleReserveButton()
   }
   
-  func contactSeller() {
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    changeDefaults()
+    
+    // Create toolbar for reserving and contacting
+    var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+    
+    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "contactSeller")
+    var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
+    
+    self.setToolbarItems(barItems, animated: true)
+    navigationController?.toolbarHidden = false
+  }
+  
+  override func viewWillDisappear(animated: Bool) {
+    super.viewWillDisappear(animated)
+    navigationController?.toolbarHidden = true
+  }
+
+  // MARK: - Init
+  
+  override init(style: UITableViewStyle)
+  { super.init(style: .Grouped) }
+  
+  required init(coder aDecoder: NSCoder)
+  {super.init(coder: aDecoder)}
+  
+  // MARK: - Private Methods
+  
+  /**
+  Creates a UPMContactVC for the user to contact the seller.
+  */
+  public func contactSeller() {
     //TODO: Use real seller
     var contactVC = UPMContactVC(user: PFUser.currentUser(), withSubject: "Question about: \(listing!.title)")
     var navigation = UINavigationController(rootViewController: contactVC)
     presentViewController(navigation, animated: true, completion: nil)
   }
   
-  override func viewDidAppear(animated: Bool) {
-    super.viewDidAppear(animated)
-   
-  }
-  
-  override func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    changeDefaults()
-     var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
-    
-    
-    
-    // Contact!
-    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "contactSeller")
-    var reserveButton = UIBarButtonItem(title: "RESERVE", style: UIBarButtonItemStyle.Bordered, target: self, action: "reserveListing")
-    var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
-    
-    self.setToolbarItems(barItems, animated: true)
-    navigationController?.toolbarHidden = false
-    tableView.reloadData()
-  }
-  
   /**
   User has attempted to reserve the listing.
   */
-  func reserveListing() {
-    listing?.reserveInBackground(PFUser.currentUser() as UPMUser, message: "Reserving").continueWithBlock({
+  internal func reserveListing() {
+    listing?.reserveInBackground(PFUser.currentUser(), message: "Reserving").continueWithBlock({
       (task: BFTask!) -> AnyObject! in
       var alertController: UIAlertController!
       if task.error == nil {
@@ -100,48 +125,27 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       }
       alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
       self.presentViewController(alertController, animated: true, completion: nil)
+      self.toggleReserveButton()
       return nil
     })
-    
   }
   
-  override func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-    navigationController?.toolbarHidden = true
-  }
-  
-
-  override init(){
-    super.init()
-  }
-  
-  override init(style: UITableViewStyle)
-  { super.init(style: .Grouped) }
-  
-  required init(coder aDecoder: NSCoder)
-  {
-      super.init(coder: aDecoder)
-
-    
-    
-  }
-  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-    // Custom initialization
-  }
-  
-  
-  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    let Section = tableCellSection(rawValue: section)! as tableCellSection
-    
-    switch Section{
-    case tableCellSection.FieldSection:
-      return numberOfAttributes
-    default:
-      return 1
+  /**
+  Disables the reserve button if the listing ahs been reserved.
+  */
+  func toggleReserveButton() {
+      listing.isReservable().continueWithBlock { (task: BFTask!) -> AnyObject! in
+      if let reserveable = task.result as? Bool {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+          self.reserveButton.enabled = reserveable
+        })
+      } else {
+        //:TODO handle button error
+      }
+      return nil
     }
-
   }
+  
   
   // MARK: - TableView Datasource
 
@@ -151,7 +155,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     switch Section{
       case tableCellSection.ImageSection:
-        let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as UPMBuyItemImageCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemImageCell
       
         cell.buyItemImage.file = listing?.picture
         cell.buyItemImage.loadInBackground()
@@ -166,35 +170,48 @@ class UPMBuyItemDetailsTVC: UITableViewController {
           self.tableView.opaque = false
           
           imageVC.image = cell.buyItemImage.image
-          self.navigationController?.presentViewController(imageVC, animated: true, completion: nil)
+          self.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
         }
-        
-        
-        
-        
+ 
       return cell
       
     case tableCellSection.TitleSection:
-      let cell = tableView.dequeueReusableCellWithIdentifier(titleCellIdentifier, forIndexPath: indexPath) as UPMBuyItemTitleCell
+      let cell = tableView.dequeueReusableCellWithIdentifier(titleCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemTitleCell
       cell.configureCell(listing?.title, price: listing?.displayPrice())
       return cell
     case tableCellSection.FieldSection:
-       let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as UPMBuyItemFieldCell
+       let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemFieldCell
        
        configureFieldCells(cell, indexPath: indexPath)
 
       return cell
     
     case tableCellSection.DescriptionSection:
-      let cell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as UPMBuyItemDescriptionCell
+      let cell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemDescriptionCell
       cell.setDescription(listing?.descriptionS)
       return cell
       
     default:
-      NSLog("not one of the sections")
+      println("not one of the sections")
     }
     
   }
+  
+  override func numberOfSectionsInTableView(tableView: UITableView) -> Int{
+    return tableCellSection.allValues.count
+  }
+  
+  override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    let Section = tableCellSection(rawValue: section)! as tableCellSection
+    
+    switch Section{
+    case tableCellSection.FieldSection:
+      return numberOfAttributes
+    default:
+      return 1
+    }
+  }
+
   
   func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath){
     if (indexPath.row == 0){
@@ -204,6 +221,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       cell.configureCell("Hello There", second: "Mehh")
     }
   }
+  
+  // MARK: - TableView Delegate
+  
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
     let Section: tableCellSection = (tableCellSection(rawValue: indexPath.section))! as tableCellSection
@@ -219,10 +239,6 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     }
   }
   
-  override func numberOfSectionsInTableView(tableView: UITableView) -> Int{
-    return tableCellSection.allValues.count
-  }
-  
   override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     if section == tableCellSection.FieldSection.rawValue {
       return "Details"
@@ -231,7 +247,6 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     }
   }
   
-
   override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat{
     let Section = tableCellSection(rawValue: section)! as tableCellSection
     switch Section{
@@ -244,7 +259,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     case tableCellSection.DescriptionSection:
       return 0.00001
     default:
-      return 0.00001
+      return UITableViewAutomaticDimension
     }
   }
 
@@ -265,6 +280,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   }
 }
+
+
+
+
+
 
 
 class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
@@ -302,7 +322,7 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
       imageView.image = image
     }
     
-    var elements = NSDictionary(dictionary: ["scrollView": scrollView, "imageView": imageView])
+    var elements: [NSObject : AnyObject] = ["scrollView": scrollView, "imageView": imageView]
     
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "H:|[scrollView]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
@@ -335,7 +355,4 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
   }
   
 }
-
-
-
 

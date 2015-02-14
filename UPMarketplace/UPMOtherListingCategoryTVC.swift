@@ -44,7 +44,7 @@ class UPMOtherListingCategoryTVC: UITableViewController {
 
   
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier(CategoryCellIdentifer, forIndexPath: indexPath) as UPMOtherListingCategoryCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(CategoryCellIdentifer, forIndexPath: indexPath) as! UPMOtherListingCategoryCell
       
       cell.categoryLabel.text = categories[indexPath.row]
         return cell

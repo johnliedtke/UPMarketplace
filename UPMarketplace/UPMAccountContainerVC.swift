@@ -27,6 +27,7 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
   
   func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController]) {
     var accountActivityTVC = UPMAccountActivityTVC(style: .Plain, className: "UPMOtherListing")
+    accountActivityTVC.sectionKey = "title"
       accountActivityTVC.view.frame = CGRectMake(0, 0, accountView.bounds.width, accountView.bounds.height)
     
     

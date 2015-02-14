@@ -16,6 +16,19 @@ public class UPMReservation: PFObject, PFSubclassing  {
   
   enum reservationStatus: Int {
     case Rejected, Accepted, Waiting
+    
+    var description : String {
+      get {
+        switch(self) {
+        case .Rejected:
+          return "Rejected"
+        case .Accepted:
+          return "Accepted"
+        case .Waiting:
+          return "Waiting"
+        }
+      }
+    }
   }
   
   // MARK: - Properties
@@ -24,36 +37,53 @@ public class UPMReservation: PFObject, PFSubclassing  {
   @NSManaged public var reserveTime: NSDate
   
   /// The UPMUser that reserved the object
-  @NSManaged internal var reserver: UPMUser
+  @NSManaged internal var reserver: PFUser
   
   /// An associated message written by the reserver
   @NSManaged public var message: String
   
   /// Associated listing of reservation
-  @NSManaged public var listing: UPMListing
+  //@NSManaged public var listing: UPMListing
   
   /// Status of reservation
   @NSManaged public var status: Int
+  
+  /// Listing associated with the reservervation. Stored in the first array spot.
+  @NSManaged public var listing: [UPMListing]
   
   // MARK: - Methods
   
   /**
   Creates a UPMReservation with a default state of waitig.
   */
-  convenience init(reserver: UPMUser, listing: UPMListing, message: String) {
+  convenience init(reserver: PFUser, listing: UPMListing, message: String) {
     self.init()
     var reservePointer = PFObject(withoutDataWithClassName:"_User", objectId: reserver.objectId)
-    self.reserver = reservePointer as UPMUser
+    self.reserver = reservePointer as! UPMUser
     self.message = message
     self.reserveTime = NSDate()
     self.status = reservationStatus.Waiting.rawValue
+    self.listing = [UPMListing]()
+    self.listing.append(listing)
+  }
+  
+  /**
+  Get the listing that is associated with the reservation.
+  */
+  public func getListing() -> UPMListing {
+    return listing.first!
+  }
+  
+  public func displayStatus() -> String {
+    return (reservationStatus(rawValue: status)?.description)!
   }
   
   /// returns the reserver{
-  internal func getReserver() -> UPMUser
+  internal func getReserver() -> PFUser
   {
     return reserver
   }
+  
   // MARK: - PFSubclassing Methods
   
   /**
@@ -67,9 +97,9 @@ public class UPMReservation: PFObject, PFSubclassing  {
   }
   
   /// Registers the subclass with Parse
-  override public class func load() {
-    self.registerSubclass()
-  }
+//  override public class func load() {
+//    self.registerSubclass()
+//  }
   
 
 }

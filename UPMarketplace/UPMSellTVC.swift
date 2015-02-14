@@ -65,7 +65,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     super.viewDidLoad()
     listing = UPMOtherListing()
     setupProgressHUD()
-    tableView.estimatedRowHeight = 60
+    tableView.estimatedRowHeight = 100
     tableView = UITableView(frame: tableView.frame, style: UITableViewStyle.Grouped)
     tableView.backgroundColor = UIColor.standardBackgroundColor()
     
@@ -117,10 +117,10 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   }
   
   // MARK: Private Methods
-  override init() {
-    progresHUD = MBProgressHUD()
-    super.init()
-  }
+//  override init() {
+//    progresHUD = MBProgressHUD()
+//    super.init()
+//  }
   
   required init(coder aDecoder: NSCoder) {
     progresHUD = MBProgressHUD()
@@ -229,7 +229,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     
       switch Section {
       case CellSection.Title:
-        let cell = tableView.dequeueReusableCellWithIdentifier(SellTitleCelIdentifier, forIndexPath: indexPath) as UPMSellTitleCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellTitleCelIdentifier, forIndexPath: indexPath) as! UPMSellTitleCell
         var titleItem = requiredItems.itemWithTitle(RequiredItems.Title.rawValue)
         cell.titleLabel.text = titleItem?.itemDescription
         if listing?.photo != nil {
@@ -245,12 +245,12 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         }
         return cell
       case CellSection.Required:
-        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
         var i = requiredItems.itemAtIndex(indexPath.row)
         cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         return cell
       case CellSection.Optional:
-        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
         var i = optionalItems.itemAtIndex(indexPath.row)
         cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         return cell

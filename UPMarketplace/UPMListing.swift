@@ -40,17 +40,20 @@ public class UPMListing: PFObject  {
   /// The image for a listing stored as a PFFile
   @NSManaged public var picture: PFFile?
   
+  /// Thumbnail of picture
+  @NSManaged public var pictureThumbnail: PFFile?
+  
   /// The User that created the listing
-  @NSManaged internal var owner: UPMUser
+  @NSManaged internal var owner: PFUser
   
   /// Users that have been blacklisted by the listing owner
-  @NSManaged internal var blackListedUsers: [UPMUser]
+  @NSManaged internal var blackListedUsers: [PFUser]?
   
   /// The public visibility of the object
   @NSManaged public var isHidden: ObjCBool
   
   /// The array of reservations
-  @NSManaged internal var reservations: [UPMReservation]
+  @NSManaged internal var reservations: [UPMReservation]?
   
   // TODO: Add reservations array after class has been implemented
   
@@ -74,16 +77,16 @@ public class UPMListing: PFObject  {
   :param: reserver User reserving item.
   :param: message Message?
   */
-  func reserveInBackground(reserver: UPMUser, message: String) -> BFTask {
+  func reserveInBackground(reserver: PFUser, message: String) -> BFTask {
     // Create reservation
     var reservation = UPMReservation(reserver: reserver, listing: self, message: "Test Reservation")
     var reserveTask = BFTaskCompletionSource()
     
     // Fetch the reservations
-    PFObject.fetchAllInBackgroundBolt(reservations).continueWithBlock {
+    PFObject.fetchAllInBackgroundBolt(reservations!).continueWithBlock {
       (task: BFTask!) -> AnyObject! in
       var error: NSError!
-      let result = task.result as [UPMReservation]
+      let result = task.result as! [UPMReservation]
 
       if self.isUserInReservations(result, user: reserver) {
         // User has already reserved item
@@ -108,6 +111,11 @@ public class UPMListing: PFObject  {
       
       }.continueWithBlock {
         (task: BFTask!) -> AnyObject! in
+        
+        var activity = UPMActivity(title: "Made Reservation", description: "\(title)", user: reserver)
+        return activity.saveInBackground()
+        
+      }.continueWithBlock { (task: BFTask!) -> AnyObject! in
         if task.error == nil {
           reserveTask.setResult("Success")
           return nil
@@ -137,7 +145,10 @@ public class UPMListing: PFObject  {
     removeObject(reservation, forKey: "reservations")
     isHidden = false
     
-    saveInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
+    reservation.deleteInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
+      
+      return self.saveInBackground()
+    }.continueWithBlock { (task: BFTask!) -> AnyObject! in
       if task.error == nil {
         deleteTask.setResult(nil)
       } else {
@@ -234,23 +245,133 @@ public class UPMListing: PFObject  {
     
   }
   
+  func fetchReservationsInBackground() -> BFTask {
+    var reservationsTask = BFTaskCompletionSource()
+    
+    PFObject.fetchAllInBackground(reservations).continueWithBlock {
+      (task: BFTask!) -> AnyObject! in
+      
+      if let rs = task.result as? [UPMReservation] {
+        reservationsTask.setResult(rs)
+      } else {
+        reservationsTask.setError(task.error)
+      }
+      return nil
+    }
+    return reservationsTask.task
+  }
+  
+  func fetchBlackListedBackground() -> BFTask {
+    var blackListedTask = BFTaskCompletionSource()
+    
+    PFObject.fetchAllInBackground(blackListedUsers).continueWithBlock {
+      (task: BFTask!) -> AnyObject! in
+      
+      if let users = task.result as? [PFUser] {
+        blackListedTask.setResult(users)
+      } else {
+        blackListedTask.setError(task.error)
+      }
+      return nil
+    }
+    return blackListedTask.task
+  }
+  
+  func isReservationsDataAvailable() -> Bool {
+    if let res = reservations {
+      for r in res {
+        if !r.isDataAvailable() {
+          return false
+        }
+      }
+    } else {
+      return false
+    }
+    return true
+  }
+  
+  /** 
+  Checks whether the listing is in a reservable state using the current data of the 
+  listing. If the data is not available, isReserveableInBackground() is used instead.
+  */
+  public func isReservable() -> BFTask {
+    var reservableTask = BFTaskCompletionSource()
+    
+    if reservations == nil || blackListedUsers == nil {
+      isReseveableInBackground().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+        
+        if let reservable = task.result as? Bool {
+          reservableTask.setResult(reservable)
+        } else {
+          reservableTask.setError(task.error)
+        }
+        return nil
+      })
+    } else {
+      reservableTask.setResult(isUserValidReserver(PFUser.currentUser()))
+    }
+    return reservableTask.task
+  }
+  
+  
+  /**
+  Checks whether a listing is reserveable by fetching the latest data from
+  parse.
+  */
+  public func isReseveableInBackground() -> BFTask {
+    var reserveableTask = BFTaskCompletionSource()
+    
+    var listingQuery = PFQuery(className: "UPMOtherListing")
+    listingQuery.selectKeys(["reservations", "blackListedUsers"])
+    listingQuery.whereKey("objectId", equalTo: self.objectId)
+    
+    listingQuery.getFirstObjectInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
+      
+      if let listing = task.result as? UPMListing {
+        reserveableTask.setResult(listing.isUserValidReserver(PFUser.currentUser()))
+      } else {
+        reserveableTask.setResult(task.error)
+      }
+      return nil
+    }
+
+    return reserveableTask.task
+  }
+  
+  public func isUserValidReserver(user: PFUser) -> Bool {
+    
+    for r in reservations! {
+      if r.objectId == user.objectId {
+        return false
+      }
+    }
+    
+    for b in blackListedUsers! {
+      if b.objectId == user.objectId {
+        return false
+      }
+    }
+    return true
+  }
   
   
   /// Checks the reservations array and returns a true boolean if any of the
   /// Methods meet the requirements for this listing
   func isReserved() -> Bool {
     
+
+    
     if oBO {
-      for res in reservations {
-        if res is UPMReservationObo && isNotBlackListed(res.getReserver()) && (res as UPMReservationObo).offer >= limit {
+      for res in reservations! {
+        if res is UPMReservationObo && isNotBlackListed(res.getReserver()) && (res as! UPMReservationObo).offer >= limit {
           return true
         }
       }
     }
       
     else{ //Not OBO
-      for res in reservations {
-        if isNotBlackListed(res.getReserver()) {
+      for res in reservations! {
+        if (isNotBlackListed(res.getReserver())) || isNotBlackListed(PFUser.currentUser()) || (res.status != UPMReservation.reservationStatus.Rejected.rawValue) || res.getReserver().objectId == PFUser.currentUser().objectId {
           return true
         }
       }
@@ -260,8 +381,8 @@ public class UPMListing: PFObject  {
   
   /// checks if user is on black list
   /// @param reservr
-  func isNotBlackListed(resevr: UPMUser) -> Bool {
-    for user in blackListedUsers {
+  func isNotBlackListed(resevr: PFUser) -> Bool {
+    for user in blackListedUsers! {
       if user.objectId == resevr.objectId {
         return true
       }
@@ -270,20 +391,20 @@ public class UPMListing: PFObject  {
   }
   /// Checks the reservations array and returns a  UPMUser if any of the
   /// Reservations meet the requirements for this listing.
-  func currentReserver() -> UPMUser?
+  func currentReserver() -> PFUser?
   {
     if !isReserved()
     {
       return nil
     }
-    var curUser: UPMUser
+    var curUser: PFUser
     if oBO {
       var max = 0.0
-      for res in reservations {
-        if res is UPMReservationObo && isNotBlackListed(res.getReserver()) && (res as UPMReservationObo).offer >= limit {
-          if max < (res as UPMReservationObo).offer {
+      for res in reservations! {
+        if res is UPMReservationObo && isNotBlackListed(res.getReserver()) && (res as! UPMReservationObo).offer >= limit {
+          if max < (res as! UPMReservationObo).offer {
             curUser = res.getReserver()
-            max = (res as UPMReservationObo).offer
+            max = (res as! UPMReservationObo).offer
           }
         }
       }
@@ -291,7 +412,7 @@ public class UPMListing: PFObject  {
       
     else{ //Not OBO
       var time: NSDate
-      for res in reservations {
+      for res in reservations! {
         if isNotBlackListed(res.getReserver()) {
           return res.getReserver()
         }
@@ -302,10 +423,10 @@ public class UPMListing: PFObject  {
   
   
   func reserve(res: UPMReservation) {
-    reservations.append(res)
+    reservations!.append(res)
   }
   
-  private func isUserInReservations(reservations: [UPMReservation], user: UPMUser) -> Bool {
+  private func isUserInReservations(reservations: [UPMReservation], user: PFUser) -> Bool {
     for r in reservations {
       if r.reserver.objectId == user.objectId {
         return true

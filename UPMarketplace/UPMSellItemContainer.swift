@@ -114,7 +114,7 @@ class UPMSellItemContainer {
         d += "\(item.title): Missing\n"
       }
     }
-    return d == "" ? "Select" : d.substringToIndex(advance(d.startIndex, countElements(d)-1))
+    return d == "" ? "Select" : d
   }
   
   /// Creates a description of missing items 
@@ -125,7 +125,7 @@ class UPMSellItemContainer {
         d += "\(item.title): Missing\n"
       }
     }
-    return d.substringToIndex(advance(d.startIndex, countElements(d)-1))
+    return d
   }
 
 

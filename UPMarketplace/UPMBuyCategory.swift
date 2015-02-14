@@ -39,7 +39,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   }
 
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-      let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseidentifer, forIndexPath: indexPath) as UPMBuyCategoryCell
+      let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseidentifer, forIndexPath: indexPath) as! UPMBuyCategoryCell
       
       cell.pic = UIImage(named: pictures[indexPath.row])
       cell.title = categories[indexPath.row]
@@ -53,7 +53,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     if(segue.identifier == "showBuyList"){
 
       
-      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as UPMBuyCategoryCell)
+      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as! UPMBuyCategoryCell)
       var category:String! = categories[indexPath.row]
       
       var sendCategory: String?
@@ -66,7 +66,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
       else if (category == "Furniture & Other"){
         sendCategory = "UPMOtherListing"
       }
-      let theDestination = (segue.destinationViewController as UPMBuyListItemsOtherCVC)
+      let theDestination = (segue.destinationViewController as! UPMBuyListItemsOtherCVC)
       theDestination.chosenCategory = sendCategory
 
       

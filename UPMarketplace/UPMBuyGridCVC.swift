@@ -62,9 +62,9 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
   */
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UICollectionViewCell {
     
-    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(UPMBuyGridCellConstants.reuseIdentifier, forIndexPath: indexPath) as UPMBuyGridCell
+    let cell = collectionView.dequeueReusableCellWithReuseIdentifier(UPMBuyGridCellConstants.reuseIdentifier, forIndexPath: indexPath) as! UPMBuyGridCell
     
-    let listing = object as UPMListing
+    let listing = object as! UPMListing
     
     // Grab the picture-file and retrieve it from parse
     var picture = object["picture"] as? PFFile

@@ -39,7 +39,7 @@ class UPMBuyItemDescriptionVC: UIViewController {
     view.addSubview(descTextView)
     descTextView.text = descriptionS
     
-    var elements = NSDictionary(dictionary: ["descTextView": descTextView,  "topLayoutGuide": topLayoutGuide])
+    var elements: [NSObject : AnyObject] = ["descTextView": descTextView,  "topLayoutGuide": topLayoutGuide]
     
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-(hlp)-[descTextView]-(hrp)-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: UPMStandards.autoLayoutMetrics, views: elements))
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide]-[descTextView]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
