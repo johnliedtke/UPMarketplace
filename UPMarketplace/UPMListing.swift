@@ -440,30 +440,6 @@ public class UPMListing: PFObject  {
 }
 extension PFObject {
   
-  func fetchAsync(object: PFObject) -> BFTask {
-    var task = BFTaskCompletionSource()
-    object.fetchInBackgroundWithBlock {
-      (object: PFObject!, error: NSError!) -> Void in
-      if error == nil {
-        task.setResult(object)
-      } else {
-        task.setError(error)
-      }
-    }
-    return task.task
-  }
-
-  class func fetchAllInBackgroundBolt(objects: [PFObject]) -> BFTask {
-    var task = BFTaskCompletionSource()
-    PFObject.fetchAllInBackground(objects) { (objects: [AnyObject]!, error: NSError!) -> Void in
-      if error == nil {
-        task.setResult(objects)
-      } else {
-        task.setError(error)
-      }
-    }
-    return task.task
-  }
   
 }
 
