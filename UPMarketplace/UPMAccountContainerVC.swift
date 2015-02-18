@@ -28,17 +28,12 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
   func setUpViewControllers() -> (containerView: UIView, controllers: [UIViewController]) {
     var accountActivityTVC = UPMAccountActivityTVC(style: .Plain, className: "UPMOtherListing")
     accountActivityTVC.sectionKey = "title"
-      accountActivityTVC.view.frame = CGRectMake(0, 0, accountView.bounds.width, accountView.bounds.height)
-    
-    
     var accountReservedTVC = UPMAccountReservedTVC(style: .Plain, className: "UPMOtherListing")
-    
-  
+    var sellingTVC = UPMAccountSellingTVC(style: .Plain, className: "UPMOtherListing")
+    sellingTVC.sectionKey = "category"
     isLeftRightTransition = false
     
-    
-    
-    return (accountView, [accountActivityTVC, accountReservedTVC])
+    return (accountView, [accountActivityTVC, accountReservedTVC, sellingTVC])
   }
   
   @IBAction func segmentedControlDidChange(sender: AnyObject) {

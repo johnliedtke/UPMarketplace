@@ -67,6 +67,9 @@ public class UPMListing: PFObject  {
     return String(format: "$%.2f", price)
   }
   
+  // MARK: - Background Logic Methods
+  
+  // MARK: Reservation Methods
 
   /**
   Reserves a listing for a given user asynchronously. Does not add the reservation if 
@@ -88,7 +91,7 @@ public class UPMListing: PFObject  {
       var error: NSError!
       let result = task.result as! [UPMReservation]
 
-      if self.isUserInReservations(result, user: reserver) {
+      if isItemInArray(result, reserver) {
         // User has already reserved item
         error = NSError.createError("You have already reserved listing.",
           failureReason: "User already has a reservation",
@@ -338,20 +341,12 @@ public class UPMListing: PFObject  {
     return reserveableTask.task
   }
   
+  /**
+  Checks whether a user can reserve the listings. Scans the black list and
+  checks if the user had already made a reservation.
+  */
   public func isUserValidReserver(user: PFUser) -> Bool {
-    
-    for r in reservations! {
-      if r.objectId == user.objectId {
-        return false
-      }
-    }
-    
-    for b in blackListedUsers! {
-      if b.objectId == user.objectId {
-        return false
-      }
-    }
-    return true
+    return !isItemInArray(reservations!, user) || !isItemInArray(blackListedUsers!, user)
   }
   
   
@@ -382,13 +377,9 @@ public class UPMListing: PFObject  {
   /// checks if user is on black list
   /// @param reservr
   func isNotBlackListed(resevr: PFUser) -> Bool {
-    for user in blackListedUsers! {
-      if user.objectId == resevr.objectId {
-        return true
-      }
-    }
-    return false
+    return isItemInArray(blackListedUsers!, resevr)
   }
+  
   /// Checks the reservations array and returns a  UPMUser if any of the
   /// Reservations meet the requirements for this listing.
   func currentReserver() -> PFUser?
@@ -421,23 +412,44 @@ public class UPMListing: PFObject  {
     return nil
   }
   
+//  public func firstValidReservation(reservation: UPMReservation) -> UPMReservation? {
+//    if reservations!.isEmpty { return nil }
+//    
+//    reservations!.filter { (value) -> Bool in
+//      //return UPMReservation.reservationStatus(rawValue: value.status) == UPMReservation.reservationStatus.
+//      return true
+//    }
+//  return nil
+//  }
   
-  func reserve(res: UPMReservation) {
-    reservations!.append(res)
-  }
+  // MARK: - Display 
   
-  private func isUserInReservations(reservations: [UPMReservation], user: PFUser) -> Bool {
-    for r in reservations {
-      if r.reserver.objectId == user.objectId {
-        return true
+  /**
+  Creates a string describing the status of a reservation.
+  
+  :returns: Reservation status of a listing.
+  */
+  public func displayReservationStatus() -> String {
+    if reservations!.isEmpty {
+      return "No Reservations"
+    }
+    if let firstReservation = reservations!.first {
+      switch(UPMReservation.reservationStatus(rawValue: firstReservation.status)!) {
+      case .Accepted:
+        return "Reservation Accepted"
+      case .Waiting:
+        return "Reservation Need Action"
+      case .Rejected:
+        return "Reservation Rejcted"
+      default:
+        return "Reservation Error"
       }
     }
-    return false
+    return ""
   }
   
-  // TODO:  Add display methods for all price objects
-  
 }
+
 extension PFObject {
   
   
@@ -451,8 +463,3 @@ extension NSError {
     return error
   }
 }
-
-
-//class UPMReservationContainer: PFObject, PFSubclassing {
-  
-//}

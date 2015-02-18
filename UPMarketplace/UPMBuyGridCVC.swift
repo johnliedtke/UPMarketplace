@@ -16,7 +16,7 @@ import UIKit
     - changeDefaults() If the default behavior of UPMPFObjectCVC should be changed.
 
 */
-class UPMBuyGridCVC: UPMPFObjectCVC {
+class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
 
   // MARK: - Constants
   let ListingsPerPage = 24
@@ -32,9 +32,13 @@ class UPMBuyGridCVC: UPMPFObjectCVC {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     // Register grid cell
     collectionView?.registerNib(UINib(nibName: UPMBuyGridCellConstants.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: UPMBuyGridCellConstants.reuseIdentifier)
   }
+  
+
+  
   
   /**
   If you want the default behavior of the UPMPFObjectCVC changed, it should
