@@ -48,6 +48,8 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   /// Performs query for objects on load and sets up pull to refresh.
   override func viewDidLoad() {
     super.viewDidLoad()
+    collectionView?.delegate = self
+    collectionView?.dataSource = self
     changeDefaults()
     performQuery()
     if pullToRefreshEnabled {

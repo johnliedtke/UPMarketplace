@@ -7,6 +7,7 @@ pod 'Facebook-iOS-SDK', '~> 3.15.1'
 #pod "AFNetworking", "~> 2.0"
 pod 'Bolts'
 pod 'Reachability', '~> 3.2'
+pod 'SWRevealViewController', '~> 2.3'
 
 # Solves the keyboard hiding the textfield problem :)
 pod 'IQKeyboardManager'
