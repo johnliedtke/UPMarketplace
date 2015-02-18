@@ -17,7 +17,9 @@ class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
     override func changeDefaults() {
       numberOfAttributes = numRows
     }
-    
+  
+  
+  
     override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
       switch(indexPath.row){
       case 0:

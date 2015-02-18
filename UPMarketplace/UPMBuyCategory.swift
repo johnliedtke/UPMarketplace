@@ -50,38 +50,31 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 
-    var viewController = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
-    navigationController?.pushViewController(viewController, animated: true)
-
-  }
-
-  override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//    if(segue.identifier == "showBuyList"){
-//
-//      
-//      let indexPath: NSIndexPath! = collectionView?.indexPathForCell(sender as! UPMBuyCategoryCell)
-//      var category:String! = categories[indexPath.row]
-//      
-//      var sendCategory: String?
-//      if(category == "Housing"){
-//        sendCategory = "UPMHousingListing"
-//      }
-//      else if (category == "Textbooks"){
-//        sendCategory = "UPMTextbookListing"
-//      }
-//      else if (category == "Furniture & Other"){
-//        sendCategory = "UPMOtherListing"
-//      }
-//      let theDestination = (segue.destinationViewController as! UPMBuyListItemsOtherCVC)
-//      theDestination.chosenCategory = sendCategory
-//
-//      
-//    }
-
-    
+    //push the controller to the different class based on the category that was chosen
+    switch(indexPath.row){
+      case 0:
+        var viewController = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(viewController, animated: true)
+        break
+      case 1:
+        var viewController = UPMBuyListItemsHousingCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(viewController, animated: true)
+        break
+      case 2:
+        var viewController = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        navigationController?.pushViewController(viewController, animated: true)
+        break
+      default:
+        break
+    }
     
   }
-
-
+    
 
 }
+
+    
+  
+
+
+
