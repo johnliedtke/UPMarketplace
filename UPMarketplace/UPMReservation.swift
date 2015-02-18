@@ -54,7 +54,7 @@ public class UPMReservation: PFObject, PFSubclassing  {
   // MARK: - Methods
   
   /**
-  Creates a UPMReservation with a default state of waitig.
+  Creates a UPMReservation with a default state of waiting.
   */
   convenience init(reserver: PFUser, listing: UPMListing, message: String) {
     self.init()
