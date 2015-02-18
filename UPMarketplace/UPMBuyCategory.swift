@@ -49,7 +49,8 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   }
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-    let viewController = UPMBuyListItemsOtherCVC()
+
+    var viewController = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
     navigationController?.pushViewController(viewController, animated: true)
 
   }

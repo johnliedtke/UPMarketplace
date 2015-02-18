@@ -33,11 +33,14 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   
   // MARK: - Public Methods
   
+  public override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    tableView.estimatedRowHeight = 50.0
+
+  }
   
   // MARK: - Init
-//  override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: NSBundle?) {
-//    super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-//  }
   
   // MARK: Private Methods
   

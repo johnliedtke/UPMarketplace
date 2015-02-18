@@ -95,11 +95,29 @@ public class UPMReservation: PFObject, PFSubclassing  {
   public class func parseClassName() -> String! {
     return "UPMReservation"
   }
-  
-  /// Registers the subclass with Parse
-//  override public class func load() {
-//    self.registerSubclass()
-//  }
-  
-
+ 
 }
+
+//internal class UPMReservationContainer {
+//  
+//  /// Reservations
+//  private var reservations = [UPMReservation]()
+//  
+//  // Associated Listing
+//  private var listing = UPMListing()
+//  
+//  convenience init(reservations: [UPMReservation], listing: UPMListing) {
+//    self.init()
+//    self.reservations += reservations
+//    self.listing = listing
+//  }
+//  
+//}
+//
+//
+
+
+
+
+
+

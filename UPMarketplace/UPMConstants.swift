@@ -14,3 +14,17 @@ struct Constants {
   }
 }
 
+
+func ==(lhs: PFObject, rhs: PFObject) -> Bool {
+  return lhs.objectId == rhs.objectId
+}
+
+
+func isItemInArray<T: Equatable>(array: [T], item: T) -> Bool {
+  for i in array {
+    if item == i {
+      return true
+    }
+  }
+  return false
+}
