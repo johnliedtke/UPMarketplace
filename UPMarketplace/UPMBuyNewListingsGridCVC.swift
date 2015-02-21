@@ -15,13 +15,34 @@ import UIKit
 */
 class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
+  @IBOutlet var filterButton: UIBarButtonItem!
   
+  @IBAction func a(sender: AnyObject) {
+    self.revealViewController().revealToggle(self)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
 //    navigationController?.navigationBar.backItem.title = "Back!"
     navigationController?.navigationBar.backItem?.title = "Back"
     // Check if a user is logged in
+    var revealViewController = self.revealViewController
+    if (( revealViewController  != nil))
+    {
+      
+      filterButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self.revealViewController(), action: "revealToggle:")
+      self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer());
+      
+      var swipeRight = UISwipeGestureRecognizer(target: self.revealViewController(), action: "revealToggle:")
+      swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+      self.view.addGestureRecognizer(swipeRight)
+      
+      var swipeLeft = UISwipeGestureRecognizer(target: self.revealViewController(), action: "revealToggle:")
+      swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+      self.view.addGestureRecognizer(swipeLeft)
+    }
+    
+
   }
 
   override func viewDidAppear(animated: Bool) {
