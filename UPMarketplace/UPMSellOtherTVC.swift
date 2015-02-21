@@ -26,14 +26,12 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.backgroundColor = UIColor.standardBackgroundColor()
-    tableView.estimatedRowHeight = 100
-
-    // Do any additional setup after loading the view.
+    tableView.estimatedRowHeight = 100 // autLayout Fix
   }
 
   override func pushDetailsVC() {
     var detailsVC = UPMSellOtherDetailsTVC()
-    detailsVC.listing = listing
+    detailsVC.listing = listing // pass reference
     detailsVC.delegate = self
     navigationController?.pushViewController(detailsVC, animated: true)
   }

@@ -35,12 +35,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
   //TODO: Change query to retrieve the three major UPMListing types.
   override func query() -> PFQuery {
-    var listingQuery = PFQuery(className: "UPMOtherListing")
-    listingQuery.orderByDescending("createdAt")
-    listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
-    listingQuery.includeKey("blackListedUsers")
-    listingQuery.includeKey("reservations")
-    return listingQuery
+    return UPMOtherListing.displayQuery()
   }
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {

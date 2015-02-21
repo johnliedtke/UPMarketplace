@@ -104,7 +104,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   /**
   Creates a UPMContactVC for the user to contact the seller.
   */
-  public func contactSeller() {
+  internal func contactSeller() {
     //TODO: Use real seller
     var contactVC = UPMContactVC(user: PFUser.currentUser(), withSubject: "Question about: \(listing!.title)")
     var navigation = UINavigationController(rootViewController: contactVC)
@@ -280,12 +280,6 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   }
 }
-
-
-
-
-
-
 
 class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
   

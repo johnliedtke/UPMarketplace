@@ -37,9 +37,6 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
     collectionView?.registerNib(UINib(nibName: UPMBuyGridCellConstants.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: UPMBuyGridCellConstants.reuseIdentifier)
   }
   
-
-  
-  
   /**
   If you want the default behavior of the UPMPFObjectCVC changed, it should
   be done in this method. It is automatically called in viewDidLoad().

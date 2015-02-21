@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-
-
 /**
  A UPMTextbookListing is the basic object for a listing of a textbook. It
  is a sublclass of UPMListing. It has a reference to a UPMTextbook which
@@ -18,11 +16,23 @@ public class UPMTextbookListing: UPMListing, PFSubclassing {
   // MARK: - Public Properties
   
   /// Textbook associated with listing
-  @NSManaged public var textbook: UPMTextbook?
+  @NSManaged public var textbook: UPMTextbook!
   
-  override init() {
-    super.init()
-    textbook = UPMTextbook()
+//  override class func initListing(#listing: UPMListing, owner: PFUser) -> UPMTextbookListing {
+//    var textbookListing = (super.initListing(listing: listing, owner: owner)) as! UPMTextbookListing
+//    textbookListing.textbook = UPMTextbook()
+//    return textbookListing
+//  }
+  
+  override class func displayQuery() -> PFQuery {
+    var listingQuery = PFQuery(className: "UPMOtherListing")
+    listingQuery.orderByDescending("createdAt")
+    listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
+    listingQuery.includeKey("blackListedUsers")
+    listingQuery.includeKey("reservations")
+    listingQuery.includeKey("textbook")
+    listingQuery.includeKey("reservations.reserver")
+    return listingQuery
   }
   
   // MARK: - PFSubclassing Methods

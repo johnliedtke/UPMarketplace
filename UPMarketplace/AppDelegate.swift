@@ -26,8 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UPMUser.registerSubclass()
     UPMActivity.registerSubclass()
     
-  
-    
     // Global apperances
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
