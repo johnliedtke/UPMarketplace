@@ -27,7 +27,8 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   let SellCellIdentifier = "UPMSellCell"
   let SellTitleCelIdentifier = "UPMSellTitleCell"
   
-  // MARK: - Properties
+  // MARK: - Public Properties
+  
   /// Container for all required items (attributes) of a listing.
   var requiredItems = UPMSellItemContainer()
   
@@ -36,9 +37,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   
   /// Listing to be posted. Should be overriden and return subclass.
   var listing: UPMListing?
-  
-  /// Displays status when posting
-  var progresHUD: MBProgressHUD
   
   enum CellSection: Int {
     case Title = 0, Required , Optional;
@@ -64,7 +62,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   override func viewDidLoad() {
     super.viewDidLoad()
     listing = UPMOtherListing()
-    setupProgressHUD()
     tableView.estimatedRowHeight = 100
     tableView = UITableView(frame: tableView.frame, style: UITableViewStyle.Grouped)
     tableView.backgroundColor = UIColor.standardBackgroundColor()
@@ -87,8 +84,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
 
   }
   
- 
-  
   func didPressCancelButton(sender: AnyObject) {
     self.navigationController?.popToRootViewControllerAnimated(true)
   }
@@ -98,7 +93,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     tableView.reloadData()
   }
   
-  /// Creates default required items, can be overriden to provide custom required items.
+  /// Creates default required items, may be overriden to provide custom required items.
   func createRequiredItems() {
     // Required
     var titleItem = UPMSellItem(title: RequiredItems.Title.rawValue, description: "Write")
@@ -117,23 +112,10 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   }
   
   // MARK: Private Methods
-//  override init() {
-//    progresHUD = MBProgressHUD()
-//    super.init()
-//  }
   
   required init(coder aDecoder: NSCoder) {
-    progresHUD = MBProgressHUD()
     super.init(coder: aDecoder)
   }
-  
-  private func setupProgressHUD() {
-    progresHUD = MBProgressHUD(view: self.navigationController?.view)
-    progresHUD.delegate = self
-    progresHUD.labelText = "Posting..."
-  }
-
-  
   
   // MARK: - Posting Methods
   
@@ -150,20 +132,36 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   /// Checks if required items are complete and alerts if there are missing items.
   /// Displays progress HUD while executing post().
   ///
-  /// * Assumes post() is using the main thread and not running in background.
+  /// * Uses post() to save to parse
   /// * When complete, pops the controller from navigation stack.
   func postWithProgressHUD() {
+    if UPMReachabilityManager.isUnreachable() {
+      UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
+      return
+    }
+    
     if requiredItems.isItemsComplete() {
-      navigationController?.view.addSubview(progresHUD)
-      progresHUD.showAnimated(true, whileExecutingBlock: { () -> Void in
-        self.post()
-        self.progresHUD.labelText = "Success"
-        sleep(1)
-        return
-        }) { () -> Void in
-          self.navigationController?.popViewControllerAnimated(true)
-          return
-      }
+      var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+      hud.labelText = "Posting..."
+      
+      self.post().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+        if task.error == nil {
+          hud.labelText = "Success"
+          sleep(1)
+          dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            self.navigationController?.popToRootViewControllerAnimated(true)
+          })
+        } else {
+          var errorAlert = UIAlertController(title: "Error", message: "An error ocurred.", preferredStyle: .Alert)
+          errorAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+          dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+            self.navigationController?.popToRootViewControllerAnimated(true)
+          })
+        }
+        return nil
+      })
     } else {
       alertIfMissingRequiredItems()
     }
@@ -178,11 +176,28 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       presentViewController(alertController, animated: true, completion: nil)
     }
   }
+
+  /**
+  Saves the listing to parse. Should not call directly, instead call
+  postWithProgressHUD for a user-friendly experience.
   
-  /// Saves the listing to parse. If overriden, other post methods
-  /// may need to be overriden as well.
-  func post() {
-    listing?.save()
+    - May override for customization.
+  
+  :returns: task indicating the status of the posting
+  */
+  func post() -> BFTask {
+    var postTask = BFTaskCompletionSource()
+
+    listing?.saveInBackground().continueWithBlock({
+      (task: BFTask!) -> AnyObject! in
+      if task.error == nil {
+        postTask.setResult(task.result)
+      } else {
+        postTask.setError(task.error)
+      }
+      return nil
+    })
+    return postTask.task
   }
   
   /// Calls postWithProgressHUD() when done button is pressed
@@ -190,7 +205,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     postWithProgressHUD()
   }
 
-  // MARK: - Table view data source
+  // MARK: - TableView Data Source
 
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
     return CellSection.allValues.count
@@ -268,6 +283,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   }
 
   // MARK: - Delegate Methods
+  
   func descriptionUpdated(description: String)  {
     var descriptionItem = requiredItems.itemWithTitle(RequiredItems.Description.rawValue)
     if description != "" {

@@ -27,6 +27,21 @@ public class UPMOtherListing: UPMListing, PFSubclassing  {
     return "UPMOtherListing"
   }
   
+//  override class func initListing(#listing: UPMListing, owner: PFUser) -> UPMOtherListing {
+//    var otherListing = (super.initListing(listing: listing, owner: owner)) as! UPMOtherListing
+//    return otherListing
+//  }
+
+  override class func displayQuery() -> PFQuery {
+    var listingQuery = PFQuery(className: "UPMOtherListing")
+    listingQuery.orderByDescending("createdAt")
+    listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
+    listingQuery.includeKey("blackListedUsers")
+    listingQuery.includeKey("reservations")
+    listingQuery.includeKey("reservations.reserver")
+    return listingQuery
+  }
+  
   /// Registers the subclass with Parse
 //  override public class func load() {
 //    self.registerSubclass()

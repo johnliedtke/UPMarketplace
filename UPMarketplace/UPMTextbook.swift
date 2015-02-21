@@ -6,8 +6,6 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-
-
 /**
  The UPMTextbook class represents a textbook that can be sold on the 
  marketplace. It is closely associated with a UPMTextbookListing.
@@ -53,11 +51,6 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   public class func parseClassName() -> String! {
     return "UPMTextbook"
   }
-  
-  /// Registers the subclass with Parse
-//  override public class func load() {
-  //  self.registerSubclass()
-//  }
   
   
 }
