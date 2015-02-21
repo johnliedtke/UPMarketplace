@@ -34,4 +34,6 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
       navigationController?.pushViewController(viewController, animated: true)
   
   }
+  
+
 }
