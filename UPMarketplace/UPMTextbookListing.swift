@@ -18,14 +18,14 @@ public class UPMTextbookListing: UPMListing, PFSubclassing {
   /// Textbook associated with listing
   @NSManaged public var textbook: UPMTextbook!
   
-//  override class func initListing(#listing: UPMListing, owner: PFUser) -> UPMTextbookListing {
-//    var textbookListing = (super.initListing(listing: listing, owner: owner)) as! UPMTextbookListing
-//    textbookListing.textbook = UPMTextbook()
-//    return textbookListing
-//  }
+  class func initListing() -> UPMTextbookListing {
+    var textbookListing = UPMTextbookListing()
+    textbookListing.textbook = UPMTextbook()
+    return textbookListing
+  }
   
   override class func displayQuery() -> PFQuery {
-    var listingQuery = PFQuery(className: "UPMOtherListing")
+    var listingQuery = PFQuery(className: "UPMTextbookListing")
     listingQuery.orderByDescending("createdAt")
     listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
     listingQuery.includeKey("blackListedUsers")
