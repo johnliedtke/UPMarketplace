@@ -7,7 +7,7 @@
         <!--Navigation Controller-->
         <scene sceneID="psd-gf-oL9">
             <objects>
-                <navigationController id="wkT-f8-uvH" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="frontNav" id="wkT-f8-uvH" sceneMemberID="viewController">
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="040-BZ-8x8">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -18,7 +18,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hbB-np-Re1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-215" y="177"/>
+            <point key="canvasLocation" x="-213" y="171"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="DEs-FK-l9u">
@@ -79,7 +79,7 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <segue destination="wkT-f8-uvH" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="Pdg-YV-oko"/>
+                        <segue destination="wkT-f8-uvH" kind="custom" identifier="sw_push" customClass="SWRevealViewControllerSeguePushController" id="Pdg-YV-oko"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hMs-Go-GA4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -107,14 +107,14 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="New Listings" id="uKY-fl-Xjy">
-                        <barButtonItem key="rightBarButtonItem" title="Filter" id="hAg-zW-Mut">
+                        <barButtonItem key="rightBarButtonItem" title="Filter" id="gAf-mE-9W4">
                             <connections>
-                                <action selector="a:" destination="JgW-Jz-KSE" id="k8e-Hq-Qlw"/>
+                                <action selector="a:" destination="JgW-Jz-KSE" id="TaN-qm-ESa"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="filterButton" destination="hAg-zW-Mut" id="rm0-uW-QL8"/>
+                        <outlet property="filterButton" destination="gAf-mE-9W4" id="0CW-HU-rWy"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bPR-jT-EVU" userLabel="First Responder" sceneMemberID="firstResponder"/>

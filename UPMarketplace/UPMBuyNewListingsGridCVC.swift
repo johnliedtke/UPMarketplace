@@ -21,6 +21,8 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     self.revealViewController().rightRevealToggle(self)
   }
   
+  var chosenCategory: Int = -1
+  
   override func viewDidLoad() {
     super.viewDidLoad()
 //    navigationController?.navigationBar.backItem.title = "Back!"
@@ -29,10 +31,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     var revealViewController = self.revealViewController
     if (( revealViewController  != nil))
     {
-      
-      filterButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self.revealViewController(), action: "rightRevealToggle:")
-      self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer());
-      
+     
       var swipeRight = UISwipeGestureRecognizer(target: self.revealViewController(), action: "rightRevealToggle:")
       swipeRight.direction = UISwipeGestureRecognizerDirection.Right
       self.view.addGestureRecognizer(swipeRight)
@@ -56,7 +55,26 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
   //TODO: Change query to retrieve the three major UPMListing types.
   override func query() -> PFQuery {
-    return UPMOtherListing.displayQuery()
+    
+    switch(chosenCategory){
+    case 0:
+      var listQuery = PFQuery(className: "UPMOtherListing")
+      listQuery.orderByDescending("createdAt")
+      return listQuery
+    case 1:
+      var listQuery = PFQuery(className: "UPMHousingListing")
+      listQuery.orderByDescending("createdAt")
+      return listQuery
+    case 2:
+      var listQuery = PFQuery(className: "UPMTextbookListing")
+      listQuery.orderByDescending("createdAt")
+      return listQuery
+    default:
+      var listQuery = PFQuery(className: "UPMHousingListing")
+      listQuery.orderByDescending("createdAt")
+      return listQuery
+    }
+
   }
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {

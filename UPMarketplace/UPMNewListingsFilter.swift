@@ -12,11 +12,14 @@ class UPMNewListingsFilter: UITableViewController {
 
   //button that may be used to go back to orig view
   @IBAction func doneButton(sender: AnyObject) {
-    self.revealViewController().revealToggle(self)
+    self.revealViewController().rightRevealToggle(self)
   }
   
   var categories = ["Furniture & Other", "Housing", "Textbooks"]
   let filterCellIdentifier = "UPMBuyFilterCell"
+  var chosenCategory = -1
+  let storyboardS = UIStoryboard(name: "UPMBuy", bundle: nil)
+  
   
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,18 +47,23 @@ class UPMNewListingsFilter: UITableViewController {
   
    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCellWithIdentifier(filterCellIdentifier, forIndexPath: indexPath) as! UPMBuyFilterCell
+    
 
     cell.configureCell(categories[indexPath.row])
     return cell
    }
 
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as! UINavigationController
+    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
+   
+    first.chosenCategory = indexPath.row
+    self.revealViewController().pushFrontViewController(nav, animated: true)
 
 
+  }
 
-        override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
   
 
 }
