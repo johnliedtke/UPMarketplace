@@ -18,7 +18,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   @IBOutlet var filterButton: UIBarButtonItem!
   
   @IBAction func a(sender: AnyObject) {
-    self.revealViewController().revealToggle(self)
+    self.revealViewController().rightRevealToggle(self)
   }
   
   override func viewDidLoad() {
@@ -30,14 +30,14 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     if (( revealViewController  != nil))
     {
       
-      filterButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self.revealViewController(), action: "revealToggle:")
+      filterButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self.revealViewController(), action: "rightRevealToggle:")
       self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer());
       
-      var swipeRight = UISwipeGestureRecognizer(target: self.revealViewController(), action: "revealToggle:")
+      var swipeRight = UISwipeGestureRecognizer(target: self.revealViewController(), action: "rightRevealToggle:")
       swipeRight.direction = UISwipeGestureRecognizerDirection.Right
       self.view.addGestureRecognizer(swipeRight)
       
-      var swipeLeft = UISwipeGestureRecognizer(target: self.revealViewController(), action: "revealToggle:")
+      var swipeLeft = UISwipeGestureRecognizer(target: self.revealViewController(), action: "rightRevealToggle:")
       swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
       self.view.addGestureRecognizer(swipeLeft)
     }
