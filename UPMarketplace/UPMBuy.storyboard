@@ -80,7 +80,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="hhW-IK-HG2">
-                        <barButtonItem key="leftBarButtonItem" title="Done" id="ot4-AD-4Az"/>
+                        <barButtonItem key="leftBarButtonItem" title="Done" id="ot4-AD-4Az">
+                            <connections>
+                                <action selector="doneButton:" destination="7TQ-NH-bWa" id="H5u-pY-PG7"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <segue destination="wkT-f8-uvH" kind="custom" customClass="SWRevealViewControllerSeguePushController" id="Pdg-YV-oko"/>
