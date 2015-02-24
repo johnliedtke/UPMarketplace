@@ -21,7 +21,6 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   
   // MARK: - Private Properties
   
-  
   /// Contains all the indices (for objects) corresponding to a section
   private var sectionIndices = [String: [Int]]()
   
@@ -35,9 +34,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   
   public override func viewDidLoad() {
     super.viewDidLoad()
-    
     tableView.estimatedRowHeight = 50.0
-
   }
   
   // MARK: - Init
@@ -54,15 +51,8 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     return sectionToKeyMap[section]!
   }
   
-//  override init() {
-//    super.init()
-//    self.pullToRefreshEnabled = true
-//    self.paginationEnabled = true
-//    self.objectsPerPage = 25
-//  }
-  
-  
   // MARK: - Init
+  
   // Crashes without all these stupid inits
   required public init(coder aDecoder: NSCoder) {
     super.init(coder: aDecoder)
@@ -70,19 +60,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   
   override init!(style: UITableViewStyle, className aClassName: String!) {
     super.init(style: style, className: aClassName)
-    
   }
-  
-//  override init(style: UITableViewStyle) {
-//    super.init(style: style)
-//    
-//    self.pullToRefreshEnabled = true
-//    self.paginationEnabled = true
-//    self.objectsPerPage = 5
-//  }
-  
-  
-  
   
   // MARK: - PFQueryTableViewController
   
@@ -93,7 +71,16 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     
     var section = 0
     for (rowIndex, object) in enumerate(objects as! [PFObject]) {
-      var currentSectionKey = object.objectForKey(sectionKey) as! String
+      
+      var currentSectionKey: String!
+      
+      if let secKey = object.objectForKey(sectionKey) as? Int {
+        //FIXME: Do this better
+        currentSectionKey = ReservationStatus(rawValue: secKey)?.description
+      } else {
+        currentSectionKey = object.objectForKey(sectionKey) as! String
+      }
+      
       var objectsInSection = sectionIndices[currentSectionKey]
       
       // First time we've seen sectionKey

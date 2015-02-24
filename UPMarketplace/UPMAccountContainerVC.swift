@@ -29,8 +29,9 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
     var accountActivityTVC = UPMAccountActivityTVC(style: .Plain, className: "UPMOtherListing")
     accountActivityTVC.sectionKey = "title"
     var accountReservedTVC = UPMAccountReservedTVC(style: .Plain, className: "UPMOtherListing")
-    var sellingTVC = UPMAccountSellingTVC(style: .Plain, className: "UPMOtherListing")
-    sellingTVC.sectionKey = "category"
+    accountReservedTVC.sectionKey = "status"
+    var sellingTVC = UPMAccountSellingTVC(style: .Plain, className: "UPMOtherListng")
+    
     isLeftRightTransition = false
     
     return (accountView, [accountActivityTVC, accountReservedTVC, sellingTVC])
