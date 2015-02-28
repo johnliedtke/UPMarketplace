@@ -8,8 +8,6 @@
 
 import UIKit
 
-
-
 class UPMAccountSellingTVC: PFQueryTableViewController {
 
   // MARK: - Public Properties
@@ -28,7 +26,6 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   
   // MARK: - Public Methods
   
-  
   // MARK: - Init
   
   override init!(style: UITableViewStyle, className aClassName: String!) {
@@ -42,6 +39,7 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 50.0
+
   }
   
   // MARK - Private Methods

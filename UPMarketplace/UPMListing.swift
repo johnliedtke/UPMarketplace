@@ -66,7 +66,7 @@ public class UPMListing: PFObject  {
   */
   enum SellerAction: Int, Printable {
     case AcceptReservation, ContactReserver, DeleteListing, RejectReservation
-    var description : String {
+    var description: String {
       get {
         switch self {
         case .AcceptReservation:

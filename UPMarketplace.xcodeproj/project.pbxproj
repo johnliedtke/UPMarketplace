@@ -104,6 +104,8 @@
 		52AF3D5F19E77BBF007E0D22 /* UPMarketplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D5E19E77BBF007E0D22 /* UPMarketplaceTests.swift */; };
 		52AF3D6D19E77D9B007E0D22 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6A19E77D9B007E0D22 /* Parse.framework */; };
 		52AF3D6E19E77D9B007E0D22 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */; };
+		52B1C7C11AA263590034E45F /* UPMAccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1C7C01AA263590034E45F /* UPMAccountSettings.swift */; };
+		52B1C7C51AA2673D0034E45F /* UPMAccountSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1C7C41AA2673D0034E45F /* UPMAccountSettingsCell.swift */; };
 		52C063191A1EFA250088907E /* UPMOtherListingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C063181A1EFA250088907E /* UPMOtherListingCategoryCell.swift */; };
 		52C0631D1A1F012C0088907E /* UPMOtherListingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C063181A1EFA250088907E /* UPMOtherListingCategoryCell.swift */; };
 		52C0631F1A1F02000088907E /* UPMOtherListingCategoryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C0631E1A1F02000088907E /* UPMOtherListingCategoryTVC.swift */; };
@@ -285,6 +287,8 @@
 		52AF3D6919E77D9B007E0D22 /* Bolts.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Bolts.framework; sourceTree = "<group>"; };
 		52AF3D6A19E77D9B007E0D22 /* Parse.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Parse.framework; sourceTree = "<group>"; };
 		52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = ParseFacebookUtils.framework; sourceTree = "<group>"; };
+		52B1C7C01AA263590034E45F /* UPMAccountSettings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMAccountSettings.swift; sourceTree = "<group>"; };
+		52B1C7C41AA2673D0034E45F /* UPMAccountSettingsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMAccountSettingsCell.swift; sourceTree = "<group>"; };
 		52C063181A1EFA250088907E /* UPMOtherListingCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMOtherListingCategoryCell.swift; sourceTree = "<group>"; };
 		52C0631E1A1F02000088907E /* UPMOtherListingCategoryTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMOtherListingCategoryTVC.swift; sourceTree = "<group>"; };
 		52CA48F31A743D7F00073F2F /* UPMContact.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UPMContact.storyboard; sourceTree = "<group>"; };
@@ -607,6 +611,8 @@
 				528840721A7988190082CC86 /* UPMAccountActivityTVC.swift */,
 				529F39131A79885A000ED764 /* UPMAccountReservedTVC.swift */,
 				529F39151A79886C000ED764 /* UPMAccountSellingTVC.swift */,
+				52B1C7C01AA263590034E45F /* UPMAccountSettings.swift */,
+				52B1C7C41AA2673D0034E45F /* UPMAccountSettingsCell.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -1030,6 +1036,8 @@
 				524F40AC1A104D54002B47B6 /* UPMSellItemContainer.swift in Sources */,
 				529F39161A79886C000ED764 /* UPMAccountSellingTVC.swift in Sources */,
 				F18F1DFB1A9B2683000853CF /* UPMBuyFilterCell.swift in Sources */,
+				52B1C7C11AA263590034E45F /* UPMAccountSettings.swift in Sources */,
+				52B1C7C51AA2673D0034E45F /* UPMAccountSettingsCell.swift in Sources */,
 				52CA48FC1A743EA400073F2F /* UPMBuyItemDetailsDescription.swift in Sources */,
 				5255EC091A0EDD56007207C7 /* UPMSellCell.swift in Sources */,
 				5200D4AF1A50A63A0079ED9A /* UPMBarcodeBox.swift in Sources */,
