@@ -136,12 +136,7 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   }
   
   override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-    var listing = objectAtIndexPath(indexPath) as! UPMListing
-    if !listing.isReserved() {
-      return UITableViewCellEditingStyle.None
-    } else {
-      return UITableViewCellEditingStyle.Delete
-    }
+    return UITableViewCellEditingStyle.Delete
   }
 
   override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
@@ -155,7 +150,7 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
         editActions.append(UITableViewRowAction(style: .Default, title: action.description) { (rowAction, indexPath) in
 
           switch action {
-          case .AcceptReservation, .RejectReservation:
+          case .AcceptReservation, .RejectReservation, .DeleteListing:
             
             if UPMReachabilityManager.isUnreachable() {
               UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
@@ -209,6 +204,77 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
 
 
 
+extension PFQueryTableViewController {
+    /**
+    */
+    func editActionsForListing(listing: UPMListing, user: PFUser) -> [UITableViewRowAction]? {
+
+        
+        // Create the table actions...
+        if let actions = listing.availableSellerActions() {
+            var editActions = [UITableViewRowAction]()
+            for (action, actionFunc) in actions {
+                editActions.append(UITableViewRowAction(style: .Default, title: action.description) { (rowAction, indexPath) in
+                    
+                    switch action {
+                    case .AcceptReservation, .RejectReservation, .DeleteListing:
+                        
+                        if UPMReachabilityManager.isUnreachable() {
+                            UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
+                            return
+                        }
+                        
+                        var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+                        hud.labelText = action.description
+                        
+                        actionFunc().continueWithBlock() { (task: BFTask!) in
+                            if task.error == nil {
+                                hud.labelText = "Success"
+                                sleep(1)
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                                    self.loadObjects()
+                                }
+                            } else {
+                                hud.labelText = "Error"
+                                dispatch_async(dispatch_get_main_queue()) {
+                                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                                }
+                            }
+                            return nil
+                        }
+                        
+                    case .ContactReserver:
+                        actionFunc().continueWithBlock({ (task) in
+                            if let contactNavigation = task.result as? UINavigationController {
+                                self.navigationController?.presentViewController(contactNavigation, animated: true, completion: nil)
+                            }
+                            return nil
+                        })
+                        
+                    default: break
+                    }
+                    })
+            }
+            let colors = [UIColor.flatLightOrangeColor(), UIColor.flatLightRedColor(), UIColor.flatLightGreenColor()]
+            
+
+           // var meow = editActions.filter({$0.labelText == ""})
+            
+            for (index, editAction) in enumerate(editActions) {
+                editAction.backgroundColor = colors[index]
+            }
+            return editActions
+            
+        } else {
+            return nil
+        }
+    }
+
+}
+
+
+
 class UPMAccountReservationsTVC: UPMPFQueryTableVC {
   
   // The listing associated with the reservations.
@@ -223,10 +289,6 @@ class UPMAccountReservationsTVC: UPMPFQueryTableVC {
     }
     return query
   }
-  
-  
-
-
   
 }
 

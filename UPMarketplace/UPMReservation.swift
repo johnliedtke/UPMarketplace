@@ -28,11 +28,9 @@ enum ReservationStatus: Int, Printable {
 /**
  A UPMReservation is an object containing information pertinent to a reservation of UPMListing and
  is used for sending notifications.
+  - Ensure to include :listing: in query if you need access associated listing.
 */
 public class UPMReservation: PFObject, PFSubclassing  {
-
-  // MARK: - Enum Def
-  
   
   // MARK: - Properties
 
@@ -100,24 +98,6 @@ public class UPMReservation: PFObject, PFSubclassing  {
   }
  
 }
-
-//internal class UPMReservationContainer {
-//  
-//  /// Reservations
-//  private var reservations = [UPMReservation]()
-//  
-//  // Associated Listing
-//  private var listing = UPMListing()
-//  
-//  convenience init(reservations: [UPMReservation], listing: UPMListing) {
-//    self.init()
-//    self.reservations += reservations
-//    self.listing = listing
-//  }
-//  
-//}
-//
-//
 
 
 

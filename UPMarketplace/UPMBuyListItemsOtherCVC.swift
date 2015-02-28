@@ -16,7 +16,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   override func query() -> PFQuery {
     var listQuery = PFQuery(className: "UPMOtherListing")
     listQuery.orderByDescending("createdAt")
-    return listQuery
+    return UPMOtherListing.displayQuery()
   }
   
   override func viewDidLoad() {

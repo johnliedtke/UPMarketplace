@@ -31,9 +31,10 @@ public class UPMListing: PFObject  {
   /// Indicator for Or Best Offer (OBO)
   @NSManaged public var oBO: ObjCBool
   
-  /// Auto-reject limit for OBO
-  ///
-  /// 1. Check oBO before using
+  /**
+  Auto-reject limit for OBO
+    1. Check oBO before using
+  */
   @NSManaged public var limit: Double
   
   /// The image for a listing stored as a PFFile
@@ -82,8 +83,8 @@ public class UPMListing: PFObject  {
   }
   
   /**
-  MARK: - (E) Listing State
-  State of the listing
+  MARK: - (E) Seller Listing State
+  State of the listing in regards to the seller
   */
   enum SellerState: Int, Printable {
     case Accepted, Waiting, NoAction
@@ -395,10 +396,13 @@ public class UPMListing: PFObject  {
     // Create the various "actions" based on the state of the listing.
     switch sellerState() {
     case .NoAction:
-      return nil
+      var deleteTask = { return self.deleteListingAndRelatedInBackground() }
+      var deleteAction = (SellerAction.DeleteListing, deleteTask)
+      
+      return [deleteAction]
       
     case .Waiting:
-      if let waitingReservation = self.getWaitingReservation() {
+      if let waitingReservation = getWaitingReservation() {
         var acceptAction = (SellerAction.AcceptReservation,
           { return self.acceptReservationInBackground(waitingReservation) })
         var rejectAction = (SellerAction.RejectReservation,
@@ -419,6 +423,20 @@ public class UPMListing: PFObject  {
       
     default: break
     }
+    return nil
+  }
+  
+  
+  /**
+  Determines the available actions a buyer can take based upon the state of
+  the listing.
+  
+  - Most of the actions (functions) are asynchronous and thus are wrapped in
+  in a closure to avoid firing off network requests.
+  
+  :returns: BuyerAction and a reference to the action.
+  */
+  internal func availableBuyerActions() -> [(SellerAction, () -> BFTask)]? {
     return nil
   }
   
@@ -444,7 +462,7 @@ public class UPMListing: PFObject  {
     
   :returns: First reservation waiting for action
   */
-  func getWaitingReservation() -> UPMReservation? {
+  public func getWaitingReservation() -> UPMReservation? {
     return reservations.filter({ $0.status == ReservationStatus.Waiting.rawValue}).first
   }
   
@@ -453,7 +471,7 @@ public class UPMListing: PFObject  {
   
   :returns: First reservation waiting for action
   */
-  func getAcceptedReservation() -> UPMReservation? {
+  public func getAcceptedReservation() -> UPMReservation? {
     return reservations.filter({ $0.status == ReservationStatus.Accepted.rawValue}).first
   }
 
@@ -525,7 +543,6 @@ public class UPMListing: PFObject  {
     }
   }
 
-
   /**
   Checks the reservations array and returns a true boolean if any of the
   Methods meet the requirements for this listing
@@ -542,7 +559,6 @@ public class UPMListing: PFObject  {
       }
     }
     return !reservations!.filter( { $0.status == ReservationStatus.Accepted.rawValue || $0.status == ReservationStatus.Waiting.rawValue }).isEmpty
-
   }
   
   /// checks if user is on black list
@@ -620,7 +636,6 @@ public class UPMListing: PFObject  {
       return "No Reservations"
     }
   }
-
   
   /**
   Creates a string describing the status of a reservation.
