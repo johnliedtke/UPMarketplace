@@ -9,13 +9,34 @@
 import UIKit
 
 
+struct UPMBuyCategoryCellConstants {
+  static let reuseIdentifier = "UPMBuyCategoryCell"
+}
+
 @IBDesignable
 class UPMBuyCategoryCell: UICollectionViewCell {
     
     
-    @IBOutlet weak var listingPicture: UIImageView!
+  // MARK: - Public Properties
+  
+  /// Reference to the imageView at the top of the cell.
+  lazy var listingPicture: PFImageView = {
+    var imageView = PFImageView()
+    imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
+    imageView.clipsToBounds = true
+    imageView.contentMode = .ScaleAspectFill
+    return imageView
+    }()
+  
+  /// Use to display the title of UPMListing
+  lazy var listingCategory: UILabel =  {
+    var label = UILabelVertical(forAutoLayout: true)
+    label.font = UIFont.standardBoldTitleFont()
+    label.text = "Title"
     
-    @IBOutlet weak var listingCategory: UILabel!
+    label.numberOfLines = 0
+    return label
+    }()
     
     
     var pic:UIImage? {
