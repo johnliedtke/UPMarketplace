@@ -11,7 +11,7 @@
 import UIKit
 
 class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLayout{
-    
+  //TODO: make picture sizes smaller
   var categories = ["Textbooks", "Housing", "Furniture & Other"]
   var pictures = ["books.png", "house.png", "other.png"]
 

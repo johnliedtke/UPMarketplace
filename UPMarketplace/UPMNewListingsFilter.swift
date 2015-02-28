@@ -12,8 +12,13 @@ class UPMNewListingsFilter: UITableViewController {
 
   //button that may be used to go back to orig view
   @IBAction func doneButton(sender: AnyObject) {
+    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as! UINavigationController
+    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
     
-    self.revealViewController().rightRevealToggle(self)
+    first.chosenCategory = -1
+    first.titleTop = "New Listings"
+
+    self.revealViewController().pushFrontViewController(nav, animated: true)
     
   }
   
@@ -25,7 +30,8 @@ class UPMNewListingsFilter: UITableViewController {
   
     override func viewDidLoad() {
         super.viewDidLoad()
-      tableView.registerNib(UINib(nibName: filterCellIdentifier, bundle: nil), forCellReuseIdentifier: filterCellIdentifier)
+        tableView.registerNib(UINib(nibName: filterCellIdentifier, bundle: nil), forCellReuseIdentifier: filterCellIdentifier)
+        navigationItem.title = "Filter"
 
     }
 
@@ -61,6 +67,7 @@ class UPMNewListingsFilter: UITableViewController {
     var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
    
     first.chosenCategory = indexPath.row
+    first.titleTop = "Filtered by: " + categories[indexPath.row]
     self.revealViewController().pushFrontViewController(nav, animated: true)
 
 

@@ -62,7 +62,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     case 0:
       var listQuery = PFQuery(className: "UPMOtherListing")
       listQuery.orderByDescending("createdAt")
-      return listQuery
+      return UPMOtherListing.displayQuery()
     case 1:
       var listQuery = PFQuery(className: "UPMHousingListing")
       listQuery.orderByDescending("createdAt")
@@ -70,7 +70,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     case 2:
       var listQuery = PFQuery(className: "UPMTextbookListing")
       listQuery.orderByDescending("createdAt")
-      return listQuery
+      return UPMTextbookListing.displayQuery()
     default:
       var listQuery = PFQuery(className: "UPMHousingListing")
       listQuery.orderByDescending("createdAt")
@@ -87,6 +87,15 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
       viewController.listingOther = listing
       navigationController?.pushViewController(viewController, animated: true)
     }
+    else if(object.parseClassName == "UPMTextbookListing"){
+      var listing = object as! UPMTextbookListing
+      let viewController = UPMBuyItemDetailsTextbookTVC()
+      viewController.listingTextbook = listing
+      navigationController?.pushViewController(viewController, animated: true)
+
+    }
+    
+   
     
     
   }
