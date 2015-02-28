@@ -42,23 +42,19 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
     
     
   }
-    override func viewDidLoad() {
-      super.viewDidLoad()
-      delegate = self
-
-        // Do any additional setup after loading the view.
-    }
   
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
+  // MARK: - View
+  
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    delegate = self
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Settings", style: .Plain, target: self, action: "didPushSettings")
+  }
+  
+  func didPushSettings() {
+    let settingsTVC = UPMAccountSettings()
+    navigationController?.pushViewController(settingsTVC, animated: true)
+  }
+  
 
 }

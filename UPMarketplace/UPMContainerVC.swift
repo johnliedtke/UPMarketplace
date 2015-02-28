@@ -146,6 +146,7 @@ public class UPMContainerVC: UIViewController {
       nextView.alpha = 1.0
       nextView.setTranslatesAutoresizingMaskIntoConstraints(false)
       
+      
       var elementsDict = NSDictionary(dictionary: ["nextView": nextView])
       self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "H:|[nextView]|",
