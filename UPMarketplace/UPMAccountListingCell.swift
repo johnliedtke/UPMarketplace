@@ -117,7 +117,7 @@ public class UPMAccountListingCell: PFTableViewCell {
 
   :param: status Status of a UPMListing
   */
-  internal func changeStatusColor(status: UPMReservation.reservationStatus) {
+  internal func changeStatusColor(status: ReservationStatus) {
     switch status {
     case .Accepted:
       statusLabel.textColor = UIColor.flatDarkGreenColor()

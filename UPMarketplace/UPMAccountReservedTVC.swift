@@ -22,7 +22,7 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       query.whereKeyExists("listing")
       query.cachePolicy = kPFCachePolicyNetworkElseCache
       query.includeKey("pictureThumbnail")
-      query.orderByDescending("createdAt")
+      query.orderByDescending("status")
       return query
     }
     
@@ -84,13 +84,13 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       //var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")
       var cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "Meow")
       
-      var status = UPMReservation.reservationStatus(rawValue: reservation.status)
+      var status = ReservationStatus(rawValue: reservation.status)
       cell.statusLabel.text = reservation.displayStatus()
       cell.titleLabel.text = reservation.getListing().title
       cell.priceLabel.text = reservation.getListing().displayPrice()
       cell.displayImageView.file = reservation.getListing().pictureThumbnail
       cell.displayImageView.loadInBackground()
-      cell.changeStatusColor(UPMReservation.reservationStatus(rawValue: reservation.status)!)
+      cell.changeStatusColor(ReservationStatus(rawValue: reservation.status)!)
       
       // Add long press
       var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
@@ -175,48 +175,59 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     
     
     
-    // Override to support conditional editing of the table view.
-    override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-      // Return NO if you do not want the specified item to be editable.
-      return true
-    }
+  override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
+    var reservation = objectAtIndexPath(indexPath) as! UPMReservation
+    
+    
+    // Delete reservation
+    var deleteReservationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
+      
+      // Network connection
+      if UPMReachabilityManager.isUnreachable() {
+        UPMReachabilityManager.alertOfNoNetworkConnectionInController(self.navigationController!)
+        return
+      }
+      
+      MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+      
+      // delete reservation
+      reservation.getListing().deleteReservationInBackground(reservation, blackList: true).continueWithBlock {
+        (task: BFTask!) -> AnyObject! in
+        
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: false)
+        if task.error == nil {
+          self.loadObjects()
+        } else {
+          
+        }
+        return nil
+      }
+    });
+    deleteReservationAction.backgroundColor = UIColor.flatLightRedColor()
+    
+    // Contact
+    var contactReservationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Contact", handler:{action, indexpath in
+      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser(), withSubject: "Question about: \(reservation.getListing().title)")
+      self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
+
+    });
+    contactReservationAction.backgroundColor = UIColor.flatLightYellowColor()
+    
+    return [contactReservationAction, deleteReservationAction]
+    
+  }
     
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-      if editingStyle == .Delete {
-        // Delete the row from the data source
-        tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-      } else if editingStyle == .Insert {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-      }
     }
-    
-    
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-    
-    
-    */
-    
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-    // Return NO if you do not want the item to be re-orderable.
+  
+  // Override to support conditional editing of the table view.
+  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+
     return true
-    }
-    */
-    
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-    }
-    */
-    
+  }
+
+
 }
 
 

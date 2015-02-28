@@ -9,7 +9,7 @@
 import UIKit
 
 
-class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC{
+class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC {
   
   var numRows = 2
   var listingOther: UPMOtherListing?

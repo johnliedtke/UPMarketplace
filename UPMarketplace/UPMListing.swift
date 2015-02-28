@@ -6,9 +6,8 @@
 //  Copyright (c) 2014 UP Marketplace. All rights reserved.
 //
 
-
 /**
-Abstract class that provides the base for all
+Abstract[ISH] class that provides the base for all
 marketplace listings. Must be subclassed. Steps to properly subclass:
 
 1. Adopt the PFSubclassing protocol
@@ -32,9 +31,10 @@ public class UPMListing: PFObject  {
   /// Indicator for Or Best Offer (OBO)
   @NSManaged public var oBO: ObjCBool
   
-  /// Auto-reject limit for OBO
-  ///
-  /// 1. Check oBO before using
+  /**
+  Auto-reject limit for OBO
+    1. Check oBO before using
+  */
   @NSManaged public var limit: Double
   
   /// The image for a listing stored as a PFFile
@@ -55,26 +55,57 @@ public class UPMListing: PFObject  {
   /// The array of reservations
   @NSManaged var reservations: [UPMReservation]!
   
-  // TODO: Add reservations array after class has been implemented
+  // TODO: Add reservations array after class has been implemented - (WHAT IS THIS)
   
   /// Returns the image for a listing
   var photo: UIImage?
   
-  // MARK: - Public Methods
-
   /**
-  Designated initializer
+  MARK: - (E) Seller Actions
+  Actions the seller can perform depending on the state of the listing.
   */
-//  class func initListing(#listing: UPMListing, owner: PFUser)-> UPMListing {
-//    listing.reservations = [UPMReservation]()
-//    listing.isHidden = false
-//    listing.blackListedUsers = [PFUser]()
-//    listing.owner = owner
-//    return listing
-//  }
+  enum SellerAction: Int, Printable {
+    case AcceptReservation, ContactReserver, DeleteListing, RejectReservation
+    var description : String {
+      get {
+        switch self {
+        case .AcceptReservation:
+          return "Accept"
+        case .ContactReserver:
+          return "Contact"
+        case .DeleteListing:
+          return "Delete"
+        case .RejectReservation:
+          return "Reject"
+        }
+      }
+    } // end description
+  }
+  
+  /**
+  MARK: - (E) Seller Listing State
+  State of the listing in regards to the seller
+  */
+  enum SellerState: Int, Printable {
+    case Accepted, Waiting, NoAction
+    var description : String {
+      get {
+        switch self {
+        case .Accepted: // Seller has accepted a reservation
+          return "Accepted"
+        case .Waiting: // Waiting for reservations
+          return "Waiting"
+        case .NoAction:
+          return "No Reservations"
+        }
+      }
+    } // end description
+  }
+
+  
+  // MARK: - Public Methods
   
   // MARK: - Background Logic Methods
-  
   // MARK: Reservation Methods
 
   /**
@@ -119,11 +150,6 @@ public class UPMListing: PFObject  {
       
       }.continueWithSuccessBlock {
         (task: BFTask!) -> AnyObject! in
-        
-        if task.error == nil {
-          println("no erorr")
-        }
-        
         var activity = UPMActivity(title: "Made Reservation", description: "\(title)", user: reserver)
         return activity.saveInBackground()
         
@@ -172,8 +198,8 @@ public class UPMListing: PFObject  {
   }
   
   /**
-  Reservation is removed asynchronously. Listing is put back
-  on the marketplace.
+  Reservation state is changed to rejected asynchronously. Listing is put 
+  back on the marketplace. (isHidden = true)
   
   //TODO: Status change for reservation
   //TODO: Reservation needs to linger so user can see "Rejected State"
@@ -188,7 +214,8 @@ public class UPMListing: PFObject  {
     if blackList {
       addObject(reservation.reserver, forKey: "blackListedUsers")
     }
-    removeObject(reservation, forKey: "reservations")
+    
+    reservation.status = ReservationStatus.Rejected.rawValue
     isHidden = false
     
     saveInBackground().continueWithBlock {
@@ -203,23 +230,74 @@ public class UPMListing: PFObject  {
     return rejectTask.task
   }
   
+  
+  /**
+  Reject the reservation that the seller is acting upon. Rejects the accepting 
+  reservation if it exists then the waitng reservation.
+  
+  :param: blackList Should reserver be blackListed
+  */
+  func rejectCurrentReservationInBackground(#blackList: Bool) -> BFTask {
+    
+    var rejectTask = BFTaskCompletionSource()
+    
+    func reject(reservation: UPMReservation) {
+      if blackList {
+        addObject(reservation.reserver, forKey: "blackListedUsers")
+      }
+      
+      reservation.status = ReservationStatus.Rejected.rawValue
+      isHidden = false
+      
+      saveInBackground().continueWithBlock {
+        (task: BFTask!) -> AnyObject! in
+        if task.error == nil {
+          rejectTask.setResult(nil)
+        } else {
+          rejectTask.setError(task.error)
+        }
+        return nil
+      }
+    } // end reject
+    
+    if let acceptingReservation = getAcceptedReservation() {
+      reject(acceptingReservation)
+    } else if let waitingReservation = getWaitingReservation() {
+      reject(waitingReservation)
+    }
+    
+    return rejectTask.task
+  }
+
   /**
   Deletes the listing and related data asynchronously.
   
-  //TODO: Notify potential reservers of deletion
+  //TODO: Notify potential reservers of deletion.
+  //TODO: Add activty...
   
   */
   func deleteListingAndRelatedInBackground() -> BFTask {
     var deleteTask = BFTaskCompletionSource()
     
-    deleteInBackground().continueWithBlock {
-      (task: BFTask!) -> AnyObject! in
+    PFObject.deleteAllInBackground(reservations).continueWithBlock { (task) in
+      return self.deleteInBackground()
+      
+    }.continueWithSuccessBlock { (task) in
       if task.error == nil {
-        deleteTask.setResult(nil)
+        deleteTask.setResult(true)
       } else {
         deleteTask.setError(task.error)
       }
       return nil
+      
+    }.continueWithBlock { (task) in
+      if task.error == nil {
+        deleteTask.setResult(true)
+      } else {
+        deleteTask.setError(task.error)
+      }
+      return nil
+      
     }
     return deleteTask.task
   }
@@ -229,14 +307,14 @@ public class UPMListing: PFObject  {
   asynchronously.
   
   //TODO: Notify user of status change
-  //TODO: Potentially put in reservation class?
+  //TODO: Potentially put in reservation class? meh
   
   :param: reservation Reservation to accept
   */
   func acceptReservationInBackground(reservation: UPMReservation) -> BFTask {
     var acceptTask = BFTaskCompletionSource()
     
-    reservation.status = UPMReservation.reservationStatus.Accepted.rawValue
+    reservation.status = ReservationStatus.Accepted.rawValue
     
     reservation.saveInBackground().continueWithBlock {
       (task: BFTask!) -> AnyObject! in
@@ -252,11 +330,17 @@ public class UPMListing: PFObject  {
   
   /**
   Complete the transaction gracefully and asynchronously!
+  
+  //TODO: Implement
+  
   */
   func completeTransactionInBackground() {
     
   }
   
+  /**
+  Retrieves all reservations associated with listing.
+  */
   func fetchReservationsInBackground() -> BFTask {
     var reservationsTask = BFTaskCompletionSource()
     
@@ -292,6 +376,115 @@ public class UPMListing: PFObject  {
   // MARK: - Helper Methods
   
   /**
+  Determines the available actions a seller can take based upon the state of 
+  the listing.
+    
+    - Most of the actions (functions) are asynchronous and thus are wrapped in
+      in a closure to avoid firing off network requests.
+  
+  :returns: SellerAction and a reference to the action.
+  */
+  internal func availableSellerActions() -> [(SellerAction, () -> BFTask)]? {
+    
+    // Helper closure to create contact action
+    let contactActionMeow: (PFUser) -> BFTask = { (user: PFUser) in
+      var contactTask = BFTaskCompletionSource()
+      contactTask.setResult(UPMContactVC.initWithNavigationController(user, withSubject: "Message about \(self.title)"))
+      return contactTask.task
+    }
+
+    // Create the various "actions" based on the state of the listing.
+    switch sellerState() {
+    case .NoAction:
+      var deleteTask = { return self.deleteListingAndRelatedInBackground() }
+      var deleteAction = (SellerAction.DeleteListing, deleteTask)
+      
+      return [deleteAction]
+      
+    case .Waiting:
+      if let waitingReservation = getWaitingReservation() {
+        var acceptAction = (SellerAction.AcceptReservation,
+          { return self.acceptReservationInBackground(waitingReservation) })
+        var rejectAction = (SellerAction.RejectReservation,
+          { return self.rejectReservationInBackground(waitingReservation, blackList: false) })
+        var contactAction = (SellerAction.ContactReserver, { return contactActionMeow(waitingReservation.reserver) })
+        
+        return [contactAction, rejectAction, acceptAction]
+      }
+      
+    case .Accepted:
+      if let acceptedReservation = getAcceptedReservation() {
+        var contactAction = (SellerAction.ContactReserver, { return contactActionMeow(acceptedReservation.reserver) })
+        var rejectAction = (SellerAction.RejectReservation,
+          { return self.rejectReservationInBackground(self.getAcceptedReservation()!, blackList: false) })
+        
+        return [contactAction, rejectAction]
+      }
+      
+    default: break
+    }
+    return nil
+  }
+  
+  
+  /**
+  Determines the available actions a buyer can take based upon the state of
+  the listing.
+  
+  - Most of the actions (functions) are asynchronous and thus are wrapped in
+  in a closure to avoid firing off network requests.
+  
+  :returns: BuyerAction and a reference to the action.
+  */
+  internal func availableBuyerActions() -> [(SellerAction, () -> BFTask)]? {
+    return nil
+  }
+  
+  /**
+  Determines the state of the listing
+  
+  :returns: State of the listing
+  */
+  func sellerState() -> SellerState {
+    if !isReserved() { // No reservations or rejected
+      return .NoAction
+    }
+  
+    if !reservations.filter({ $0.status == ReservationStatus.Accepted.rawValue }).isEmpty {
+      return .Accepted
+    } else {
+      return .Waiting
+    }
+  }
+  
+  /**
+  Returns the reservation that is waiting for action by the seller.
+    
+  :returns: First reservation waiting for action
+  */
+  public func getWaitingReservation() -> UPMReservation? {
+    return reservations.filter({ $0.status == ReservationStatus.Waiting.rawValue}).first
+  }
+  
+  /**
+  Returns the reservation that is waiting for action by the seller.
+  
+  :returns: First reservation waiting for action
+  */
+  public func getAcceptedReservation() -> UPMReservation? {
+    return reservations.filter({ $0.status == ReservationStatus.Accepted.rawValue}).first
+  }
+
+  /**
+  Checks if there is a reservation that has been accepted.
+  
+  :returns: Whether there is an accepted reservation
+  */
+  func isAcceptedReservation() -> Bool {
+    return !reservations.filter() { $0.status == ReservationStatus.Accepted.rawValue }.isEmpty
+  }
+  
+  /**
   Checks whether a listing is reserveable by fetching the latest data from
   parse.
   //TODO: DELETE?
@@ -320,14 +513,35 @@ public class UPMListing: PFObject  {
     return reservableTask.task
   }
 
-  
   /**
   Determines whether a user can reserve a listing by checking if the user
   is in the blakcklist or has already made a reservation.
   */
   public func isUserValidReserver(user: PFUser) -> Bool {
-    return reservations!.filter({ $0.reserver.objectId == user.objectId }).isEmpty && blackListedUsers!.filter({ $0.objectId == user.objectId }).isEmpty  }
+    return reservations!.filter({ $0.reserver.objectId == user.objectId }).isEmpty && blackListedUsers!.filter({ $0.objectId == user.objectId }).isEmpty
+  }
   
+  /**
+  Returns a treble describing the count of the reservations statuses.
+
+  */
+  internal func reservationCount() -> (accepted: Int, waiting: Int, rejected: Int) {
+    var accepted = reservations.filter({ $0.status == ReservationStatus.Accepted.rawValue }).count
+    var waiting = reservations.filter({ $0.status == ReservationStatus.Waiting.rawValue }).count
+    var rejected = reservations.filter({ $0.status == ReservationStatus.Rejected.rawValue }).count
+    
+    return (accepted, waiting, rejected)
+  }
+  
+  /**
+  */
+  internal func sellerReservationStatus() -> ReservationStatus  {
+    if reservationCount().accepted > 0 {
+      return ReservationStatus.Accepted
+    } else {
+      return ReservationStatus.Waiting
+    }
+  }
 
   /**
   Checks the reservations array and returns a true boolean if any of the
@@ -337,8 +551,6 @@ public class UPMListing: PFObject  {
   */
   func isReserved() -> Bool {
     
-
-
     if oBO {
       for res in reservations! {
         if res is UPMReservationObo && isBlackListed(res.getReserver()) && (res as! UPMReservationObo).offer >= limit {
@@ -346,8 +558,7 @@ public class UPMListing: PFObject  {
         }
       }
     }
-    return !reservations!.filter( { $0.status == UPMReservation.reservationStatus.Accepted.rawValue || $0.status == UPMReservation.reservationStatus.Waiting.rawValue }).isEmpty
-
+    return !reservations!.filter( { $0.status == ReservationStatus.Accepted.rawValue || $0.status == ReservationStatus.Waiting.rawValue }).isEmpty
   }
   
   /// checks if user is on black list
@@ -391,7 +602,10 @@ public class UPMListing: PFObject  {
   // MARK: - Display 
   
   /**
+  Creates a query that inlucdes all the necessary relational data to display
+  a listing.
   
+  :returns: Query to displaying listings
   */
   class func displayQuery() -> PFQuery {
     var listingQuery = PFQuery(className: "UPMOtherListing")
@@ -409,6 +623,21 @@ public class UPMListing: PFObject  {
   }
   
   /**
+  Creates a description of listing's reservation status for the seller.
+  
+  :returns: Seller's listing reserveation status
+  */
+  public func displaySellerReservationStatus() -> String {
+    if reservationCount().accepted > 0 {
+      return "Accepted Reservation"
+    } else if reservationCount().waiting > 0 {
+      return "Reservation Waiting"
+    } else {
+      return "No Reservations"
+    }
+  }
+  
+  /**
   Creates a string describing the status of a reservation.
   
   :returns: Reservation status of a listing.
@@ -418,7 +647,7 @@ public class UPMListing: PFObject  {
       return "No Reservations"
     }
     if let firstReservation = reservations!.first {
-      switch(UPMReservation.reservationStatus(rawValue: firstReservation.status)!) {
+      switch(ReservationStatus(rawValue: firstReservation.status)!) {
       case .Accepted:
         return "Reservation Accepted"
       case .Waiting:

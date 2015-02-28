@@ -10,16 +10,23 @@ import UIKit
 
 class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
   
-    
+  
+  override var listing: UPMListing? {
+    get {
+      return listingTextbook
+    } set {
+      if newValue is UPMTextbookListing {
+        listingTextbook = newValue as? UPMTextbookListing
+      }
+    }
+  }
     var numRows = 4
     var listingTextbook: UPMTextbookListing?
     
     override func changeDefaults() {
       numberOfAttributes = numRows
     }
-  
-  
-  
+
     override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
       switch(indexPath.row){
       case 0:

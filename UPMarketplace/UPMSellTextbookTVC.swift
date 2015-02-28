@@ -10,7 +10,8 @@ import UIKit
 
 class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   
-  var textbookListing: UPMTextbookListing = UPMTextbookListing()
+  var textbookListing: UPMTextbookListing = UPMTextbookListing.initListing()
+
   override var listing: UPMListing? {
     get {
       return textbookListing
@@ -25,15 +26,6 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     super.viewDidLoad()
     
   }
-
-  override func didReceiveMemoryWarning() {
-    super.didReceiveMemoryWarning()
-    
-  }
-  
-//  override func post() {
-//    
-//  }
   
   func didDetailsUpdate(details: String, isComplete: Bool) {
     requiredItems.updateItemWithTitle(RequiredItems.Details.rawValue, description: details, isComplete: isComplete)

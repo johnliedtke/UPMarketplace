@@ -18,7 +18,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   let reuseidentifer = "BuyCategoryCell"
 
   override func viewDidLoad() {
-      super.viewDidLoad()
+    super.viewDidLoad()
     collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     
     
