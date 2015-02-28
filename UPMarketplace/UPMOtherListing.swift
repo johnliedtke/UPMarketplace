@@ -39,6 +39,7 @@ public class UPMOtherListing: UPMListing, PFSubclassing  {
     listingQuery.includeKey("blackListedUsers")
     listingQuery.includeKey("reservations")
     listingQuery.includeKey("reservations.reserver")
+    listingQuery.includeKey("owner")
     return listingQuery
   }
   

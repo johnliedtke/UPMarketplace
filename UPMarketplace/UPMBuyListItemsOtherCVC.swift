@@ -12,7 +12,8 @@ Displays all UPMOtherListings in a grid format.
 */
 class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   
-    
+  
+  
   override func query() -> PFQuery {
     var listQuery = PFQuery(className: "UPMOtherListing")
     listQuery.orderByDescending("createdAt")
@@ -25,6 +26,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
     self.collectionView!.dataSource = self;
     self.collectionView!.delegate = self;
     
+  
     
     var revealController: SWRevealViewController = self.revealViewController();
 
@@ -35,6 +37,10 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
       var swipeLeft = UISwipeGestureRecognizer(target: revealController, action: "rightRevealToggle:")
       swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
       self.view.addGestureRecognizer(swipeLeft)
+    
+    self.navigationItem.title = "Furniture and Other"
+    var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action: "sayHello")
+    navigationItem.rightBarButtonItem = filterButton
   
   }
   

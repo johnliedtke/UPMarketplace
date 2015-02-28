@@ -64,7 +64,7 @@ class UPMBuyGridCell: UICollectionViewCell {
   
   override func layoutSubviews() {
     super.layoutSubviews()
-    contentView.clipsToBounds = true
+    
     contentView.addSubview(listingImageView)
     contentView.addSubview(titleLabel)
     contentView.addSubview(priceLabel)

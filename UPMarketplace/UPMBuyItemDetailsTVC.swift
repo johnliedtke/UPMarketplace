@@ -15,7 +15,7 @@ import UIKit
 */
 class UPMBuyItemDetailsTVC: UITableViewController {
   
-  //TODO: Needs real name for seller
+ 
 
   // MARK: - Constants 
   
@@ -233,7 +233,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   func configureSellerCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath){
 
-      cell.configureCell("Seller", second: "Seller Name")
+      cell.configureCell("Seller", second: listing.owner.username)
 
   }
   

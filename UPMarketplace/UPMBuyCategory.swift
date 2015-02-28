@@ -103,9 +103,9 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     var height:CGFloat
     if ScreenWidth > 320 {
-      height = (self.view.bounds.size.height - (Spacing + TabBarHeight + NavBarHeight)) / 2.15
+      height = (self.view.bounds.size.height - (Spacing + TabBarHeight + NavBarHeight)) / 3.15
     } else {
-      height = (self.view.bounds.size.height - (Spacing + TabBarHeight + NavBarHeight)) / 2.0
+      height = (self.view.bounds.size.height - (Spacing + TabBarHeight + NavBarHeight)) / 3.00
     }
     
     return CGSizeMake(Width, height)

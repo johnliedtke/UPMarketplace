@@ -32,6 +32,7 @@ public class UPMTextbookListing: UPMListing, PFSubclassing {
     listingQuery.includeKey("reservations")
     listingQuery.includeKey("textbook")
     listingQuery.includeKey("reservations.reserver")
+    listingQuery.includeKey("owner")
     return listingQuery
   }
   
