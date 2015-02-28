@@ -62,7 +62,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     case 0:
       var listQuery = PFQuery(className: "UPMOtherListing")
       listQuery.orderByDescending("createdAt")
-      return listQuery
+      return UPMOtherListing.displayQuery()
     case 1:
       var listQuery = PFQuery(className: "UPMHousingListing")
       listQuery.orderByDescending("createdAt")
