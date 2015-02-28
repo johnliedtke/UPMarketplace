@@ -12,7 +12,9 @@ class UPMNewListingsFilter: UITableViewController {
 
   //button that may be used to go back to orig view
   @IBAction func doneButton(sender: AnyObject) {
+    
     self.revealViewController().rightRevealToggle(self)
+    
   }
   
   var categories = ["Furniture & Other", "Housing", "Textbooks"]

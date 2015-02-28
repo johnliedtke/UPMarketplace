@@ -6,11 +6,13 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x"
+      "scale" : "2x",
+      "filename" : "old_house_hires.JPG"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x"
+      "scale" : "3x",
+      "filename" : "old_house_hires-1.JPG"
     }
   ],
   "info" : {

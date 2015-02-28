@@ -22,11 +22,13 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   }
   
   var chosenCategory: Int = -1
+  var titleTop = "New Listings"
   
   override func viewDidLoad() {
     super.viewDidLoad()
 //    navigationController?.navigationBar.backItem.title = "Back!"
     navigationController?.navigationBar.backItem?.title = "Back"
+    self.title = titleTop
     // Check if a user is logged in
     var revealViewController = self.revealViewController
     if (( revealViewController  != nil))

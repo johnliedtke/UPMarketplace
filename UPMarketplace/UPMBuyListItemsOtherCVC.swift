@@ -24,6 +24,18 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
     self.collectionView = collectionView;
     self.collectionView!.dataSource = self;
     self.collectionView!.delegate = self;
+    
+    
+    var revealController: SWRevealViewController = self.revealViewController();
+
+      var swipeRight = UISwipeGestureRecognizer(target: revealController, action: "rightRevealToggle:")
+      swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+      self.view.addGestureRecognizer(swipeRight)
+      
+      var swipeLeft = UISwipeGestureRecognizer(target: revealController, action: "rightRevealToggle:")
+      swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+      self.view.addGestureRecognizer(swipeLeft)
+  
   }
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {

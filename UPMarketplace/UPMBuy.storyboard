@@ -119,10 +119,10 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bPR-jT-EVU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="546" y="438"/>
+            <point key="canvasLocation" x="488" y="430"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Pdg-YV-oko"/>
+        <segue reference="p1m-Rn-Veq"/>
     </inferredMetricsTieBreakers>
 </document>
