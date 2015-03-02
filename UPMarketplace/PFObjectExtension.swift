@@ -46,9 +46,38 @@ extension PFObject {
     }
     return task.task
   }
-  
-  
+}
 
+extension PFQuery {
+  /**
+  Performs all queries in parallel and combines the result into an array.
+  
+  :returns: BFTask with [PFObject] as result
+  */
+  class func combineQueriesInBackground(queries: [PFQuery]) -> BFTask {
+    var objectsTask = BFTaskCompletionSource()
+    
+    let tasks = queries.map { $0.findObjectsInBackground() }
+
+    var result = [UPMListing]()
+    
+    BFTask(forCompletionOfAllTasks: tasks).continueWithBlock {
+      (task) in
+      for t in tasks {
+        if let res = t.result as? [UPMListing] {
+          result += res
+        } else {
+          objectsTask.setResult(t.error)
+        }
+      }
+      return BFTask(forCompletionOfAllTasks: tasks)
+    }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task) -> AnyObject! in
+      objectsTask.setResult(result)
+      return nil
+      
+    })
+    return objectsTask.task
+  }
 }
 
 extension PFUser {

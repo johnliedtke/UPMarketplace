@@ -12,7 +12,7 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
-
+  
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
     // Parse initialization
     Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
@@ -31,6 +31,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.lightPurpleColor()], forState:.Selected)
     UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
     UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
+    
+    
+    // testing multiple queries
+    var otherListingQuery = PFQuery(className: "UPMOtherListing")
+    var textBookListingQuery = PFQuery(className: "UPMTextbookListing")
     
     /**
     Tab Bar Navigation
@@ -83,11 +88,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     accountItem.image = UIImage(named: "account.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
     accountItem.selectedImage = UIImage(named: "accountSelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
 
-    
-    
-    
-    
-    
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
     

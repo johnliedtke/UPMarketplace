@@ -80,8 +80,9 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
       cell.listingImageView.file = thumbnail
       cell.listingImageView.loadInBackground()
     } else {
-      cell.listingImageView.file = listing.picture
-      cell.listingImageView.loadInBackground()
+//      cell.listingImageView.file = listing.picture
+      cell.listingImageView.image = nil
+      //cell.listingImageView.loadInBackground()
     }
     
     

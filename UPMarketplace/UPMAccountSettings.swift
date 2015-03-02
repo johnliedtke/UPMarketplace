@@ -10,6 +10,7 @@ import UIKit
 
 class UPMAccountSettings: UITableViewController {
   
+  /// Datasource
   var rows = [Section:[Row]]()
 
   enum Section: Int {
@@ -24,7 +25,6 @@ class UPMAccountSettings: UITableViewController {
         }
       }
     }
-
   }
   
   enum Row: Int, Printable {
@@ -40,9 +40,6 @@ class UPMAccountSettings: UITableViewController {
       }
     }
   }
-  
-  
-  let NUMBER_OF_SECTIONS = 1
   
   // MARK: - View
   
@@ -90,10 +87,18 @@ class UPMAccountSettings: UITableViewController {
     
   }
   
+  // MARK: - Delegate
   
-  override func tableView(tableView: UITableView, didDeselectRowAtIndexPath indexPath: NSIndexPath) {
-    
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    if let section = Section(rawValue: indexPath.section), let arows = rows[section] {
+      let row = arows[indexPath.row]
+      switch row {
+      case Row.Logout:
+        PFUser.logOut()
+        tabBarController?.selectedIndex = 0
+      default: break
+      }
+    }
   }
-  
-  
 }

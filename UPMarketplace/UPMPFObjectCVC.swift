@@ -1,4 +1,4 @@
-import UIKit
+ import UIKit
 
 /**
   Used to display PFObjects from parse. Fetches data in a "pagination" style.
@@ -9,6 +9,7 @@ import UIKit
       a cell to the datasource.
     - Override collectionView(_:didSelectItemAtIndexPath:withObject:) to handle
       selection of cells.
+    - Must override either query() or queryTask() to obtain a [PFObject]
   */
 class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UICollectionViewDelegate {
   
@@ -34,7 +35,8 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   
   /// Currently refreshing the data (pulled to refresh)
   var isRefreshing: Bool = false
-  
+
+
   // MARK: - Private Properties
   
   /// Loading indicator dispalyed in middle of screen
@@ -43,7 +45,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   /// Pull to refresh control
   var refreshControl: UIRefreshControl!
 
-  // MARK: - Public Methods
+  // MARK: - View
   
   /// Performs query for objects on load and sets up pull to refresh.
   override func viewDidLoad() {
@@ -61,18 +63,19 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
     }
   }
   
-  /// Display message label when there is no data
+  /// Display message when there is no data or network connection
   func displayNoDataAvailable() -> Void {
-    var messageLabel = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: view.bounds.size.height))
-    
-    messageLabel.text = "No data is currently available. Please pull down to refresh.";
+    var messageLabel = UILabel()
+    collectionView?.addSubview(messageLabel)
+    messageLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+    collectionView?.addConstraint(NSLayoutConstraint(item: messageLabel, attribute: .CenterX, relatedBy: .Equal, toItem: collectionView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+    collectionView?.addConstraint(NSLayoutConstraint(item: messageLabel, attribute: .CenterY, relatedBy: .Equal, toItem: collectionView, attribute: .CenterY, multiplier: 1.0, constant: -100))
+    collectionView?.addConstraint(NSLayoutConstraint(item: messageLabel, attribute: .Width, relatedBy: .Equal, toItem: collectionView, attribute: .Width, multiplier: 1.0, constant: 0))
+    messageLabel.text = "No network connection.\nPull down to refresh."
     messageLabel.textColor = UIColor.darkGrayColor()
     messageLabel.numberOfLines = 0
     messageLabel.textAlignment = NSTextAlignment.Center
-    messageLabel.font = UIFont.systemFontOfSize(16.0)
-    
-    collectionView?.backgroundView = messageLabel;
-
+    messageLabel.font = UIFont.standardBoldTitleFont()
   }
   
   /// Override to change the default values before the first data is fetched
@@ -83,6 +86,15 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   /// Override to provide a query for objects
   func query() -> PFQuery {
     return PFQuery()
+  }
+
+  /**
+  Override if you are querying multiple tables
+  
+  :returns: An array of queries that should have the same base class
+  */
+  func queries() -> [PFQuery]? {
+    return nil
   }
   
   /// May need to override if using multiple sections
@@ -140,9 +152,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
     
   }
-    
-   
-  
+
   // MARK: - Private Methods
   
   /// Pull to refresh action
@@ -156,35 +166,73 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   both pullToRefresh and auto-loading from bottom.
   */
   func performQuery() -> Void {
-    var queryToPeform = query()
-    
-    if paginationEnabled {
-      queryToPeform.limit = Int(objectsPerPage)
-      // next page of objects
-      if !isRefreshing {
-        queryToPeform.skip = objects.count
-      }
-    }
-    
-    // About to fetch objects
-    objectsWillLoad()
-    
-    queryToPeform.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
-      if error == nil {
-        // Success
-        // Convert objects
-        if let fetchedObjects = objects as? [PFObject] {
-          if self.paginationEnabled && !self.isRefreshing {
-            self.objects += fetchedObjects
-          } else {
-            self.objects = fetchedObjects
+    if var queriesToPerform = queries() {
+      if paginationEnabled {
+        for q in queriesToPerform {
+          q.limit = Int(objectsPerPage) / queriesToPerform.count
+        }
+        if !isRefreshing {
+          for q in queriesToPerform {
+            q.skip = objects.filter { $0.parseClassName == q.parseClassName }.count
           }
         }
-      } else {
-        // error
+        
+        // About to fetch
+        self.objectsWillLoad()
+        
+        //FIXME: Fix slow initial fetching.
+        
+        PFQuery.combineQueriesInBackground(queriesToPerform).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+          (task) in
+              if task.error == nil {
+                // Success
+                if var fetchedObjects = task.result as? [PFObject] {
+                  fetchedObjects.sort { $0.createdAt.compare($1.createdAt) == NSComparisonResult.OrderedAscending }
+                  if self.paginationEnabled && !self.isRefreshing {
+                    self.objects += fetchedObjects
+                  } else {
+                    self.objects = fetchedObjects
+                  }
+                }
+              } else {
+                // error
+              }
+              self.objectsDidLoad(task.error)
+          return nil
+        })
+        
+      }// end if var
+    } else {
+      var queryToPeform = query()
+      
+      if paginationEnabled {
+        queryToPeform.limit = Int(objectsPerPage)
+        // next page of objects
+        if !isRefreshing {
+          queryToPeform.skip = objects.count
+        }
       }
-      self.objectsDidLoad(error)
-    } // end block
+      
+      // About to fetch objects
+      objectsWillLoad()
+      
+      queryToPeform.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
+        if error == nil {
+          // Success
+          // Convert objects
+          if let fetchedObjects = objects as? [PFObject] {
+            if self.paginationEnabled && !self.isRefreshing {
+              self.objects += fetchedObjects
+            } else {
+              self.objects = fetchedObjects
+            }
+          }
+        } else {
+          // error
+        }
+        self.objectsDidLoad(error)
+      } // end findObjectsInBackground
+    } // end else
   } // end performQuery()
   
   /**
