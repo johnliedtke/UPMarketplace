@@ -17,23 +17,28 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   
   @IBOutlet var filterButton: UIBarButtonItem!
   
+  //MARK: - Button Action
   @IBAction func a(sender: AnyObject) {
     self.revealViewController().rightRevealToggle(self)
   }
   
-  var chosenCategory: Int = -1
-  var titleTop = "New Listings"
+   // MARK: - Public Properties
+  var chosenCategory: Int = -1 //this is the default value which is used to determine query performed
+  var titleTop = "New Listings" //title displayed in the navigation bar
   
+  
+  // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
-//    navigationController?.navigationBar.backItem.title = "Back!"
+
     navigationController?.navigationBar.backItem?.title = "Back"
     self.title = titleTop
-    // Check if a user is logged in
+    
+    // reveal controller
     var revealViewController = self.revealViewController
     if (( revealViewController  != nil))
     {
-     
+     //allow swipe gestures to be used to also trigger the filter categories to come into view
       var swipeRight = UISwipeGestureRecognizer(target: self.revealViewController(), action: "rightRevealToggle:")
       swipeRight.direction = UISwipeGestureRecognizerDirection.Right
       self.view.addGestureRecognizer(swipeRight)
@@ -51,7 +56,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     UPMLoginVC.displayLoginInController(self)
   }
     
-  
+  // MARK: - Overide methods
   override func changeDefaults() {
   }
   

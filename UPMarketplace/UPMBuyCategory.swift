@@ -11,23 +11,42 @@
 import UIKit
 
 class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLayout{
-  //TODO: make picture sizes smaller
-  var categories = ["Textbooks", "Housing", "Furniture & Other"]
-  var pictures = ["books.png", "house.png", "other.png"]
-
+  
+  // TODO: Fix Bug With pressing back button
+  
+  // MARK: - Public Properties
+  var categories = ["Furniture & Other", "Housing", "Textbooks"]
+  var pictures = [ "other.png","house.png", "books.png"]
+  
+  // MARK: - Constants
+  let buyFilter = UPMCategoryFilterMainTVC()
   let reuseidentifer = "BuyCategoryCell"
-
+  let revController = SWRevealViewController()
+  
+  
+  // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     
+    //set default behavior of reveal controller
+    revController.bounceBackOnOverdraw = true;
+    revController.stableDragOnOverdraw = true;
+    revController.rightViewController = buyFilter
     
+    // Calculate Height
+    var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height)!
+    var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)!
+    
+    buyFilter.tableView.clipsToBounds = true
+    buyFilter.tableView.contentInset = UIEdgeInsetsMake(TabBarHeight + NavBarHeight, 0.0, 0.0, 0.0)
   }
 
   override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
   }
 
+  // MARK: - Collectionview Datasource
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
       return 1
   }
@@ -50,38 +69,71 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
-    //push the controller to the different class based on the category that was chosen
+   
+    
+       //push the controller to the different class based on the category that was chosen
     switch(indexPath.row){
       case 0:
-        var viewController = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
-     //   navigationController?.performSegueWithIdentifier("sw_front", sender: UPMBuyCategoryCell.self)
         
-        navigationController?.pushViewController(viewController, animated: true)
+        //set defaults of each controller
+        var buyCategory = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyCategory
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        
+        //set the title to be that of the chosen category
+        revController.navigationItem.title = categories[indexPath.row]
+        buyCategory.category = categories[indexPath.row]
+        
+        //create the filter button in the navigation bar
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        revController.navigationItem.rightBarButtonItem = filterButton
+        
+        //push the reveal controller
+        navigationController?.pushViewController(revController, animated: true)
         break
+      
       case 1:
-        var viewController = UPMBuyListItemsHousingCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(viewController, animated: true)
+        //set defaults of each controller
+        var buyCategory = UPMBuyListItemsHousingCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyCategory
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        
+        //set the title to be that of the chosen category
+        revController.navigationItem.title = categories[indexPath.row]
+        buyCategory.category = categories[indexPath.row]
+        
+        //create the filter button in the navigation bar
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        revController.navigationItem.rightBarButtonItem = filterButton
+        
+        //push the reveal controller
+        navigationController?.pushViewController(revController, animated: true)
         break
       case 2:
-        var revealController = SWRevealViewController(rearViewController: UPMCategoryFilterMainTVC(), frontViewController: UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout()))
+      
+        //set defaults of each controller
+        var buyCategory = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyCategory
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
         
+        //set the title to be that of the chosen category
+        revController.navigationItem.title = categories[indexPath.row]
+        buyCategory.category = categories[indexPath.row]
         
-        revealController.rightViewRevealWidth = 100;
-        revealController.rightViewRevealOverdraw = 120;
-        revealController.bounceBackOnOverdraw = true;
-        revealController.stableDragOnOverdraw = true;
-        revealController.setFrontViewPosition(FrontViewPosition.Left, animated: true)
-        //revealController.delegate = self
-
+        //create the filter button in the navigation bar
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        revController.navigationItem.rightBarButtonItem = filterButton
         
-
-        var viewController = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(revealController, animated: true)
+        //push the reveal controller
+        navigationController?.pushViewController(revController, animated: true)
+        
         break
       default:
         break
     }
   }
+  
+
   
 
   /**
