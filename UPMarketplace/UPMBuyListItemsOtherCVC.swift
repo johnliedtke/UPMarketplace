@@ -17,6 +17,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   // MARK: - Public Properites
   var atFilter = false
   var category: String?
+
   
   override func query() -> PFQuery {
     var listQuery = PFQuery(className: "UPMOtherListing")
@@ -30,14 +31,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
     self.collectionView = collectionView;
     self.collectionView!.dataSource = self;
     self.collectionView!.delegate = self;
-    
-      var swipeRight = UISwipeGestureRecognizer(target: self.revealViewController(), action: "rightRevealToggle:")
-      swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-      self.view.addGestureRecognizer(swipeRight)
-      
-      var swipeLeft = UISwipeGestureRecognizer(target: self.revealViewController(), action: "rightRevealToggle:")
-      swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-      self.view.addGestureRecognizer(swipeLeft)
+
     
   }
   
@@ -58,20 +52,25 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
     //button and the navigation bar
     if (!atFilter){
     
-    self.revealViewController().navigationItem.title = "Filter"
-    self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Clear"
-    self.revealViewController().navigationItem.hidesBackButton = true
+      self.revealViewController().navigationItem.title = "Filter"
+      self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Clear"
+      self.revealViewController().navigationItem.hidesBackButton = true
       
-    atFilter = true
+      atFilter = true
+      self.revealViewController().rightRevealToggle(self)
     }
     else if(atFilter){
       
       self.revealViewController().navigationItem.title = category
       self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Filter"
       self.revealViewController().navigationItem.hidesBackButton = false
-       atFilter = false
+      atFilter = false
+      
+      self.revealViewController().pushFrontViewController(self, animated: true)
     }
-    self.revealViewController().rightRevealToggle(self)
+  
+
+  
 
   }
   

@@ -15,18 +15,20 @@ class UPMCategoryFilterMainTVC: UITableViewController {
   
   
   // MARK: - Public Properties
-  var subCategories = ["Empty", "One", "Two", "Three"]
+  var subCategories = [ " ", "Select Category: ", " ", " "]
   var clearButton:UIBarButtonItem?
   
   // MARK: - View Methods
   // TODO: - Fix first cell hidden issue
     override func viewDidLoad() {
         super.viewDidLoad()
+      self.tableView = tableView
       
       //register the filter cell nib
       tableView.registerNib(UINib(nibName: filterCellIdentifier, bundle: nil), forCellReuseIdentifier: filterCellIdentifier)
-      
-
+      // Auto-layout
+      tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+      tableView.estimatedRowHeight = 1000 // fix for auto-layout
     }
 
     override func didReceiveMemoryWarning() {
@@ -53,6 +55,7 @@ class UPMCategoryFilterMainTVC: UITableViewController {
       
       let cell = tableView.dequeueReusableCellWithIdentifier(filterCellIdentifier, forIndexPath: indexPath) as! UPMBuyFilterCell
       
+           
       //configure the cells to be the category name
       cell.configureCell(subCategories[indexPath.row])
       return cell

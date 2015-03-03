@@ -12,11 +12,14 @@ import UIKit
 
 class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLayout{
   
-  // TODO: Fix Bug With pressing back button
+  // TODO: Fix Bug With pressing back button, the collectionview ends up hiding behind the navigation bar
   
   // MARK: - Public Properties
   var categories = ["Furniture & Other", "Housing", "Textbooks"]
   var pictures = [ "other.png","house.png", "books.png"]
+  var classes = ["UPMOtherListing", "UPMHousingListing", "UPMTextbookListing"]
+  var className: String?
+  var allCategory = [" "]
   
   // MARK: - Constants
   let buyFilter = UPMCategoryFilterMainTVC()
@@ -32,12 +35,14 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     //set default behavior of reveal controller
     revController.bounceBackOnOverdraw = true;
     revController.stableDragOnOverdraw = true;
-    revController.rightViewController = buyFilter
+    revController.setRightViewController(buyFilter, animated: true)
     
     // Calculate Height
     var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height)!
     var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)!
     
+    
+    //make tableview fit in the right bounds
     buyFilter.tableView.clipsToBounds = true
     buyFilter.tableView.contentInset = UIEdgeInsetsMake(TabBarHeight + NavBarHeight, 0.0, 0.0, 0.0)
   }
@@ -84,12 +89,16 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         revController.navigationItem.title = categories[indexPath.row]
         buyCategory.category = categories[indexPath.row]
         
+         //get the subcategories for selected class
+        className = classes[indexPath.row]
+        getCategories(className!)
+        
         //create the filter button in the navigation bar
         var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
         revController.navigationItem.rightBarButtonItem = filterButton
-        
         //push the reveal controller
-        navigationController?.pushViewController(revController, animated: true)
+       navigationController?.pushViewController(revController, animated: true)
+       
         break
       
       case 1:
@@ -101,6 +110,10 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         //set the title to be that of the chosen category
         revController.navigationItem.title = categories[indexPath.row]
         buyCategory.category = categories[indexPath.row]
+        
+        //get the subcategories for selected class
+       // className = classes[indexPath.row]
+        //getCategories(className!)
         
         //create the filter button in the navigation bar
         var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
@@ -120,6 +133,11 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         revController.navigationItem.title = categories[indexPath.row]
         buyCategory.category = categories[indexPath.row]
         
+        //get the subcategories for selected class
+        //className = classes[indexPath.row]
+        //getCategories(className!)
+        
+        
         //create the filter button in the navigation bar
         var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
         revController.navigationItem.rightBarButtonItem = filterButton
@@ -133,9 +151,6 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     }
   }
   
-
-  
-
   /**
   Create the grid into an aproximately 2 x 2.1 format. Adustments are made based on the
   resolution of the screen. The cell height shrinks as the screen size grows.
@@ -162,10 +177,45 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     return CGSizeMake(Width, height)
   }
+  
+  
+  
+  // MARK: - Private Methods
+  
+  func getCategories(classQuery: String){
+    //get the unique subcategories from the selected class and initalize it for the filter tableview to use
+    var query = PFQuery(className: classQuery)
+    query.selectKeys(["category"])
+    
+    query.findObjectsInBackgroundWithBlock {
+      (objects: [AnyObject]!, error: NSError!) -> Void in
+      if error == nil {
+
+        // add them to the array of subcategories
+        if let objects = objects as? [PFObject] {
+          for object in objects {
+            if(!contains(self.allCategory, object["category"] as! String)){
+              self.allCategory.append(object["category"] as! String)
+            }
+          }
+        } else {
+          // Log details of the failure
+          // println("Error: \(error) \(error.userInfo!)")
+        }
+        
+        //make them alphabetized
+        self.allCategory = self.allCategory.sorted { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
+        self.buyFilter.subCategories = self.allCategory
+        
+        
+      }
+      
+    }
+  }
 }
 
 
-  
+
 
 
 
