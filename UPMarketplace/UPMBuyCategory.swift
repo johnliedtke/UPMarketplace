@@ -98,7 +98,8 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         revController.navigationItem.rightBarButtonItem = filterButton
         //push the reveal controller
        navigationController?.pushViewController(revController, animated: true)
-       
+        
+        
         break
       
       case 1:
