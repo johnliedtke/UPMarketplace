@@ -10,13 +10,25 @@ import UIKit
 
 class UPMCategoryFilterMainTVC: UITableViewController {
 
-  
+  // MARK: - Constants
    let filterCellIdentifier = "UPMBuyFilterCell"
   
+  
+  // MARK: - Public Properties
+  var subCategories = [ " ", "Select Category: ", " ", " "]
+  var clearButton:UIBarButtonItem?
+  
+  // MARK: - View Methods
+  // TODO: - Fix first cell hidden issue
     override func viewDidLoad() {
         super.viewDidLoad()
+      self.tableView = tableView
+      
+      //register the filter cell nib
       tableView.registerNib(UINib(nibName: filterCellIdentifier, bundle: nil), forCellReuseIdentifier: filterCellIdentifier)
-
+      // Auto-layout
+      tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
+      tableView.estimatedRowHeight = 1000 // fix for auto-layout
     }
 
     override func didReceiveMemoryWarning() {
@@ -27,26 +39,28 @@ class UPMCategoryFilterMainTVC: UITableViewController {
     // MARK: - Table view data source
 
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        // #warning Potentially incomplete method implementation.
-        // Return the number of sections.
-        return 0
+     // Return the number sections.
+        return 1
     }
 
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete method implementation.
+      
         // Return the number of rows in the section.
-        return 0
+        return subCategories.count
+      
     }
 
-    /*
+  
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("reuseIdentifier", forIndexPath: indexPath) as UITableViewCell
-
-        // Configure the cell...
-
-        return cell
+      
+      let cell = tableView.dequeueReusableCellWithIdentifier(filterCellIdentifier, forIndexPath: indexPath) as! UPMBuyFilterCell
+      
+           
+      //configure the cells to be the category name
+      cell.configureCell(subCategories[indexPath.row])
+      return cell
     }
-    */
+
 
     /*
     // Override to support conditional editing of the table view.
@@ -83,14 +97,6 @@ class UPMCategoryFilterMainTVC: UITableViewController {
     }
     */
 
-    /*
-    // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

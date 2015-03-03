@@ -11,23 +11,47 @@
 import UIKit
 
 class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLayout{
-    
-  var categories = ["Textbooks", "Housing", "Furniture & Other"]
-  var pictures = ["books.png", "house.png", "other.png"]
-
+  
+  // TODO: Fix Bug With pressing back button, the collectionview ends up hiding behind the navigation bar
+  
+  // MARK: - Public Properties
+  var categories = ["Furniture & Other", "Housing", "Textbooks"]
+  var pictures = [ "other.png","house.png", "books.png"]
+  var classes = ["UPMOtherListing", "UPMHousingListing", "UPMTextbookListing"]
+  var className: String?
+  var allCategory = [" "]
+  
+  // MARK: - Constants
+  let buyFilter = UPMCategoryFilterMainTVC()
   let reuseidentifer = "BuyCategoryCell"
-
+  let revController = SWRevealViewController()
+  
+  
+  // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     
+    //set default behavior of reveal controller
+    revController.bounceBackOnOverdraw = true;
+    revController.stableDragOnOverdraw = true;
+    revController.setRightViewController(buyFilter, animated: true)
     
+    // Calculate Height
+    var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height)!
+    var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)!
+    
+    
+    //make tableview fit in the right bounds
+    buyFilter.tableView.clipsToBounds = true
+    buyFilter.tableView.contentInset = UIEdgeInsetsMake(TabBarHeight + NavBarHeight, 0.0, 0.0, 0.0)
   }
 
   override func didReceiveMemoryWarning() {
       super.didReceiveMemoryWarning()
   }
 
+  // MARK: - Collectionview Datasource
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
       return 1
   }
@@ -50,40 +74,83 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
-    //push the controller to the different class based on the category that was chosen
+   
+    
+       //push the controller to the different class based on the category that was chosen
     switch(indexPath.row){
       case 0:
-        var viewController = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
-     //   navigationController?.performSegueWithIdentifier("sw_front", sender: UPMBuyCategoryCell.self)
         
-        navigationController?.pushViewController(viewController, animated: true)
+        //set defaults of each controller
+        var buyCategory = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyCategory
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        
+        //set the title to be that of the chosen category
+        revController.navigationItem.title = categories[indexPath.row]
+        buyCategory.category = categories[indexPath.row]
+        
+         //get the subcategories for selected class
+        className = classes[indexPath.row]
+        getCategories(className!)
+        
+        //create the filter button in the navigation bar
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        revController.navigationItem.rightBarButtonItem = filterButton
+        //push the reveal controller
+       navigationController?.pushViewController(revController, animated: true)
+       
         break
+      
       case 1:
-        var viewController = UPMBuyListItemsHousingCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(viewController, animated: true)
+        //set defaults of each controller
+        var buyCategory = UPMBuyListItemsHousingCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyCategory
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        
+        //set the title to be that of the chosen category
+        revController.navigationItem.title = categories[indexPath.row]
+        buyCategory.category = categories[indexPath.row]
+        
+        //get the subcategories for selected class
+       // className = classes[indexPath.row]
+        //getCategories(className!)
+        
+        //create the filter button in the navigation bar
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        revController.navigationItem.rightBarButtonItem = filterButton
+        
+        //push the reveal controller
+        navigationController?.pushViewController(revController, animated: true)
         break
       case 2:
-        var revealController = SWRevealViewController(rearViewController: UPMCategoryFilterMainTVC(), frontViewController: UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout()))
+      
+        //set defaults of each controller
+        var buyCategory = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyCategory
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        
+        //set the title to be that of the chosen category
+        revController.navigationItem.title = categories[indexPath.row]
+        buyCategory.category = categories[indexPath.row]
+        
+        //get the subcategories for selected class
+        //className = classes[indexPath.row]
+        //getCategories(className!)
         
         
-        revealController.rightViewRevealWidth = 100;
-        revealController.rightViewRevealOverdraw = 120;
-        revealController.bounceBackOnOverdraw = true;
-        revealController.stableDragOnOverdraw = true;
-        revealController.setFrontViewPosition(FrontViewPosition.Left, animated: true)
-        //revealController.delegate = self
-
+        //create the filter button in the navigation bar
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        revController.navigationItem.rightBarButtonItem = filterButton
         
-
-        var viewController = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        navigationController?.pushViewController(revealController, animated: true)
+        //push the reveal controller
+        navigationController?.pushViewController(revController, animated: true)
+        
         break
       default:
         break
     }
   }
   
-
   /**
   Create the grid into an aproximately 2 x 2.1 format. Adustments are made based on the
   resolution of the screen. The cell height shrinks as the screen size grows.
@@ -110,10 +177,45 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     return CGSizeMake(Width, height)
   }
+  
+  
+  
+  // MARK: - Private Methods
+  
+  func getCategories(classQuery: String){
+    //get the unique subcategories from the selected class and initalize it for the filter tableview to use
+    var query = PFQuery(className: classQuery)
+    query.selectKeys(["category"])
+    
+    query.findObjectsInBackgroundWithBlock {
+      (objects: [AnyObject]!, error: NSError!) -> Void in
+      if error == nil {
+
+        // add them to the array of subcategories
+        if let objects = objects as? [PFObject] {
+          for object in objects {
+            if(!contains(self.allCategory, object["category"] as! String)){
+              self.allCategory.append(object["category"] as! String)
+            }
+          }
+        } else {
+          // Log details of the failure
+          // println("Error: \(error) \(error.userInfo!)")
+        }
+        
+        //make them alphabetized
+        self.allCategory = self.allCategory.sorted { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
+        self.buyFilter.subCategories = self.allCategory
+        
+        
+      }
+      
+    }
+  }
 }
 
 
-  
+
 
 
 

@@ -10,22 +10,34 @@ import UIKit
 
 class UPMNewListingsFilter: UITableViewController {
 
-  //button that may be used to go back to orig view
+  //button that may be used to go back to orig view and clear the filter
+  //MARK: - Button Action
   @IBAction func doneButton(sender: AnyObject) {
-    
-    self.revealViewController().rightRevealToggle(self)
+    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as! UINavigationController
+    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
+   
+    //change the filter back and change the title back to normal
+    first.chosenCategory = -1
+    first.titleTop = "New Listings"
+    self.revealViewController().pushFrontViewController(nav, animated: true)
     
   }
-  
+   // MARK: - Public Properties
   var categories = ["Furniture & Other", "Housing", "Textbooks"]
+  var chosenCategory: NSInteger?
+  
+  // MARK: - Constants
+  let storyboardS = UIStoryboard(name: "UPMBuy", bundle: nil) //story board being used
   let filterCellIdentifier = "UPMBuyFilterCell"
-  var chosenCategory = -1
-  let storyboardS = UIStoryboard(name: "UPMBuy", bundle: nil)
   
-  
+  // MARK: - View Methods
     override func viewDidLoad() {
         super.viewDidLoad()
-      tableView.registerNib(UINib(nibName: filterCellIdentifier, bundle: nil), forCellReuseIdentifier: filterCellIdentifier)
+      
+      //register the filterCell nib
+        tableView.registerNib(UINib(nibName: filterCellIdentifier, bundle: nil), forCellReuseIdentifier: filterCellIdentifier)
+      //set the title of filter
+        navigationItem.title = "Filter"
 
     }
 
@@ -41,6 +53,7 @@ class UPMNewListingsFilter: UITableViewController {
         return 1
     }
 
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         return categories.count
@@ -48,19 +61,23 @@ class UPMNewListingsFilter: UITableViewController {
 
   
    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+
     let cell = tableView.dequeueReusableCellWithIdentifier(filterCellIdentifier, forIndexPath: indexPath) as! UPMBuyFilterCell
     
-
+    //configure the cells to be the category name
     cell.configureCell(categories[indexPath.row])
     return cell
    }
 
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     
+    //instantiate the front controller as the collection view for new listings
     var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as! UINavigationController
     var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
    
+    //change the values of the query and title based on selected row
     first.chosenCategory = indexPath.row
+    first.titleTop = "Filtered by: " + categories[indexPath.row]
     self.revealViewController().pushFrontViewController(nav, animated: true)
 
 

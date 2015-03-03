@@ -72,7 +72,7 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" id="hhW-IK-HG2">
-                        <barButtonItem key="rightBarButtonItem" title="Done" id="ot4-AD-4Az">
+                        <barButtonItem key="rightBarButtonItem" title="Clear" id="ot4-AD-4Az">
                             <connections>
                                 <action selector="doneButton:" destination="7TQ-NH-bWa" id="H5u-pY-PG7"/>
                             </connections>
@@ -123,6 +123,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="p1m-Rn-Veq"/>
+        <segue reference="Pdg-YV-oko"/>
     </inferredMetricsTieBreakers>
 </document>
