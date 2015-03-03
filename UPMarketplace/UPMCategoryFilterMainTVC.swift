@@ -17,6 +17,7 @@ class UPMCategoryFilterMainTVC: UITableViewController {
   // MARK: - Public Properties
   var subCategories = [ " ", "Select Category: ", " ", " "]
   var clearButton:UIBarButtonItem?
+  var chosenFilter: String?
   
   // MARK: - View Methods
   // TODO: - Fix first cell hidden issue
@@ -60,6 +61,14 @@ class UPMCategoryFilterMainTVC: UITableViewController {
       cell.configureCell(subCategories[indexPath.row])
       return cell
     }
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    
+    //TODO: Fix the ignoring first row bug
+    if(indexPath.row > 0){
+      chosenFilter = subCategories[indexPath.row]
+    }
+  }
 
 
     /*

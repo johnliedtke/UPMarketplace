@@ -17,7 +17,7 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   // MARK: - Public Properites
   var atFilter = false
   var category: String?
-
+  var subCategory: String?
   
   override func query() -> PFQuery {
     var listQuery = PFQuery(className: "UPMOtherListing")
