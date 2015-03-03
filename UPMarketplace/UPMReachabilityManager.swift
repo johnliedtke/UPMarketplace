@@ -36,3 +36,19 @@ class UPMReachabilityManager {
   }
   
 }
+
+class UPMCategoryTag {
+  static let categoryTagManager = UPMCategoryTag()
+  
+  func tags() -> [String: [String]] {
+    return ["Furniture": ["Desk", "Table", "Chair"], "Appliance": ["Mini Fridge", "Microwave"]]
+  }
+
+  func categories() -> [String] {
+    return ["Furniture",	"Appliance",	"Transportation",	"Clothing", "Decor",	"Cooking", "School",	"Outdoors", "Electronics"]
+  }
+  
+
+
+  
+}

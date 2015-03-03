@@ -10,7 +10,7 @@ import UIKit
 /**
 Displays all UPMOtherListings in a grid format.
 */
-class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
+class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
   // TODO: Make Clear Button reset the query to original State
   // TODO: Fix Issue of not showing first cell
   
@@ -20,8 +20,6 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
   var subCategory: String?
   
   override func query() -> PFQuery {
-    var listQuery = PFQuery(className: "UPMOtherListing")
-    listQuery.orderByDescending("createdAt")
     return UPMOtherListing.displayQuery()
   }
   
@@ -31,18 +29,19 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
     self.collectionView = collectionView;
     self.collectionView!.dataSource = self;
     self.collectionView!.delegate = self;
-
-    
+  }
+  
+  func didFinishFiltering(sender: UPMCategoryFilterMainTVC, category: String) {
+    self.revealViewController().pushFrontViewController(self, animated: true)
+    self.navigationController?.navigationBar.hidden = false
   }
   
   // MARK: - Data Source Methods
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
-    
       var listing = object as! UPMOtherListing
       let viewController = UPMBuyItemDetailsOtherTVC()
       viewController.listingOther = listing
       navigationController?.pushViewController(viewController, animated: true)
-  
   }
   
   // MARK: - Button Action
@@ -55,6 +54,8 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC {
       self.revealViewController().navigationItem.title = "Filter"
       self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Clear"
       self.revealViewController().navigationItem.hidesBackButton = true
+//      navigationController?.hidesBarsOnTap = true
+      navigationController?.navigationBar.hidden = true
       
       atFilter = true
       self.revealViewController().rightRevealToggle(self)

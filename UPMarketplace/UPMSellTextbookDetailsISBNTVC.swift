@@ -1,7 +1,7 @@
 import UIKit
 
 /// Used to communicate changes to a textbook's ISBN
-protocol UPMSellTextbookDetailsISBNDelegate {
+protocol UPMSellTextbookDetailsISBNDelegate: class {
   /// Called when the user has finished updating the ISBN of a textbook. 
   /// That is, when the user selects done and the controller is popped from
   /// the navigation stack.
@@ -16,7 +16,7 @@ class UPMSellTextbookDetailsISBNTVC: UITableViewController, UITextFieldDelegate,
   
   // MARK: Properties
   /// Delegate controller to handle ISBN updates
-  var delegate: UPMSellTextbookDetailsISBNDelegate?
+  weak var delegate: UPMSellTextbookDetailsISBNDelegate?
   
   /// Reference to the textfield used to collect the ISBN of a textbook.
   @IBOutlet var iSBNField: UITextField!

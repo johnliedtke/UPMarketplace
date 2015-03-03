@@ -18,20 +18,21 @@ public class UPMOtherListing: UPMListing, PFSubclassing  {
   /// Category for filtering the different other listings.
   @NSManaged public var category: String?
   
+  /// Tag for filtering
+  @NSManaged public var tag: String?
+  
   // MARK: -  PFSubclassing Methods
-  /// The name of the PFObject subclass as it would appear
-  /// in the data browser.
-  ///
-  /// :returns: The name of the class
+  
+  /**
+  The name of the PFObject subclass as it would appear
+  in the data browser.
+  
+  :returns: The name of the class
+  */
   public class func parseClassName() -> String! {
     return "UPMOtherListing"
   }
   
-//  override class func initListing(#listing: UPMListing, owner: PFUser) -> UPMOtherListing {
-//    var otherListing = (super.initListing(listing: listing, owner: owner)) as! UPMOtherListing
-//    return otherListing
-//  }
-
   override class func displayQuery() -> PFQuery {
     var listingQuery = PFQuery(className: "UPMOtherListing")
     listingQuery.orderByDescending("createdAt")
@@ -42,12 +43,5 @@ public class UPMOtherListing: UPMListing, PFSubclassing  {
     listingQuery.includeKey("owner")
     return listingQuery
   }
-  
-  /// Registers the subclass with Parse
-//  override public class func load() {
-//    self.registerSubclass()
-//  }
-
-
 
 }

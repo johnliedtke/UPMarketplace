@@ -150,7 +150,7 @@ public class UPMListing: PFObject  {
       
       }.continueWithSuccessBlock {
         (task: BFTask!) -> AnyObject! in
-        var activity = UPMActivity(title: "Made Reservation", description: "\(title)", user: reserver)
+        var activity = UPMActivity(title: "Made Reservation", description: "\(self.title)", user: reserver)
         return activity.saveInBackground()
         
       }.continueWithBlock { (task: BFTask!) -> AnyObject! in
@@ -243,13 +243,13 @@ public class UPMListing: PFObject  {
     
     func reject(reservation: UPMReservation) {
       if blackList {
-        addObject(reservation.reserver, forKey: "blackListedUsers")
+        self.addObject(reservation.reserver, forKey: "blackListedUsers")
       }
       
       reservation.status = ReservationStatus.Rejected.rawValue
-      isHidden = false
+      self.isHidden = false
       
-      saveInBackground().continueWithBlock {
+      self.saveInBackground().continueWithBlock {
         (task: BFTask!) -> AnyObject! in
         if task.error == nil {
           rejectTask.setResult(nil)
@@ -509,7 +509,7 @@ public class UPMListing: PFObject  {
   */
   public func isReservable() -> BFTask {
     var reservableTask = BFTaskCompletionSource()
-    reservableTask.setResult(isUserValidReserver(PFUser.currentUser()))
+    reservableTask.setResult(self.isUserValidReserver(PFUser.currentUser()))
     return reservableTask.task
   }
 
@@ -518,7 +518,9 @@ public class UPMListing: PFObject  {
   is in the blakcklist or has already made a reservation.
   */
   public func isUserValidReserver(user: PFUser) -> Bool {
-    return reservations!.filter({ $0.reserver.objectId == user.objectId }).isEmpty && blackListedUsers!.filter({ $0.objectId == user.objectId }).isEmpty
+    let isInReservations = reservations!.filter({ $0.reserver.objectId == user.objectId }).isEmpty // breaks compiler is one liner
+    let isInBlackList = blackListedUsers!.filter({ $0.objectId == user.objectId }).isEmpty
+    return isInReservations && isInBlackList
   }
   
   /**

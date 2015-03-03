@@ -34,8 +34,8 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
   
   override func createRequiredItems() {
     func initializeRequiredItems() {
-      didCourseUpdate(textbookListing.textbook?.course)
-      didCourseUpdate(textbookListing.textbook?.iSBN)
+      self.didCourseUpdate(self.textbookListing.textbook?.course)
+      self.didCourseUpdate(self.textbookListing.textbook?.iSBN)
     }
     var iSBNItem = UPMSellItem(title: RequiredItem.ISBN.rawValue, description: "Select")
     var courseItem = UPMSellItem(title: RequiredItem.Course.rawValue, description: "Select")

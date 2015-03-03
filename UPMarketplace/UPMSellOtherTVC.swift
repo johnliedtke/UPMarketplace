@@ -16,9 +16,7 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   
   var otherListng: UPMOtherListing = UPMOtherListing()
   override var listing: UPMListing? {
-    get {
-      return otherListng
-    }
+    get { return otherListng }
     set {
       if newValue is UPMOtherListing {
         otherListng = newValue as! UPMOtherListing
@@ -38,6 +36,7 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   
   override func createRequiredItems() {
     super.createRequiredItems()
+    requiredItems.removeItemWithTitle(RequiredItems.Details.rawValue)
     requiredItems.addItem(UPMSellItem(title: CategoryTag, description: "Select"))
   }
   
@@ -46,6 +45,7 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     if requiredItems.itemAtIndex(indexPath.row).title == CategoryTag {
       var categoryTVC = UPMSellCategoryTVC()
       categoryTVC.listing = otherListng
+      categoryTVC.delegate = self
       navigationController?.pushViewController(categoryTVC, animated: true)
     }
   }
@@ -60,76 +60,9 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   }
   
   func didDetailsUpdate(details: String, isComplete: Bool) {
-    if isComplete {
-      let detailsItem = requiredItems.itemWithTitle(RequiredItems.Details.rawValue)
-      detailsItem?.isComplete = isComplete
-      detailsItem?.itemDescription = details
-    }
+      requiredItems.updateItemWithTitle(CategoryTag, description: details, isComplete: isComplete)
   }
-  
 }
-
-class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate {
-  
-  let Category = "Category"
-  let Tag = "Tag"
-  
-  // MARK: - Public Properties
-  var otherListing: UPMOtherListing = UPMOtherListing()
-  override var listing: UPMListing? {
-    get {
-      return otherListing
-    }
-    set {
-      if newValue is UPMOtherListing {
-        otherListing = newValue as! UPMOtherListing
-      }
-    }
-  }
-  
-  override func createRequiredItems() {
-    requiredItems.addItem(UPMSellItem(title: "Category", description: "Select"))
-    requiredItems.addItem(UPMSellItem(title: "Tag", description: "Select"))
-    
-  }
-  
-  override func didSelectItem(item: UPMSellItem) {
-    switch item.title {
-    case Category:
-//      let Storyboard = UIStoryboard(name: "SellMain", bundle: nil)
-//      var categoryVC = Storyboard.instantiateViewControllerWithIdentifier(OtherListingCategoryStoryboard) as! UPMOtherListingCategoryTVC
-//      categoryVC.delegate = self
-      
-      var controller = UPMTablePickerVC()
-      
-      navigationController?.pushViewController(controller, animated: true)
-    case Tag:
-      println("Tag coming to a place near you")
-    default: break
-    }
-  }
-  
-  
-  // MARK: - Delegate
-  func didUpdateCategory(category: String?) {
-    
-  }
-
-  
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

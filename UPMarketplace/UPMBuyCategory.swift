@@ -22,7 +22,10 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   var allCategory = [" "]
   
   // MARK: - Constants
-  let buyFilter = UPMCategoryFilterMainTVC()
+  lazy var buyFilter: UPMCategoryFilterMainTVC = {
+    var buyFilterTVC = UPMCategoryFilterMainTVC()
+    return buyFilterTVC
+  }()
   let reuseidentifer = "BuyCategoryCell"
   let revController = SWRevealViewController()
   
@@ -35,28 +38,18 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     //set default behavior of reveal controller
     revController.bounceBackOnOverdraw = true;
     revController.stableDragOnOverdraw = true;
-    revController.setRightViewController(buyFilter, animated: true)
+    revController.setRightViewController(UINavigationController(rootViewController: buyFilter), animated: true)
     
     // Calculate Height
     var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height)!
     var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)!
     
-    
-    //make tableview fit in the right bounds
-    buyFilter.tableView.clipsToBounds = true
-    buyFilter.tableView.contentInset = UIEdgeInsetsMake(TabBarHeight + NavBarHeight, 0.0, 0.0, 0.0)
-  }
-
-  override func didReceiveMemoryWarning() {
-      super.didReceiveMemoryWarning()
   }
 
   // MARK: - Collectionview Datasource
   override func numberOfSectionsInCollectionView(collectionView: UICollectionView) -> Int {
       return 1
   }
-
-
 
   override func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
       return 3
@@ -74,33 +67,29 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
     
-   
-    
-       //push the controller to the different class based on the category that was chosen
+    //push the controller to the different class based on the category that was chosen
     switch(indexPath.row){
       case 0:
         
         //set defaults of each controller
-        var buyCategory = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        revController.frontViewController = buyCategory
+        var buyOtherListngCVC = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        revController.frontViewController = buyOtherListngCVC
         revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
         
         //set the title to be that of the chosen category
         revController.navigationItem.title = categories[indexPath.row]
-        buyCategory.category = categories[indexPath.row]
+        buyOtherListngCVC.category = categories[indexPath.row]
+        buyFilter.delegate = buyOtherListngCVC
         
          //get the subcategories for selected class
         className = classes[indexPath.row]
         getCategories(className!)
         
         //create the filter button in the navigation bar
-        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyOtherListngCVC, action:Selector("goToRear"))
         revController.navigationItem.rightBarButtonItem = filterButton
         //push the reveal controller
        navigationController?.pushViewController(revController, animated: true)
-        
-        
-        break
       
       case 1:
         //set defaults of each controller
@@ -153,8 +142,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   }
   
   /**
-  Create the grid into an aproximately 2 x 2.1 format. Adustments are made based on the
-  resolution of the screen. The cell height shrinks as the screen size grows.
+  Display listing categories. Fit to screen.
   */
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
     
@@ -178,9 +166,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     
     return CGSizeMake(Width, height)
   }
-  
-  
-  
+
   // MARK: - Private Methods
   
   func getCategories(classQuery: String){
@@ -206,7 +192,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         //make them alphabetized
         self.allCategory = self.allCategory.sorted { $0.localizedCaseInsensitiveCompare($1) == NSComparisonResult.OrderedAscending }
-        self.buyFilter.subCategories = self.allCategory
+        //self.buyFilter.subCategories = self.allCategory
         
         
       }

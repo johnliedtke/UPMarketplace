@@ -8,29 +8,29 @@
 
 import Foundation
 
-
 protocol UPMTablePickerVCDelegate: class {
-  func didSelectItem(sender: UPMTablePickerVC, item: AnyObject)
+  func didSelectItem(sender: UPMTablePickerVC, item: AnyObject?)
 }
 
 class UPMTablePickerVC: UITableViewController {
   
-  let CategoryCellIdentifer = "UPMOtherListingCategoryCell"
   weak var delegate: UPMTablePickerVCDelegate?
+  typealias T = String
   
-  var rows: [String] = ["Furniture",	"Appliance",	"Transportation",	"Clothing", "Decor",	"Cooking", "School",	"Outdoors", "Electronics"]
-  lazy var datasource: SingleSectionDataSource<String> = {
-    return SingleSectionDataSource(rows: self.rows)
-    }()
+  var rows = [String]()
+  var datasource: SingleSectionDataSource<T> = SingleSectionDataSource<T>() {
+    didSet {
+      tableView.dataSource = datasource.tableViewDataSource
+    }
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    tableView.dataSource = datasource.tableViewDataSource
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
     if let d = delegate {
-      //d.didSelectItem(self, item: datasource.itemAtIndexPath(indexPath))
+      d.didSelectItem(self, item: datasource.getRow(indexPath))
       navigationController?.popViewControllerAnimated(true)
     }
   }

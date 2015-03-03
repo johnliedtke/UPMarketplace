@@ -38,7 +38,7 @@ class UPMSellOtherDetailsTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate
   
   override func createRequiredItems() {
     func initializeRequiredItems() {
-      didUpdateCategory(otherListing.category)
+      self.didUpdateCategory(self.otherListing.category)
     }
     var categoryItem = UPMSellItem(title: RequiredItem.Category.rawValue, description: "Select")
     requiredItems.addItem(categoryItem)
@@ -52,8 +52,7 @@ class UPMSellOtherDetailsTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate
       var categoryVC = Storyboard.instantiateViewControllerWithIdentifier(OtherListingCategoryStoryboard) as! UPMOtherListingCategoryTVC
       categoryVC.delegate = self
       navigationController?.pushViewController(categoryVC, animated: true)
-    default:
-      println("Default")
+    default: break
     }
   }
   

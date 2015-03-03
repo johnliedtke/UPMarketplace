@@ -143,8 +143,10 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     if requiredItems.isItemsComplete() {
       var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
       hud.labelText = "Posting..."
+      UIApplication.sharedApplication().beginIgnoringInteractionEvents()
       
       self.post().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+        UIApplication.sharedApplication().endIgnoringInteractionEvents()
         if task.error == nil {
           hud.labelText = "Success"
           sleep(1)
@@ -153,11 +155,11 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
             self.navigationController?.popToRootViewControllerAnimated(true)
           })
         } else {
-          var errorAlert = UIAlertController(title: "Error", message: "An error ocurred.", preferredStyle: .Alert)
+          var errorAlert = UIAlertController(title: "Error", message: task.error.localizedDescription, preferredStyle: .Alert)
           errorAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
           dispatch_async(dispatch_get_main_queue(), { () -> Void in
             MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            self.navigationController?.popToRootViewControllerAnimated(true)
+            self.navigationController?.presentViewController(errorAlert, animated: true, completion: nil)
           })
         }
         return nil

@@ -8,10 +8,13 @@
 
 import UIKit
 
+// Found online
+
 /**
-* Allows the UITableViewDataSource to talk to our datasource without knowing the underlying type is generic (which is against the rules for Obj-C objects)
+  Allows the UITableViewDataSource to talk to our datasource without knowing the underlying
+  type is generic (which is against the rules for Obj-C objects)
 */
-protocol SectionedDataSourceBridge{
+protocol SectionedDataSourceBridge {
   
   func numberOfSections() -> Int
   
@@ -52,4 +55,5 @@ class TableViewDataSource : NSObject, UITableViewDataSource {
   func tableView(tableView: UITableView, titleForFooterInSection section: Int) -> String? {
     return sectionedDataSource.titleForFooterInSection(section)
   }
+  
 }

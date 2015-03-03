@@ -13,7 +13,7 @@ import SellUI
   Delegate protocol to be followed by a controller that wants to recieve updates
   about changes made in in UPMSellDetailsTVC subclass.
 */
-protocol UPMSellDetailsTVCDelegate {
+protocol UPMSellDetailsTVCDelegate: class {
   
   /**
   Receives updates that are made in a UPMSellDetailsTVC subclass
@@ -39,7 +39,7 @@ class UPMSellDetailsTVC: UITableViewController {
   }
   
   var listing: UPMListing?
-  var delegate: UPMSellDetailsTVCDelegate?
+  weak var delegate: UPMSellDetailsTVCDelegate?
   var requiredItems = UPMSellItemContainer()
   var optionalItems = UPMSellItemContainer()
   

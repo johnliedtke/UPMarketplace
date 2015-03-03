@@ -14,6 +14,7 @@
 		5200D4AB1A48FE2D0079ED9A /* UPMBarcodeScanner.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */; };
 		5200D4AD1A4903210079ED9A /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5200D4AC1A4903210079ED9A /* AVFoundation.framework */; };
 		5200D4AF1A50A63A0079ED9A /* UPMBarcodeBox.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */; };
+		520E26A51AA64217005B69D0 /* UPMSellCategoryTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 520E26A41AA64217005B69D0 /* UPMSellCategoryTVC.swift */; };
 		521313171A70450500F67813 /* UPMLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521313141A70450500F67813 /* UPMLoginVC.swift */; };
 		521313181A70450500F67813 /* UPMLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 521313151A70450500F67813 /* UPMLogin.storyboard */; };
 		521313191A70450500F67813 /* UPMButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 521313161A70450500F67813 /* UPMButton.swift */; };
@@ -206,6 +207,7 @@
 		5200D4A91A48FE2D0079ED9A /* UPMBarcodeScanner.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = UPMBarcodeScanner.xib; sourceTree = "<group>"; };
 		5200D4AC1A4903210079ED9A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		5200D4AE1A50A63A0079ED9A /* UPMBarcodeBox.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBarcodeBox.swift; sourceTree = "<group>"; };
+		520E26A41AA64217005B69D0 /* UPMSellCategoryTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellCategoryTVC.swift; sourceTree = "<group>"; };
 		521313141A70450500F67813 /* UPMLoginVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMLoginVC.swift; sourceTree = "<group>"; };
 		521313151A70450500F67813 /* UPMLogin.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UPMLogin.storyboard; sourceTree = "<group>"; };
 		521313161A70450500F67813 /* UPMButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMButton.swift; sourceTree = "<group>"; };
@@ -578,11 +580,11 @@
 		5266C65D1A46A1430061FFFB /* Buy */ = {
 			isa = PBXGroup;
 			children = (
+				524355931AA58B0900333FC3 /* Abstract */,
 				F12FCE351A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard */,
 				5266C6621A46ADA60061FFFB /* UPMBuy.storyboard */,
 				5266C6681A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift */,
 				F1617DBB1A99378000AFF2C2 /* UPMNewListingsFilter.swift */,
-				524355931AA58B0900333FC3 /* Abstract */,
 				524355911AA58A2B00333FC3 /* Other */,
 				524355901AA589D300333FC3 /* Textbook */,
 				F12FCE371A68F6AB00D5A441 /* UPMBuyCategory.swift */,
@@ -633,6 +635,7 @@
 			isa = PBXGroup;
 			children = (
 				52E571671A1DD8B90056FCD8 /* UPMSellOtherTVC.swift */,
+				520E26A41AA64217005B69D0 /* UPMSellCategoryTVC.swift */,
 				5243559C1AA58D3700333FC3 /* UPMTablePickerVC.swift */,
 				52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */,
 				52C0631E1A1F02000088907E /* UPMOtherListingCategoryTVC.swift */,
@@ -1068,6 +1071,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				520E26A51AA64217005B69D0 /* UPMSellCategoryTVC.swift in Sources */,
 				529F39181A798884000ED764 /* UPMContainerVC.swift in Sources */,
 				5255EC0E1A0EE0DD007207C7 /* DefaultVC.swift in Sources */,
 				5231287B1A8FDCC50036F11D /* UPMReachabilityManager.swift in Sources */,

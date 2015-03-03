@@ -22,7 +22,7 @@ class UPMNewListingsFilter: UITableViewController {
     self.revealViewController().pushFrontViewController(nav, animated: true)
     
   }
-   // MARK: - Public Properties
+  // MARK: - Public Properties
   var categories = ["Furniture & Other", "Housing", "Textbooks"]
   var chosenCategory: NSInteger?
   

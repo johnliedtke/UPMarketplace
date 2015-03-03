@@ -17,16 +17,13 @@ class UPMSellItemContainer {
   
   /// The number of items in the container.
    var count: Int {
-    get {
-      return items.count
-    }
+    get { return items.count }
   }
   
   // MARK: - Private Properties
   
   /// Used to store the
   private var items = [UPMSellItem]()
-  
   
   convenience init(items: [UPMSellItem]) {
     self.init()
@@ -114,7 +111,7 @@ class UPMSellItemContainer {
         d += "\(item.title): Missing\n"
       }
     }
-    return d == "" ? "Select" : d
+    return d == "" ? "Select" : d.substringToIndex(d.endIndex.predecessor())
   }
   
   /// Creates a description of missing items 
@@ -125,7 +122,7 @@ class UPMSellItemContainer {
         d += "\(item.title): Missing\n"
       }
     }
-    return d
+    return d.substringToIndex(d.endIndex.predecessor())
   }
 
 
