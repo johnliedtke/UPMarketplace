@@ -322,7 +322,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   
   func didUpdatePhoto(image: UIImage) {
     var photoItem = requiredItems.itemWithTitle(RequiredItems.Photos.rawValue)
-    var file: NSData = UIImageJPEGRepresentation(image, 0.5)
+    var file: NSData = UIImageJPEGRepresentation(image, 0.45)
     listing?.picture = PFFile(name: "image.png", data: file)
     listing?.photo = image
     photoItem?.itemDescription = "Picture Added"
@@ -352,8 +352,8 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       case RequiredItems.Details.rawValue:
         pushDetailsVC()
         
-      default:
-        NSLog("")
+      default: break
+      
       }
       
     default:

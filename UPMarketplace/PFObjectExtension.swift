@@ -70,14 +70,12 @@ extension PFQuery {
           objectsTask.setResult(t.error)
         }
       }
-      return BFTask(forCompletionOfAllTasks: tasks)
-    }.continueWithExecutor(BFExecutor.mainThreadExecutor(), withSuccessBlock: { (task) -> AnyObject! in
       objectsTask.setResult(result)
       return nil
-      
-    })
+    }
     return objectsTask.task
   }
+  
 }
 
 extension PFUser {

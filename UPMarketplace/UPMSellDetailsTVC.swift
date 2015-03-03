@@ -28,6 +28,7 @@ protocol UPMSellDetailsTVCDelegate {
   The UPMSellDetailsTVC class is used to collect various attributes of a sublclass
   UPMListing. Functions similarily to a UPMSellTVC except there are no default optional
   or required UPMSellItems.
+  - Override 
 */
 class UPMSellDetailsTVC: UITableViewController {
   let SellCellIdentifier = "UPMSellCell"

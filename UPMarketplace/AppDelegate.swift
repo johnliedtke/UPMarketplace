@@ -32,11 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
     UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
     
-    
-    // testing multiple queries
-    var otherListingQuery = PFQuery(className: "UPMOtherListing")
-    var textBookListingQuery = PFQuery(className: "UPMTextbookListing")
-    
     /**
     Tab Bar Navigation
     Create the entire navigation for the application.

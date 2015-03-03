@@ -21,12 +21,20 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
       }
     }
   }
+  
+  let CategoryTag = "Category"
+
+  // MARK: - View
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    
+    tableView.estimatedRowHeight = 100
+
   }
-  
+
+
+  // MARK: - Details
+
   func didDetailsUpdate(details: String, isComplete: Bool) {
     requiredItems.updateItemWithTitle(RequiredItems.Details.rawValue, description: details, isComplete: isComplete)
   }
@@ -38,4 +46,10 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     navigationController?.pushViewController(detailsVC, animated: true)
   }
   
+  
 }
+
+
+
+
+

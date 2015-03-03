@@ -7,10 +7,10 @@
 //
 
 import UIKit
+let OtherListingCategoryStoryboard = "OtherListingCategory"
 
 class UPMSellOtherDetailsTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate {
   let SellStoryboard = "UPMSell"
-  let OtherListingCategoryStoryboard = "OtherListingCategory"
   
   var otherListing: UPMOtherListing = UPMOtherListing()
   override var listing: UPMListing? {

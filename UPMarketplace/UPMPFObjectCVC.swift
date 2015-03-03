@@ -28,7 +28,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   var objects: [PFObject] = [PFObject]()
   
   /// Enable activity indicator in middle of screen when loading
-  var activityViewEnabled = false
+  var activityViewEnabled = true
   
   /// Enable pull to refresh
   var pullToRefreshEnabled: Bool = true
@@ -187,7 +187,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
               if task.error == nil {
                 // Success
                 if var fetchedObjects = task.result as? [PFObject] {
-                  fetchedObjects.sort { $0.createdAt.compare($1.createdAt) == NSComparisonResult.OrderedAscending }
+                  fetchedObjects.sort { $0.createdAt.compare($1.createdAt) == NSComparisonResult.OrderedDescending }
                   if self.paginationEnabled && !self.isRefreshing {
                     self.objects += fetchedObjects
                   } else {

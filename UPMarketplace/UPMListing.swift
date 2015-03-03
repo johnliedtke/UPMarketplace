@@ -587,8 +587,7 @@ public class UPMListing: PFObject  {
         }
       }
     }
-      
-    else{ //Not OBO
+    else { //Not OBO
       var time: NSDate
       for res in reservations! {
         if !isBlackListed(res.getReserver()) {
