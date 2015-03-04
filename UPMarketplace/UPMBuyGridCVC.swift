@@ -122,5 +122,6 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
   func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAtIndex section: Int) -> UIEdgeInsets {
         return UIEdgeInsetsMake(10, 10, 10, 10)
   }
+  
 
 }

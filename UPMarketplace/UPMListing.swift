@@ -165,6 +165,11 @@ public class UPMListing: PFObject  {
     return reserveTask.task
   }
   
+  deinit {
+    //println("Deallocating listing")
+  }
+  
+  
   /**
   Delete reservation. Deletes a given reservation and updates the listing
   to be unhidden.

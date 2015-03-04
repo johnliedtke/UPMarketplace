@@ -26,14 +26,17 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
   // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
-    self.collectionView = collectionView;
-    self.collectionView!.dataSource = self;
-    self.collectionView!.delegate = self;
+    
+    // Add filter button
+    var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action:Selector("goToRear"))
+    revealViewController().navigationItem.rightBarButtonItem = filterButton
+    revealViewController().navigationItem.title = "Other Listings"
   }
   
   func didFinishFiltering(sender: UPMCategoryFilterMainTVC, category: String) {
     self.revealViewController().pushFrontViewController(self, animated: true)
-    self.navigationController?.navigationBar.hidden = false
+    revealViewController().navigationController?.navigationBar.hidden = false
+    collectionView?.userInteractionEnabled = true
   }
   
   // MARK: - Data Source Methods
@@ -49,30 +52,9 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
     
     //depending on whether we are showing the filter tableview change the behavior of
     //button and the navigation bar
-    if (!atFilter){
-    
-      self.revealViewController().navigationItem.title = "Filter"
-      self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Clear"
-      self.revealViewController().navigationItem.hidesBackButton = true
-//      navigationController?.hidesBarsOnTap = true
-      navigationController?.navigationBar.hidden = true
-      
-      atFilter = true
-      self.revealViewController().rightRevealToggle(self)
-    }
-    else if(atFilter){
-      
-      self.revealViewController().navigationItem.title = category
-      self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Filter"
-      self.revealViewController().navigationItem.hidesBackButton = false
-      atFilter = false
-      
-      self.revealViewController().pushFrontViewController(self, animated: true)
-    }
-  
-
-  
-
+    revealViewController().rightRevealToggle(self)
+    revealViewController().navigationController?.navigationBar.hidden = true
+    collectionView?.userInteractionEnabled = false
   }
   
 

@@ -14,10 +14,8 @@ import UIKit
   of a UPMListing. Subclass to customize for different listings.
 */
 class UPMBuyItemDetailsTVC: UITableViewController {
-  
  
-
-  // MARK: - Constants 
+  // MARK: - Constants
   
   let imageCellIdentifier = "UPMBuyItemImageCell"
   let titleCellIdentifier = "UPMBuyItemTitleCell"
@@ -32,6 +30,11 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   
   /// The listing to display details of.
   var listing: UPMListing!
+  
+  deinit {
+    println("deallocating UPMBuyItemDetailsTVC")
+    //listing.picture = nil
+  }
   
   // MARK: - Private Properties
   
@@ -93,6 +96,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   override func viewWillDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
     navigationController?.toolbarHidden = true
+    //listing.picture = nil
   }
 
   // MARK: - Init
@@ -161,22 +165,21 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       case tableCellSection.ImageSection:
         let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemImageCell
       
-        cell.buyItemImage.file = listing?.picture
-        cell.buyItemImage.loadInBackground()
-        cell.displayImageViewTapped = { (sender) in
-          var imageVC = UPMBuyItemDetailsImageVC()
-          
-          self.providesPresentationContextTransitionStyle = true
-          self.definesPresentationContext = true
-          self.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
-          self.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
-          self.view.opaque = false
-          self.tableView.opaque = false
-          
-          imageVC.image = cell.buyItemImage.image
-          self.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
-        }
- 
+        weak var weakFile = listing?.picture
+        
+        weakFile?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+          [unowned self, cell] (task)  in
+          if task.error == nil, let imageData = task.result as? NSData {
+            cell.buyItemImage.image = UIImage(data: imageData)
+            cell.displayImageViewTapped = { [unowned self, cell] (sender) in
+              var imageVC = UPMBuyItemDetailsImageVC()
+              imageVC.image = UIImage(data: imageData)
+              self.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
+            }
+          }
+          return nil
+        })
+
       return cell
       
     case tableCellSection.TitleSection:
@@ -232,8 +235,10 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   }
   
   func configureSellerCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath){
-
-      cell.configureCell("Seller", second: listing.owner.username)
+    
+    if let username =  listing?.owner.username {
+      cell.configureCell("Seller", second: username)
+    }
 
   }
   
@@ -332,7 +337,7 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
     gr.direction = .Up
     return gr
   }()
-  
+    
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(scrollView)

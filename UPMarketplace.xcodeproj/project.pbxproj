@@ -135,7 +135,6 @@
 		F12FCE381A68F6AB00D5A441 /* UPMBuyCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12FCE371A68F6AB00D5A441 /* UPMBuyCategory.swift */; };
 		F12FCE3A1A68F7AA00D5A441 /* UPMBuyCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */; };
 		F1478DC61A7983B0008C3621 /* UPMBuyItemImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */; };
-		F1478DC71A7983B0008C3621 /* UPMBuyItemImageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */; };
 		F1478DCA1A7983D1008C3621 /* UPMBuyItemTitleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */; };
 		F1478DCB1A7983D1008C3621 /* UPMBuyItemTitleCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F1478DC91A7983D1008C3621 /* UPMBuyItemTitleCell.xib */; };
 		F1478DCE1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1478DCC1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift */; };
@@ -325,7 +324,6 @@
 		F12FCE371A68F6AB00D5A441 /* UPMBuyCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyCategory.swift; sourceTree = "<group>"; };
 		F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyCategoryCell.swift; path = UPMarketplace/UPMBuyCategoryCell.swift; sourceTree = "<group>"; };
 		F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyItemImageCell.swift; path = UPMarketplace/UPMBuyItemImageCell.swift; sourceTree = "<group>"; };
-		F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UPMBuyItemImageCell.xib; path = UPMarketplace/UPMBuyItemImageCell.xib; sourceTree = "<group>"; };
 		F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyItemTitleCell.swift; path = UPMarketplace/UPMBuyItemTitleCell.swift; sourceTree = "<group>"; };
 		F1478DC91A7983D1008C3621 /* UPMBuyItemTitleCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UPMBuyItemTitleCell.xib; path = UPMarketplace/UPMBuyItemTitleCell.xib; sourceTree = "<group>"; };
 		F1478DCC1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyItemDescriptionCell.swift; path = UPMarketplace/UPMBuyItemDescriptionCell.swift; sourceTree = "<group>"; };
@@ -333,7 +331,7 @@
 		F1478DD01A798447008C3621 /* UPMBuyItemFieldCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyItemFieldCell.swift; path = UPMarketplace/UPMBuyItemFieldCell.swift; sourceTree = "<group>"; };
 		F1478DD11A798447008C3621 /* UPMBuyItemFieldCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = UPMBuyItemFieldCell.xib; path = UPMarketplace/UPMBuyItemFieldCell.xib; sourceTree = "<group>"; };
 		F1497C4A1A6E2FA700F85CF2 /* UPMBuyListItemsOtherCVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyListItemsOtherCVC.swift; path = UPMarketplace/UPMBuyListItemsOtherCVC.swift; sourceTree = "<group>"; };
-		F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UPMBuyItemDetailsTVC.swift; path = UPMarketplace/UPMBuyItemDetailsTVC.swift; sourceTree = "<group>"; };
+		F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyItemDetailsTVC.swift; sourceTree = "<group>"; };
 		F1617DBB1A99378000AFF2C2 /* UPMNewListingsFilter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMNewListingsFilter.swift; sourceTree = "<group>"; };
 		F1617DBD1A9938C800AFF2C2 /* UPMBuyCategoryFilterChooseTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMBuyCategoryFilterChooseTVC.swift; sourceTree = "<group>"; };
 		F1617DBF1A9939B800AFF2C2 /* UPMCategoryFilterMainTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMCategoryFilterMainTVC.swift; sourceTree = "<group>"; };
@@ -445,7 +443,6 @@
 		524355921AA58AC200333FC3 /* Housing */ = {
 			isa = PBXGroup;
 			children = (
-				F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */,
 				F1D79E001A82BED100061D0A /* UPMBuyListItemsHousingCVC.swift */,
 				F1D79E021A82BEF800061D0A /* UPMBuyItemDetailsHousingTVC.swift */,
 			);
@@ -585,13 +582,14 @@
 				5266C6621A46ADA60061FFFB /* UPMBuy.storyboard */,
 				5266C6681A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift */,
 				F1617DBB1A99378000AFF2C2 /* UPMNewListingsFilter.swift */,
+				F14BDB6D1A6B02D300AF6957 /* UPMBuyItemDetailsTVC.swift */,
 				524355911AA58A2B00333FC3 /* Other */,
 				524355901AA589D300333FC3 /* Textbook */,
 				F12FCE371A68F6AB00D5A441 /* UPMBuyCategory.swift */,
 				F1617DBD1A9938C800AFF2C2 /* UPMBuyCategoryFilterChooseTVC.swift */,
-				52CA48FB1A743EA400073F2F /* UPMBuyItemDetailsDescription.swift */,
 				F1617DBF1A9939B800AFF2C2 /* UPMCategoryFilterMainTVC.swift */,
 				F19573981A7D8B6E00B88538 /* UPMBuyItemDescriptionVC.swift */,
+				52CA48FB1A743EA400073F2F /* UPMBuyItemDetailsDescription.swift */,
 				524355921AA58AC200333FC3 /* Housing */,
 				5277DD321A8FDF4700F9CB19 /* Cells */,
 			);
@@ -607,7 +605,6 @@
 				F18F1DFA1A9B2683000853CF /* UPMBuyFilterCell.xib */,
 				F12FCE391A68F7AA00D5A441 /* UPMBuyCategoryCell.swift */,
 				F1478DC41A7983B0008C3621 /* UPMBuyItemImageCell.swift */,
-				F1478DC51A7983B0008C3621 /* UPMBuyItemImageCell.xib */,
 				F1478DC81A7983D1008C3621 /* UPMBuyItemTitleCell.swift */,
 				F1478DC91A7983D1008C3621 /* UPMBuyItemTitleCell.xib */,
 				F1478DCC1A7983FC008C3621 /* UPMBuyItemDescriptionCell.swift */,
@@ -709,8 +706,8 @@
 				52FEAAE61A67082000240E25 /* User */,
 				5255EBFE1A0EC72A007207C7 /* Extensions */,
 				52AF3D4C19E77BBF007E0D22 /* SellMain.storyboard */,
-				5213298C1A3E2C7B003E345A /* Listings */,
 				5266C65D1A46A1430061FFFB /* Buy */,
+				5213298C1A3E2C7B003E345A /* Listings */,
 				525B898A1A18994400A7CB6D /* Sell */,
 				5243559E1AA58D5600333FC3 /* TableDataSource */,
 				5255EC0D1A0EE0DD007207C7 /* DefaultVC.swift */,
@@ -983,7 +980,6 @@
 				52176EC01A6ECE3400ACCFA9 /* UPMBuyGridCell.xib in Resources */,
 				52CA48F41A743D7F00073F2F /* UPMContact.storyboard in Resources */,
 				52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */,
-				F1478DC71A7983B0008C3621 /* UPMBuyItemImageCell.xib in Resources */,
 				521313181A70450500F67813 /* UPMLogin.storyboard in Resources */,
 				521329901A3E38EC003E345A /* UPMSellTextbook.storyboard in Resources */,
 				F18F1DFC1A9B2683000853CF /* UPMBuyFilterCell.xib in Resources */,

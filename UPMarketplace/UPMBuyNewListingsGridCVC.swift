@@ -47,7 +47,6 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
       swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
       self.view.addGestureRecognizer(swipeLeft)
     }
-    
 
   }
 
@@ -61,46 +60,20 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   }
   
   //TODO: Change query to retrieve the three major UPMListing types.
-  override func query() -> PFQuery {
-    
-    switch(chosenCategory){
-    case 0:
-      var listQuery = PFQuery(className: "UPMOtherListing")
-      listQuery.orderByDescending("createdAt")
-      return UPMOtherListing.displayQuery()
-    case 1:
-      var listQuery = PFQuery(className: "UPMHousingListing")
-      listQuery.orderByDescending("createdAt")
-      return listQuery
-    case 2:
-      var listQuery = PFQuery(className: "UPMTextbookListing")
-      listQuery.orderByDescending("createdAt")
-      return UPMTextbookListing.displayQuery()
-    default:
-      var listQuery = PFQuery(className: "UPMHousingListing")
-      listQuery.orderByDescending("createdAt")
-      return listQuery
-    }
-
-  }
-  
-  //TODO: Change query to retrieve the three major UPMListing types.
   override func queries() -> [PFQuery]? {
     
-    
     switch(chosenCategory){
     case 0:
       var listQuery = PFQuery(className: "UPMOtherListing")
       listQuery.orderByDescending("createdAt")
-      return nil
+      return [UPMOtherListing.displayQuery()]
     case 1:
       var listQuery = PFQuery(className: "UPMHousingListing")
       listQuery.orderByDescending("createdAt")
-      return nil
+      return [listQuery]
     case 2:
       var listQuery = PFQuery(className: "UPMTextbookListing")
-      listQuery.orderByDescending("createdAt")
-      return nil
+        return [UPMTextbookListing.displayQuery()]
     default:
       var listQuery = PFQuery(className: "UPMHousingListing")
       listQuery.orderByDescending("createdAt")
@@ -108,8 +81,6 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     }
     
   }
-  
-  
   
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
 
@@ -126,14 +97,7 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
       navigationController?.pushViewController(viewController, animated: true)
 
     }
-    
-   
-    
-    
+
   }
-
-
-
-
     
 }

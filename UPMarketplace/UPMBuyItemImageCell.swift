@@ -19,8 +19,8 @@ class UPMBuyItemImageCell: UITableViewCell {
   // MARK: - Public Properties
 
   
-  lazy var buyItemImage: PFImageView = {
-    var imageView = PFImageView()
+  lazy var buyItemImage: UIImageView = {
+    var imageView = UIImageView()
     imageView.contentMode = UIViewContentMode.ScaleAspectFit
     imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
     imageView.clipsToBounds = true
@@ -32,7 +32,7 @@ class UPMBuyItemImageCell: UITableViewCell {
   }()
   
   
-  var displayImageViewTapped: ((sender: AnyObject) -> Void)!
+   var displayImageViewTapped: ((sender: AnyObject?) -> Void)!
   
   // MARK: - Private Properties
   lazy private var imageViewGestureRecognizer: UITapGestureRecognizer = {
@@ -49,6 +49,7 @@ class UPMBuyItemImageCell: UITableViewCell {
     super.init(coder: aDecoder)
     setupConstraints()
   }
+  
 
   func setupConstraints() {
     contentView.addSubview(buyItemImage)
@@ -62,11 +63,6 @@ class UPMBuyItemImageCell: UITableViewCell {
     var metrics: [NSObject : AnyObject] = ["imageHeight": imageHeight]
     
     contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-(>=0)-[buyItemImage(imageHeight)]-(>=0)-|", options: .DirectionLeadingToTrailing, metrics: metrics, views: elements))
-    
- 
-
-
-
   }
   
   override func awakeFromNib() {
@@ -74,9 +70,15 @@ class UPMBuyItemImageCell: UITableViewCell {
 
   }
   
-  func imageViewTapped(sender: AnyObject) {
+  deinit {
+    println("deallocating image cell")
+    buyItemImage.image = nil
+  }
+  
+  func imageViewTapped(sender: AnyObject?) {
     if displayImageViewTapped != nil {
-      displayImageViewTapped(sender: self)
+      weak var weakSelf = self
+      displayImageViewTapped(sender: nil)
     }
   }
 

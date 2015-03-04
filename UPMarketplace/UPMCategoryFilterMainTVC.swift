@@ -19,9 +19,6 @@ protocol UPMFilterDelegate: class {
   func didFinishFiltering(sender: UPMCategoryFilterMainTVC, category: String)
 }
 
-
-
-
 class UPMCategoryFilterMainTVC: UITableViewController {
 
   // MARK: - Constants
@@ -31,7 +28,6 @@ class UPMCategoryFilterMainTVC: UITableViewController {
   var subCategories = [ " ", "Select Category: ", " ", " "]
   var clearButton:UIBarButtonItem?
   var chosenFilter: String?
-  
   
   // Delegate
   weak var delegate: UPMFilterDelegate?
@@ -48,7 +44,7 @@ class UPMCategoryFilterMainTVC: UITableViewController {
     // Auto-layout
     tableView.setTranslatesAutoresizingMaskIntoConstraints(false)
     tableView.estimatedRowHeight = 1000 // fix for auto-layout
-    
+
     navigationItem.title = "*********************"
     navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .Done, target: self, action: "done")
   }

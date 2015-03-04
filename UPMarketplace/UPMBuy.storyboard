@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7515.2" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MQ8-Sx-DqR">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7519.1" systemVersion="14C109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="MQ8-Sx-DqR">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7512"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7513.1"/>
     </dependencies>
     <scenes>
         <!--Navigation Controller-->
@@ -18,7 +18,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hbB-np-Re1" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-213" y="171"/>
+            <point key="canvasLocation" x="-453" y="247"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="DEs-FK-l9u">
@@ -56,7 +56,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EDx-LX-SH2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-552" y="966"/>
+            <point key="canvasLocation" x="-400" y="1130"/>
         </scene>
         <!--New Listings Filter-->
         <scene sceneID="jJc-WQ-YlH">
@@ -107,19 +107,20 @@
                         </connections>
                     </collectionView>
                     <navigationItem key="navigationItem" title="New Listings" id="uKY-fl-Xjy">
-                        <barButtonItem key="rightBarButtonItem" title="Filter" id="gAf-mE-9W4">
+                        <barButtonItem key="rightBarButtonItem" title="Filter" id="pU1-tO-Xtw">
+                            <color key="tintColor" red="0.60784313729999995" green="0.34901960780000002" blue="0.71372549019999998" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="a:" destination="JgW-Jz-KSE" id="TaN-qm-ESa"/>
+                                <action selector="a:" destination="JgW-Jz-KSE" id="ClL-nd-7Mn"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="filterButton" destination="gAf-mE-9W4" id="0CW-HU-rWy"/>
+                        <outlet property="filterButton" destination="pU1-tO-Xtw" id="g3c-u3-Smw"/>
                     </connections>
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bPR-jT-EVU" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="488" y="430"/>
+            <point key="canvasLocation" x="286" y="300"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

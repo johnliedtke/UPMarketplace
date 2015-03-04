@@ -34,6 +34,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = UIColor.standardBackgroundColor()
+    navigationItem.title = "Buy"
     
     //set default behavior of reveal controller
     revController.bounceBackOnOverdraw = true;
@@ -77,7 +78,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
         
         //set the title to be that of the chosen category
-        revController.navigationItem.title = categories[indexPath.row]
+        //revController.navigationItem.title = categories[indexPath.row]
         buyOtherListngCVC.category = categories[indexPath.row]
         buyFilter.delegate = buyOtherListngCVC
         
@@ -85,9 +86,6 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         className = classes[indexPath.row]
         getCategories(className!)
         
-        //create the filter button in the navigation bar
-        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyOtherListngCVC, action:Selector("goToRear"))
-        revController.navigationItem.rightBarButtonItem = filterButton
         //push the reveal controller
        navigationController?.pushViewController(revController, animated: true)
       
@@ -111,7 +109,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         //push the reveal controller
         navigationController?.pushViewController(revController, animated: true)
-        break
+
       case 2:
       
         //set defaults of each controller
@@ -135,9 +133,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         //push the reveal controller
         navigationController?.pushViewController(revController, animated: true)
         
-        break
-      default:
-        break
+      default:break
     }
   }
   

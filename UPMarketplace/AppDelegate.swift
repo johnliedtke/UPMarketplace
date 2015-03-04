@@ -43,9 +43,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     */
     var controllers = [UIViewController]()
     
+    
     // Buy
     let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)
-    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as! SWRevealViewController
+    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as! UIViewController
     var buyNewListingsItem = buyNewListingsVC.tabBarItem
     buyNewListingsItem.title = "New Listings"
     buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)

@@ -99,5 +99,4 @@ public class UPMBuyItemTitleCell: UITableViewCell {
   }
   
   
-  
 }

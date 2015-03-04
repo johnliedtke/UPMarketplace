@@ -9,19 +9,11 @@
 import UIKit
 
 class DefaultVC: UIViewController {
-  let MainSellStoryboardIdentifier = "UPMSell"
-  let SellStoryboardIdentifier = "SellStoryboard"
-  @IBAction func buttonPushed(sender: AnyObject) {
-//    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"MainStoryboard_iPhone" bundle:nil];
-//    MyNewViewController *myVC = (MyNewViewController *)[storyboard instantiateViewControllerWithIdentifier:@"myViewCont"];
-    
-    let SellStoryboard = UIStoryboard(name: MainSellStoryboardIdentifier, bundle: nil)
-    var sellTVC = SellStoryboard.instantiateViewControllerWithIdentifier(SellStoryboardIdentifier) as! UPMSellTVC
-      navigationController?.pushViewController(sellTVC, animated: true)
-  }
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+      println("Allocated DEAFULT SHIT")
 
         // Do any additional setup after loading the view.
     }
@@ -30,7 +22,12 @@ class DefaultVC: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+  
+  deinit {
+    println("Deallocated DEFAULT")
+
+  }
+  
 
     /*
     // MARK: - Navigation

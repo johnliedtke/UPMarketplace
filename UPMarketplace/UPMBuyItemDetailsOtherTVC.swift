@@ -12,12 +12,17 @@ import UIKit
 class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC {
   
   var numRows = 2
-  var listingOther: UPMOtherListing?
+  weak var listingOther: UPMOtherListing?
   
   override func changeDefaults() {
     numberOfAttributes = numRows
     listing = listingOther
   }
+  deinit {
+    println("deallocating UPMBuyItemDetailsTVC")
+    //listing = nil
+  }
+  
   
   override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
     switch(indexPath.row){
@@ -25,7 +30,9 @@ class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC {
       cell.configureCell("Category:", second: listingOther?.category)
       break
     case 1:
-      cell.configureCell("Posted:", second: super.fixDateFormat((listingOther?.createdAt)!))
+      if let createdAt = listingOther?.createdAt {
+        cell.configureCell("Posted:", second: super.fixDateFormat(createdAt))
+      }
       break
     default:
       break
