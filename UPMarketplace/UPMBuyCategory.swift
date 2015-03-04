@@ -104,8 +104,8 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         //getCategories(className!)
         
         //create the filter button in the navigation bar
-        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
-        revController.navigationItem.rightBarButtonItem = filterButton
+      //  var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+       // revController.navigationItem.rightBarButtonItem = filterButton
         
         //push the reveal controller
         navigationController?.pushViewController(revController, animated: true)
@@ -127,8 +127,8 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         
         //create the filter button in the navigation bar
-        var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
-        revController.navigationItem.rightBarButtonItem = filterButton
+       // var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
+       // revController.navigationItem.rightBarButtonItem = filterButton
         
         //push the reveal controller
         navigationController?.pushViewController(revController, animated: true)
