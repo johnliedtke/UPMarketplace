@@ -61,7 +61,8 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     changeDefaults()
     
     // Register table cells
-    tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
+    //tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
+    tableView.registerClass(UPMBuyItemImageCell.self, forCellReuseIdentifier: imageCellIdentifier)
     tableView.registerNib(UINib(nibName: titleCellIdentifier, bundle: nil), forCellReuseIdentifier: titleCellIdentifier)
     tableView.registerNib(UINib(nibName: fieldCellIdentifier, bundle: nil), forCellReuseIdentifier: fieldCellIdentifier)
     tableView.registerNib(UINib(nibName: descriptionCellIdentifier, bundle: nil), forCellReuseIdentifier: descriptionCellIdentifier)
@@ -104,8 +105,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   override init(style: UITableViewStyle)
   { super.init(style: .Grouped) }
   
-  required init(coder aDecoder: NSCoder)
-  {super.init(coder: aDecoder)}
+  required init(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
   
   // MARK: - Private Methods
   
@@ -114,7 +114,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   */
   internal func contactSeller() {
     //TODO: Use real seller
-    var contactVC = UPMContactVC(user: PFUser.currentUser(), withSubject: "Question about: \(listing!.title)")
+    var contactVC = UPMContactVC(user: listing.owner, withSubject: "Question about: \(listing!.title)")
     var navigation = UINavigationController(rootViewController: contactVC)
     presentViewController(navigation, animated: true, completion: nil)
   }
@@ -165,7 +165,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       case tableCellSection.ImageSection:
         let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemImageCell
       
-        weak var weakFile = listing?.picture
+        var weakFile = listing?.picture
         
         weakFile?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
           [unowned self, cell] (task)  in

@@ -20,7 +20,7 @@ public class UPMListing: PFObject  {
   // MARK: - Properties
   
   /// Title of the listing
-  @NSManaged public var title: String
+  @NSManaged public var title: String?
   
   /// User-description of listing
   @NSManaged public var descriptionS: String?

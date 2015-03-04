@@ -25,8 +25,8 @@ extension UPMSellTVC {
 
     var sellDescriptionVC = storyboard.instantiateViewControllerWithIdentifier(SellDescriptionStoryboard) as! UPMSellDescriptionVC
     sellDescriptionVC.delegate = self
-    if listing?.descriptionS != nil {
-      sellDescriptionVC.descriptionS = (listing?.descriptionS)!
+    if let desc = listing?.descriptionS {
+      sellDescriptionVC.descriptionS = (desc)
     }
     navigationController?.pushViewController(sellDescriptionVC, animated: true)
   }
@@ -35,10 +35,12 @@ extension UPMSellTVC {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
     var priceFormatVC = storyboard.instantiateViewControllerWithIdentifier(SellPriceFormatStoryboard) as! UPMSellPriceFormatTVC
     priceFormatVC.delegate = self
-    priceFormatVC.price = (listing?.price)!
-    priceFormatVC.limit = (listing?.limit)!
-    priceFormatVC.oBO = ((listing?.oBO)?.boolValue)!
-
+    
+    if let price = listing?.price, let limit = listing?.limit, let oBO = listing?.oBO {
+      priceFormatVC.price = price
+      priceFormatVC.limit = limit
+      priceFormatVC.oBO = Bool(oBO)
+    }
     navigationController?.pushViewController(priceFormatVC, animated: true)
   }
   
@@ -46,6 +48,9 @@ extension UPMSellTVC {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
     var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as! UPMSellTitleTVC
     titleVC.delegate = self
+    if let title = listing?.title {
+      titleVC.titleS = title
+    }
     navigationController?.pushViewController(titleVC, animated: true)
   }
   

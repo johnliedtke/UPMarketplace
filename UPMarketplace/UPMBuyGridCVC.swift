@@ -86,7 +86,7 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
     }
     
     //TODO: Change details
-    cell.configureCell(listing.title, price: listing.displayPrice(), details: "Reserve Now")
+    cell.configureCell(listing.title!, price: listing.displayPrice(), details: "Reserve Now")
     
     return cell
   }

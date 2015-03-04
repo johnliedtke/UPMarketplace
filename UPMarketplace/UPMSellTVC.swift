@@ -38,6 +38,9 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   /// Listing to be posted. Should be overriden and return subclass.
   var listing: UPMListing?
   
+  /// Whether an existing listing is being updated.
+  var isUpdatingListing = false
+  
   enum CellSection: Int {
     case Title = 0, Required , Optional;
     static let allValues = [Title, Required, Optional]
@@ -61,7 +64,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
 
   override func viewDidLoad() {
     super.viewDidLoad()
-    listing = UPMOtherListing()
     tableView.estimatedRowHeight = 100
     tableView = UITableView(frame: tableView.frame, style: UITableViewStyle.Grouped)
     tableView.backgroundColor = UIColor.standardBackgroundColor()
@@ -77,6 +79,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     // Items
     createRequiredItems()
     createOptionalItems()
+    initItemFields()
     
     // Cells
     tableView.registerNib(UINib(nibName: SellCellIdentifier, bundle: nil), forCellReuseIdentifier: SellCellIdentifier)
@@ -104,6 +107,17 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     requiredItems.addItems([titleItem, photoItem, priceFormatItem, detailsItem, descriptionItem])
   }
   
+  func initItemFields() {
+    if isUpdatingListing {
+      navigationItem.rightBarButtonItem?.title = "Update"
+      navigationItem.title = "Listing"
+      self.didUpdateTitle((self.listing?.title)!)
+      self.updatedPriceFormat((listing?.price)!, limit: 33.2, oBo: Bool((listing?.oBO)!))
+      descriptionUpdated((listing?.descriptionS)!)
+    }
+  }
+  
+  
   /// Creates the default optional items, can be overriden to provide custom optional items.
   func createOptionalItems() {
     //TODO: Implement a tags controller
@@ -113,10 +127,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   
   // MARK: Private Methods
   
-  required init(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-  
+
   // MARK: - Posting Methods
   
   /// Calls post() if required items are complete. Otherwise displays

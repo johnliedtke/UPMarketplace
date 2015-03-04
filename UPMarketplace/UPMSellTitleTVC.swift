@@ -24,6 +24,9 @@ class UPMSellTitleTVC: UITableViewController, UITextViewDelegate {
     addDoneButtonToNavigationItemWithSelector("didPressDoneButton:")
     addCancelButtontToNavigationItemWithSelector("didPressCancelButton:")
     titleTextView.becomeFirstResponder()
+    titleTextView.text = titleS
+      
+
 
   }
   

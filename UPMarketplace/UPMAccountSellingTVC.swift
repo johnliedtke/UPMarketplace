@@ -117,13 +117,24 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   }
   
   // MARK: - Tableview Delegate
-
-  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-      // Return NO if you do not want the specified item to be editable.
-      return true
+  
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+    var listing = objectAtIndexPath(indexPath)
+    
+    if listing.parseClassName == "UPMOtherListing", let otherListing = listing as? UPMOtherListing {
+      var updateOtherListing = UPMSellOtherTVC()
+      updateOtherListing.otherListng = otherListing
+      updateOtherListing.isUpdatingListing = true
+      navigationController?.pushViewController(updateOtherListing, animated: true)
+    }
   }
-
-  // Override to support editing the table view.
+  
+  // MARK: Edit Actions
+  
+  override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+    return true
+  }
+  
   override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
       if editingStyle == .Delete {
           // Delete the row from the data source
@@ -136,7 +147,7 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
     return UITableViewCellEditingStyle.Delete
   }
-
+  
   override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
     
     var listing = objectAtIndexPath(indexPath) as! UPMListing
@@ -255,10 +266,7 @@ extension PFQueryTableViewController {
                     })
             }
             let colors = [UIColor.flatLightOrangeColor(), UIColor.flatLightRedColor(), UIColor.flatLightGreenColor()]
-            
-
-           // var meow = editActions.filter({$0.labelText == ""})
-            
+          
             for (index, editAction) in enumerate(editActions) {
                 editAction.backgroundColor = colors[index]
             }
