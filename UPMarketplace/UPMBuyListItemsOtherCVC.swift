@@ -28,10 +28,17 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
     super.viewDidLoad()
     
     // Add filter button
-    var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action:Selector("goToRear"))
-    revealViewController().navigationItem.rightBarButtonItem = filterButton
-    revealViewController().navigationItem.title = "Other Listings"
+   // var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action:Selector("goToRear"))
+   // revealViewController().navigationItem.rightBarButtonItem = filterButton
+    revealViewController().navigationItem.title = "Furniture & Other Listings"
+    
+   
+
+    
   }
+
+
+  
   
   func didFinishFiltering(sender: UPMCategoryFilterMainTVC, category: String) {
     self.revealViewController().pushFrontViewController(self, animated: true)
