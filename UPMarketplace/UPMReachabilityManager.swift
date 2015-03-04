@@ -41,9 +41,20 @@ class UPMCategoryTag {
   static let categoryTagManager = UPMCategoryTag()
   
   func tags() -> [String: [String]] {
-    return ["Furniture": ["Desk", "Table", "Chair"], "Appliance": ["Mini Fridge", "Microwave"]]
+    return [
+      "Furniture": ["Desk", "Table", "Chair", "Light", "Sofa", "Bed", "Bed Frame", "Storage"],
+      "Appliance": ["Mini Fridge", "Microwave", "Coffee Machine", "Toaters", "Large Appliances", "Vaccum", "Mixing Supplies"],
+      "Transportation": ["Bike", "Skateboard", "Scooter", "Car", "Other", "Locks"],
+      "Clothing": ["Mens", "Womens"],
+      "Decor": ["Posters", "Mirrors", "Pictures", "Holiday Decor"],
+      "Cooking": ["Pots and Pans", "Dishes", "Rice Cookers", "Utensiles"],
+      "School": ["Writing Implements", "Binders", "Paper", "Notebooks", "Backpacks", "Calculators", "Nursing Supplies"],
+      "Outdoors": ["Furniture", "BBQ", "Sporting Goods"],
+      "Electronics": ["Computers", "Phones", "Phone Cases", "Printers", "Computer Components", "Speakers", "TV", "Gaming Systems", "Games", "Cables", "Cameras", "Internet Supplies"]
+    ]
   }
-
+ 
+  
   func categories() -> [String] {
     return ["Furniture",	"Appliance",	"Transportation",	"Clothing", "Decor",	"Cooking", "School",	"Outdoors", "Electronics"]
   }

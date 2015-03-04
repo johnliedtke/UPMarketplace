@@ -59,6 +59,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var buyTabBarItem = buyCategoryVC.tabBarItem
     buyTabBarItem.title = "Buy"
     buyTabBarItem.image = UIImage(named: "buy.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+    buyTabBarItem.selectedImage = UIImage(named: "buySelected.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
+
     controllers.append(buyCategoryVC)
     
     

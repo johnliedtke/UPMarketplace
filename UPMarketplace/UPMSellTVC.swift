@@ -121,8 +121,8 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   /// Creates the default optional items, can be overriden to provide custom optional items.
   func createOptionalItems() {
     //TODO: Implement a tags controller
-    var tagsItem = UPMSellItem(title: OptionalItems.Tags.rawValue, description: "Select")
-    optionalItems.addItems([tagsItem])
+    //var tagsItem = UPMSellItem(title: OptionalItems.Tags.rawValue, description: "Select")
+    //optionalItems.addItems([tagsItem])
   }
   
   // MARK: Private Methods
@@ -246,7 +246,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     case CellSection.Required:
       return "Required"
     case CellSection.Optional:
-      return "Optional"
+      return optionalItems.count > 0 ? "Optional" : nil
     default:
       return ""
     }
