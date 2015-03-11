@@ -51,7 +51,8 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     
     override func viewDidLoad() {
       super.viewDidLoad()
-      tableView.estimatedRowHeight = 50.0
+      tableView.estimatedRowHeight = 100.0
+      noDataMessage = "You have not reserved anything.\nPull to refresh."
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -61,17 +62,15 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     
     override func viewWillDisappear(animated: Bool) {
       super.viewWillDisappear(animated)
-      tableView.estimatedRowHeight = 50.0
       tableView.userInteractionEnabled = false
     }
     
     
     // MARK - Private Methods
     var isDisplayingActionSheet = false
-    
+
     
     // MARK: - Table view data source
-    
     
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
       var reservation = object as! UPMReservation

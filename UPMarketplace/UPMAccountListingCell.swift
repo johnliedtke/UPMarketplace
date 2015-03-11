@@ -56,7 +56,6 @@ public class UPMAccountListingCell: PFTableViewCell {
   
   // MARK: - Private Properties
   
-  
   // MARK: - Pubic Methods
   
   /**

@@ -124,7 +124,7 @@ public class UPMListing: PFObject  {
     
     // Fetch the reservations
     self.fetchInBackground().continueWithBlock {
-      (task: BFTask!) -> AnyObject! in
+      [unowned self] (task: BFTask!) -> AnyObject! in
       var error: NSError!
 
       if !self.reservations!.filter({ return $0.reserver.objectId == reserver.objectId }).isEmpty {
@@ -149,10 +149,12 @@ public class UPMListing: PFObject  {
       }
       
       }.continueWithSuccessBlock {
-        (task: BFTask!) -> AnyObject! in
-        var activity = UPMActivity(title: "Made Reservation", description: "\(self.title)", user: reserver)
-        return activity.saveInBackground()
-        
+        [unowned self] (task: BFTask!) -> AnyObject! in
+        // Add activity for seller and buyer
+        let buyerActivity = UPMActivity(title: "Made Reservation:", description: "Reservation:\n\(self.title!)", user: reserver)
+//        let sellerActivity = UPMActivity(title: "Your listing has been reserved:", description: <#String#>, user: <#PFUser#>)
+        return buyerActivity.saveInBackground()
+
       }.continueWithBlock { (task: BFTask!) -> AnyObject! in
         if task.error == nil {
           reserveTask.setResult("Success")
@@ -164,12 +166,7 @@ public class UPMListing: PFObject  {
     }
     return reserveTask.task
   }
-  
-  deinit {
-    //println("Deallocating listing")
-  }
-  
-  
+
   /**
   Delete reservation. Deletes a given reservation and updates the listing
   to be unhidden.
@@ -474,7 +471,7 @@ public class UPMListing: PFObject  {
   /**
   Returns the reservation that is waiting for action by the seller.
   
-  :returns: First reservation waiting for action
+  :returns: Returns the first accepted reservation
   */
   public func getAcceptedReservation() -> UPMReservation? {
     return reservations.filter({ $0.status == ReservationStatus.Accepted.rawValue}).first
@@ -605,70 +602,12 @@ public class UPMListing: PFObject  {
     return nil
   }
   
-  // MARK: - Display 
-  
-  /**
-  Creates a query that inlucdes all the necessary relational data to display
-  a listing.
-  
-  :returns: Query to displaying listings
-  */
-  class func displayQuery() -> PFQuery {
-    var listingQuery = PFQuery(className: "UPMOtherListing")
-    listingQuery.orderByDescending("createdAt")
-    listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
-    listingQuery.includeKey("blackListedUsers")
-    listingQuery.includeKey(NSString(string: "reservations") as! String)
-    listingQuery.includeKey("reservations.reserver")
-    return listingQuery
+  deinit {
+    println("Listing deallocated")
   }
-  
-  /// Displays the price in human-readable form, e.g. $50.00
-  func displayPrice() -> String {
-    return String(format: "$%.2f", price)
-  }
-  
-  /**
-  Creates a description of listing's reservation status for the seller.
-  
-  :returns: Seller's listing reserveation status
-  */
-  public func displaySellerReservationStatus() -> String {
-    if reservationCount().accepted > 0 {
-      return "Accepted Reservation"
-    } else if reservationCount().waiting > 0 {
-      return "Reservation Waiting"
-    } else {
-      return "No Reservations"
-    }
-  }
-  
-  /**
-  Creates a string describing the status of a reservation.
-  
-  :returns: Reservation status of a listing.
-  */
-  public func displayReservationStatus() -> String {
-    if reservations!.isEmpty {
-      return "No Reservations"
-    }
-    if let firstReservation = reservations!.first {
-      switch(ReservationStatus(rawValue: firstReservation.status)!) {
-      case .Accepted:
-        return "Reservation Accepted"
-      case .Waiting:
-        return "Reservation Need Action"
-      case .Rejected:
-        return "Reservation Rejcted"
-      default:
-        return "Reservation Error"
-      }
-    }
-    return ""
-  }
-  
 }
 
+ 
 extension NSError {
   class func createError(localizedDescription: String, failureReason: String, suggestion: String) -> NSError {
     var userInfo = [NSLocalizedDescriptionKey: localizedDescription, NSLocalizedFailureReasonErrorKey: failureReason, NSLocalizedRecoverySuggestionErrorKey: suggestion]

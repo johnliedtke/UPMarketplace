@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol UPMSellImagePickerDelegate {
+protocol UPMSellImagePickerDelegate: class {
   func didUpdatePhoto(image: UIImage)
 }
 
@@ -22,7 +22,7 @@ class UPMSellImagePickerVC: UIViewController, UIImagePickerControllerDelegate, U
   @IBOutlet var cameraButton: UIToolbar!
   @IBOutlet var toolBar: UIToolbar!
   
-  var delegate: UPMSellImagePickerDelegate?
+  weak var delegate: UPMSellImagePickerDelegate?
   var image: UIImage? = nil
 
   // MARK: - Private Properties

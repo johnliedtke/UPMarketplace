@@ -28,14 +28,13 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   var objects: [PFObject] = [PFObject]()
   
   /// Enable activity indicator in middle of screen when loading
-  var activityViewEnabled = true
+  var activityViewEnabled = false
   
   /// Enable pull to refresh
   var pullToRefreshEnabled: Bool = true
   
   /// Currently refreshing the data (pulled to refresh)
   var isRefreshing: Bool = false
-
 
   // MARK: - Private Properties
   
@@ -183,7 +182,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
         //FIXME: Fix slow initial fetching.
         
         PFQuery.combineQueriesInBackground(queriesToPerform).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
-          (task) in
+          [unowned self] (task) in
               if task.error == nil {
                 // Success
                 if var fetchedObjects = task.result as? [PFObject] {

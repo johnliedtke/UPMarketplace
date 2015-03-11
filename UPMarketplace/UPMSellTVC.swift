@@ -107,6 +107,9 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     requiredItems.addItems([titleItem, photoItem, priceFormatItem, detailsItem, descriptionItem])
   }
   
+  /**
+  Used to set the sell items if being used to update a listing.
+  */
   func initItemFields() {
     if isUpdatingListing {
       navigationItem.rightBarButtonItem?.title = "Update"
@@ -114,9 +117,19 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       self.didUpdateTitle((self.listing?.title)!)
       self.updatedPriceFormat((listing?.price)!, limit: 33.2, oBo: Bool((listing?.oBO)!))
       descriptionUpdated((listing?.descriptionS)!)
+      listing?.picture?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+       [unowned self] (task) in
+        if task.error == nil, let imageData = task.result as? NSData {
+          var imageItem = self.requiredItems.itemWithTitle(RequiredItems.Photos.rawValue)
+          self.requiredItems.updateItemWithTitle(RequiredItems.Photos.rawValue, description: "Image Selected", isComplete: true)
+          self.listing?.photo = UIImage(data: imageData)
+          self.tableView.reloadData()
+        }
+        return nil
+      })
+
     }
   }
-  
   
   /// Creates the default optional items, can be overriden to provide custom optional items.
   func createOptionalItems() {
@@ -156,7 +169,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       hud.labelText = "Posting..."
       UIApplication.sharedApplication().beginIgnoringInteractionEvents()
       
-      self.post().continueWithBlock({ (task: BFTask!) -> AnyObject! in
+      self.post().continueWithBlock({ [unowned self] (task: BFTask!) -> AnyObject! in
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
         if task.error == nil {
           hud.labelText = "Success"
@@ -263,11 +276,11 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         if listing?.photo != nil {
           cell.displayImageView.image = listing?.photo
         }
-        cell.displayImageViewTapped = { (sender: AnyObject) -> Void in
+        cell.displayImageViewTapped = { [unowned self] (sender: AnyObject) in
           self.pushImagePickerVC()
           return
         }
-        cell.titleLabelTapped = { (sender: AnyObject) -> Void in
+        cell.titleLabelTapped = { [unowned self] (sender: AnyObject) in
           self.pushTitleVC()
           return;
         }
@@ -282,9 +295,8 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         var i = optionalItems.itemAtIndex(indexPath.row)
         cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         return cell
-      default:
-        NSLog("meow")
-      }
+      default:break
+    }
   }
   
   override func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

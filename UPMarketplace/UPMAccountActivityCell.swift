@@ -7,14 +7,42 @@
 //
 
 import UIKit
+
+extension UPMAccountActivityCell {
+  func configureCellForActivity(#activity: UPMActivity) {
+    titleLabel.text = activity.title
+    messageLabel.text = activity.activityDescription
+    
+    let dateFormatter = NSDateFormatter()
+    dateFormatter.setLocalizedDateFormatFromTemplate("EEE, MMM d, ''yy")
+    dateLabel.text = dateFormatter.stringFromDate(activity.date)
+
+    }
+}
+
 class UPMAccountActivityCell: PFTableViewCell {
   
-  lazy var messageLabel: UILabel = {
+  lazy var titleLabel: UILabel = { [unowned self] in
+    let label = UILabel(forAutoLayout: true)
+    label.font = UIFont.standardHeaderTwoFont()
+    label.numberOfLines = 0
+    self.contentView.addSubview(label)
+    return label
+  }()
+  
+  lazy var dateLabel: UILabel = { [unowned self] in
+    let label = UILabel(forAutoLayout: true)
+    label.font = UIFont.standardCaptionFont()
+    self.contentView.addSubview(label)
+    return label
+  }()
+  
+  lazy var messageLabel: UILabel = { [unowned self] in
     var label = UILabel()
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
-    self.contentView.addSubview(label)
     label.font = UIFont.systemFontOfSize(14.0)
     label.numberOfLines = 0
+    self.contentView.addSubview(label)
     return label
     }()
   
@@ -28,32 +56,36 @@ class UPMAccountActivityCell: PFTableViewCell {
   
   override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
     super.init(style: style, reuseIdentifier: reuseIdentifier)
+    setup()
+
     
+  }
+
+ 
+  
+  func setup() {
     // Elements dictionary, holds all subviews
-    var ed: [NSObject : AnyObject] = ["messageLabel": messageLabel, "iconImageView": iconImageView]
+    let ed: [NSObject : AnyObject] = ["messageLabel": messageLabel, "iconImageView": iconImageView, "titleLabel": titleLabel, "dateLabel": dateLabel]
     
-    // Layout
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-[iconImageView(50)]-[messageLabel]-(>=8)-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[iconImageView(50)]-[titleLabel]-[dateLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "V:|-[iconImageView(50)]-(>=8)-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[iconImageView]-[messageLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "V:|-[messageLabel]-|",
-      options: NSLayoutFormatOptions.DirectionLeadingToTrailing,
-      metrics: nil,
-      views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel][messageLabel]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: ed))
+    
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[dateLabel][messageLabel]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[iconImageView(50)]-(>=8)-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ed))
+
+    
+    titleLabel.setContentHuggingPriority(100, forAxis: .Horizontal)
+    dateLabel.setContentHuggingPriority(900, forAxis: .Horizontal)
+    messageLabel.setContentHuggingPriority(100, forAxis: .Vertical)
+    //messageLabel.setContentCompressionResistancePriority(1000, forAxis: .Vertical)
+    
   }
   
   required init(coder aDecoder: NSCoder) {
-    fatalError("init(coder:) has not been implemented")
+    super.init(coder: aDecoder)
+    setup()
   }
-  
 }

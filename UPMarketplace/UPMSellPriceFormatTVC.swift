@@ -9,7 +9,7 @@
 import UIKit
 
 
-protocol UPMSellPriceFormatDelegate {
+protocol UPMSellPriceFormatDelegate: class {
   func updatedPriceFormat(price: Double, limit: Double?, oBo: Bool)
 }
 
@@ -18,7 +18,7 @@ let MAX_LENGTH = 8
 /// Used to collect user-input for the price of a UPMListing.
 class UPMSellPriceFormatTVC: UITableViewController, UITextFieldDelegate {
   
-  var delegate: UPMSellPriceFormatDelegate?
+  weak var delegate: UPMSellPriceFormatDelegate?
   var price: Double = 0.00
   var oBO: Bool = false
   var limit: Double = 0.00

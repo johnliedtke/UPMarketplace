@@ -87,6 +87,10 @@ extension UIFont {
   class func standardBolTextFont() -> UIFont {
     return standardBoldFontOfSize(14.0)
   }
+  
+  class func standardCaptionFont() -> UIFont {
+    return standardFontOfSize(12.0)
+  }
 }
 
 

@@ -22,5 +22,9 @@ class UPMButton: UIButton {
   override func layoutSubviews() {
     super.layoutSubviews()
     setTitleColor(UIColor.lightPurpleColor(), forState: UIControlState.Normal)
+    
+    layer.borderColor = UIColor.lightPurpleColor().CGColor
+ 
+    
   }
 }

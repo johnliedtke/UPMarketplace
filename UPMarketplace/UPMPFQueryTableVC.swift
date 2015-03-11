@@ -19,10 +19,15 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   /// The key used on fetched PFObjects to put them into sections
   public var sectionKey: String = "message"
   
+  public var noDataMessage: String = "No data available."
+  
   // MARK: - Private Properties
   
   /// Contains all the indices (for objects) corresponding to a section
   private var sectionIndices = [String: [Int]]()
+  
+  /// No Data Label
+  var noDataLabel = UILabel()
   
   /**
   Maps a section to a sectionKey that can be used to obtain the indices for
@@ -95,6 +100,10 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     tableView.reloadData()
   }
   
+  public func queries() -> [PFQuery]? {
+    return nil
+  }
+  
   override public func objectAtIndexPath(indexPath: NSIndexPath!) -> PFObject! {
     var currentSectionKey = keyForSection(indexPath.section)
     var rowIndicesInSection = sectionIndices[currentSectionKey]!
@@ -106,15 +115,36 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
   // MARK: - UITableViewDatasource
   
   public override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    displayNoDataAvailable()
     return sectionToKeyMap.count
   }
   
   public override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     var currentSectionKey = keyForSection(section)
     var rowsInSection = sectionIndices[currentSectionKey]!
+
     return rowsInSection.count
   }
-  
+
+  func displayNoDataAvailable() {
+    
+    if objects.isEmpty {
+    tableView.addSubview(noDataLabel)
+    noDataLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+    tableView.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterX, relatedBy: .Equal, toItem: tableView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+    tableView.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterY, relatedBy: .Equal, toItem: tableView, attribute: .CenterY, multiplier: 1.0, constant: -100))
+    tableView.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .Width, relatedBy: .Equal, toItem: tableView, attribute: .Width, multiplier: 1.0, constant: 0))
+    noDataLabel.text = noDataMessage
+    noDataLabel.textColor = UIColor.darkGrayColor()
+    noDataLabel.numberOfLines = 0
+    noDataLabel.textAlignment = NSTextAlignment.Center
+    noDataLabel.font = UIFont.standardBoldTitleFont()
+    tableView.separatorStyle = UITableViewCellSeparatorStyle.None
+    } else {
+      noDataLabel.removeFromSuperview()
+    }
+  }
+
   public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     return keyForSection(section)
   }

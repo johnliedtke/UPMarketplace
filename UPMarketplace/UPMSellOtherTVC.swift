@@ -50,6 +50,19 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     }
   }
   
+  override func initItemFields() {
+    super.initItemFields()
+    if isUpdatingListing {
+      if let category = otherListng.category {
+        requiredItems.updateItemWithTitle(CategoryTag, description: "Category: \(category)", isComplete: true)
+        if let tag = otherListng.tag {
+          requiredItems.updateItemWithTitle(CategoryTag, description: "Category: \(category)\nTag: \(tag)", isComplete: true)
+        }
+
+      }
+    }
+  }
+  
   // MARK: - Details
 
   override func pushDetailsVC() {

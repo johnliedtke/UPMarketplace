@@ -16,6 +16,63 @@ struct UPMLoginVCConstants {
   static let loginStoryboardIdentifier = "UPMLogin"
 }
 
+
+extension PFUser {
+  class func doSomethingComplicatedAsync(taskFunc: ()->BFTask, progress: NSProgress) -> BFTask {
+    let complicatedTask = BFTaskCompletionSource()
+    
+    taskFunc().continueWithBlock() { (task) in
+      if progress.cancelled {
+        complicatedTask.cancel()
+      }
+      if task.error == nil {
+        complicatedTask.setResult(task.result)
+      } else {
+        if let error = task.error {
+          println(error.localizedDescription)
+        }
+        complicatedTask.setError(task.error)
+      }
+      return nil
+    }
+    return complicatedTask.task
+  }
+
+  class func doSomethingComplicatedAsync(progress: NSProgress) {
+    PFUser.logInWithUsernameInBackground("eow", password: "Meow").continueWithBlock() { (task) in
+      if progress.cancelled {
+        return task.cancelled
+      }
+      println("meow")
+      return task.result
+    }
+
+  }
+}
+
+
+
+/*
+- (void)doSomethingComplicatedAsync:(MYCancellationToken *)cancellationToken {
+  [[self doSomethingAsync:cancellationToken] continueWithBlock:^{
+    if (cancellationToken.isCancelled) {
+    return [BFTask cancelledTask];
+    }
+    // Do something that takes a while.
+    return result;
+    }];
+}
+
+
+// Somewhere else.
+MYCancellationToken *cancellationToken = [[MYCancellationToken alloc] init];
+[obj doSomethingComplicatedAsync:cancellationToken];
+
+// When you get bored...
+[cancellationToken cancel];
+*/
+
+
 /**
   UPMLoginVC handles creating new users and signing in existing
   ones. Users who are signed in must have their email confirmed. 
@@ -73,26 +130,19 @@ public class UPMLoginVC: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.standardBackgroundColor()
-    
-    var currentUser = PFUser.currentUser()
-
-    var barButtonItem = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.Cancel, target: self, action: "pop")
-    navigationItem.leftBarButtonItem = barButtonItem
-    
   }
+  
+  func timerFinished(timer: NSTimer) {
+    println("Timer finished")
+    if let progress = timer.userInfo?["progress"] as? NSProgress {
+      progress.cancel()
+    }
+
+  }
+  
+  
   func pop() -> Void {
     dismissViewControllerAnimated(true, completion: nil)
-  }
-  
-  
-  override public func viewWillAppear(animated: Bool) {
-    super.viewWillAppear(animated)
-    //tabBarController?.tabBar.hidden = true
-  }
-  
-  override public func viewWillDisappear(animated: Bool) {
-    super.viewWillDisappear(animated)
-   // tabBarController?.tabBar.hidden = false
   }
   
   /**
@@ -105,9 +155,21 @@ public class UPMLoginVC: UIViewController {
   */
   func logIn(username: String, password: String) -> Void {
     
-    PFUser.logInWithUsernameInBackground(username, password: password).continueWithBlock {
-      (task: BFTask!) -> AnyObject! in
-      
+    
+    var progress = NSProgress(parent: nil, userInfo: nil)
+    
+    if UPMReachabilityManager.isUnreachable() {
+      UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
+      return
+    }
+
+    var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+    hud.labelText = "Logging in..."
+    hud.graceTime = 1.0
+    
+    PFUser.doSomethingComplicatedAsync({return PFUser.logInWithUsernameInBackground(username, password: password)}, progress: progress).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { [unowned self] (task) in
+        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+
       if task.error == nil {
         
         let user = task.result as! PFUser
@@ -121,6 +183,7 @@ public class UPMLoginVC: UIViewController {
         } else {
           self.logInSuccessfulHandler(sender: self)
         }
+
       } else {
         // Display error
         let error = task.error
@@ -130,7 +193,37 @@ public class UPMLoginVC: UIViewController {
         self.presentViewController(alertError, animated: true, completion: nil)
       }
       return nil
-    }
+
+    })
+    
+    
+    
+//    PFUser.logInWithUsernameInBackground(username, password: password).continueWithBlock {
+//      (task: BFTask!) -> AnyObject! in
+//      
+//      if task.error == nil {
+//        
+//        let user = task.result as! PFUser
+//        
+//        // Confirm that the user has a verified email address
+//        if !user.isEmailVerified() {
+//          PFUser.logOut()
+//          var emailAlert = UIAlertController(title: "Email not confirmed", message: "Please verify your email address.", preferredStyle: .Alert)
+//          emailAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+//          self.presentViewController(emailAlert, animated: true, completion: nil)
+//        } else {
+//          self.logInSuccessfulHandler(sender: self)
+//        }
+//      } else {
+//        // Display error
+//        let error = task.error
+//        var errorString = error.userInfo?[NSString(string: "error")] as! NSString
+//        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
+//        alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
+//        self.presentViewController(alertError, animated: true, completion: nil)
+//      }
+//      return nil
+//    }
   }
   
   /**

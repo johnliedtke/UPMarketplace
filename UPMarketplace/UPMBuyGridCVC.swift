@@ -76,14 +76,68 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
     // Grab the picture-file and retrieve it from parse
     var picture = object["picture"] as? PFFile
     
-    if let thumbnail = object["pictureThumbnail"] as? PFFile {
-      cell.listingImageView.file = thumbnail
-      cell.listingImageView.loadInBackground()
-    } else {
-      cell.listingImageView.file = listing.picture
-      //cell.listingImageView.image = nil
-      cell.listingImageView.loadInBackground()
+    
+    
+    var weakFile = listing.pictureThumbnail
+    
+    
+//    [cell.imageView sd_setImageWithURL:[NSURL URLWithString:@"http://www.domain.com/path/to/image.jpg"]
+    //  placeholderImage:[UIImage imageNamed:@"placeholder.png"]];
+    
+    if let url = weakFile?.url {
+//      cell.listingImageView.sd_setImageWithURL(NSURL(string: url))
+      cell.listingImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: nil, completed: { [unowned self, cell] (image, error, cache, url) in
+        cell.layer.shouldRasterize = true
+        cell.layer.rasterizationScale = UIScreen.mainScreen().scale
+
+      })
     }
+    
+//    weakFile?.getDataInBackground().continueWithBlock()  {
+//      [unowned self, cell] (task)  in
+//      if task.error == nil, let imageData = task.result as? NSData {
+//        //        listing.photo = UIImage(data: imageData)
+//        let image = UIImage(data: imageData)
+//        image?.CGImage
+//        cell.listingImageView.image = UIImage(data: imageData)
+//        
+//        dispatch_async(dispatch_get_main_queue(), { [unowned self, cell] in
+//          if let image = image {
+//            cell.listingImageView.image = image
+//          }
+//        })
+//        
+    
+        
+//      } else {
+//        //      cell.listingImageView.image = listing.photo
+//      }
+//      return nil
+//      }
+    
+//    weakFile?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+//      [unowned self, cell] (task)  in
+//      if task.error == nil, let imageData = task.result as? NSData {
+////        listing.photo = UIImage(data: imageData)
+//        cell.listingImageView.image = UIImage(data: imageData)
+//      } else {
+//  //      cell.listingImageView.image = listing.photo
+//      }
+//      return nil
+//      })
+
+    
+    
+    
+
+//    if let thumbnail = object["pictureThumbnail"] as? PFFile {
+//      cell.listingImageView.file = thumbnail
+//      cell.listingImageView.loadInBackground()
+//    } else {
+//      cell.listingImageView.file = listing.picture
+//      //cell.listingImageView.image = nil
+//      cell.listingImageView.loadInBackground()
+//    }
     
     //TODO: Change details
     cell.configureCell(listing.title!, price: listing.displayPrice(), details: "Reserve Now")

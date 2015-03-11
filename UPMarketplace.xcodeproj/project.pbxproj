@@ -128,6 +128,7 @@
 		52E571681A1DD8B90056FCD8 /* UPMSellOtherTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E571671A1DD8B90056FCD8 /* UPMSellOtherTVC.swift */; };
 		52E5716E1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5716D1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift */; };
 		52E571701A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */; };
+		52FBF94E1AA935BE00F7F96C /* UPMListingDisplayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */; };
 		52FEAAE81A67094300240E25 /* UPMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FEAAE71A67094300240E25 /* UPMUser.swift */; };
 		60C0BCEC1A704BA00029C355 /* UPMReservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C0BCEA1A704BA00029C355 /* UPMReservation.swift */; };
 		60C0BCED1A704BA00029C355 /* UPMReservationObo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C0BCEB1A704BA00029C355 /* UPMReservationObo.swift */; };
@@ -314,6 +315,7 @@
 		52E571671A1DD8B90056FCD8 /* UPMSellOtherTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellOtherTVC.swift; sourceTree = "<group>"; };
 		52E5716D1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellDetailsTVC.swift; sourceTree = "<group>"; };
 		52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellOtherDetailsTVC.swift; sourceTree = "<group>"; };
+		52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMListingDisplayExtension.swift; sourceTree = "<group>"; };
 		52FEAAE71A67094300240E25 /* UPMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMUser.swift; sourceTree = "<group>"; };
 		577B26F9312C66E604906FFB /* Pods-UPMarketplace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UPMarketplace.release.xcconfig"; path = "Pods/Target Support Files/Pods-UPMarketplace/Pods-UPMarketplace.release.xcconfig"; sourceTree = "<group>"; };
 		60C0BCEA1A704BA00029C355 /* UPMReservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMReservation.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 			children = (
 				52CA48FD1A743EC600073F2F /* Model */,
 				521329841A3E2B1A003E345A /* UPMListing.swift */,
+				52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */,
 				521329851A3E2B1A003E345A /* UPMTextbookListing.swift */,
 				521329861A3E2B1A003E345A /* UPMOtherListing.swift */,
 				521329871A3E2B1A003E345A /* UPMHousingListing.swift */,
@@ -1087,6 +1090,7 @@
 				52CA48FF1A743EDC00073F2F /* UPMSubcategory.swift in Sources */,
 				60C0BCED1A704BA00029C355 /* UPMReservationObo.swift in Sources */,
 				529F39141A79885A000ED764 /* UPMAccountReservedTVC.swift in Sources */,
+				52FBF94E1AA935BE00F7F96C /* UPMListingDisplayExtension.swift in Sources */,
 				521313171A70450500F67813 /* UPMLoginVC.swift in Sources */,
 				52CA49071A743F8400073F2F /* UPMCloud.swift in Sources */,
 				525B89821A17FC9E00A7CB6D /* UPMSellDescriptionTextView.swift in Sources */,
@@ -1375,7 +1379,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Liedtke (BX5CP76VJ3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/UPMarketplace",
@@ -1384,6 +1389,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "UPMarketplace/UPMarketplace-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -1395,7 +1401,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer: John Liedtke (BX5CP76VJ3)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/UPMarketplace",
@@ -1404,6 +1411,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "UPMarketplace/UPMarketplace-Bridging-Header.h";
 			};
 			name = Release;

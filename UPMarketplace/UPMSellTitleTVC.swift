@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol UPMSellTitleDelegate {
+protocol UPMSellTitleDelegate: class {
   func didUpdateTitle(title: String)
 }
 
 class UPMSellTitleTVC: UITableViewController, UITextViewDelegate {
-  var delegate: UPMSellTitleDelegate?
+  weak var delegate: UPMSellTitleDelegate?
   var titleS = ""
   @IBOutlet var titleTextView: UITextView!
   

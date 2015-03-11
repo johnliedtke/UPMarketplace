@@ -48,9 +48,9 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 50.0
-    
-    
 
+//    tableView.estimatedRowHeight = 100.0
+    //tableView.registerClass(UPMAccountActivityCell.self, forHeaderFooterViewReuseIdentifier: "ActivityCell")
   }
   
   override func viewWillAppear(animated: Bool) {
@@ -60,7 +60,6 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
   
   override func viewWillDisappear(animated: Bool) {
     super.viewWillDisappear(animated)
-    tableView.estimatedRowHeight = 50.0
     tableView.userInteractionEnabled = false
   }
   
@@ -79,10 +78,10 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
       var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
       return loadMoreCell as! PFTableViewCell
     }
-
-    var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")
-    cell.messageLabel.text = activity.activityDescription
     
+    var cell = tableView.dequeueReusableCellWithIdentifier("ActivityCell") as? UPMAccountActivityCell ?? UPMAccountActivityCell(style: .Default, reuseIdentifier: "ActivityCell")
+    cell.configureCellForActivity(activity: activity)
+
     return cell
   }
   

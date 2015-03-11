@@ -11,3 +11,4 @@
 #import <ParseUI/ParseUI.h>
 #import "Reachability.h"
 #import "SWRevealViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
