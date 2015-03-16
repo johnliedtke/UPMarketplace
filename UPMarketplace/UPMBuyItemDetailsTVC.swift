@@ -87,7 +87,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     // Create toolbar for reserving and contacting
     var flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
     
-    var contactButton = UIBarButtonItem(title: "CONTACT", style: UIBarButtonItemStyle.Bordered, target: self, action: "contactSeller")
+    var contactButton = UIBarButtonItem(title: "CONTACT", style: .Plain, target: self, action: "contactSeller")
     var barItems = [flexSpace, contactButton, flexSpace, reserveButton, flexSpace]
     
     self.setToolbarItems(barItems, animated: true)

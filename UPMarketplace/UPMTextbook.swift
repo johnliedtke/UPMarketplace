@@ -19,14 +19,23 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   /// Edition of textbook
   @NSManaged public var edition: String?
   
-  /// Unformatted ISBN of a textbook
-  @NSManaged public var iSBN: String?
+  /// The ISBN10 number of a textbook, formatting removed
+  @NSManaged public var iSBN10: String?
+  
+  /// The ISBN13 number of a textbook, formatting removed
+  @NSManaged public var iSBN13: String?
   
   /// The professor that assigned the textbook
   @NSManaged public var professor: String?
 
   /// The course the textbook was used in. e.g. CS301
   @NSManaged public var course: String?
+  
+  /// Authors (separated by comma) in alphabetical order
+  @NSManaged public var authors: String?
+  
+  /// The URL of an image of the book
+  public var imageURL: String?
   
   // MARK: - Public Methods
   
@@ -37,7 +46,7 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   :returns: Formatted iSBN
   */
   public func getFormattedISBN() -> String {
-    return iSBN!
+    return iSBN10!
   }
   
   // MARK: - PFSubclassing Methods

@@ -26,7 +26,7 @@ class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
         cell.configureCell("Edition:", second: listingTextbook?.textbook?.edition)
         break
       case 1:
-       cell.configureCell("ISBN:", second: listingTextbook?.textbook?.iSBN)
+       cell.configureCell("ISBN:", second: listingTextbook?.textbook?.iSBN13)
         break
       case 2:
         cell.configureCell("Course:", second: listingTextbook?.textbook?.course)

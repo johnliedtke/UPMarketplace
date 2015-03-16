@@ -236,26 +236,26 @@ public class UPMLoginVC: UIViewController {
     let message = defaultFieldValues?["message"] ?? "You must sign up using your @up.edu email address."
     var signUpAlert = UIAlertController(title: "Registration", message: message, preferredStyle: .Alert)
     
-    signUpAlert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+    signUpAlert.addTextFieldWithConfigurationHandler { [unowned self] (textField) in
       textField.placeholder = "Email"
       textField.keyboardType = .EmailAddress
       textField.text = defaultFieldValues?["email"] ?? ""
       self.registerEmailField = textField
     }
     
-    signUpAlert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+    signUpAlert.addTextFieldWithConfigurationHandler { [unowned self] (textField) in
       textField.placeholder = "Full name"
       textField.text = defaultFieldValues?["fullName"] ?? ""
       self.registerFullNameField = textField
     }
     
-    signUpAlert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+    signUpAlert.addTextFieldWithConfigurationHandler { [unowned self] (textField) in
       textField.placeholder = "Password"
       textField.secureTextEntry = true
       self.registerPasswordField = textField
     }
     
-    signUpAlert.addTextFieldWithConfigurationHandler { (textField) -> Void in
+    signUpAlert.addTextFieldWithConfigurationHandler { [unowned self] (textField) in
       textField.placeholder = "Confirm password"
       textField.secureTextEntry = true
       self.registerPasswordConfirmationField = textField

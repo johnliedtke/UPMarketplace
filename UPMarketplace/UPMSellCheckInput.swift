@@ -27,5 +27,5 @@ protocol UPMSellCheckInput {
   
   /// Add action items/buttons to alertController. Should call in 
   /// viewDidLoad()
-  func addActionItemsToAlertController() -> Void
+  //func addActionItemsToAlertController() -> Void
 }

@@ -8,20 +8,18 @@
 
 import UIKit
 
-class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
+class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScannerDelegate {
   
   var textbookListing: UPMTextbookListing = UPMTextbookListing.initListing()
+  
+  /// The book scanned using the barcode scanner
+  private var scannedTextbook: UPMTextbook!
 
   override var listing: UPMListing? {
-    get {
-      return textbookListing
-    } set {
-      if newValue is UPMTextbookListing {
-        textbookListing = newValue as! UPMTextbookListing
-      }
-    }
+    get { return textbookListing }
+    set { if newValue is UPMTextbookListing { textbookListing = newValue as! UPMTextbookListing } }
   }
-  
+
   let CategoryTag = "Category"
 
   // MARK: - View
@@ -29,7 +27,8 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 100
-
+    
+    scanISBNAlert()
   }
 
 
@@ -45,6 +44,79 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     detailsVC.delegate = self
     navigationController?.pushViewController(detailsVC, animated: true)
   }
+  
+  func scanISBNAlert() {
+    let isbnSheet = UIAlertController(title: "Scan ISBN", message: "Do you want prefill fields by scanning your book's barcode?", preferredStyle:  .ActionSheet)
+    
+    isbnSheet.addAction(UIAlertAction(title: "Scan", style: .Default) {
+      [unowned self] (action) in
+      let barcodeScannerVC = UPMBarcodeScanner()
+      barcodeScannerVC.delegate = self
+      barcodeScannerVC.barcodeReadHandler = { [unowned self] (isbn) in
+        let bookTask = BFTaskCompletionSource()
+        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
+          var google = GoogleBooksAPI()
+          var url = google.searchByISBNURL(ISBN: isbn, fields: "kind,items(volumeInfo(title,authors,imageLinks,publishedDate,industryIdentifiers))")
+          var bookJSON = GoogleBooksAPI.getJSON(url!)
+          
+          var dict = GoogleBooksAPI.parseJSON(bookJSON!)
+          var textbook = UPMTextbook.createBookFromJSON(bookJSON!)
+          
+          if let title = textbook.title, let authors = textbook.authors {
+            var isbns = "ISBN10: \(textbook.iSBN10!)\nISBN13: \(textbook.iSBN13!)"
+            self.scannedTextbook = textbook
+            bookTask.setResult(title + "\n" + authors + "\n" + isbns)
+          } else {
+            bookTask.setResult("")
+          }
+        }
+        return bookTask.task
+      }
+      self.navigationController?.presentViewController(UINavigationController(rootViewController: barcodeScannerVC), animated: true, completion: nil)
+    })
+    
+    isbnSheet.addAction(UIAlertAction(title: "Cancel", style: .Destructive, handler: nil))
+    
+    presentViewController(isbnSheet, animated: true, completion: nil)
+    
+  }
+  
+  
+  func didReadBarcode(barcode: String, shouldUseBarCode: Bool) {
+    if shouldUseBarCode {
+      didUpdateTitle(scannedTextbook.title!)
+      textbookListing.textbook = scannedTextbook
+      var manager = SDWebImageManager.sharedManager()
+      if let url = NSURL(string: scannedTextbook.imageURL!) {
+      manager.downloadImageWithURL(url, options: nil, progress: nil, completed: {
+        [unowned self] (image, error, cacheType, finished, url) in
+        
+        dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+          self.didUpdatePhoto(image)
+          self.tableView.reloadData()
+        })
+      })
+      }
+      /*
+      SDWebImageManager *manager = [SDWebImageManager sharedManager];
+      [manager downloadImageWithURL:imageURL
+        options:0
+        progress:^(NSInteger receivedSize, NSInteger expectedSize)
+        {
+        // progression tracking code
+        }
+        completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL)
+        {
+        if (image) {
+        // do something with image
+        }
+        }];
+      */
+    }
+  }
+  
+  
   
   
 }

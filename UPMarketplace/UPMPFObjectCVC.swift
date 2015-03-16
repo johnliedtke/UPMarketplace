@@ -215,7 +215,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
       // About to fetch objects
       objectsWillLoad()
       
-      queryToPeform.findObjectsInBackgroundWithBlock { (objects: [AnyObject]!, error: NSError!) -> Void in
+      queryToPeform.findObjectsInBackgroundWithBlock { [unowned self] (objects: [AnyObject]!, error: NSError!) in
         if error == nil {
           // Success
           // Convert objects

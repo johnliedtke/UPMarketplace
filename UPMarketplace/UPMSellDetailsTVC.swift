@@ -97,8 +97,13 @@ class UPMSellDetailsTVC: UITableViewController {
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
       let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
 
-    let item = requiredItems.itemAtIndex(indexPath.row)
-    cell.configureCell(item.title, details: item.itemDescription, isComplete: item.isComplete)
+    if indexPath.section == CellSection.Required.rawValue {
+      let item = requiredItems.itemAtIndex(indexPath.row)
+      cell.configureCell(item.title, details: item.itemDescription, isComplete: item.isComplete)
+    } else {
+      let item = optionalItems.itemAtIndex(indexPath.row)
+      cell.configureCell(item.title, details: item.itemDescription, isComplete: item.isComplete)
+    }
 
       return cell
   }
@@ -126,7 +131,7 @@ class UPMSellDetailsTVC: UITableViewController {
       let requiredItem = requiredItems.itemAtIndex(indexPath.row)
       didSelectItem(requiredItem)
     case CellSection.Optional where optionalItems.count > 0:
-      let optionalItem = requiredItems.itemAtIndex(indexPath.row)
+      let optionalItem = optionalItems.itemAtIndex(indexPath.row)
       didSelectItem(optionalItem)
     default:
       println("Deafult")

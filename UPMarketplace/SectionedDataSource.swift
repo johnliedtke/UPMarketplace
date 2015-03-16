@@ -69,7 +69,12 @@ class SectionedDataSource<R> : SectionedDataSourceBridge {
     var row = getRow(indexPath)
     var identifier = reuseIdentifier
     
-    var cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+    var cell: UITableViewCell!
+    if let reuseCell = tableView.dequeueReusableCellWithIdentifier(identifier) as? UITableViewCell {
+      cell = reuseCell
+    } else {
+      cell = UITableViewCell(style: .Default, reuseIdentifier: identifier)
+    }
     
     if let row = row {
       populateCell(cell, row: row)

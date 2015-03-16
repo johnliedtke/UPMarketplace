@@ -17,7 +17,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Parse initialization
     Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
       clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
-    
+
+    // Parse subclasses
     UPMTextbookListing.registerSubclass()
     UPMOtherListing.registerSubclass()
     UPMHousingListing.registerSubclass()
@@ -32,9 +33,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
     UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
     
+    
+    
     /**
     Tab Bar Navigation
     Create the entire navigation for the application.
+    
     - New Listings
     - Buy
     - iWant
@@ -42,7 +46,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     - Account
     */
     var controllers = [UIViewController]()
-    
     
     // Buy
     let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)

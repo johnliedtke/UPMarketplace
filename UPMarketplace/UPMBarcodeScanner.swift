@@ -11,14 +11,14 @@ import AVFoundation
 
 //TODO: Implement a delegate method to alert controller of reading a barcode...
 
-public protocol UPMBarcodeScannerDelegate {
+public protocol UPMBarcodeScannerDelegate: class {
   
   /**
   Called when a barcode is found. Reading has been halted when this method is called.
   
   :param: barcode String represenation of barcode.
   */
-  func didReadBarcode(barcode: String) -> Void
+  func didReadBarcode(barcode: String, shouldUseBarCode: Bool) -> Void
   
 }
 
@@ -26,7 +26,7 @@ public protocol UPMBarcodeScannerDelegate {
   A simple barcode scanner that retrieves the number from a barcode using
   the camera of the iOS device.
 */
-public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate, UPMBarcodeScannerDelegate {
+public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjectsDelegate {
   
   // MARK: - Public Properties
   @IBOutlet var previewView: UIView!
@@ -34,10 +34,13 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
   var highlightView: UIView!
   
   /// Receives notifications when a code is read
-  public var delegate: UPMBarcodeScannerDelegate?
+  public weak var delegate: UPMBarcodeScannerDelegate?
   
   /// What kind of barcodes to read?
   public var allowedBarcodeTypes = [AVMetadataObjectTypeEAN13Code]
+  
+  /// Barcode read handler
+  public var barcodeReadHandler: ((isbn: String) -> BFTask)?
   
   // MARK: - Private Properties
   
@@ -56,20 +59,25 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
   /// Displays the video stream
   private var videoPreviewLayer: AVCaptureVideoPreviewLayer!
 
-  
   // MARK: - Public Methods
   
   override public func viewDidLoad() {
     super.viewDidLoad()
-    
     var barcodeBox = UPMBarcodeBox()
+    previewView = UIView(frame: self.view.frame)
+    view.addSubview(previewView)
     barcodeBox.frame = previewView.frame
     view.addSubview(barcodeBox)
     
-    delegate = self
+    navigationItem.title = "Scan"
+    navigationItem.setLeftBarButtonItem(UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "didPressCancel"), animated: true)
     
     startReading()
     // Do any additional setup after loading the view.
+  }
+  
+  func didPressCancel() {
+    dismissViewControllerAnimated(true, completion: nil)
   }
   
   /// Halts capture session and stops reading barcodes.
@@ -155,15 +163,44 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
           self.isReading = false
           self.isFound = true
           
-          self.stopReading()
-          self.delegate?.didReadBarcode(metaDataObject.stringValue)
           
+          self.stopReading()
+          //self.delegate?.didReadBarcode(metaDataObject.stringValue)
+          if let handler = self.barcodeReadHandler {
+            handler(isbn: metaDataObject.stringValue).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+              [unowned self] (task) in
+              
+              var message = ""
+              if let msg = task.result as? String {
+                message = msg
+              }
+              
+              var alertController = UIAlertController(title: "Found!", message: message, preferredStyle: .Alert)
+              
+              alertController.addAction(UIAlertAction(title: "Cancel", style: .Destructive) {
+                (action) in
+                self.dismissViewControllerAnimated(true, completion: nil)
+                })
+              alertController.addAction(UIAlertAction(title: "Rescan", style: .Default) {
+                (action) in
+                self.startReading()
+              })
+              alertController.addAction(UIAlertAction(title: "Done", style: .Cancel) {
+                (action) in
+                self.delegate?.didReadBarcode(metaDataObject.stringValue, shouldUseBarCode: true)
+                self.dismissViewControllerAnimated(true, completion: nil)
+              })
+              
+              self.presentViewController(alertController, animated: true, completion: nil)
 
+              return nil
+            })
+          }
           
           dispatch_async(dispatch_get_main_queue()) {
             highlightViewRect = metaDataObject.bounds
             //self.highlightView.frame = self.videoPreviewLayer.transformedMetadataObjectForMetadataObject(metaDataObject).bounds
-            self.statusLabel.text = metaDataObject.stringValue
+            //self.statusLabel.text = metaDataObject.stringValue
           }
         }
       }
@@ -179,10 +216,10 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
     }
   }
 
-  
   public func didReadBarcode(barcode: String) {
-    var alertController = UIAlertController(title: "Found!", message: barcode, preferredStyle: UIAlertControllerStyle.Alert)
-    var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) { (a: UIAlertAction!) -> Void in
+    var alertController = UIAlertController(title: "Found!", message: barcode, preferredStyle: .Alert)
+    var okayAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default) {
+      (a: UIAlertAction!) -> Void in
       self.startReading()
       return
     }
@@ -190,14 +227,7 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
     presentViewController(alertController, animated: true, completion: nil)
   }
   
-  override public func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-  
   // MARK: - Camera Focus
-  
-  // MARK: Camera Focus
   
   func setupCameraFocus() -> Void {
     
@@ -213,15 +243,12 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
       
       captureDevice.unlockForConfiguration()
       
-      
     } else {
       // error
     }
   }
   
   // Auto-focus on touch
-
-  
   override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
     
     var touch = touches.first as! UITouch

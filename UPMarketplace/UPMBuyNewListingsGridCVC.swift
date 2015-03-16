@@ -34,6 +34,10 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     navigationController?.navigationBar.backItem?.title = "Back"
     self.title = titleTop
     
+    self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Barcdoe", style: .Done, target: self, action: "pushBarcode")
+    
+    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Barcode", style: UIBarButtonItemStyle.Done, target: self, action: "pushBarcode")
+    
     // reveal controller
     var revealViewController = self.revealViewController
     if (( revealViewController  != nil))
@@ -49,13 +53,25 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     }
 
   }
+  
+  func pushBarcode() {
+    let singleinput = UPMSellTextbookRequiredDeatils()
+    singleinput.dataCollectedHandler = {
+      [unowned self] (bookDetails) in
+      let isbn = bookDetails["ISBN"]
+      println(isbn!)
+      
+    }
+
+    self.navigationController?.pushViewController(singleinput, animated: true)
+  }
 
   override func viewDidAppear(animated: Bool) {
     super.viewDidAppear(animated)
     UPMLoginVC.displayLoginInController(self)
   }
     
-  // MARK: - Overide methods
+  // MARK: - Override methods
   override func changeDefaults() {
   }
   
@@ -99,5 +115,6 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     }
 
   }
+  
     
 }
