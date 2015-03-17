@@ -134,6 +134,7 @@
 		52F022C31AB64415003C58C6 /* UPMSellTextbookRequiredDeatils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F022C21AB64415003C58C6 /* UPMSellTextbookRequiredDeatils.swift */; };
 		52FBF94E1AA935BE00F7F96C /* UPMListingDisplayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */; };
 		52FEAAE81A67094300240E25 /* UPMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FEAAE71A67094300240E25 /* UPMUser.swift */; };
+		52FEE3361AB74F70007883C2 /* UPMPFQueryAllTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FEE3351AB74F70007883C2 /* UPMPFQueryAllTVC.swift */; };
 		60C0BCEC1A704BA00029C355 /* UPMReservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C0BCEA1A704BA00029C355 /* UPMReservation.swift */; };
 		60C0BCED1A704BA00029C355 /* UPMReservationObo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C0BCEB1A704BA00029C355 /* UPMReservationObo.swift */; };
 		F12FCE361A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F12FCE351A68F5BF00D5A441 /* UPMBuyWorkflow.storyboard */; };
@@ -325,6 +326,7 @@
 		52F022C21AB64415003C58C6 /* UPMSellTextbookRequiredDeatils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTextbookRequiredDeatils.swift; sourceTree = "<group>"; };
 		52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMListingDisplayExtension.swift; sourceTree = "<group>"; };
 		52FEAAE71A67094300240E25 /* UPMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMUser.swift; sourceTree = "<group>"; };
+		52FEE3351AB74F70007883C2 /* UPMPFQueryAllTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMPFQueryAllTVC.swift; sourceTree = "<group>"; };
 		577B26F9312C66E604906FFB /* Pods-UPMarketplace.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-UPMarketplace.release.xcconfig"; path = "Pods/Target Support Files/Pods-UPMarketplace/Pods-UPMarketplace.release.xcconfig"; sourceTree = "<group>"; };
 		60C0BCEA1A704BA00029C355 /* UPMReservation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMReservation.swift; sourceTree = "<group>"; };
 		60C0BCEB1A704BA00029C355 /* UPMReservationObo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMReservationObo.swift; sourceTree = "<group>"; };
@@ -420,7 +422,6 @@
 			children = (
 				52CA48FD1A743EC600073F2F /* Model */,
 				52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */,
-				521329851A3E2B1A003E345A /* UPMTextbookListing.swift */,
 			);
 			name = Listings;
 			sourceTree = "<group>";
@@ -628,6 +629,7 @@
 				52A3DAFF1A7D777000D8E485 /* Controllers */,
 				52A3DAFA1A7D767C00D8E485 /* Cells */,
 				52A3DB001A7D77AF00D8E485 /* UPMPFQueryTableVC.swift */,
+				52FEE3351AB74F70007883C2 /* UPMPFQueryAllTVC.swift */,
 				529F39171A798884000ED764 /* UPMContainerVC.swift */,
 				529F391B1A7988A9000ED764 /* UPMAccount.storyboard */,
 			);
@@ -805,6 +807,7 @@
 				60C0BCEB1A704BA00029C355 /* UPMReservationObo.swift */,
 				52CA49001A743EF400073F2F /* UPMTag.swift */,
 				524663881A3F683E00CB18B9 /* UPMTextbook.swift */,
+				521329851A3E2B1A003E345A /* UPMTextbookListing.swift */,
 				52CA49021A743F0100073F2F /* UPMSemester.swift */,
 				52CA48FE1A743EDC00073F2F /* UPMSubcategory.swift */,
 			);
@@ -1101,6 +1104,7 @@
 				5200D4AA1A48FE2D0079ED9A /* UPMBarcodeScanner.swift in Sources */,
 				5266C6691A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift in Sources */,
 				52CA48FF1A743EDC00073F2F /* UPMSubcategory.swift in Sources */,
+				52FEE3361AB74F70007883C2 /* UPMPFQueryAllTVC.swift in Sources */,
 				60C0BCED1A704BA00029C355 /* UPMReservationObo.swift in Sources */,
 				529F39141A79885A000ED764 /* UPMAccountReservedTVC.swift in Sources */,
 				52FBF94E1AA935BE00F7F96C /* UPMListingDisplayExtension.swift in Sources */,

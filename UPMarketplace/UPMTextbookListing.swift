@@ -46,9 +46,20 @@ public class UPMTextbookListing: UPMListing, PFSubclassing {
     return "UPMTextbookListing"
   }
   
-  /// Registers the subclass with Parse
-//  override public class func load() {
-//    self.registerSubclass()
-//  }
+  // MARK: - Display
+  
+  func displayRequiredFields(missingText: String) -> String {
+    let isbn = textbook.iSBN13 ?? missingText
+    let course = textbook.course ?? missingText
+    return "ISBN: \(isbn)\nCourse: \(course)"
+  }
+  
+  func displayOptionalFields(missingText: String) -> String {
+    let authors = textbook.authors ?? missingText
+    let edition = textbook.edition ?? missingText
+    let professor = textbook.professor ?? missingText
+    return "Authors: \(authors)\nEdition: \(edition)\nProfessor: \(professor)"
+  }
+  
   
 }

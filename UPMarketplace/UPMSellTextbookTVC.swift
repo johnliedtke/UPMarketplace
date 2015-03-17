@@ -27,7 +27,7 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 100
-    
+    refreshDetailDescriptions()
     scanISBNAlert()
   }
 
@@ -35,7 +35,7 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
   // MARK: - Details
 
   func didDetailsUpdate(details: String, isComplete: Bool) {
-    requiredItems.updateItemWithTitle(RequiredItems.Details.rawValue, description: details, isComplete: isComplete)
+    requiredItems.updateItemWithTitle(RequiredItems.Details.rawValue, description: textbookListing.displayRequiredFields("Select") + "\nOptional Details\n" + textbookListing.displayOptionalFields("Select"), isComplete: isComplete)
   }
   
   override func pushDetailsVC() {
@@ -81,12 +81,17 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
     presentViewController(isbnSheet, animated: true, completion: nil)
     
   }
+
+  func refreshDetailDescriptions() {
+    didDetailsUpdate("", isComplete: textbookListing.textbook.course != nil && textbookListing.textbook.iSBN13 != nil)
+  }
   
   
   func didReadBarcode(barcode: String, shouldUseBarCode: Bool) {
     if shouldUseBarCode {
       didUpdateTitle(scannedTextbook.title!)
       textbookListing.textbook = scannedTextbook
+      refreshDetailDescriptions()
       var manager = SDWebImageManager.sharedManager()
       if let url = NSURL(string: scannedTextbook.imageURL!) {
       manager.downloadImageWithURL(url, options: nil, progress: nil, completed: {

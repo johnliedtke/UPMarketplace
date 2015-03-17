@@ -76,6 +76,7 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
         self.textbookListing.textbook.authors = textbookDict["authors"]
         self.textbookListing.textbook.edition = textbookDict["edition"]
         self.textbookListing.textbook.professor = textbookDict["professor"]
+        self.setupItemDescriptions()
       }
       textbookOptional.currentTextbookDetails = ["authors": textbookListing.textbook.authors, "professor": textbookListing.textbook.professor, "edition": textbookListing.textbook.course]
       navigationController?.pushViewController(textbookOptional, animated: true)
@@ -84,13 +85,8 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
   }
   
   func setupItemDescriptions() {
-    let isbn = textbookListing.textbook.iSBN13 ?? "Select"
-    let course = textbookListing.textbook.course ?? "Select"
-    let authors = textbookListing.textbook.authors ?? "Select"
-    let professor = textbookListing.textbook.professor ?? "Select"
-    let edition = textbookListing.textbook.edition ?? "Select"
-    requiredItems.updateItemWithTitle(RequiredItem.Required.rawValue, description: "ISBN: \(isbn)\nCourse: \(course)" , isComplete: textbookListing.textbook.iSBN13 != nil && textbookListing.textbook.course != nil)
-    optionalItems.updateItemWithTitle(RequiredItem.Optional.rawValue, description: "Authors: \(authors)\nProfessor: \(professor)\nEdition: \(edition)", isComplete: textbookListing.textbook.edition != nil && textbookListing.textbook.professor != nil && textbookListing.textbook.authors != nil)
+    requiredItems.updateItemWithTitle(RequiredItem.Required.rawValue, description: textbookListing.displayRequiredFields("Select") , isComplete: textbookListing.textbook.iSBN13 != nil && textbookListing.textbook.course != nil)
+    optionalItems.updateItemWithTitle(RequiredItem.Optional.rawValue, description: textbookListing.displayOptionalFields("Select"), isComplete: textbookListing.textbook.edition != nil && textbookListing.textbook.professor != nil && textbookListing.textbook.authors != nil)
   }
   
   // MARK: - Delegate Methods
