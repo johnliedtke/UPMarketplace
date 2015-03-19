@@ -169,16 +169,17 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     //get the unique subcategories from the selected class and initalize it for the filter tableview to use
     var query = PFQuery(className: classQuery)
     query.selectKeys(["category"])
-    
+
     query.findObjectsInBackgroundWithBlock {
-      (objects: [AnyObject]!, error: NSError!) -> Void in
+      (objects: [AnyObject]?, error: NSError?) -> Void in
       if error == nil {
+
 
         // add them to the array of subcategories
         if let objects = objects as? [PFObject] {
           for object in objects {
-            if(!contains(self.allCategory, object["category"] as! String)){
-              self.allCategory.append(object["category"] as! String)
+            if(!contains(self.allCategory, object.objectForKey("category") as! String)){
+              self.allCategory.append(object.objectForKey("category") as! String)
             }
           }
         } else {

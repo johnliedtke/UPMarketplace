@@ -168,33 +168,36 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
           //self.delegate?.didReadBarcode(metaDataObject.stringValue)
           if let handler = self.barcodeReadHandler {
             handler(isbn: metaDataObject.stringValue).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
-              [unowned self] (task) in
+              [weak self] (task) in
               
-              var message = ""
-              if let msg = task.result as? String {
-                message = msg
-              }
+              if let weakSelf = self {
               
-              var alertController = UIAlertController(title: "Found!", message: message, preferredStyle: .Alert)
-              
-              alertController.addAction(UIAlertAction(title: "Cancel", style: .Destructive) {
-                (action) in
-                self.dismissViewControllerAnimated(true, completion: nil)
+                var message = ""
+                if let msg = task.result as? String {
+                  message = msg
+                }
+                
+                var alertController = UIAlertController(title: "Found!", message: message, preferredStyle: .Alert)
+                
+                alertController.addAction(UIAlertAction(title: "Cancel", style: .Destructive) {
+                  (action) in
+                  weakSelf.dismissViewControllerAnimated(true, completion: nil)
+                  })
+                alertController.addAction(UIAlertAction(title: "Rescan", style: .Default) {
+                  (action) in
+                  weakSelf.startReading()
                 })
-              alertController.addAction(UIAlertAction(title: "Rescan", style: .Default) {
-                (action) in
-                self.startReading()
-              })
-              alertController.addAction(UIAlertAction(title: "Done", style: .Cancel) {
-                (action) in
-                self.delegate?.didReadBarcode(metaDataObject.stringValue, shouldUseBarCode: true)
-                self.dismissViewControllerAnimated(true, completion: nil)
-              })
-              
-              self.presentViewController(alertController, animated: true, completion: nil)
-
+                alertController.addAction(UIAlertAction(title: "Done", style: .Cancel) {
+                  (action) in
+                  weakSelf.delegate?.didReadBarcode(metaDataObject.stringValue, shouldUseBarCode: true)
+                  weakSelf.dismissViewControllerAnimated(true, completion: nil)
+                })
+                
+                weakSelf.presentViewController(alertController, animated: true, completion: nil)
+              }
               return nil
             })
+           
           }
           
           dispatch_async(dispatch_get_main_queue()) {

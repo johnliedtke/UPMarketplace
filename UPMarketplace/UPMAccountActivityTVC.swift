@@ -16,8 +16,8 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
   
   override func queryForTable() -> PFQuery! {
     var query = PFQuery(className: "UPMActivity")
-    query.whereKey("user", equalTo: PFUser.currentUser())
-    query.cachePolicy = kPFCachePolicyNetworkElseCache
+    query.whereKey("user", equalTo: PFUser.currentUser()!)
+    query.cachePolicy = .NetworkElseCache
     query.orderByDescending("createdAt")
     return query
   }
@@ -109,7 +109,7 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
     // Contact action
     var contactAction = UIAlertAction(title: "Contact Seller", style: .Default) {
       (action: UIAlertAction!) -> Void in
-      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser(), withSubject: "Question about: \(reservation.getListing().title)")
+      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(reservation.getListing().title)")
       self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
     }
     

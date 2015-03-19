@@ -8,35 +8,28 @@
 
 import UIKit
 
-class UPMAccountSellingTVC: PFQueryTableViewController {
+class UPMAccountSellingTVC: UPMPFQueryAllTVC {
 
   // MARK: - Public Properties
   
   // MARK: UPMPFQueryTableVC
   
-  override func queryForTable() -> PFQuery! {
+  override func queries() -> [PFQuery]? {
     var query = PFQuery(className: "UPMOtherListing")
-    query.whereKey("owner", equalTo: PFUser.currentUser())
+    query.whereKey("owner", equalTo: PFUser.currentUser()!)
     query.includeKey("reservations")
     query.includeKey("reservations.reserver")
-    return query
+    var textbookListing = PFQuery(className: "UPMTextbookListing")
+    textbookListing.whereKey("owner", equalTo: PFUser.currentUser()!)
+    textbookListing.includeKey("reservations")
+    textbookListing.includeKey("reservations.reserver")
+    return [query, textbookListing]
   }
-  
-  // MARK: - Private Properties
-  
-  // MARK: - Public Methods
   
   // MARK: - Init
   
-  override init!(style: UITableViewStyle, className aClassName: String!) {
-    super.init(style: style, className: "UPMOtherListing")
-  }
-  
-  required internal init(coder aDecoder: NSCoder) {
-    super.init(coder: aDecoder)
-  }
-  
   override func viewDidLoad() {
+    noDataMessage = "You are not selling anything.\nPull to refresh."
     super.viewDidLoad()
     tableView.estimatedRowHeight = 50.0
 
@@ -46,33 +39,31 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   
   // MARK: - Table view data source
   
-  override func tableView(tableView: UITableView!,
-    cellForRowAtIndexPath indexPath: NSIndexPath!,
-    object: PFObject!) -> PFTableViewCell! {
-      
-    var listing = object as! UPMListing
+  override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UITableViewCell {
     
-    if indexPath.section == objects.count {
-      var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-      return loadMoreCell as! PFTableViewCell
-    }
+      var listing = object as! UPMListing
+      
+      if indexPath.section == objects.count {
+        var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
+        return loadMoreCell as! PFTableViewCell
+      }
       
       var cell = tableView.dequeueReusableCellWithIdentifier("UPMAccountListingCell") as! UPMAccountListingCell!
       if cell == nil {
         cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "UPMAccountListingCell")
       }
-    
-    cell.statusLabel.text = listing.displaySellerReservationStatus()
-    cell.changeStatusColor(listing.sellerReservationStatus())
-    cell.titleLabel.text = listing.title
-    cell.displayImageView.file = listing.pictureThumbnail
-    cell.displayImageView.loadInBackground()
-    
-    // Add long press
-    var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-    cell.addGestureRecognizer(gestureRecognizer)
-    
-    return cell
+      
+      cell.statusLabel.text = listing.displaySellerReservationStatus()
+      cell.changeStatusColor(listing.sellerReservationStatus())
+      cell.titleLabel.text = listing.title
+      cell.displayImageView.file = listing.pictureThumbnail
+      cell.displayImageView.loadInBackground()
+      
+      // Add long press
+      var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+      cell.addGestureRecognizer(gestureRecognizer)
+      
+      return cell
   }
   
   /**
@@ -86,14 +77,14 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
     // Grab the cell long pressed
     var point = sender.locationInView(tableView)
     var indexPath = tableView.indexPathForRowAtPoint(point)
-    var listing = objectAtIndexPath(indexPath) as! UPMListing
+    var listing = objectAtIndexPath(indexPath!) as! UPMListing
     
     var actionSheet = UIAlertController(title: "Reservation Options", message: "", preferredStyle: .ActionSheet)
     
     // Contact action
     var contactAction = UIAlertAction(title: "Contact Buyer", style: .Default) {
       (action: UIAlertAction!) -> Void in
-      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser(), withSubject: "Question about: \(listing.title)")
+      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(listing.title)")
       self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
     }
     
@@ -118,7 +109,7 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
   
   // MARK: - Tableview Delegate
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
     var listing = objectAtIndexPath(indexPath)
     
     if listing.parseClassName == "UPMOtherListing", let otherListing = listing as? UPMOtherListing {
@@ -166,21 +157,21 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
               return
             }
             
-            var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
+            var hud = MBProgressHUD.showHUDAddedTo(self.tableView.superview, animated: true)
             hud.labelText = action.description
             
-            actionFunc().continueWithBlock() { (task: BFTask!) in
+            actionFunc().continueWithBlock() { [unowned self] (task: BFTask!) in
               if task.error == nil {
                 hud.labelText = "Success"
                 sleep(1)
                 dispatch_async(dispatch_get_main_queue()) {
-                  MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                  self.loadObjects()
+                  MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
+                  self.performQuery()
                 }
               } else {
                 hud.labelText = "Error"
                 dispatch_async(dispatch_get_main_queue()) {
-                  MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
+                  MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
                 }
               }
               return nil
@@ -213,90 +204,6 @@ class UPMAccountSellingTVC: PFQueryTableViewController {
 
 
 
-extension PFQueryTableViewController {
-    /**
-    */
-    func editActionsForListing(listing: UPMListing, user: PFUser) -> [UITableViewRowAction]? {
-
-        
-        // Create the table actions...
-        if let actions = listing.availableSellerActions() {
-            var editActions = [UITableViewRowAction]()
-            for (action, actionFunc) in actions {
-                editActions.append(UITableViewRowAction(style: .Default, title: action.description) { (rowAction, indexPath) in
-                    
-                    switch action {
-                    case .AcceptReservation, .RejectReservation, .DeleteListing:
-                        
-                        if UPMReachabilityManager.isUnreachable() {
-                            UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
-                            return
-                        }
-                        
-                        var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-                        hud.labelText = action.description
-                        
-                        actionFunc().continueWithBlock() { (task: BFTask!) in
-                            if task.error == nil {
-                                hud.labelText = "Success"
-                                sleep(1)
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                                    self.loadObjects()
-                                }
-                            } else {
-                                hud.labelText = "Error"
-                                dispatch_async(dispatch_get_main_queue()) {
-                                    MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-                                }
-                            }
-                            return nil
-                        }
-                        
-                    case .ContactReserver:
-                        actionFunc().continueWithBlock({ (task) in
-                            if let contactNavigation = task.result as? UINavigationController {
-                                self.navigationController?.presentViewController(contactNavigation, animated: true, completion: nil)
-                            }
-                            return nil
-                        })
-                        
-                    default: break
-                    }
-                    })
-            }
-            let colors = [UIColor.flatLightOrangeColor(), UIColor.flatLightRedColor(), UIColor.flatLightGreenColor()]
-          
-            for (index, editAction) in enumerate(editActions) {
-                editAction.backgroundColor = colors[index]
-            }
-            return editActions
-            
-        } else {
-            return nil
-        }
-    }
-
-}
-
-
-
-class UPMAccountReservationsTVC: UPMPFQueryTableVC {
-  
-  // The listing associated with the reservations.
-  var listing: UPMListing?
-  
-  override func queryForTable() -> PFQuery! {
-    var query: PFQuery?
-    if let listing = self.listing {
-      query = PFQuery(className: "UPMReservation")
-      var array = [listing] as [AnyObject]
-     // query.whereKey("listing", containedIn: array)
-    }
-    return query
-  }
-  
-}
 
 
 

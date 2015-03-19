@@ -186,7 +186,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
               if task.error == nil {
                 // Success
                 if var fetchedObjects = task.result as? [PFObject] {
-                  fetchedObjects.sort { $0.createdAt.compare($1.createdAt) == NSComparisonResult.OrderedDescending }
+                  fetchedObjects.sort { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
                   if self.paginationEnabled && !self.isRefreshing {
                     self.objects += fetchedObjects
                   } else {
@@ -215,7 +215,8 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
       // About to fetch objects
       objectsWillLoad()
       
-      queryToPeform.findObjectsInBackgroundWithBlock { [unowned self] (objects: [AnyObject]!, error: NSError!) in
+      
+      queryToPeform.findObjectsInBackgroundWithBlock { [unowned self] (objects: [AnyObject]?, error: NSError?) in
         if error == nil {
           // Success
           // Convert objects

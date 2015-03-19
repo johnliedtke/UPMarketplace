@@ -20,6 +20,9 @@ class UPMSellItemContainer {
     get { return items.count }
   }
   
+  var completedCount: Int {
+    get { return items.filter({ $0.isComplete }).count } }
+  
   // MARK: - Private Properties
   
   /// Used to store the

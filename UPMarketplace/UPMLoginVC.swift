@@ -291,7 +291,8 @@ public class UPMLoginVC: UIViewController {
     
     
     // Sign up user
-    user.signUpInBackgroundWithBlock { (success: Bool, error: NSError!) -> Void in
+    
+    user.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
       
       if success {
         // Log out user and notify of email verification requirment
@@ -303,7 +304,7 @@ public class UPMLoginVC: UIViewController {
         
       } else {
         // Display error
-        var errorString = error.userInfo?[NSString(string: "error")] as! NSString
+        var errorString = error!.userInfo?[NSString(string: "error")] as! NSString
         var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle: UIAlertControllerStyle.Alert)
         var errorAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {
           (alert: UIAlertAction!) -> Void in

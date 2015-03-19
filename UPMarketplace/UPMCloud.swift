@@ -23,20 +23,13 @@ class PFCloudExt: PFCloud {
       
       let p = BFTaskCompletionSource()
       
-      self.callFunctionInBackground(
-        name as! String,
-        withParameters: parameters as! [NSObject : AnyObject],
-        block: {
-          (result: AnyObject!, error: NSError!) -> Void in
-          
-          if let result: AnyObject = result {
-            p.setResult(result)
-          } else {
-            p.setError(error)
-          }
-          
-      })
-      
+      self.callFunctionInBackground(name as String, withParameters: parameters as [NSObject : AnyObject]) { (result, error) -> Void in
+        if let result: AnyObject = result {
+          p.setResult(result)
+        } else {
+          p.setError(error)
+        }
+      }
       return p.task
   }
 

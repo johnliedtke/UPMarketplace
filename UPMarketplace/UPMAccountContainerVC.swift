@@ -30,7 +30,7 @@ class UPMAccountContainerVC: UPMContainerVC, UPMContainerDelegate {
     accountActivityTVC.sectionKey = "title"
     var accountReservedTVC = UPMAccountReservedTVC(style: .Plain, className: "UPMOtherListing")
     accountReservedTVC.sectionKey = "status"
-    var sellingTVC = UPMAccountSellingTVC(style: .Plain, className: "UPMOtherListng")
+    var sellingTVC = UPMAccountSellingTVC()
     
     isLeftRightTransition = false
     

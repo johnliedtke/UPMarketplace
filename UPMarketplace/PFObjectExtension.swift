@@ -25,7 +25,7 @@ extension PFObject {
   func fetchAsync(object: PFObject) -> BFTask {
     var task = BFTaskCompletionSource()
     object.fetchInBackgroundWithBlock {
-      (object: PFObject!, error: NSError!) -> Void in
+      (object: PFObject?, error: NSError?)  in
       if error == nil {
         task.setResult(object)
       } else {
@@ -37,7 +37,7 @@ extension PFObject {
   
   class func fetchAllInBackgroundBolt(objects: [PFObject]) -> BFTask {
     var task = BFTaskCompletionSource()
-    PFObject.fetchAllInBackground(objects) { (objects: [AnyObject]!, error: NSError!) -> Void in
+    PFObject.fetchAllInBackground(objects) { (objects: [AnyObject]?, error: NSError?) -> Void in
       if error == nil {
         task.setResult(objects)
       } else {
@@ -87,7 +87,7 @@ extension PFUser {
   */
   func isEmailVerified() -> Bool {
     //self["emailVerified"].fetchIfNeeded()
-    return self["emailVerified"] as! Bool
+    return self.objectForKey("emailVerified") as! Bool
   }
   
   /**

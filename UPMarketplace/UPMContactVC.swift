@@ -217,8 +217,8 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     }
     
     // create dictionary to send
-    var currentUser = PFUser.currentUser()
-    let email: [String: String] = ["to": "jcliedtke@gmail.com", "from": currentUser.email, "subject": subjectField.text, "message": bodyTextView.text]
+    var currentUser = PFUser.currentUser()!
+    let email: [String: String] = ["to": "jcliedtke@gmail.com", "from": currentUser.email!, "subject": subjectField.text, "message": bodyTextView.text]
     
     // Progress HUD
     var progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)

@@ -17,10 +17,10 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     
     override func queryForTable() -> PFQuery! {
       var query = PFQuery(className: "UPMReservation")
-      query.whereKey("reserver", equalTo: PFUser.currentUser())
+      query.whereKey("reserver", equalTo: PFUser.currentUser()!)
       query.includeKey("listing")
       query.whereKeyExists("listing")
-      query.cachePolicy = kPFCachePolicyNetworkElseCache
+      query.cachePolicy = .NetworkElseCache
       query.includeKey("pictureThumbnail")
       query.orderByDescending("status")
       return query
@@ -122,7 +122,7 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       // Contact action
       var contactAction = UIAlertAction(title: "Contact Seller", style: .Default) {
         (action: UIAlertAction!) -> Void in
-        var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser(), withSubject: "Question about: \(reservation.getListing().title)")
+        var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(reservation.getListing().title)")
         self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
       }
       
@@ -206,7 +206,7 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     
     // Contact
     var contactReservationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Contact", handler:{action, indexpath in
-      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser(), withSubject: "Question about: \(reservation.getListing().title)")
+      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(reservation.getListing().title)")
       self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
 
     });

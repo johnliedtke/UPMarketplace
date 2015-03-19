@@ -26,7 +26,6 @@ class UPMSellTextbookRequiredDeatils: UPMSellSingleInput {
     dataSource.rows = [UPMSellInput(labelText: "ISBN", placeholderText: "MEOW", valueText: currentTextbookDetails["isbn"]!), UPMSellInput(labelText: "Course", placeholderText: "e.g. CS301", valueText: currentTextbookDetails["course"]!)]
   }
   
-  
   override func didPressDoneFromNavigation() {
     //TODO: Validate...
     view.endEditing(true)

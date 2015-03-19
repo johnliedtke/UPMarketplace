@@ -91,8 +91,6 @@
 		5266C6611A46A3D30061FFFB /* UPMBuyGridCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5266C6601A46A3D30061FFFB /* UPMBuyGridCVC.swift */; };
 		5266C6631A46ADA60061FFFB /* UPMBuy.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 5266C6621A46ADA60061FFFB /* UPMBuy.storyboard */; };
 		5266C6691A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5266C6681A478CC30061FFFB /* UPMBuyNewListingsGridCVC.swift */; };
-		526937FB1A81AAD000C32401 /* ParseUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937F91A81AAD000C32401 /* ParseUI.framework */; };
-		526937FC1A81AAD000C32401 /* ParseCrashReporting.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937FA1A81AAD000C32401 /* ParseCrashReporting.framework */; };
 		526937FE1A81AD4200C32401 /* libstdc++.6.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937FD1A81AD4200C32401 /* libstdc++.6.dylib */; };
 		526938001A81AD8200C32401 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 526937FF1A81AD8200C32401 /* libsqlite3.dylib */; };
 		528840731A7988190082CC86 /* UPMAccountActivityTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 528840721A7988190082CC86 /* UPMAccountActivityTVC.swift */; };
@@ -110,8 +108,6 @@
 		52AF3D5019E77BBF007E0D22 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D4F19E77BBF007E0D22 /* Images.xcassets */; };
 		52AF3D5319E77BBF007E0D22 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 52AF3D5119E77BBF007E0D22 /* LaunchScreen.xib */; };
 		52AF3D5F19E77BBF007E0D22 /* UPMarketplaceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF3D5E19E77BBF007E0D22 /* UPMarketplaceTests.swift */; };
-		52AF3D6D19E77D9B007E0D22 /* Parse.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6A19E77D9B007E0D22 /* Parse.framework */; };
-		52AF3D6E19E77D9B007E0D22 /* ParseFacebookUtils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 52AF3D6B19E77D9B007E0D22 /* ParseFacebookUtils.framework */; };
 		52B1C7C11AA263590034E45F /* UPMAccountSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52B1C7C01AA263590034E45F /* UPMAccountSettings.swift */; };
 		52C063191A1EFA250088907E /* UPMOtherListingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C063181A1EFA250088907E /* UPMOtherListingCategoryCell.swift */; };
 		52C0631D1A1F012C0088907E /* UPMOtherListingCategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52C063181A1EFA250088907E /* UPMOtherListingCategoryCell.swift */; };
@@ -377,8 +373,6 @@
 			files = (
 				526938001A81AD8200C32401 /* libsqlite3.dylib in Frameworks */,
 				526937FE1A81AD4200C32401 /* libstdc++.6.dylib in Frameworks */,
-				526937FC1A81AAD000C32401 /* ParseCrashReporting.framework in Frameworks */,
-				526937FB1A81AAD000C32401 /* ParseUI.framework in Frameworks */,
 				5200D4AD1A4903210079ED9A /* AVFoundation.framework in Frameworks */,
 				5265D3931A44B08F008D60E7 /* Accounts.framework in Frameworks */,
 				5265D3911A44B084008D60E7 /* Social.framework in Frameworks */,
@@ -391,9 +385,7 @@
 				52234A8E19E77E7500E899B8 /* CoreGraphics.framework in Frameworks */,
 				52234A8C19E77E6A00E899B8 /* CFNetwork.framework in Frameworks */,
 				52234A8A19E77E6100E899B8 /* AudioToolbox.framework in Frameworks */,
-				52AF3D6D19E77D9B007E0D22 /* Parse.framework in Frameworks */,
 				5255EBEC1A0EC325007207C7 /* SellUI.framework in Frameworks */,
-				52AF3D6E19E77D9B007E0D22 /* ParseFacebookUtils.framework in Frameworks */,
 				2CFB0F45F94BDC3C301133C6 /* libPods-UPMarketplace.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

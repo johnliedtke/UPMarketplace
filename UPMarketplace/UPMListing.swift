@@ -496,7 +496,7 @@ public class UPMListing: PFObject  {
 
     fetchInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
       if task.error == nil {
-        reserveableTask.setResult(self.isUserValidReserver(PFUser.currentUser()))
+        reserveableTask.setResult(self.isUserValidReserver(PFUser.currentUser()!))
       } else {
         reserveableTask.setResult(task.error)
       }
@@ -511,7 +511,7 @@ public class UPMListing: PFObject  {
   */
   public func isReservable() -> BFTask {
     var reservableTask = BFTaskCompletionSource()
-    reservableTask.setResult(self.isUserValidReserver(PFUser.currentUser()))
+    reservableTask.setResult(self.isUserValidReserver(PFUser.currentUser()!))
     return reservableTask.task
   }
 

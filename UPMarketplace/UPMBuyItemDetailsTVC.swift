@@ -123,7 +123,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   User has attempted to reserve the listing.
   */
   internal func reserveListing() {
-    listing?.reserveInBackground(PFUser.currentUser(), message: "Reserving").continueWithBlock({
+    listing?.reserveInBackground(PFUser.currentUser()!, message: "Reserving").continueWithBlock({
       (task: BFTask!) -> AnyObject! in
       var alertController: UIAlertController!
       if task.error == nil {
