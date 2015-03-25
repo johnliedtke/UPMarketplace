@@ -28,9 +28,4 @@ public class UPMHousingListing: UPMListing, PFSubclassing {
     return "UPMHousingListing"
   }
   
-  /// Registers the subclass with Parse
-//  override public class func load() {
-//    self.registerSubclass()
-//  }
-  
 }

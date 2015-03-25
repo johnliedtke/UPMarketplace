@@ -84,11 +84,26 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     // Cells
     tableView.registerNib(UINib(nibName: SellCellIdentifier, bundle: nil), forCellReuseIdentifier: SellCellIdentifier)
     tableView.registerNib(UINib(nibName: SellTitleCelIdentifier, bundle: nil), forCellReuseIdentifier: SellTitleCelIdentifier)
-
   }
   
+  /**
+  What happens when you press the cancel button in the top left corner.
+  */
   func didPressCancelButton(sender: AnyObject) {
-    self.navigationController?.popToRootViewControllerAnimated(true)
+    if requiredItems.completedCount > 0 && !isUpdatingListing {
+      let cancelAlert = UIAlertController(title: "Cancel Confirmation", message: "Are you sure you want to discard your listing? Listing will not be saved.", preferredStyle: .Alert)
+      cancelAlert.addAction(UIAlertAction(title: "Discard", style: .Destructive, handler: {
+        (action) in
+          self.navigationController?.popToRootViewControllerAnimated(true)
+      }))
+      cancelAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
+      presentViewController(cancelAlert, animated: true, completion: nil)
+    } else {
+      navigationController?.popToRootViewControllerAnimated(true)
+    }
+  }
+  deinit {
+    println("Deallocating SellController")
   }
 
   override func viewWillAppear(animated: Bool) {
@@ -117,16 +132,20 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       self.didUpdateTitle((self.listing?.title)!)
       self.updatedPriceFormat((listing?.price)!, limit: 33.2, oBo: Bool((listing?.oBO)!))
       descriptionUpdated((listing?.descriptionS)!)
-      listing?.picture?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
-       [unowned self] (task) in
-        if task.error == nil, let imageData = task.result as? NSData {
-          var imageItem = self.requiredItems.itemWithTitle(RequiredItems.Photos.rawValue)
-          self.requiredItems.updateItemWithTitle(RequiredItems.Photos.rawValue, description: "Image Selected", isComplete: true)
-          self.listing?.photo = UIImage(data: imageData)
-          self.tableView.reloadData()
-        }
-        return nil
-      })
+      if let url = listing?.picture?.url, let imageURL = NSURL(string: url) {
+        let sharedManager = SDWebImageManager.sharedManager()
+        sharedManager.downloadImageWithURL(imageURL, options: nil, progress: nil, completed: { [weak self] (image, error, cache, finished, url) -> Void in
+          if let weakSelf = self where error == nil {
+              var imageItem = weakSelf.requiredItems.itemWithTitle(RequiredItems.Photos.rawValue)
+              weakSelf.requiredItems.updateItemWithTitle(RequiredItems.Photos.rawValue, description: "Image Selected", isComplete: true)
+            dispatch_async(dispatch_get_main_queue(), { () -> Void in
+              weakSelf.listing?.photo = image
+              weakSelf.tableView.reloadData()
+            })
+          }
+        })
+
+      }
 
     }
   }
@@ -295,7 +314,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         var i = optionalItems.itemAtIndex(indexPath.row)
         cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         return cell
-      default:break
+      default: break
     }
   }
   

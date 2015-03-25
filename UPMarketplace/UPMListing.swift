@@ -7,13 +7,13 @@
 //
 
 /**
-Abstract[ISH] class that provides the base for all
-marketplace listings. Must be subclassed. Steps to properly subclass:
+  Abstract[ISH] class that provides the base for all
+  marketplace listings. Must be subclassed. Steps to properly subclass:
 
-1. Adopt the PFSubclassing protocol
-2. Fullfill required methods parseClassName()
-3. Register subclass with Parse by overridng load() and calling
-self.registerSubclass()
+  1. Adopt the PFSubclassing protocol
+  2. Fullfill required methods parseClassName()
+  3. Register subclass with Parse by overridng load() and calling
+  self.registerSubclass()
 */
 public class UPMListing: PFObject  {
   
@@ -141,6 +141,12 @@ public class UPMListing: PFObject  {
           suggestion: "Wait")
         return BFTask(error: error)
         
+      } else if self.owner == reserver {
+        error = NSError.createError("You cannot reserve your own listing",
+          failureReason: "Listing owned by self.",
+          suggestion: "Don't reserve own listing.")
+          return BFTask(error: error)
+      
       } else {
         // Add user to reservations and hide the listing
         self.addObject(reservation, forKey: "reservations")
@@ -151,8 +157,8 @@ public class UPMListing: PFObject  {
       }.continueWithSuccessBlock {
         [unowned self] (task: BFTask!) -> AnyObject! in
         // Add activity for seller and buyer
-        let buyerActivity = UPMActivity(title: "Made Reservation:", description: "Reservation:\n\(self.title!)", user: reserver)
-//        let sellerActivity = UPMActivity(title: "Your listing has been reserved:", description: <#String#>, user: <#PFUser#>)
+        let title = self.title ?? ""
+        let buyerActivity = UPMActivity(title: "Made Reservation:", description: "Reservation:\n\(title)", user: reserver)
         return buyerActivity.saveInBackground()
 
       }.continueWithBlock { (task: BFTask!) -> AnyObject! in
@@ -185,10 +191,14 @@ public class UPMListing: PFObject  {
     removeObject(reservation, forKey: "reservations")
     isHidden = false
     
-    reservation.deleteInBackground().continueWithBlock { (task: BFTask!) -> AnyObject! in
-      
+    reservation.deleteInBackground().continueWithBlock { (task: BFTask!) in
       return self.saveInBackground()
-    }.continueWithBlock { (task: BFTask!) -> AnyObject! in
+      
+    }.continueWithSuccessBlock { (task) in
+      let deleteActivity = UPMActivity.activityWithTitle("Deleted Reservation", description: self.title!, user: PFUser.currentUser()!)
+      return deleteActivity.saveInBackground()
+      
+    }.continueWithBlock { (task: BFTask!) in
       if task.error == nil {
         deleteTask.setResult(nil)
       } else {
@@ -541,9 +551,11 @@ public class UPMListing: PFObject  {
   */
   internal func sellerReservationStatus() -> ReservationStatus  {
     if reservationCount().accepted > 0 {
-      return ReservationStatus.Accepted
+      return .Accepted
+    } else if reservationCount().waiting > 0  {
+      return .Waiting
     } else {
-      return ReservationStatus.Waiting
+      return .NoReservations
     }
   }
 

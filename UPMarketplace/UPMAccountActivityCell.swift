@@ -24,7 +24,7 @@ class UPMAccountActivityCell: PFTableViewCell {
   
   lazy var titleLabel: UILabel = { [unowned self] in
     let label = UILabel(forAutoLayout: true)
-    label.font = UIFont.standardHeaderTwoFont()
+    label.font = UIFont.standardBoldFontOfSize(17.0)
     label.numberOfLines = 0
     self.contentView.addSubview(label)
     return label

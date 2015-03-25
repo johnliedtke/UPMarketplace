@@ -7,12 +7,28 @@
 //
 
 import UIKit
-
+/**
+  The UPMAccountSellingTVC class displays all of the current user's listings. In additoin, 
+  it the location where users can edit and delete his or her listings. 
+*/
 class UPMAccountSellingTVC: UPMPFQueryAllTVC {
 
-  // MARK: - Public Properties
+  // MARK: - View
   
-  // MARK: UPMPFQueryTableVC
+ 
+  override func viewDidLoad() {
+    noDataMessage = "You are not selling anything.\nPull to refresh."
+    sectionsEnabled = true
+    sectionKey = ""
+    determineSectionKey = { (listing) in
+      if let l = listing as? UPMListing {
+        return l.displaySellerReservationStatus()
+      }
+      return ""
+    }
+    super.viewDidLoad()
+    tableView.estimatedRowHeight = 50.0
+  }
   
   override func queries() -> [PFQuery]? {
     var query = PFQuery(className: "UPMOtherListing")
@@ -23,47 +39,38 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
     textbookListing.whereKey("owner", equalTo: PFUser.currentUser()!)
     textbookListing.includeKey("reservations")
     textbookListing.includeKey("reservations.reserver")
+    textbookListing.includeKey("textbook")
     return [query, textbookListing]
   }
   
-  // MARK: - Init
-  
-  override func viewDidLoad() {
-    noDataMessage = "You are not selling anything.\nPull to refresh."
-    super.viewDidLoad()
-    tableView.estimatedRowHeight = 50.0
-
-  }
-  
-  // MARK - Private Methods
-  
-  // MARK: - Table view data source
+  // MARK: - TableView Datasource
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UITableViewCell {
     
-      var listing = object as! UPMListing
-      
-      if indexPath.section == objects.count {
-        var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-        return loadMoreCell as! PFTableViewCell
-      }
-      
-      var cell = tableView.dequeueReusableCellWithIdentifier("UPMAccountListingCell") as! UPMAccountListingCell!
-      if cell == nil {
-        cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "UPMAccountListingCell")
-      }
-      
-      cell.statusLabel.text = listing.displaySellerReservationStatus()
-      cell.changeStatusColor(listing.sellerReservationStatus())
-      cell.titleLabel.text = listing.title
-      cell.displayImageView.file = listing.pictureThumbnail
-      cell.displayImageView.loadInBackground()
-      
-      // Add long press
-      var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-      cell.addGestureRecognizer(gestureRecognizer)
-      
-      return cell
+    var listing = object as! UPMListing
+    
+    if indexPath.section == objects.count {
+      var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
+      return loadMoreCell as! PFTableViewCell
+    }
+    
+    var cell = tableView.dequeueReusableCellWithIdentifier("UPMAccountListingCell") as! UPMAccountListingCell!
+    if cell == nil {
+      cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "UPMAccountListingCell")
+    }
+    
+    cell.statusLabel.text = listing.displaySellerReservationStatus()
+    cell.changeStatusColor(listing.sellerReservationStatus())
+    cell.titleLabel.text = listing.title
+    cell.displayImageView.file = listing.pictureThumbnail
+    cell.displayImageView.loadInBackground()
+    cell.priceLabel.text = listing.displayPrice()
+    
+    // Add long press
+    var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+    cell.addGestureRecognizer(gestureRecognizer)
+    
+    return cell
   }
   
   /**
@@ -109,18 +116,31 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
   
   // MARK: - Tableview Delegate
   
-  override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
+  override func tableView(tableView: UITableView,
+    didSelectRowAtIndexPath indexPath: NSIndexPath,
+    withObject object: PFObject) {
     var listing = objectAtIndexPath(indexPath)
     
-    if listing.parseClassName == "UPMOtherListing", let otherListing = listing as? UPMOtherListing {
-      var updateOtherListing = UPMSellOtherTVC()
-      updateOtherListing.otherListng = otherListing
-      updateOtherListing.isUpdatingListing = true
-      navigationController?.pushViewController(updateOtherListing, animated: true)
-    }
+      switch listing.parseClassName {
+      case UPMOtherListing.parseClassName():
+        if let otherListing = listing as? UPMOtherListing {
+          var updateOtherListing = UPMSellOtherTVC()
+          updateOtherListing.otherListng = otherListing
+          updateOtherListing.isUpdatingListing = true
+          navigationController?.pushViewController(updateOtherListing, animated: true)
+        }
+      case UPMTextbookListing.parseClassName():
+        if let textbookListing = listing as? UPMTextbookListing {
+          var textbookListingTVC = UPMSellTextbookTVC()
+          textbookListingTVC.textbookListing = textbookListing
+          textbookListingTVC.isUpdatingListing = true
+          navigationController?.pushViewController(textbookListingTVC, animated: true)
+        }
+      default: break
+      }
   }
   
-  // MARK: Edit Actions
+  // MARK: - Edit Actions
   
   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
     return true
@@ -128,11 +148,8 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
   
   override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
       if editingStyle == .Delete {
-          // Delete the row from the data source
-         // tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
       } else if editingStyle == .Insert {
-          // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-      }    
+      }
   }
   
   override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {

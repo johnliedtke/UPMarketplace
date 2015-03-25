@@ -27,6 +27,7 @@ class UPMBuyListItemsTextbookCVC: UPMBuyGridCVC {
   // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+    navigationItem.title = "Textbooks"
     self.collectionView = collectionView;
     self.collectionView!.dataSource = self;
     self.collectionView!.delegate = self;

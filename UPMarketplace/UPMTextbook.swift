@@ -48,6 +48,22 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   public func getFormattedISBN() -> String {
     return iSBN10!
   }
+
+  /**
+  Returns all non-nil detail properties with the appropriate value 
+  and a descriptive formatted label.
+  
+  :returns: Non-nil property and label (label: String, value: String)
+  */
+  func textbookDetails() -> [(String, String)] {
+    var f = [(String, String)]()
+    if let edition = edition {f.append(("Edition: ", edition))}
+    if let isbn = iSBN13 {f.append(("ISBN: ", isbn))}
+    if let course = course {f.append(("Course: ", course))}
+    if let professor = professor {f.append(("Professor: ", professor))}
+    if let authors = authors {f.append(("Author(s): ", authors))}
+    return f
+  }
   
   // MARK: - PFSubclassing Methods
   

@@ -9,6 +9,15 @@
 import Foundation
 
 
+enum UPMActivityCategory {
+  case ReservationDeleted,
+  ReservationMade,
+  ListingDeleted,
+  ListingMade,
+  ContactedSeller, ContactedBuyer
+}
+
+
 /**
 A UPMActivity represents any activity by the user in the application. Serves
 as a history for the user to view.
@@ -38,6 +47,15 @@ class UPMActivity: PFObject, PFSubclassing {
     self.user = user
     self.date = NSDate()
     self.ACL = PFACL(user: user)
+  }
+  
+  class func activityWithTitle(title: String, description: String, user: PFUser) -> UPMActivity {
+    var activity = UPMActivity()
+    activity.title = title
+    activity.activityDescription = description
+    activity.user = user
+    activity.date = NSDate()
+    return activity
   }
   
   // MARK: - Parse Subclassing

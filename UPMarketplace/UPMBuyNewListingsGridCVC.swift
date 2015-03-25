@@ -34,9 +34,6 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
     navigationController?.navigationBar.backItem?.title = "Back"
     self.title = titleTop
     
-    self.navigationController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Barcdoe", style: .Done, target: self, action: "pushBarcode")
-    
-    navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Barcode", style: UIBarButtonItemStyle.Done, target: self, action: "pushBarcode")
     
     // reveal controller
     var revealViewController = self.revealViewController
@@ -113,8 +110,5 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
       navigationController?.pushViewController(viewController, animated: true)
 
     }
-
   }
-  
-    
 }

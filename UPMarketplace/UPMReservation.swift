@@ -8,7 +8,7 @@
 
 
 enum ReservationStatus: Int, Printable {
-  case Rejected, Accepted, Waiting
+  case Rejected, Accepted, Waiting, NoReservations
   
   var description : String {
     get {
@@ -19,6 +19,8 @@ enum ReservationStatus: Int, Printable {
         return "Accepted"
       case .Waiting:
         return "Waiting"
+      case .NoReservations:
+        return "No Reservations"
       }
     }
   }

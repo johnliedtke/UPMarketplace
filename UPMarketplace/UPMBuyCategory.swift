@@ -22,12 +22,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   var allCategory = [" "]
   
   // MARK: - Constants
-  lazy var buyFilter: UPMCategoryFilterMainTVC = {
-    var buyFilterTVC = UPMCategoryFilterMainTVC()
-    return buyFilterTVC
-  }()
   let reuseidentifer = "BuyCategoryCell"
-  let revController = SWRevealViewController()
   
   
   // MARK: - View Methods
@@ -35,12 +30,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     super.viewDidLoad()
     collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     navigationItem.title = "Buy"
-    
-    //set default behavior of reveal controller
-    revController.bounceBackOnOverdraw = true;
-    revController.stableDragOnOverdraw = true;
-    revController.setRightViewController(UINavigationController(rootViewController: buyFilter), animated: true)
-    
+
     // Calculate Height
     var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height)!
     var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)!
@@ -72,32 +62,39 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
     switch(indexPath.row){
       case 0:
         
+        let revController = SWRevealViewController()
+        let buyOtherFilter = UPMCategoryFilterMainTVC()
+        
+        //set default behavior of reveal controller
+        revController.bounceBackOnOverdraw = true;
+        revController.stableDragOnOverdraw = true;
+        revController.setRightViewController(UINavigationController(rootViewController: buyOtherFilter), animated: true)
+        
         //set defaults of each controller
         var buyOtherListngCVC = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
         revController.frontViewController = buyOtherListngCVC
         revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
-        
-        //set the title to be that of the chosen category
-        //revController.navigationItem.title = categories[indexPath.row]
+        revController.revealToggleAnimated(true)
+
         buyOtherListngCVC.category = categories[indexPath.row]
-        buyFilter.delegate = buyOtherListngCVC
+        buyOtherFilter.delegate = buyOtherListngCVC
         
          //get the subcategories for selected class
         className = classes[indexPath.row]
         getCategories(className!)
         
         //push the reveal controller
-       navigationController?.pushViewController(revController, animated: true)
+        navigationController?.pushViewController(revController, animated: true)
       
       case 1:
         //set defaults of each controller
         var buyCategory = UPMBuyListItemsHousingCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        revController.frontViewController = buyCategory
-        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        //revController.frontViewController = buyCategory
+        //revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
         
         //set the title to be that of the chosen category
-        revController.navigationItem.title = categories[indexPath.row]
-        buyCategory.category = categories[indexPath.row]
+       //n revController.navigationItem.title = categories[indexPath.row]
+        //buyCategory.category = categories[indexPath.row]
         
         //get the subcategories for selected class
        // className = classes[indexPath.row]
@@ -108,17 +105,17 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
        // revController.navigationItem.rightBarButtonItem = filterButton
         
         //push the reveal controller
-        navigationController?.pushViewController(revController, animated: true)
+        //navigationController?.pushViewController(revController, animated: true)
 
       case 2:
       
         //set defaults of each controller
         var buyCategory = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        revController.frontViewController = buyCategory
-        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        //revController.frontViewController = buyCategory
+        //revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
         
         //set the title to be that of the chosen category
-        revController.navigationItem.title = categories[indexPath.row]
+       // revController.navigationItem.title = categories[indexPath.row]
         buyCategory.category = categories[indexPath.row]
         
         //get the subcategories for selected class
@@ -131,7 +128,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
        // revController.navigationItem.rightBarButtonItem = filterButton
         
         //push the reveal controller
-        navigationController?.pushViewController(revController, animated: true)
+        navigationController?.pushViewController(buyCategory, animated: true)
         
       default:break
     }

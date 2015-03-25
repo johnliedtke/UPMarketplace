@@ -145,9 +145,6 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     }
   }
 
-  public override func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    return keyForSection(section)
-  }
   
   
 }

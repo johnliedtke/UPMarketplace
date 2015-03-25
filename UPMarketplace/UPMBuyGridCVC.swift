@@ -21,8 +21,6 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
   // MARK: - Constants
   let ListingsPerPage = 24
 
-  // MARK: - Public Properties
-  
   // MARK: - Public Methods
   
   /// Override to provide the UPMListing subclass name for a PFQuery

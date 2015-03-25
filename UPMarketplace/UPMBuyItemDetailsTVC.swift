@@ -114,7 +114,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   */
   internal func contactSeller() {
     //TODO: Use real seller
-    var contactVC = UPMContactVC(user: listing.owner, withSubject: "Question about: \(listing!.title)")
+    var contactVC = UPMContactVC(user: listing.owner, withSubject: "Question about: \(listing!.title!)")
     var navigation = UINavigationController(rootViewController: contactVC)
     presentViewController(navigation, animated: true, completion: nil)
   }
@@ -154,7 +154,6 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     }
   }
   
-  
   // MARK: - TableView Datasource
 
   override func tableView(tableView: UITableView,cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -168,13 +167,13 @@ class UPMBuyItemDetailsTVC: UITableViewController {
         var weakFile = listing?.picture
         
         weakFile?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
-          [unowned self, cell] (task)  in
-          if task.error == nil, let imageData = task.result as? NSData {
+          [weak self, cell] (task)  in
+          if let weakSelf = self where task.error == nil, let imageData = task.result as? NSData {
             cell.buyItemImage.image = UIImage(data: imageData)
-            cell.displayImageViewTapped = { [unowned self, cell] (sender) in
+            cell.displayImageViewTapped = { [weak self, cell] (sender) in
               var imageVC = UPMBuyItemDetailsImageVC()
               imageVC.image = UIImage(data: imageData)
-              self.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
+              weakSelf.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
             }
           }
           return nil

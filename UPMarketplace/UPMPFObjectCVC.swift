@@ -43,12 +43,23 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   
   /// Pull to refresh control
   var refreshControl: UIRefreshControl!
+  
+  /// Displayed when :objects: is empty
+  private var noDataLabel = UILabel()
+
 
   // MARK: - View
   
   /// Performs query for objects on load and sets up pull to refresh.
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    let topLayout = topLayoutGuide
+    
+    if let collectionView = collectionView {
+      
+    }
+    
     collectionView?.delegate = self
     collectionView?.dataSource = self
     changeDefaults()
@@ -64,17 +75,20 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   
   /// Display message when there is no data or network connection
   func displayNoDataAvailable() -> Void {
-    var messageLabel = UILabel()
-    collectionView?.addSubview(messageLabel)
-    messageLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-    collectionView?.addConstraint(NSLayoutConstraint(item: messageLabel, attribute: .CenterX, relatedBy: .Equal, toItem: collectionView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-    collectionView?.addConstraint(NSLayoutConstraint(item: messageLabel, attribute: .CenterY, relatedBy: .Equal, toItem: collectionView, attribute: .CenterY, multiplier: 1.0, constant: -100))
-    collectionView?.addConstraint(NSLayoutConstraint(item: messageLabel, attribute: .Width, relatedBy: .Equal, toItem: collectionView, attribute: .Width, multiplier: 1.0, constant: 0))
-    messageLabel.text = "No network connection.\nPull down to refresh."
-    messageLabel.textColor = UIColor.darkGrayColor()
-    messageLabel.numberOfLines = 0
-    messageLabel.textAlignment = NSTextAlignment.Center
-    messageLabel.font = UIFont.standardBoldTitleFont()
+    noDataLabel.removeFromSuperview()
+    if objects.isEmpty {
+      noDataLabel = UILabel()
+      view.addSubview(noDataLabel)
+      noDataLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterX, relatedBy: .Equal, toItem: collectionView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterY, relatedBy: .Equal, toItem: collectionView, attribute: .CenterY, multiplier: 1.0, constant: -100))
+      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .Width, relatedBy: .Equal, toItem: collectionView, attribute: .Width, multiplier: 1.0, constant: 0))
+      noDataLabel.text = "No network connection.\nPull down to refresh."
+      noDataLabel.textColor = UIColor.darkGrayColor()
+      noDataLabel.numberOfLines = 0
+      noDataLabel.textAlignment = NSTextAlignment.Center
+      noDataLabel.font = UIFont.standardBoldTitleFont()
+    }
   }
   
   /// Override to change the default values before the first data is fetched
@@ -111,9 +125,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   /// Default is one section
   override func collectionView(collectionView: UICollectionView,
     numberOfItemsInSection section: Int) -> Int {
-      if objects.isEmpty {
-        displayNoDataAvailable()
-      }
+      displayNoDataAvailable()
       return objects.count
   }
 
@@ -154,10 +166,14 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
 
   // MARK: - Private Methods
   
-  /// Pull to refresh action
-  func refreshControlAction(sender: AnyObject) {
+  func refresh() {
     isRefreshing = true
     performQuery()
+  }
+  
+  /// Pull to refresh action
+  func refreshControlAction(sender: AnyObject) {
+    refresh()
   }
 
   /**
@@ -175,32 +191,29 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
             q.skip = objects.filter { $0.parseClassName == q.parseClassName }.count
           }
         }
-        
-        // About to fetch
-        self.objectsWillLoad()
-        
-        //FIXME: Fix slow initial fetching.
-        
-        PFQuery.combineQueriesInBackground(queriesToPerform).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
-          [unowned self] (task) in
-              if task.error == nil {
-                // Success
-                if var fetchedObjects = task.result as? [PFObject] {
-                  fetchedObjects.sort { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
-                  if self.paginationEnabled && !self.isRefreshing {
-                    self.objects += fetchedObjects
-                  } else {
-                    self.objects = fetchedObjects
-                  }
+      }
+      
+      // About to fetch
+      self.objectsWillLoad()
+
+      PFQuery.combineQueriesInBackground(queriesToPerform).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+        [unowned self] (task) in
+            if task.error == nil {
+              // Success
+              if var fetchedObjects = task.result as? [PFObject] {
+                fetchedObjects.sort { $0.createdAt!.compare($1.createdAt!) == NSComparisonResult.OrderedDescending }
+                if self.paginationEnabled && !self.isRefreshing {
+                  self.objects += fetchedObjects
+                } else {
+                  self.objects = fetchedObjects
                 }
-              } else {
-                // error
               }
-              self.objectsDidLoad(task.error)
-          return nil
-        })
-        
-      }// end if var
+            } else {
+              // error
+            }
+            self.objectsDidLoad(task.error)
+        return nil
+      })
     } else {
       var queryToPeform = query()
       
@@ -279,7 +292,7 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   /// When we hit the end of the scrollView, fetch more items!
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     var bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-    if bottomEdge >= scrollView.contentSize.height {
+    if bottomEdge >= scrollView.contentSize.height && !isLoading {
       isRefreshing = false
       performQuery()
     }

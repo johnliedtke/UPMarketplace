@@ -19,9 +19,7 @@ class UPMTablePickerVC: UITableViewController {
   
   var rows = [String]()
   var datasource: SingleSectionDataSource<T> = SingleSectionDataSource<T>() {
-    didSet {
-      tableView.dataSource = datasource.tableViewDataSource
-    }
+    didSet { tableView.dataSource = datasource.tableViewDataSource }
   }
   
   override func viewDidLoad() {

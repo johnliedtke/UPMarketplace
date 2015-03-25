@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UIBarButtonItem.appearance().tintColor = UIColor.lightPurpleColor()
     UINavigationBar.appearance().tintColor = UIColor.lightPurpleColor()
     
-    
-    
     /**
     Tab Bar Navigation
     Create the entire navigation for the application.

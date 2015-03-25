@@ -12,34 +12,23 @@ class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
   
   
     
-    var numRows = 4
-    var listingTextbook: UPMTextbookListing?
+  var numRows: Int {
+    get { return (listingTextbook?.textbook.textbookDetails())!.count + 1 }
+  }
+  
+  var listingTextbook: UPMTextbookListing?
     
-    override func changeDefaults() {
-      numberOfAttributes = numRows
-      listing = listingTextbook
-    }
+  override func changeDefaults() {
+    numberOfAttributes = numRows
+    listing = listingTextbook
+  }
 
-    override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
-      switch(indexPath.row){
-      case 0:
-        cell.configureCell("Edition:", second: listingTextbook?.textbook?.edition)
-        break
-      case 1:
-       cell.configureCell("ISBN:", second: listingTextbook?.textbook?.iSBN13)
-        break
-      case 2:
-        cell.configureCell("Course:", second: listingTextbook?.textbook?.course)
-        break
-      case 3:
-        cell.configureCell("Professor:", second: listingTextbook?.textbook?.professor)
-        break
-      case 4:
-        cell.configureCell("Posted:", second:fixDateFormat((listingTextbook?.createdAt)!))
-        break
-      default:
-        break
-        
-      }
+  override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
+    if let fields = listingTextbook?.textbook.textbookDetails() where indexPath.row != tableView.numberOfRowsInSection(indexPath.section) - 1
+    {
+      cell.configureCell(fields[indexPath.row].0, second: fields[indexPath.row].1)
+    } else {
+      cell.configureCell("Posted:", second:fixDateFormat((listingTextbook?.createdAt)!))
     }
+  }
 }

@@ -35,13 +35,12 @@ public class UPMAccountListingCell: PFTableViewCell {
   }()
   
   lazy var priceLabel: UILabel = {
-    var label = UILabelVertical()
+    var label = UILabel()
     label.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(label)
     label.numberOfLines = 0
-    label.font = UIFont.systemFontOfSize(14.0)
-    //label.backgroundColor = UIColor.flatLightGreenColor()
-    label.text = "$5.00"
+    label.textAlignment = .Right
+    label.font = UIFont.standardBolTextFont()
     return label
   }()
   
@@ -53,8 +52,6 @@ public class UPMAccountListingCell: PFTableViewCell {
     return iv
   }()
   
-  
-  // MARK: - Private Properties
   
   // MARK: - Pubic Methods
   
@@ -104,15 +101,10 @@ public class UPMAccountListingCell: PFTableViewCell {
       options: .DirectionLeadingToTrailing,
       metrics: nil,
       views: ed))
-
-    // Make the titleLabel grow faster
-    titleLabel.setContentHuggingPriority(400, forAxis: UILayoutConstraintAxis.Vertical)
-    statusLabel.setContentHuggingPriority(800, forAxis: UILayoutConstraintAxis.Vertical)
-
   }
   
   /**
-  Changes the color of the statusLabel corresponding to the status parameter.
+  Changes the color of the statusLabel corresponding to a reservation status.
 
   :param: status Status of a UPMListing
   */
@@ -122,8 +114,8 @@ public class UPMAccountListingCell: PFTableViewCell {
       statusLabel.textColor = UIColor.flatDarkGreenColor()
     case .Waiting:
       statusLabel.textColor = UIColor.flatLightOrangeColor()
-    case .Rejected:
-      statusLabel.textColor = UIColor.flatDarkRedColor()
+    case .NoReservations:
+      statusLabel.textColor = UIColor.flatLightRedColor()
     default:
       statusLabel.textColor = UIColor.flatLightBlueColor()
     }
@@ -132,7 +124,7 @@ public class UPMAccountListingCell: PFTableViewCell {
   // MARK: Private Methods
 
   required public init(coder aDecoder: NSCoder) {
-      fatalError("init(coder:) has not been implemented")
+    super.init(coder: aDecoder)
   }
   
 }

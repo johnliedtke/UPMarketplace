@@ -42,6 +42,7 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 1000 // auto-layout simulator fix
     navigationItem.title = "Filter Category"
+    
   }
   
   // MARK: - Items

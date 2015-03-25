@@ -27,4 +27,19 @@ class Section<R> {
     self.header = header
     self.value = value
   }
+  
+  init(rows: [R]) {
+    self.rows = rows
+  }
+  
+  init(header: String, rows: [R]) {
+    self.header = header
+    self.rows = rows
+  }
+  
+  init(header: String, rows: [R], value: Any) {
+    self.header = header
+    self.rows = rows
+    self.value = value
+  }
 }
