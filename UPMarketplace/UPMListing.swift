@@ -189,8 +189,6 @@ public class UPMListing: PFObject  {
         [unowned self] (task: BFTask!) -> AnyObject! in
         
         if let result = task.result as? UPMListing {
-          println("Meow")
-          println(result.title)
         }
         // Add activity for seller and buyer
         let title = self.title ?? ""
@@ -199,9 +197,10 @@ public class UPMListing: PFObject  {
 
       }.continueWithSuccessBlock { (task) in
         
-        let subject = "Reserveration Made: \(self.title!)"
+        let subject = "UP-Market: Reserveration Made - \(self.title!)"
         
-        let message = "\(reserver.fullNameOfUser()) reserved your listing: \(self.title!). \n\n Log into UP Market to accept or reject the reservation."
+        let message = "\(reserver.fullNameOfUser()) reserved your listing: \(self.title!). \n\nLog into UP Market->Account to accept or reject the reservation."
+        + "\n\n" + Constants.Email.kNotificationFooter
         
         return PFCloudExt.sendEmailTo(self.owner, from: reserver, subject: subject, body: message, notification: true)
         
@@ -247,7 +246,7 @@ public class UPMListing: PFObject  {
       if reservation.status == ReservationStatus.Rejected.rawValue {
         return task
       } else {
-        let subject = "User Deleted Reservation: \(self.title!)"
+        let subject = "UP-Market - User Deleted Reservation: \(self.title!)"
         
         let message = "\(reservation.reserver.fullNameOfUser()) deleted the reservation for your listing: \(self.title!)."
         + "\n\n Your listing has been placed back on the market."
@@ -296,7 +295,7 @@ public class UPMListing: PFObject  {
     
     saveInBackground().continueWithSuccessBlock {
       (task: BFTask!) in
-        let subject = "Seller Rejected Reservation: \(self.title!)"
+        let subject = "UP-Market: Seller Rejected Reservation - \(self.title!)"
         
         let message = "Your reservation has been rejected for listing: \(self.title!)."
           + "\n\n" + Constants.Email.kNotificationFooter
@@ -306,8 +305,8 @@ public class UPMListing: PFObject  {
     }.continueWithSuccessBlock {
       [unowned self] (task) in
       
-      let rejectReserverActivity = UPMActivity.activityWithTitle("Reservation Rejected", description: "Seller rejected reservation for: \(self.title!)", user: reserver)
-      let rejectSellerActivity = UPMActivity.activityWithTitle("Rejected Reservation", description: "Rejected reservation for \(self.title!)", user: self.owner)
+      let rejectReserverActivity = UPMActivity.activityWithTitle("Reservation Rejected", description: "Seller rejected \(self.title!)", user: reserver)
+      let rejectSellerActivity = UPMActivity.activityWithTitle("Rejected Reservation", description: "\(self.title!)", user: self.owner)
       
       return PFObject.saveAllInBackground([rejectReserverActivity, rejectSellerActivity])
       
@@ -424,7 +423,7 @@ public class UPMListing: PFObject  {
     let reserver = getWaitingReservation()!.getReserver()
     reservation.status = ReservationStatus.Accepted.rawValue
     
-    let subject = "Reservation Accepted: \(self.title!)"
+    let subject = "UP-Market: Reservation Accepted - \(self.title!)"
     let body = "\(self.owner.fullNameOfUser()) accepted your reservation for \"\(self.title!)\".\n\nContact email: \(self.owner.email!)"
     
     let email: [String: String] = ["to": reserver.email!, "from": self.owner.email!, "subject": subject, "message": body]

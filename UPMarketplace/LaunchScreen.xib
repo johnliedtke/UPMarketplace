@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7525" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" id="iN0-l3-epB">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="bigLogo" translatesAutoresizingMaskIntoConstraints="NO" id="LvH-Lr-nSU">
+                    <rect key="frame" x="8" y="46" width="584" height="408"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="262" id="6OE-H2-cB3"/>
+                        <constraint firstAttribute="height" constant="408" id="9Tn-23-GUR"/>
+                        <constraint firstAttribute="width" secondItem="LvH-Lr-nSU" secondAttribute="height" multiplier="73:51" id="KDn-us-8Mm"/>
+                        <constraint firstAttribute="width" constant="584" id="cx0-8J-gQM"/>
+                        <constraint firstAttribute="height" constant="262" id="fY3-wL-pwF"/>
+                    </constraints>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="6OE-H2-cB3"/>
+                            <exclude reference="9Tn-23-GUR"/>
+                            <exclude reference="cx0-8J-gQM"/>
+                            <exclude reference="fY3-wL-pwF"/>
+                        </mask>
+                    </variation>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" red="0.60784313725490191" green="0.34901960784313724" blue="0.71372549019607845" alpha="1" colorSpace="calibratedRGB"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="LvH-Lr-nSU" secondAttribute="trailing" constant="8" id="DGb-Bs-rFR"/>
+                <constraint firstAttribute="centerX" secondItem="LvH-Lr-nSU" secondAttribute="centerX" id="LFc-Qh-Gew"/>
+                <constraint firstAttribute="centerY" secondItem="LvH-Lr-nSU" secondAttribute="centerY" multiplier="1.2" id="RfU-bW-y73"/>
+                <constraint firstItem="LvH-Lr-nSU" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" constant="8" id="fNZ-rV-3He"/>
+            </constraints>
+        </view>
+    </objects>
+    <resources>
+        <image name="bigLogo" width="462" height="500"/>
+    </resources>
+</document>
