@@ -18,13 +18,56 @@ import Foundation
 */
 class UPMSellTextbookRequiredDeatils: UPMSellSingleInput {
   
+  /// Must be set
   var currentTextbookDetails = [String: String?]()
-
+  
+  /// Pointer to the isbnField
+  private weak var isbnField: UITextField!
+  
+  /// Pointer to course textfield
+  private weak var courseField: UITextField!
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.estimatedRowHeight = 50.0 // simulator auto-layout fix
     navigationItem.title = "ISBN & Course"
-    dataSource.rows = [UPMSellInput(labelText: "ISBN", placeholderText: "MEOW", valueText: currentTextbookDetails["isbn"]!), UPMSellInput(labelText: "Course", placeholderText: "e.g. CS301", valueText: currentTextbookDetails["course"]!)]
+    
+    let isbn = currentTextbookDetails["isbn"]!
+    let course = currentTextbookDetails["course"]!
+    
+    let isbnInput = UPMSellInput(labelText: "ISBN", valueText: isbn) {
+      [weak self] (tf) in
+      if let weakSelf = self {
+        tf.placeholder = "e.g. 9780262033848"
+        tf.text = weakSelf.currentTextbookDetails["isbn"] ?? ""
+        tf.autocapitalizationType = .AllCharacters
+        tf.delegate = self
+        tf.keyboardType = .NumberPad
+        weakSelf.isbnField = tf
+      }
+    }
+    
+    let courseInput = UPMSellInput(labelText: "Course", valueText: course) {
+      [weak self] (tf) in
+      if let weakSelf = self {
+        tf.placeholder = "e.g. ENG112"
+        tf.text = weakSelf.currentTextbookDetails["course"] ?? ""
+        tf.delegate = weakSelf
+        weakSelf.courseField = tf
+        tf.autocapitalizationType = .AllCharacters
+      }
+    }
+
+    dataSource.rows = [isbnInput, courseInput]
   }
+  
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    if isbnField != nil {
+      isbnField.becomeFirstResponder()
+    }
+  }
+  
   
   override func didPressDoneFromNavigation() {
     //TODO: Validate...
@@ -33,8 +76,32 @@ class UPMSellTextbookRequiredDeatils: UPMSellSingleInput {
     for r in dataSource.rows {
       dict[r.labelText.lowercaseString] = r.valueText
     }
-    dataCollectedHandler!(dict)
+    if let handler = dataCollectedHandler {
+      handler(dict)
+    }
     navigationController?.popViewControllerAnimated(true)
   }
+  
+  // MARK: - UITextField Delegate
+  
+  func textField(textField: UITextField,
+    shouldChangeCharactersInRange range: NSRange,
+    replacementString string: String) -> Bool {
+
+      let newLength = count(textField.text) + count(string) - range.length
+      
+      if range.length + range.location > count(textField.text) {
+        return false
+      }
+
+      if textField == courseField {
+        return !(newLength > 7);
+      } else if textField == isbnField {
+        return !(newLength > 14);
+      }
+    
+    return false
+  }
+
   
 }

@@ -9,14 +9,31 @@
 import Foundation
 
 struct UPMSellInput {
+  typealias ConfigureTextField = ((textField: UITextField) -> ())
   var labelText: String
   var placeholderText: String
   var valueText: String?
-  init(labelText: String, placeholderText: String, valueText: String?) {
+  var textFieldConfigurer: ConfigureTextField?
+  init(labelText: String, placeholderText: String, valueText: String?, textFieldConfigurer: ConfigureTextField?) {
+    self.textFieldConfigurer = textFieldConfigurer
     self.labelText = labelText
     self.placeholderText = placeholderText
     self.valueText = valueText
   }
+  
+  init(labelText: String, textFieldConfigurer: ConfigureTextField?) {
+    self.labelText = labelText
+    self.placeholderText = ""
+    self.textFieldConfigurer = textFieldConfigurer
+  }
+  
+  init(labelText: String, valueText: String?, textFieldConfigurer: ConfigureTextField?) {
+    self.labelText = labelText
+    self.valueText = valueText
+    self.placeholderText = ""
+    self.textFieldConfigurer = textFieldConfigurer
+  }
+  
 }
 
 class UPMSellInputCell: UITableViewCell {
@@ -72,12 +89,14 @@ internal class UPMSellSingleInput: UITableViewController, UITextFieldDelegate {
     var ds = SingleSectionDataSource(rows: [UPMSellInput](), cellConfigurator: {
       [weak self] (cell, row) in
       if let inputCell = cell as? UPMSellInputCell {
+        if let configure = row.textFieldConfigurer {
+          configure(textField: inputCell.textField)
+        } else {
+          inputCell.textField.placeholder = row.placeholderText
+          inputCell.textField.text = row.valueText
+          inputCell.textField.delegate = self
+        }
         inputCell.textFieldLabel.text = row.labelText
-        inputCell.textField.placeholder = row.placeholderText
-        inputCell.textField.text = row.valueText
-//        inputCell.textField.font = UIFont.standardF
-        inputCell.textField.delegate = self
-        //inputCell.textField.addDoneOnKeyboardWithTarget(self, action: "donePushed:")
       }
     })
     ds.reuseIdentifier = "UPMSellInputCell"

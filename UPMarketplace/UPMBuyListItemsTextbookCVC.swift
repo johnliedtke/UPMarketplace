@@ -10,7 +10,7 @@ import UIKit
 
 
 
-class UPMBuyListItemsTextbookCVC: UPMBuyGridCVC {
+class UPMBuyListItemsTextbookCVC: UPMBuyGridCVC, UPMFilterDelegate {
   // TODO: Make Clear Button reset the query to original State
   // TODO: Fix Issue of not showing first cell
   
@@ -18,19 +18,32 @@ class UPMBuyListItemsTextbookCVC: UPMBuyGridCVC {
   var atFilter = false
   var category: String?
   
+  /// Filter for textbooks
+  var filter = TextbookFilter(isbn: nil, course: nil)
+
+  
   override func query() -> PFQuery {
-    var listQuery = PFQuery(className: "UPMTextbookListing")
-    listQuery.orderByDescending("createdAt")
-    return UPMTextbookListing.displayQuery()
+    var query = UPMTextbookListing.displayQuery()
+    var textbookQuery = PFQuery(className: "UPMTextbook")
+    if let course = filter.course {
+      textbookQuery.whereKey("course", equalTo: course)
+    }
+    if let isbn = filter.isbn {
+      textbookQuery.whereKey("iSBN13", equalTo: isbn)
+    }
+    if filter.isbn != nil || filter.course != nil {
+    query.whereKey("textbook", matchesQuery: textbookQuery)
+    }
+    return query
   }
   
   // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+    var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action:Selector("goToRear"))
+    revealViewController().navigationItem.rightBarButtonItem = filterButton
+    revealViewController().navigationItem.title = "Textbooks"
     navigationItem.title = "Textbooks"
-    self.collectionView = collectionView;
-    self.collectionView!.dataSource = self;
-    self.collectionView!.delegate = self;
   }
   
   // MARK: - Data Source Methods
@@ -43,27 +56,20 @@ class UPMBuyListItemsTextbookCVC: UPMBuyGridCVC {
     
   }
   
+  func didFinishFiltering(sender: UIViewController, filter: Filter) {
+    if let f = filter as? TextbookFilter {
+      self.filter = f
+    }
+    goToRear()
+    refresh()
+  }
+  
   // MARK: - Button Action
   func goToRear(){
-    //depending on whether we are showing the filter tableview change the behavior of
-    //button and the navigation bar
-    if (!atFilter){
-      
-      self.revealViewController().navigationItem.title = "Filter"
-      self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Clear"
-      self.revealViewController().navigationItem.hidesBackButton = true
-      
-      atFilter = true
-    }
-    else if(atFilter){
-      
-      self.revealViewController().navigationItem.title = category
-      self.revealViewController().navigationItem.rightBarButtonItem?.title  = "Filter"
-      self.revealViewController().navigationItem.hidesBackButton = false
-      atFilter = false
-    }
+    atFilter = !atFilter
+    revealViewController().navigationController?.navigationBar.hidden = atFilter
+    collectionView?.userInteractionEnabled = !atFilter
     self.revealViewController().rightRevealToggle(self)
-    
   }
 
 }

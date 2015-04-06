@@ -44,8 +44,8 @@ public class UPMAccountListingCell: PFTableViewCell {
     return label
   }()
   
-  lazy var displayImageView: PFImageView = {
-    var iv = PFImageView()
+  lazy var displayImageView: UIImageView = {
+    var iv = UIImageView()
     iv.setTranslatesAutoresizingMaskIntoConstraints(false)
     self.contentView.addSubview(iv)
     iv.backgroundColor = UIColor.flatLightPurpleColor()

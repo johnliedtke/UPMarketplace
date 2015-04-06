@@ -175,6 +175,8 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
                 var message = ""
                 if let msg = task.result as? String {
                   message = msg
+                } else {
+                  message = task.error.localizedDescription
                 }
                 
                 var alertController = UIAlertController(title: "Found!", message: message, preferredStyle: .Alert)
@@ -189,7 +191,9 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
                 })
                 alertController.addAction(UIAlertAction(title: "Done", style: .Cancel) {
                   (action) in
-                  weakSelf.delegate?.didReadBarcode(metaDataObject.stringValue, shouldUseBarCode: true)
+                  if task.error == nil {
+                    weakSelf.delegate?.didReadBarcode(metaDataObject.stringValue, shouldUseBarCode: true)
+                  }
                   weakSelf.dismissViewControllerAnimated(true, completion: nil)
                 })
                 

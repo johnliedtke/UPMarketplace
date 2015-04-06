@@ -10,7 +10,7 @@
         <!--Buy-->
         <scene sceneID="gU4-tG-z4e">
             <objects>
-                <collectionViewController title="Buy" id="TEe-Vl-gJx" customClass="UPMBuyCategory" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController title="Buy" id="TEe-Vl-gJx" customClass="UPMBuyCategory" customModule="UP_Market" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="wem-Ce-t9S">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -22,7 +22,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BuyCategoryCell" id="OWJ-QI-zAz" customClass="UPMBuyCategoryCell" customModule="UPMarketplace" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="BuyCategoryCell" id="OWJ-QI-zAz" customClass="UPMBuyCategoryCell" customModule="UP_Market" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -63,7 +63,7 @@
         <!--Buy Other GridCVC-->
         <scene sceneID="Xnf-J7-aec">
             <objects>
-                <collectionViewController id="Anz-sg-7uX" customClass="UPMBuyOtherGridCVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController id="Anz-sg-7uX" customClass="UPMBuyOtherGridCVC" customModule="UP_Market" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="s78-cz-yUm">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -75,7 +75,7 @@
                             <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UPMItemsCategoryCell" id="vwj-DC-ht3" customClass="UPMItemCategoryCell" customModule="UPMarketplace" customModuleProvider="target">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="UPMItemsCategoryCell" id="vwj-DC-ht3" customClass="UPMItemCategoryCell" customModule="UP_Market" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
@@ -107,7 +107,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="500" misplaced="YES" text="The title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMU-2t-Yc3" customClass="UILabelVertical" customModule="UPMarketplace" customModuleProvider="target">
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalCompressionResistancePriority="500" misplaced="YES" text="The title" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZMU-2t-Yc3" customClass="UILabelVertical" customModule="UP_Market" customModuleProvider="target">
                                             <rect key="frame" x="8" y="253" width="280" height="150"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" secondItem="ZMU-2t-Yc3" secondAttribute="height" multiplier="17:1" id="Flx-TM-w0d"/>
@@ -193,7 +193,7 @@
         <!--UPMBuyList-->
         <scene sceneID="l9q-aq-wNy">
             <objects>
-                <collectionViewController storyboardIdentifier="UPMBuyList" title="UPMBuyList" id="2cU-QL-kRh" customClass="UPMBuyListItemsOtherCVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <collectionViewController storyboardIdentifier="UPMBuyList" title="UPMBuyList" id="2cU-QL-kRh" customClass="UPMBuyListItemsOtherCVC" customModule="UP_Market" customModuleProvider="target" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" id="LoZ-9K-f4L">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -219,7 +219,7 @@
         <!--BuyItemDetails-->
         <scene sceneID="pCG-5n-iLZ">
             <objects>
-                <tableViewController storyboardIdentifier="UPMBuyItemDetails" title="BuyItemDetails" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Os4-Iu-AOT" customClass="UPMBuyItemDetailsTVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="UPMBuyItemDetails" title="BuyItemDetails" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Os4-Iu-AOT" customClass="UPMBuyItemDetailsTVC" customModule="UP_Market" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="44" sectionHeaderHeight="10" sectionFooterHeight="10" id="awj-Ct-rUe">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -237,7 +237,7 @@
         <!--Item Description-->
         <scene sceneID="pfJ-H1-pXR">
             <objects>
-                <viewController storyboardIdentifier="UPMBuyItemDescriptionVC" title="Item Description" id="laD-aa-dMD" customClass="UPMBuyItemDescriptionVC" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="UPMBuyItemDescriptionVC" title="Item Description" id="laD-aa-dMD" customClass="UPMBuyItemDescriptionVC" customModule="UP_Market" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="c8N-vo-5KA"/>
                         <viewControllerLayoutGuide type="bottom" id="1wN-Am-ef9"/>

@@ -50,29 +50,6 @@ extension PFUser {
   }
 }
 
-
-
-/*
-- (void)doSomethingComplicatedAsync:(MYCancellationToken *)cancellationToken {
-  [[self doSomethingAsync:cancellationToken] continueWithBlock:^{
-    if (cancellationToken.isCancelled) {
-    return [BFTask cancelledTask];
-    }
-    // Do something that takes a while.
-    return result;
-    }];
-}
-
-
-// Somewhere else.
-MYCancellationToken *cancellationToken = [[MYCancellationToken alloc] init];
-[obj doSomethingComplicatedAsync:cancellationToken];
-
-// When you get bored...
-[cancellationToken cancel];
-*/
-
-
 /**
   UPMLoginVC handles creating new users and signing in existing
   ones. Users who are signed in must have their email confirmed. 
@@ -96,6 +73,7 @@ public class UPMLoginVC: UIViewController {
   private var registerFullNameField: UITextField?
   private var registerPasswordField: UITextField?
   private var registerPasswordConfirmationField: UITextField?
+  private weak var forgotPasswordField: UITextField!
   
   // MARK: - Public Methods
   
@@ -130,6 +108,10 @@ public class UPMLoginVC: UIViewController {
   override public func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = UIColor.standardBackgroundColor()
+    
+    if PFUser.currentUser() == nil {
+      SALQuickTutorialViewController.showIfNeededForKey("dfddddsfddgdfsfds", title: "Sign up", message: "Please sign up by selecting \"Create Account\" and confirming your UP email.", image: UIImage(named: "loginTut.png"))
+    }
   }
   
   func timerFinished(timer: NSTimer) {
@@ -163,67 +145,41 @@ public class UPMLoginVC: UIViewController {
       return
     }
 
-    var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-    hud.labelText = "Logging in..."
-    hud.graceTime = 1.0
+    APP().huddie(labelText: "Loggin in...")
     
     PFUser.doSomethingComplicatedAsync({return PFUser.logInWithUsernameInBackground(username, password: password)}, progress: progress).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: { [unowned self] (task) in
-        MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
 
       if task.error == nil {
-        
-        let user = task.result as! PFUser
-        
-        // Confirm that the user has a verified email address
-        if !user.isEmailVerified() {
-          PFUser.logOut()
-          var emailAlert = UIAlertController(title: "Email not confirmed", message: "Please verify your email address.", preferredStyle: .Alert)
-          emailAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-          self.presentViewController(emailAlert, animated: true, completion: nil)
-        } else {
-          self.logInSuccessfulHandler(sender: self)
+        self.hideHuddieWithMessage("", delay: 0.1) {
+
+          let user = task.result as! PFUser
+          
+          // Confirm that the user has a verified email address
+          if !user.isEmailVerified() {
+            PFUser.logOut()
+            var emailAlert = UIAlertController(title: "Email not confirmed", message: "Please verify your email address.", preferredStyle: .Alert)
+            emailAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+            self.presentViewController(emailAlert, animated: true, completion: nil)
+            
+          } else {
+            self.logInSuccessfulHandler(sender: self)
+          }
         }
 
       } else {
-        // Display error
-        let error = task.error
-        var errorString = error.userInfo?[NSString(string: "error")] as! NSString
-        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
-        alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
-        self.presentViewController(alertError, animated: true, completion: nil)
+        self.hideHuddieWithMessage("Error", delay: 0.1) {
+          // Display error
+          let error = task.error
+          var errorString = error.userInfo?[NSString(string: "error")] as! NSString
+          var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
+          alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
+          self.presentViewController(alertError, animated: true, completion: nil)
+        }
       }
       return nil
 
     })
-    
-    
-    
-//    PFUser.logInWithUsernameInBackground(username, password: password).continueWithBlock {
-//      (task: BFTask!) -> AnyObject! in
-//      
-//      if task.error == nil {
-//        
-//        let user = task.result as! PFUser
-//        
-//        // Confirm that the user has a verified email address
-//        if !user.isEmailVerified() {
-//          PFUser.logOut()
-//          var emailAlert = UIAlertController(title: "Email not confirmed", message: "Please verify your email address.", preferredStyle: .Alert)
-//          emailAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-//          self.presentViewController(emailAlert, animated: true, completion: nil)
-//        } else {
-//          self.logInSuccessfulHandler(sender: self)
-//        }
-//      } else {
-//        // Display error
-//        let error = task.error
-//        var errorString = error.userInfo?[NSString(string: "error")] as! NSString
-//        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
-//        alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
-//        self.presentViewController(alertError, animated: true, completion: nil)
-//      }
-//      return nil
-//    }
+
   }
   
   /**
@@ -288,8 +244,7 @@ public class UPMLoginVC: UIViewController {
     user.username = registerEmailField?.text.lowercaseString
     user.fullName = registerFullNameField?.text
     user.password = registerPasswordField?.text
-    
-    
+
     // Sign up user
     
     user.signUpInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
@@ -368,8 +323,30 @@ public class UPMLoginVC: UIViewController {
   
   //TODO: Implement
   @IBAction func forgotPasswordPressed(sender: UIButton) {
-
-    
+    let forgotController = UIAlertController(title: "Forgot Password", message: "Enter your email address and a reset link will bet sent.", preferredStyle: .Alert)
+    forgotController.addTextFieldWithConfigurationHandler { [unowned self] (textField) in
+      textField.placeholder = "email address"
+      textField.keyboardType = .EmailAddress
+      self.forgotPasswordField = textField
+    }
+    forgotController.addAction(UIAlertAction(title: "Send", style: .Default) {
+      [unowned self] (action) in
+      self.APP().huddie(labelText: "Requesting reset...")
+      PFUser.requestPasswordResetForEmailInBackground(self.forgotPasswordField.text).continueWithBlock() {
+        (task) in
+        if let error = task.error {
+          self.hideHuddieWithMessage("Error", delay: 0.1) {
+            self.displayErrorAlertWithMessage(error.localizedDescription)
+          }
+        } else {
+          self.hideHuddieWithMessage("Sent...", delay: 0.3, action: nil)
+        }
+        return nil
+      }
+    })
+      
+    forgotController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+    presentViewController(forgotController, animated: true, completion: nil)
   }
 
 

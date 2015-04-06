@@ -9,12 +9,15 @@
 import Foundation
 
 
-enum UPMActivityCategory {
-  case ReservationDeleted,
+enum UPMActivityAction: Int {
+  case
+  ReservationDeleted,
   ReservationMade,
   ListingDeleted,
   ListingMade,
-  ContactedSeller, ContactedBuyer
+  ContactedSeller,
+  ContactedBuyer,
+  ReservationAccepted
 }
 
 
@@ -38,6 +41,9 @@ class UPMActivity: PFObject, PFSubclassing {
   /// User assoicated with the activity
   @NSManaged var user: PFUser
   
+  /// Action associated with activity
+  @NSManaged var action: Int
+  
   // MARK: - Init
   
   convenience init(title: String, description: String, user: PFUser) {
@@ -58,8 +64,19 @@ class UPMActivity: PFObject, PFSubclassing {
     return activity
   }
   
+  class func activityWithTitle(title: String, description: String, user: PFUser, action: UPMActivityAction) -> UPMActivity {
+    var activity = UPMActivity()
+    activity.title = title
+    activity.activityDescription = description
+    activity.user = user
+    activity.date = NSDate()
+    activity.action = action.rawValue
+    return activity
+  }
+
+  
   // MARK: - Parse Subclassing
-  static func parseClassName() -> String! {
+  static func parseClassName() -> String {
     return "UPMActivity"
     
   }
@@ -69,7 +86,7 @@ class UPMActivity: PFObject, PFSubclassing {
 
 class UPMUserData: PFObject, PFSubclassing {
   
-  static func parseClassName() -> String! {
+  static func parseClassName() -> String {
     return "UPMUserData"
   }
   

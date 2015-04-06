@@ -34,6 +34,9 @@ public class UPMTextbook: PFObject, PFSubclassing  {
   /// Authors (separated by comma) in alphabetical order
   @NSManaged public var authors: String?
   
+  /// Book description (very optional, used for google books API)
+  @NSManaged public var bookDescription: String?
+  
   /// The URL of an image of the book
   public var imageURL: String?
   
@@ -73,7 +76,7 @@ public class UPMTextbook: PFObject, PFSubclassing  {
 
   :returns: The name of the class
   */
-  public class func parseClassName() -> String! {
+  public class func parseClassName() -> String {
     return "UPMTextbook"
   }
   

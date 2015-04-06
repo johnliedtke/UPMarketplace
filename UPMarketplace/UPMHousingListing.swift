@@ -24,7 +24,7 @@ public class UPMHousingListing: UPMListing, PFSubclassing {
   /// in the data browser.
   ///
   /// :returns: The name of the class
-  public class func parseClassName() -> String! {
+  public class func parseClassName() -> String {
     return "UPMHousingListing"
   }
   

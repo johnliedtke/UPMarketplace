@@ -56,13 +56,14 @@ extension UPMSellTVC {
   
   func pushImagePickerVC() {
     let Storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
-    var imagePickerVC = Storyboard.instantiateViewControllerWithIdentifier(SellImagePickerStoryboard) as! UPMSellImagePickerVC
+    if let imagePickerVC = Storyboard.instantiateViewControllerWithIdentifier(SellImagePickerStoryboard) as? UPMSellImagePickerVC {
     imagePickerVC.delegate = self
     if let image = listing?.photo {
       imagePickerVC.image = image
     }
     imagePickerVC.hidesBottomBarWhenPushed = true
     navigationController?.pushViewController(imagePickerVC, animated: true)
+    }
   }
   
   func pushDetailsVC() {

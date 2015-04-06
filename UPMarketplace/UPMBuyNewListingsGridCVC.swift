@@ -30,6 +30,11 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   // MARK: - View Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    //[SALQuickTutorialViewController showIfNeededForKey:@"MyUniqueKey" title:@"This feature is awesome" message:@"It's the best feature ever developed in an iOS app" image:[UIImage imageNamed:@"myFeatureImage"]];
+    if PFUser.currentUser() != nil {
+      SALQuickTutorialViewController.showIfNeededForKey("dfsfdgdfsfds", title: "New Listings", message: "The New Listings tab displays the latest additions to UP Market.", image: UIImage(named: "newListingsTut.pngs"))
+    }
 
     navigationController?.navigationBar.backItem?.title = "Back"
     self.title = titleTop

@@ -25,9 +25,6 @@ class UPMSellTitleTVC: UITableViewController, UITextViewDelegate {
     addCancelButtontToNavigationItemWithSelector("didPressCancelButton:")
     titleTextView.becomeFirstResponder()
     titleTextView.text = titleS
-      
-
-
   }
   
   func textViewDidEndEditing(textView: UITextView) {
@@ -35,7 +32,6 @@ class UPMSellTitleTVC: UITableViewController, UITextViewDelegate {
       titleS = textView.text
     }
   }
-  
 
   func didPressDoneButton(sender: AnyObject) {
     view.endEditing(true)

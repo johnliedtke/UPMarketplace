@@ -42,7 +42,7 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 1000 // auto-layout simulator fix
     navigationItem.title = "Filter Category"
-    
+
   }
   
   // MARK: - Items
@@ -64,7 +64,7 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
     case Category:
       navigationController?.pushViewController(categoryPickerTVC, animated: true)
     case Tag:
-      tagPickerTVC.datasource = SingleSectionDataSource(rows: UPMCategoryTag.categoryTagManager.tags()[self.otherListing.category!]!)
+      tagPickerTVC.datasource = SingleSectionDataSource(rows: (UPMCategoryTag.categoryTagManager.tags()[self.otherListing.category!]!).sorted(<))
       navigationController?.pushViewController(tagPickerTVC, animated: true)
     default: break
     }
@@ -82,16 +82,36 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
     return true
   }
   
+  override func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+    if let c = cell as? UPMSellCell {
+      if !requiredItems.itemWithTitle(Category)!.isComplete && requiredItems.itemAtIndex(indexPath.row).title == Tag {
+        c.isEnabled = false
+      } else {
+        c.isEnabled = true
+      }
+    }
+  }
+
   // MARK: - Delegate
 
   func didSelectItem(sender: UPMTablePickerVC, item: AnyObject?) {
     if let category = item as? String where sender == categoryPickerTVC {
       otherListing.category = category
       requiredItems.updateItemWithTitle(Category, description: category, isComplete: true)
+      requiredItems.updateItemWithTitle(Tag, description: "Select", isComplete: false)
+      otherListing.tag = nil
+      if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as? UPMSellCell {
+        
+      }
     } else if let tag = item as? String where sender == tagPickerTVC {
       otherListing.tag = tag
       requiredItems.updateItemWithTitle(Tag, description: tag, isComplete: true)
     }
+    tableView.reloadData()
+  }
+  
+  private func toggleTagEnabled(enabled: Bool) {
+    //tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)).
   }
   
 }

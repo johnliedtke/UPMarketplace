@@ -30,6 +30,9 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    noDataMessage = "No listings available"
+    
+    
     collectionView?.backgroundColor = UIColor.standardBackgroundColor()
     // Register grid cell
     collectionView?.registerNib(UINib(nibName: UPMBuyGridCellConstants.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: UPMBuyGridCellConstants.reuseIdentifier)
@@ -99,8 +102,8 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
     let Width:CGFloat = (ScreenWidth - Spacing) / 2.0
     
     // Calculate Height
-    var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height)!
-    var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height)!
+    var TabBarHeight:CGFloat = (self.tabBarController?.tabBar.frame.height) ?? CGFloat(44)
+    var NavBarHeight:CGFloat = (self.navigationController?.navigationBar.frame.height) ?? CGFloat(44)
     
     var height:CGFloat
     if ScreenWidth > 320 {

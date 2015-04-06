@@ -81,6 +81,13 @@ extension PFQuery {
 extension PFUser {
   
   /**
+  Returns the full name of the user.
+  */
+  func fullNameOfUser() -> String {
+    return self.objectForKey("fullName") as? String ?? "Name Unavailable"
+  }
+  
+  /**
   Checks if the user has a verfified email.
   
   :return: Email verified

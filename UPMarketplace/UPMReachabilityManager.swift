@@ -10,7 +10,7 @@
 
 class UPMReachabilityManager {
   
-  static let reachabilityManager = Reachability(hostName: "www.google.com")
+  static let reachabilityManager = Reachability(hostName: "www.parse.com")
   
   class func alertOfNoNetworkConnectionInController(controller: UIViewController) {
     var alertController = UIAlertController(title: "No Network Connection", message: "The action cannot be completed because you have no network connection.", preferredStyle: .Alert)
@@ -56,7 +56,7 @@ class UPMCategoryTag {
  
   
   func categories() -> [String] {
-    return ["Furniture",	"Appliance",	"Transportation",	"Clothing", "Decor",	"Cooking", "School",	"Outdoors", "Electronics"]
+    return ["Furniture",	"Appliance",	"Transportation",	"Clothing", "Decor",	"Cooking", "School",	"Outdoors", "Electronics"].sorted(<)
   }
   
 

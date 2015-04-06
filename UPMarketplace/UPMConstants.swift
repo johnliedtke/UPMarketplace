@@ -9,6 +9,14 @@
 import UIKit
 
 struct Constants {
+  
+  struct Email {
+    static let kNotificationFooter = "This email was auto-generated from the UP Market app. To disable email email notifications, log into the app and navigate to Account->Settings and deselect email notifications"
+    static let kNoReplyAddress = "no-reply@upmarket.us"
+  }
+  
+  
+  
   struct SellStoryboard {
   static let MainStoryboard = "SellMain"
   }

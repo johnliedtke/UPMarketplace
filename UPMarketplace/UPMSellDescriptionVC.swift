@@ -31,6 +31,7 @@ class UPMSellDescriptionVC: UIViewController, UITextViewDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     descriptionTextView.text = descriptionS
+    descriptionTextView.scrollEnabled = true
     self.automaticallyAdjustsScrollViewInsets = false
     navigationItem.hidesBackButton = true
     self.view.backgroundColor = UIColor.standardBackgroundColor()

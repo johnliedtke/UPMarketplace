@@ -15,7 +15,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   // TODO: Fix Bug With pressing back button, the collectionview ends up hiding behind the navigation bar
   
   // MARK: - Public Properties
-  var categories = ["Furniture & Other", "Housing", "Textbooks"]
+  var categories = ["Furniture & Other", "Housing (Coming soon)", "Textbooks"]
   var pictures = [ "other.png","house.png", "books.png"]
   var classes = ["UPMOtherListing", "UPMHousingListing", "UPMTextbookListing"]
   var className: String?
@@ -65,10 +65,16 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         let revController = SWRevealViewController()
         let buyOtherFilter = UPMCategoryFilterMainTVC()
         
+        
+        let filterContainer = UPMFilterContainer()
+        let filterContainerStoryboard = UIStoryboard(name: "UPMFilterContainer", bundle: nil)
+        let c = filterContainerStoryboard.instantiateInitialViewController() as! UPMFilterContainer
+        c.filterVC = UINavigationController(rootViewController: buyOtherFilter)
+        
         //set default behavior of reveal controller
         revController.bounceBackOnOverdraw = true;
         revController.stableDragOnOverdraw = true;
-        revController.setRightViewController(UINavigationController(rootViewController: buyOtherFilter), animated: true)
+        revController.setRightViewController(c, animated: true)
         
         //set defaults of each controller
         var buyOtherListngCVC = UPMBuyListItemsOtherCVC(collectionViewLayout: UICollectionViewFlowLayout())
@@ -108,27 +114,38 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         //navigationController?.pushViewController(revController, animated: true)
 
       case 2:
-      
+        
+        
+        let revController = SWRevealViewController()
+        let textbookFilterVC = UPMBuyTextbookFilter()
+        
+        
+        let filterContainer = UPMFilterContainer()
+        let filterContainerStoryboard = UIStoryboard(name: "UPMFilterContainer", bundle: nil)
+        let c = filterContainerStoryboard.instantiateInitialViewController() as! UPMFilterContainer
+        c.filterVC = UINavigationController(rootViewController: textbookFilterVC)
+        
+        //set default behavior of reveal controller
+        revController.bounceBackOnOverdraw = true;
+        revController.stableDragOnOverdraw = true;
+        revController.setRightViewController(c, animated: true)
+        
         //set defaults of each controller
-        var buyCategory = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
-        //revController.frontViewController = buyCategory
-        //revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        var buyListItemsTextbookCVC = UPMBuyListItemsTextbookCVC(collectionViewLayout: UICollectionViewFlowLayout())
+        textbookFilterVC.delegate = buyListItemsTextbookCVC
+        revController.frontViewController = buyListItemsTextbookCVC
+        revController.setFrontViewPosition(FrontViewPosition.Right, animated: true)
+        revController.revealToggleAnimated(true)
         
-        //set the title to be that of the chosen category
-       // revController.navigationItem.title = categories[indexPath.row]
-        buyCategory.category = categories[indexPath.row]
         
+       
         //get the subcategories for selected class
         //className = classes[indexPath.row]
         //getCategories(className!)
         
-        
-        //create the filter button in the navigation bar
-       // var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: buyCategory, action:Selector("goToRear"))
-       // revController.navigationItem.rightBarButtonItem = filterButton
-        
         //push the reveal controller
-        navigationController?.pushViewController(buyCategory, animated: true)
+        navigationController?.pushViewController(revController, animated: true)
+  
         
       default:break
     }

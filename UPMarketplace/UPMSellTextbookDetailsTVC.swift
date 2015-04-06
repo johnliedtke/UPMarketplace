@@ -26,6 +26,11 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
     case Optional = "Extra Info"
   }
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    tableView.estimatedRowHeight = 50.0 // simulator auto-layout fix
+  }
+  
   // MARK: - Methods
   
   override func createRequiredItems() {
@@ -69,6 +74,7 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
         self.setupItemDescriptions()
       }
       navigationController?.pushViewController(textbookRequiredVC, animated: true)
+      
     case RequiredItem.Optional.rawValue:
       let textbookOptional = UPMSellTextbookOptionalDeatils()
       textbookOptional.dataCollectedHandler = {
@@ -78,7 +84,7 @@ class UPMSellTextbookDetailsTVC: UPMSellDetailsTVC, UPMSellTextbookDetailsISBNDe
         self.textbookListing.textbook.professor = textbookDict["professor"]
         self.setupItemDescriptions()
       }
-      textbookOptional.currentTextbookDetails = ["authors": textbookListing.textbook.authors, "professor": textbookListing.textbook.professor, "edition": textbookListing.textbook.course]
+      textbookOptional.currentTextbookDetails = ["authors": textbookListing.textbook.authors, "professor": textbookListing.textbook.professor, "edition": textbookListing.textbook.edition]
       navigationController?.pushViewController(textbookOptional, animated: true)
     default: break
     }

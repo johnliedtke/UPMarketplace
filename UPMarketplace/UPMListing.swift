@@ -55,6 +55,9 @@ public class UPMListing: PFObject  {
   /// The array of reservations
   @NSManaged var reservations: [UPMReservation]!
   
+  /// Atomic key for handling reservation race conditions
+  @NSManaged var atomicCount: Int
+  
   // TODO: Add reservations array after class has been implemented - (WHAT IS THIS)
   
   /// Returns the image for a listing
@@ -122,12 +125,40 @@ public class UPMListing: PFObject  {
     var reservation = UPMReservation(reserver: reserver, listing: self, message: "Test Reservation")
     var reserveTask = BFTaskCompletionSource()
     
-    // Fetch the reservations
-    self.fetchInBackground().continueWithBlock {
-      [unowned self] (task: BFTask!) -> AnyObject! in
+    let savedAtomicCount = atomicCount
+    self.incrementKey("atomicCount")
+    
+    
+    self.saveInBackground().continueWithBlock { (task) in
+      print(self.atomicCount)
+      
+      if self.atomicCount - 1 != savedAtomicCount {
+        println("Someone reserved while looking at listing.")
+        self.isHidden = true
+        return BFTask(error: NSError.createError("The listing has been already been reserved.", failureReason: "", suggestion: ""))
+      } else {
+        return PFObject.fetchAllInBackground(self.reservations)
+      }
+      
+      }.continueWithBlock {
+      [unowned self] (task: BFTask!) in
+      
+      if let res = task.result as? [UPMReservation] {
+        println(res.count)
+      }
+      
       var error: NSError!
+      var inThere = false
+      for r in self.reservations {
+        if reserver.objectId == r.reserver.objectId {
+          println("in there")
+          inThere = true
+        }
+      }
+      
+     // let filter = !self.reservations!.filter({ $0.reserver.objectId == reserver.objectId }).isEmpty
 
-      if !self.reservations!.filter({ return $0.reserver.objectId == reserver.objectId }).isEmpty {
+      if inThere {
         // User has already reserved item
         error = NSError.createError("You have already reserved listing.",
           failureReason: "User already has a reservation",
@@ -156,13 +187,29 @@ public class UPMListing: PFObject  {
       
       }.continueWithSuccessBlock {
         [unowned self] (task: BFTask!) -> AnyObject! in
+        
+        if let result = task.result as? UPMListing {
+          println("Meow")
+          println(result.title)
+        }
         // Add activity for seller and buyer
         let title = self.title ?? ""
-        let buyerActivity = UPMActivity(title: "Made Reservation:", description: "Reservation:\n\(title)", user: reserver)
+        let buyerActivity = UPMActivity(title: "Made Reservation:", description: "\(title)", user: reserver)
         return buyerActivity.saveInBackground()
 
+      }.continueWithSuccessBlock { (task) in
+        
+        let subject = "Reserveration Made: \(self.title!)"
+        
+        let message = "\(reserver.fullNameOfUser()) reserved your listing: \(self.title!). \n\n Log into UP Market to accept or reject the reservation."
+        
+        return PFCloudExt.sendEmailTo(self.owner, from: reserver, subject: subject, body: message, notification: true)
+        
       }.continueWithBlock { (task: BFTask!) -> AnyObject! in
+        
         if task.error == nil {
+    
+          println(self.reservationCount().waiting)
           reserveTask.setResult("Success")
           return nil
         } else {
@@ -193,6 +240,21 @@ public class UPMListing: PFObject  {
     
     reservation.deleteInBackground().continueWithBlock { (task: BFTask!) in
       return self.saveInBackground()
+      
+    }.continueWithSuccessBlock { (task) in
+      
+      // No need to notify seller that a "rejected" reservation was deleted
+      if reservation.status == ReservationStatus.Rejected.rawValue {
+        return task
+      } else {
+        let subject = "User Deleted Reservation: \(self.title!)"
+        
+        let message = "\(reservation.reserver.fullNameOfUser()) deleted the reservation for your listing: \(self.title!)."
+        + "\n\n Your listing has been placed back on the market."
+        + "\n\n" + Constants.Email.kNotificationFooter
+        
+        return PFCloudExt.sendEmailTo(self.owner, from: nil, subject: subject, body: message, notification: true)
+      }
       
     }.continueWithSuccessBlock { (task) in
       let deleteActivity = UPMActivity.activityWithTitle("Deleted Reservation", description: self.title!, user: PFUser.currentUser()!)
@@ -230,13 +292,34 @@ public class UPMListing: PFObject  {
     reservation.status = ReservationStatus.Rejected.rawValue
     isHidden = false
     
-    saveInBackground().continueWithBlock {
-      (task: BFTask!) -> AnyObject! in
+    let reserver = reservation.reserver
+    
+    saveInBackground().continueWithSuccessBlock {
+      (task: BFTask!) in
+        let subject = "Seller Rejected Reservation: \(self.title!)"
+        
+        let message = "Your reservation has been rejected for listing: \(self.title!)."
+          + "\n\n" + Constants.Email.kNotificationFooter
+        
+        return PFCloudExt.sendEmailTo(reservation.reserver, from: nil, subject: subject, body: message, notification: true)
+      
+    }.continueWithSuccessBlock {
+      [unowned self] (task) in
+      
+      let rejectReserverActivity = UPMActivity.activityWithTitle("Reservation Rejected", description: "Seller rejected reservation for: \(self.title!)", user: reserver)
+      let rejectSellerActivity = UPMActivity.activityWithTitle("Rejected Reservation", description: "Rejected reservation for \(self.title!)", user: self.owner)
+      
+      return PFObject.saveAllInBackground([rejectReserverActivity, rejectSellerActivity])
+      
+    }.continueWithBlock {
+      (task) in
+      
       if task.error == nil {
         rejectTask.setResult(nil)
       } else {
         rejectTask.setError(task.error)
       }
+
       return nil
     }
     return rejectTask.task
@@ -246,6 +329,8 @@ public class UPMListing: PFObject  {
   /**
   Reject the reservation that the seller is acting upon. Rejects the accepting 
   reservation if it exists then the waitng reservation.
+  
+  //TODO: Deprecate
   
   :param: blackList Should reserver be blackListed
   */
@@ -291,18 +376,28 @@ public class UPMListing: PFObject  {
   func deleteListingAndRelatedInBackground() -> BFTask {
     var deleteTask = BFTaskCompletionSource()
     
+    var currentReserver: PFUser!
+    if let currentReservation = getCurrentReservation() {
+      currentReserver = currentReservation.getReserver()
+    }
+    
     PFObject.deleteAllInBackground(reservations).continueWithBlock { (task) in
       return self.deleteInBackground()
       
     }.continueWithSuccessBlock { (task) in
-      if task.error == nil {
-        deleteTask.setResult(true)
-      } else {
-        deleteTask.setError(task.error)
-      }
-      return nil
+     
+      let sellerActivity = UPMActivity.activityWithTitle("Deleted Listing", description: self.title!, user: self.owner, action: .ListingDeleted)
+      var activities = [sellerActivity]
       
-    }.continueWithBlock { (task) in
+      if currentReserver != nil {
+        activities.append(UPMActivity.activityWithTitle("Seller Deleted Listing", description: self.title!, user: currentReserver!, action: .ListingDeleted))
+      }
+      
+      return PFObject.saveAllInBackground(activities)
+      
+    }.continueWithBlock {
+      (task) in
+      
       if task.error == nil {
         deleteTask.setResult(true)
       } else {
@@ -326,14 +421,31 @@ public class UPMListing: PFObject  {
   func acceptReservationInBackground(reservation: UPMReservation) -> BFTask {
     var acceptTask = BFTaskCompletionSource()
     
+    let reserver = getWaitingReservation()!.getReserver()
     reservation.status = ReservationStatus.Accepted.rawValue
     
-    reservation.saveInBackground().continueWithBlock {
-      (task: BFTask!) -> AnyObject! in
-      if task == nil {
-        acceptTask.setResult(nil)
+    let subject = "Reservation Accepted: \(self.title!)"
+    let body = "\(self.owner.fullNameOfUser()) accepted your reservation for \"\(self.title!)\".\n\nContact email: \(self.owner.email!)"
+    
+    let email: [String: String] = ["to": reserver.email!, "from": self.owner.email!, "subject": subject, "message": body]
+    
+    reservation.saveInBackground().continueWithSuccessBlock() { (task) in
+      
+      return PFCloudExt.callFunctionAsync(PFCloudExtConstants.sendEmailFunction, withParameters: email)
+      
+    }.continueWithSuccessBlock { (task) in
+      
+      
+      let reserverActivity = UPMActivity.activityWithTitle("Reservation Accepted", description: self.title!, user: reserver, action: .ReservationAccepted)
+      let sellerActivity = UPMActivity.activityWithTitle("Accept Reservation", description: self.title!, user: self.owner, action: .ReservationAccepted)
+      
+      return PFObject.saveAllInBackground([sellerActivity, reserverActivity])
+
+    }.continueWithBlock { (task) in
+      if let error = task.error {
+        acceptTask.setError(error)
       } else {
-        acceptTask.setError(task.error)
+        acceptTask.setResult(task.result)
       }
       return nil
     }
@@ -391,7 +503,7 @@ public class UPMListing: PFObject  {
   Determines the available actions a seller can take based upon the state of 
   the listing.
     
-    - Most of the actions (functions) are asynchronous and thus are wrapped in
+    * Most of the actions (functions) are asynchronous and thus are wrapped in
       in a closure to avoid firing off network requests.
   
   :returns: SellerAction and a reference to the action.
@@ -404,12 +516,14 @@ public class UPMListing: PFObject  {
       contactTask.setResult(UPMContactVC.initWithNavigationController(user, withSubject: "Message about \(self.title)"))
       return contactTask.task
     }
+    
+    var deleteTask = { return self.deleteListingAndRelatedInBackground() }
+    var deleteAction = (SellerAction.DeleteListing, deleteTask)
+   
 
     // Create the various "actions" based on the state of the listing.
     switch sellerState() {
     case .NoAction:
-      var deleteTask = { return self.deleteListingAndRelatedInBackground() }
-      var deleteAction = (SellerAction.DeleteListing, deleteTask)
       
       return [deleteAction]
       
@@ -421,7 +535,7 @@ public class UPMListing: PFObject  {
           { return self.rejectReservationInBackground(waitingReservation, blackList: false) })
         var contactAction = (SellerAction.ContactReserver, { return contactActionMeow(waitingReservation.reserver) })
         
-        return [contactAction, rejectAction, acceptAction]
+        return [rejectAction, acceptAction]
       }
       
     case .Accepted:
@@ -485,6 +599,16 @@ public class UPMListing: PFObject  {
   */
   public func getAcceptedReservation() -> UPMReservation? {
     return reservations.filter({ $0.status == ReservationStatus.Accepted.rawValue}).first
+  }
+  
+  /**
+  Returns the current reservation which can be accepted reservation, waiting reservation, or
+  nil.
+  
+  :returns: Reservation or nil
+  */
+  public func getCurrentReservation() -> UPMReservation? {
+    return getAcceptedReservation() ?? getWaitingReservation() ?? nil
   }
 
   /**
@@ -566,6 +690,7 @@ public class UPMListing: PFObject  {
   :returns: Whether the listing is in a reserved state
   */
   func isReserved() -> Bool {
+    if isHidden { return true }
     
     if oBO {
       for res in reservations! {

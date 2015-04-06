@@ -13,6 +13,7 @@ import UIKit
 protocol Filter {
   var condition: String { get set }
   var price: Double { get set }
+  mutating func clearFilter()
 }
 
 struct OtherFilter<T: Equatable>: Filter {
@@ -48,7 +49,7 @@ struct OtherFilter<T: Equatable>: Filter {
 }
 
 protocol UPMFilterDelegate: class {
-  func didFinishFiltering(sender: UPMCategoryFilterMainTVC, filter: Filter)
+  func didFinishFiltering(sender: UIViewController, filter: Filter)
 }
 
 class UPMCategoryFilterMainTVC: UITableViewController, UPMTablePickerVCDelegate {
@@ -87,7 +88,6 @@ class UPMCategoryFilterMainTVC: UITableViewController, UPMTablePickerVCDelegate 
   lazy private var dataSource: SectionedDataSource<String> = SectionedDataSource(sections: [self.clearSection,self.categorySection, self.tagSection]) {
     (cell, row) in
     cell.textLabel?.text = row
-    cell.textLabel?.textAlignment = .Right
   }
   
   /// The indexPaths of the selected tag cells

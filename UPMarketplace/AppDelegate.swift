@@ -8,9 +8,50 @@
 
 import UIKit
 
+extension UIViewController {
+  func APP() -> AppDelegate {
+    return UIApplication.sharedApplication().delegate as! AppDelegate
+  }
+  
+  func hideHuddieWithMessage(message: String, delay: NSTimeInterval, action: (()->())?) {
+    dispatch_async(dispatch_get_main_queue()){ [unowned self] in
+      self.delay(delay - 0.1) {
+        self.APP().hud.labelText = message
+      }
+      self.delay(delay) {
+        self.APP().hud.hide(true)
+        if let act = action {
+          act()
+        }
+      }
+    }
+  }
+}
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+  
+  
+  var hud = MBProgressHUD()
+  
+  /**
+  Displays a MBProgressHUD with a given status message.
+  */
+  func huddie(#labelText: String) {
+    hud.hide(true)
+    
+    if let windowForHud = UIApplication.sharedApplication().delegate?.window {
+      hud = MBProgressHUD.showHUDAddedTo(windowForHud, animated: true)
+      
+      hud.dimBackground = true
+      hud.minShowTime = 0.2
+      hud.labelText = labelText
+    }
+  }
+  
+  func huddie() {
+    huddie(labelText: "")
+  }
+  
   var window: UIWindow?
   
   func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -26,6 +67,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UPMTextbook.registerSubclass()
     UPMUser.registerSubclass()
     UPMActivity.registerSubclass()
+    
+    
+    //PFCloudExt.sendEmailTo(PFUser.currentUser()!, from: PFUser.currentUser()!, subject: "test", body: "test", notification: false)
     
     // Global apperances
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
@@ -64,7 +108,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     controllers.append(buyCategoryVC)
     
-    
     // Sell
     let SellStoryboard = UIStoryboard(name: Constants.SellStoryboard.MainStoryboard, bundle: nil)
     var sellVC = SellStoryboard.instantiateInitialViewController() as! UINavigationController
@@ -90,6 +133,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var mainTabBarController = UITabBarController()
     mainTabBarController.viewControllers = controllers
     
+    
+    // Register user defaults 
+    let defaultsDict = NSDictionary(contentsOfFile: NSBundle.mainBundle().pathForResource("Defaults", ofType: "plist")!)!
+    NSUserDefaults.standardUserDefaults().registerDefaults(defaultsDict as [NSObject : AnyObject])
+
     
     window?.rootViewController = mainTabBarController
     

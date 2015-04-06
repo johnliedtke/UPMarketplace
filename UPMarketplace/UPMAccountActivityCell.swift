@@ -14,7 +14,7 @@ extension UPMAccountActivityCell {
     messageLabel.text = activity.activityDescription
     
     let dateFormatter = NSDateFormatter()
-    dateFormatter.setLocalizedDateFormatFromTemplate("EEE, MMM d, ''yy")
+    dateFormatter.setLocalizedDateFormatFromTemplate("EEE, MMM d, hh:mma")
     dateLabel.text = dateFormatter.stringFromDate(activity.date)
 
     }
@@ -67,14 +67,15 @@ class UPMAccountActivityCell: PFTableViewCell {
     // Elements dictionary, holds all subviews
     let ed: [NSObject : AnyObject] = ["messageLabel": messageLabel, "iconImageView": iconImageView, "titleLabel": titleLabel, "dateLabel": dateLabel]
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[iconImageView(50)]-[titleLabel]-[dateLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[dateLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[iconImageView]-[messageLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[titleLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[titleLabel][messageLabel]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[messageLabel]-|", options: .DirectionLeadingToTrailing, metrics: nil, views: ed))
     
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[dateLabel][messageLabel]", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ed))
-    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[iconImageView(50)]-(>=8)-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ed))
+    contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[dateLabel][titleLabel][messageLabel]-|", options: NSLayoutFormatOptions.DirectionLeftToRight, metrics: nil, views: ed))
+
+    //contentView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[iconImageView(50)]-(>=8)-|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: ed))
 
     
     titleLabel.setContentHuggingPriority(100, forAxis: .Horizontal)

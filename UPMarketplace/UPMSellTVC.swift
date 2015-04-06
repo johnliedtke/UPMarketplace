@@ -184,26 +184,18 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     }
     
     if requiredItems.isItemsComplete() {
-      var hud = MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-      hud.labelText = "Posting..."
-      UIApplication.sharedApplication().beginIgnoringInteractionEvents()
+      APP().huddie(labelText: "Posting...")
       
       self.post().continueWithBlock({ [unowned self] (task: BFTask!) -> AnyObject! in
         UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        if task.error == nil {
-          hud.labelText = "Success"
-          sleep(1)
-          dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            self.navigationController?.popToRootViewControllerAnimated(true)
-          })
+        if let error = task.error {
+          self.hideHuddieWithMessage("Error", delay: 0.1) {
+            self.displayErrorAlertWithMessage(error.localizedDescription)
+          }
         } else {
-          var errorAlert = UIAlertController(title: "Error", message: task.error.localizedDescription, preferredStyle: .Alert)
-          errorAlert.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-          dispatch_async(dispatch_get_main_queue(), { () -> Void in
-            MBProgressHUD.hideAllHUDsForView(self.view, animated: true)
-            self.navigationController?.presentViewController(errorAlert, animated: true, completion: nil)
-          })
+          self.hideHuddieWithMessage("Success", delay: 0.4) {
+            self.navigationController?.popToRootViewControllerAnimated(true)
+          }
         }
         return nil
       })
@@ -307,7 +299,11 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       case CellSection.Required:
         let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
         var i = requiredItems.itemAtIndex(indexPath.row)
-        cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
+        if count(i.itemDescription) > 300 {
+          cell.configureCell(i.title, details: i.itemDescription.substringToIndex(advance(i.itemDescription.startIndex, 299)), isComplete: i.isComplete)
+        } else {
+          cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
+        }
         return cell
       case CellSection.Optional:
         let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell

@@ -123,17 +123,25 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   User has attempted to reserve the listing.
   */
   internal func reserveListing() {
-    listing?.reserveInBackground(PFUser.currentUser()!, message: "Reserving").continueWithBlock({
-      (task: BFTask!) -> AnyObject! in
-      var alertController: UIAlertController!
-      if task.error == nil {
-        alertController = UIAlertController(title: "Success", message: "You have reserved this listing. Please contact the seller to set up arrangements. Seller will be notified via email.", preferredStyle: .Alert)
+    
+    APP().huddie(labelText: "Reserving...")
+    
+    listing?.reserveInBackground(PFUser.currentUser()!, message: "Reserving").continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
+      [unowned self] (task) in
+
+      
+      if let error = task.error {
+        self.hideHuddieWithMessage("Error...", delay: 0.2) {
+          self.displayErrorAlertWithMessage(error.localizedDescription)
+        }
       } else {
-        alertController = UIAlertController(title: "Error", message: task.error.localizedDescription, preferredStyle: .Alert)
+        self.hideHuddieWithMessage("Reserved...", delay: 0.2) {
+          let alertController = UIAlertController(title: "Reserved", message: "Reservation successful.\n\n You will be notified when the seller accepts your reservation. Feel free to contact the seller via email.", preferredStyle: .Alert)
+          alertController.addAction(UIAlertAction(title: "Okay", style: .Cancel, handler: nil))
+          self.presentViewController(alertController, animated: true, completion: nil)
+        }
       }
-      alertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
-      self.presentViewController(alertController, animated: true, completion: nil)
-      self.toggleReserveButton()
+      //self.toggleReserveButton()
       return nil
     })
   }
@@ -172,6 +180,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
             cell.buyItemImage.image = UIImage(data: imageData)
             cell.displayImageViewTapped = { [weak self, cell] (sender) in
               var imageVC = UPMBuyItemDetailsImageVC()
+              imageVC.modalTransitionStyle = .CrossDissolve
               imageVC.image = UIImage(data: imageData)
               weakSelf.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
             }
@@ -295,6 +304,9 @@ class UPMBuyItemDetailsTVC: UITableViewController {
 
   override func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
     let Section = tableCellSection(rawValue: section)! as tableCellSection
+    
+    if section == numberOfSectionsInTableView(tableView) - 1 { return 25 } // space at bottom
+    
     switch Section{
     case tableCellSection.ImageSection:
       return 0.00001
@@ -318,7 +330,7 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
   lazy var imageView: UIImageView = {
     var imageView = UIImageView()
     imageView.setTranslatesAutoresizingMaskIntoConstraints(false)
-    imageView.contentMode = .ScaleAspectFill
+    imageView.contentMode = .ScaleAspectFit
     return imageView
   }()
   
@@ -326,6 +338,7 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
     var scrollView = UIScrollView()
     scrollView.setTranslatesAutoresizingMaskIntoConstraints(false)
     scrollView.delegate = self
+    scrollView.minimumZoomScale = 1.0
     scrollView.maximumZoomScale = CGFloat(4.0)
     scrollView.backgroundColor = UIColor.blackColor()
     return scrollView
@@ -346,7 +359,18 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
       imageView.image = image
     }
     
-    var elements: [NSObject : AnyObject] = ["scrollView": scrollView, "imageView": imageView]
+    let doneButton = UIButton()
+    doneButton.setTranslatesAutoresizingMaskIntoConstraints(false)
+    doneButton.setTitle("Done", forState: .Normal)
+    doneButton.addTarget(self, action: "didSwipeUp:", forControlEvents: .TouchUpInside)
+    doneButton.backgroundColor = UIColor.flatDarkGrayColor().colorWithAlphaComponent(0.5)
+    doneButton.layer.cornerRadius = 5.0
+    doneButton.layer.borderColor = UIColor.flatDarkGrayColor().CGColor
+    doneButton.layer.borderWidth = 1.0
+    let ei = doneButton.contentEdgeInsets
+    doneButton.contentEdgeInsets = UIEdgeInsets(top: ei.top+10.0, left: ei.left+10.0, bottom: ei.bottom+10.0, right: ei.right+10.0)
+    
+    var elements: [NSObject : AnyObject] = ["scrollView": scrollView, "imageView": imageView, "doneButton": doneButton]
     
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "H:|[scrollView]|", options: NSLayoutFormatOptions.DirectionLeadingToTrailing, metrics: nil, views: elements))
@@ -363,6 +387,17 @@ class UPMBuyItemDetailsImageVC: UIViewController, UIScrollViewDelegate {
     
     scrollView.addGestureRecognizer(swpipeUpGestureRecognizer)
     
+    
+    // Add a done button yo
+    scrollView.addSubview(doneButton)
+    scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("H:|-[doneButton]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+    scrollView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:|-[doneButton]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+
+    
+  }
+  
+  override func prefersStatusBarHidden() -> Bool {
+    return true
   }
   
   func didSwipeUp(sender: AnyObject) {

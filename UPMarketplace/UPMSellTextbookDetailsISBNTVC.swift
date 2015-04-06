@@ -32,6 +32,7 @@ class UPMSellTextbookDetailsISBNTVC: UITableViewController, UITextFieldDelegate,
   // MARK: Methods
   override func viewDidLoad() {
     super.viewDidLoad()
+    tableView.estimatedRowHeight = 50.0 // simulator auto-layout fix
     addDoneButtonToNavigationItemWithSelector("didPressDoneButton:")
     addCancelButtontToNavigationItemWithSelector("didPressCancelButton:")
     tableView.backgroundColor = UIColor.standardBackgroundColor()

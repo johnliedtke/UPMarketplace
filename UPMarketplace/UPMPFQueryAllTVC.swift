@@ -77,13 +77,12 @@
 
     changeDefaults()
     performQuery()
-    if pullToRefreshEnabled {
-      refreshControl = UIRefreshControl()
-      refreshControl!.tintColor = UIColor.grayColor()
-      refreshControl!.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
-      tableView.addSubview(refreshControl!)
-      tableView.alwaysBounceVertical = true
-    }
+    refreshControl = UIRefreshControl()
+    refreshControl!.tintColor = UIColor.grayColor()
+    refreshControl!.addTarget(self, action: "refreshControlAction:", forControlEvents: UIControlEvents.ValueChanged)
+    tableView.addSubview(refreshControl!)
+    tableView.alwaysBounceVertical = true
+
   }
 
   /// Override to change the default values before the first data is fetched
@@ -121,7 +120,9 @@
   // MARK: - TableView Datasource
   
   override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-    if isLoading { return 0 } // Do not display anything if fetching data
+    if isLoading {
+      tableView.separatorStyle = .None
+      return 0 } // Do not display anything if fetching data
     if sectionsEnabled && sectionKey != nil {
       return sectionToKeyMap.count
     } else {
@@ -184,6 +185,7 @@
   /// Pull to refresh action
   func refreshControlAction(sender: AnyObject) {
     isRefreshing = true
+    refreshControl?.beginRefreshing()
     performQuery()
   }
   
@@ -206,7 +208,7 @@
       }
       
       // About to fetch
-      self.objectsWillLoad()
+      objectsWillLoad()
         
         //FIXME: Fix slow initial fetching.
         
@@ -246,7 +248,8 @@
       objectsWillLoad()
       
       
-      queryToPeform.findObjectsInBackgroundWithBlock { [unowned self] (objects: [AnyObject]?, error: NSError?) in
+      queryToPeform.findObjectsInBackgroundWithBlock {
+        [unowned self] (objects: [AnyObject]?, error: NSError?) in
         if error == nil {
           // Success
           // Convert objects
@@ -300,7 +303,6 @@
   :param: error Error from fetching data (if any)
   */
   func objectsDidLoad(error: NSError?) -> Void {
-    toggleSeparatorStyle()
     // Done Loading
     if isFirstLoad {
       isFirstLoad = false
@@ -313,6 +315,8 @@
       activityIndicator.stopAnimating()
     }
     refreshControl!.endRefreshing()
+    toggleSeparatorStyle()
+
     
     if sectionsEnabled, let secKey = sectionKey {
       sectionIndices.removeAll(keepCapacity: false)
@@ -386,7 +390,7 @@
   /// When we hit the end of the scrollView, fetch more items!
   override func scrollViewDidEndDecelerating(scrollView: UIScrollView) {
     var bottomEdge = scrollView.contentOffset.y + scrollView.frame.size.height
-    if bottomEdge >= scrollView.contentSize.height {
+    if bottomEdge >= scrollView.contentSize.height && paginationEnabled {
       isRefreshing = false
       performQuery()
     }

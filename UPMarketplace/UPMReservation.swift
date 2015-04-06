@@ -95,7 +95,7 @@ public class UPMReservation: PFObject, PFSubclassing  {
   
   :returns: The name of the class
   */
-  public class func parseClassName() -> String! {
+  public class func parseClassName() -> String {
     return "UPMReservation"
   }
  

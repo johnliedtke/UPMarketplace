@@ -18,7 +18,7 @@ extension UPMTextbook {
     // Some horrible parsing of JSONh
     if let dict = jsonData.dictionary where jsonData.error == nil {
       if let items = dict["items"] as? NSArray, let bookDict = items.firstObject as? NSDictionary {
-        if let volumeInfo = bookDict["volumeInfo"] as? NSDictionary, let title = volumeInfo["title"] as? String, let authors = volumeInfo["authors"] as? [String], let imageDict = volumeInfo["imageLinks"] as? [String: String] {//
+        if let volumeInfo = bookDict["volumeInfo"] as? NSDictionary, let title = volumeInfo["title"] as? String, let authors = volumeInfo["authors"] as? [String], let imageDict = volumeInfo["imageLinks"] as? [String: String], let description = volumeInfo["description"] as? String {//
          if let isbns = volumeInfo["industryIdentifiers"] as? [[String: String]] {
           if let isbn10 = isbns.filter({ $0["type"] == "ISBN_10"}).first!["identifier"] {
             textbook.iSBN10 = isbn10
@@ -32,6 +32,7 @@ extension UPMTextbook {
           }
           
           textbook.title = title
+          textbook.bookDescription = description
           textbook.authors = ", ".join(authors)
           return textbook
         }

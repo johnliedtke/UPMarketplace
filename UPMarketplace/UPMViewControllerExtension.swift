@@ -130,12 +130,53 @@ extension UIViewController {
     navigationItem.setRightBarButtonItem(doneButton, animated: true)
   }
   
+  func delay(delay:Double, closure:()->()) {
+    dispatch_after(
+      dispatch_time(
+        DISPATCH_TIME_NOW,
+        Int64(delay * Double(NSEC_PER_SEC))
+      ),
+      dispatch_get_main_queue(), closure)
+  }
+  
+  func displayErrorAlertWithMessage(message: String) {
+    let errorAlertController = UIAlertController(title: "Error", message: message, preferredStyle: .Alert)
+    errorAlertController.addAction(UIAlertAction(title: "Okay", style: .Default, handler: nil))
+    presentViewController(errorAlertController, animated: true, completion: nil)
+  }
+  
+  func displayConfirmationAlertWithTitle(title: String, message: String, action: (()->())?) {
+    let confirmationAlertController = UIAlertController(title: title, message: message, preferredStyle: .Alert)
+    confirmationAlertController.addAction(UIAlertAction(title: "Confirm", style: .Default) { (alertAction) in
+      if let act = action {
+        act()
+      }
+    })
+    confirmationAlertController.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+    presentViewController(confirmationAlertController, animated: true, completion: nil)
+  }
+  
   func getNavigationBarHeight() -> CGFloat {
     if let height = self.navigationController?.navigationBar.frame.height {
       return height
     } else {
       return 0
     }
+  }
+}
+
+class UPMUserPrefs {
+  
+  class func userDefaults() -> NSUserDefaults {
+    return NSUserDefaults.standardUserDefaults() as NSUserDefaults
+  }
+  
+  class func toggleEmailNotifications(#on: Bool) {
+    UPMUserPrefs.userDefaults().setBool(on, forKey: "emailNotifications")
+  }
+  
+  class func emailNotificationsEnabled() -> Bool {
+    return UPMUserPrefs.userDefaults().objectForKey("emailNotifications") as! Bool
   }
 }
 

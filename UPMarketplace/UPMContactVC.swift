@@ -28,16 +28,16 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
   public var subject: String?
 
   // MARK: - UI Elements
-  public lazy var toField: UITextField = {
-    var field = UITextField(forAutoLayout: true)
-    field.font = UIFont.standardTextFont()
-    field.userInteractionEnabled = false
-    return field
+  public lazy var toLabel: UILabel = {
+    var label = UILabel(forAutoLayout: true)
+    label.font = UIFont.standardTextFont()
+    return label
   }()
   
   public lazy var subjectField: UITextField = {
     var field = UITextField(forAutoLayout: true)
     field.font = UIFont.standardTextFont()
+    field.adjustsFontSizeToFitWidth = true
     return field
   }()
   
@@ -86,30 +86,45 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     view.endEditing(true)
   }
   
-  // MARK: - Private Methods
+  // MARK: - View Methods
+  
+//  public override func loadView() {
+//////    UIScrollView *scrollView = [[UIScrollView alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+////    let scrollView = UIScrollView(frame: UIScreen.mainScreen().bounds)
+////    scrollView.scrollEnabled = false
+////  scrollView.clipsToBounds = true
+////    self.view = scrollView;
+//  }
 
   override public func viewDidLoad() {
     super.viewDidLoad()
+    // Keyboard fix
+   
+    
     view.backgroundColor = UIColor.standardBackgroundColor()
-    view.addSubview(toField)
+    view.addSubview(toLabel)
     view.addSubview(subjectField)
     view.addSubview(bodyTextView)
     
     // Initialize fields
-    toField.text = user.username
+    toLabel.text = user.username
     subjectField.text = subject
 
-    var toLabel = UILabel.standardCaptionLabel(true)
-    toLabel.text = "To"
-    toLabel.setContentHuggingPriority(800, forAxis: UILayoutConstraintAxis.Horizontal)
-    toField.setContentHuggingPriority(100, forAxis: UILayoutConstraintAxis.Horizontal)
-    view.addSubview(toLabel)
+    var toDescLabel = UILabel.standardCaptionLabel(true)
+    toDescLabel.text = "To"
+    toDescLabel.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+    toLabel.setContentHuggingPriority(100, forAxis: .Horizontal)
+    view.addSubview(toDescLabel)
     
     var subjectLabel = UILabel.standardCaptionLabel(true)
     subjectLabel.text = "Subject"
-    subjectLabel.setContentHuggingPriority(800, forAxis: UILayoutConstraintAxis.Horizontal)
-    subjectField.setContentHuggingPriority(100, forAxis: UILayoutConstraintAxis.Horizontal)
+    subjectLabel.setContentHuggingPriority(1, forAxis: UILayoutConstraintAxis.Horizontal)
+    subjectField.setContentHuggingPriority(0, forAxis: UILayoutConstraintAxis.Horizontal)
     subjectLabel.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+    
+    
+    //subjectField.setContentCompressionResistancePriority(500, forAxis: UILayoutConstraintAxis.Horizontal)
+
 
     view.addSubview(subjectLabel)
     
@@ -118,21 +133,16 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     view.addSubview(messageLabel)
     
    
-    var elements: [NSObject : AnyObject] = ["toField": toField, "topLayoutGuide": topLayoutGuide, "view": view, "toLabel": toLabel, "fromLabel": subjectLabel, "fromField": subjectField, "bodyTextView": bodyTextView, "messageLabel": messageLabel]
+    var elements: [NSObject : AnyObject] = ["toLabel": toLabel, "topLayoutGuide": topLayoutGuide, "view": view, "toDescLabel": toDescLabel, "subjectLabel": subjectLabel, "subjectField": subjectField, "bodyTextView": bodyTextView, "messageLabel": messageLabel]
 
     
     // Horizontal layout
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-(hlp)-[toLabel]-[toField]-(hrp)-|",
+      "H:|-(hlp)-[toDescLabel]-[toLabel]-(hrp)-|",
       options: .DirectionLeadingToTrailing,
       metrics: UPMStandards.autoLayoutMetrics,
       views: elements))
     
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
-      "H:|-(hlp)-[fromLabel]-[fromField]-(hrp)-|",
-      options: .DirectionLeadingToTrailing,
-      metrics: UPMStandards.autoLayoutMetrics,
-      views: elements))
 
     view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "H:|-(hlp)-[bodyTextView]-(hrp)-|",
@@ -146,15 +156,22 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
       metrics: UPMStandards.autoLayoutMetrics,
       views: elements))
     
-    // Vertical layout
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[toField]-[fromField]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
+      "H:|-(hlp)-[subjectLabel]-[subjectField]-(hrp)-|",
+      options: .DirectionLeadingToTrailing,
+      metrics: UPMStandards.autoLayoutMetrics,
+      views: elements))
     
-    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[toLabel]-[fromLabel]-[messageLabel]-[bodyTextView]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+    
+    // Vertical layout
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[toLabel]-[subjectField]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
+    
+    view.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat("V:[topLayoutGuide]-[toDescLabel]-[subjectLabel]-[messageLabel]-[bodyTextView]", options: .DirectionLeadingToTrailing, metrics: nil, views: elements))
     
     // Center labels
-    view.addConstraint(NSLayoutConstraint(item: toLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: .Equal, toItem: toField, attribute: .CenterY, multiplier: 1.0, constant: 0))
+    view.addConstraint(NSLayoutConstraint(item: toDescLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: .Equal, toItem: toDescLabel, attribute: .CenterY, multiplier: 1.0, constant: 0))
     
-    view.addConstraint(NSLayoutConstraint(item: subjectLabel, attribute: NSLayoutAttribute.CenterY, relatedBy: .Equal, toItem: subjectField, attribute: .CenterY, multiplier: 1.0, constant: 0))
+    //view.addConstraint(NSLayoutConstraint(item: subjectField, attribute: NSLayoutAttribute.Width, relatedBy: .Equal, toItem: toLabel, attribute: .Width, multiplier: 1.0, constant: 0))
     
     // TextView Height
     view.addConstraint(NSLayoutConstraint(item: bodyTextView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.GreaterThanOrEqual, toItem: view, attribute: NSLayoutAttribute.Height, multiplier: 0.33, constant: 0))
@@ -167,9 +184,13 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     addCancelButtontToNavigationItemWithSelector("didPushCancelButton:")
     
     var sendButton = UIBarButtonItem(title: "Send", style: .Done, target: self, action: "didPushSendButton:")
+    
+
     navigationItem.setRightBarButtonItem(sendButton, animated: true)
   }
   
+
+
   func didPushCancelButton(sender: AnyObject) {
     dismissViewControllerAnimated(true, completion: nil)
   }
@@ -218,32 +239,29 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     
     // create dictionary to send
     var currentUser = PFUser.currentUser()!
-    let email: [String: String] = ["to": "jcliedtke@gmail.com", "from": currentUser.email!, "subject": subjectField.text, "message": bodyTextView.text]
+    let toEmail = user.email!
+    let email: [String: String] = ["to": user.email!, "from": currentUser.email!, "subject": subjectField.text, "message": bodyTextView.text]
     
     // Progress HUD
-    var progressHUD = MBProgressHUD.showHUDAddedTo(view, animated: true)
-    progressHUD.labelText = "Sending email..."
+    APP().huddie(labelText: "Sending...")
     
     PFCloudExt.callFunctionAsync(PFCloudExtConstants.sendEmailFunction, withParameters: email).continueWithBlock {
-      (task: BFTask!) -> AnyObject! in
+      [unowned self] (task) in
       
-      if task.error == nil { // success
-        progressHUD.labelText = "Success"
-        progressHUD.hide(true)
-        self.dismissViewControllerAnimated(true, completion: nil)
-        return nil
-        
-      } else { // handle error or timeout
-        progressHUD.labelText = "Error"
-        progressHUD.hide(true)
-        var errorString = task.error.userInfo?[NSString(string: "error")] as! NSString
-        var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
-        alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
-        self.presentViewController(alertError, animated: true, completion: nil)
-        return nil;
+      if let error = task.error {
+        self.hideHuddieWithMessage("Error", delay: 0.1) {
+          self.displayErrorAlertWithMessage(error.localizedDescription)
+        }
+      } else {
+        self.hideHuddieWithMessage("Sent...", delay: 0.4) {
+          self.dismissViewControllerAnimated(true, completion: nil)
+        }
       }
+      return nil;
+    
     }
   }
   
-
 }
+
+

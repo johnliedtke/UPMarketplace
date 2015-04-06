@@ -27,7 +27,7 @@ class UPMNewListingsFilter: UITableViewController {
     
   }
   // MARK: - Public Properties
-  var categories = ["Furniture & Other", "Housing", "Textbooks"]
+  var categories = ["Furniture & Other", "Housing (Coming soon)", "Textbooks"]
   var chosenCategory: NSInteger?
   
   // MARK: - Constants
@@ -36,7 +36,7 @@ class UPMNewListingsFilter: UITableViewController {
   
   // MARK: - Private Properties
   lazy var dataSource: SingleSectionDataSource<String> = {
-    var rows = ["Furniture & Other", "Housing", "Textbooks"]
+    var rows = ["Furniture & Other", "Housing (Coming soon)", "Textbooks"]
     var ds = SingleSectionDataSource(rows: rows, cellConfigurator: { (cell, string) in
       cell.textLabel?.textAlignment = NSTextAlignment.Right
       cell.textLabel?.text = string

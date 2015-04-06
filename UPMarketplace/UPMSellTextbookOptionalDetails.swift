@@ -17,23 +17,67 @@ through :dataCollectedHandler: in the form of a dictionary with the keys:
 - isbn
 - course
 */
-class UPMSellTextbookOptionalDeatils: UPMSellSingleInput {
+class UPMSellTextbookOptionalDeatils: UPMSellSingleInput, UITextFieldDelegate {
   
   var currentTextbookDetails = [String: String?]()
+  
+  /// Pointer to edition textField
+  private weak var editionField: UITextField!
+  
+  /// Pointer to professor textField
+  private weak var professorField: UITextField!
+  
+  /// Pointer to authors textField
+  private weak var authorsField: UITextField!
   
   override func viewDidLoad() {
     super.viewDidLoad()
     navigationItem.title = "Extra Info"
+    tableView.estimatedRowHeight = 50.0 // simulator auto-layout fix
+    
+    let editionInput = UPMSellInput(labelText: "Edition", valueText: currentTextbookDetails["edition"]!) {
+      [weak self] (tf) in
+      if let weakSelf = self {
+        tf.placeholder = "e.g. 4"
+        tf.text = weakSelf.currentTextbookDetails["edition"]!
+        weakSelf.editionField = tf
+        tf.delegate = weakSelf
+      }
+    }
+    
+    let professorInput = UPMSellInput(labelText: "Professor", valueText: currentTextbookDetails["professor"]!) {
+      [weak self] (tf) in
+      if let weakSelf = self {
+        tf.delegate = weakSelf
+        tf.placeholder = "Vegdahl"
+        weakSelf.professorField = tf
+        tf.text = weakSelf.currentTextbookDetails["professor"]!
+      }
+    }
+    
+    let authorsInput = UPMSellInput(labelText: "Authors", valueText: currentTextbookDetails["authors"]!) {
+      [weak self] (tf) in
+      if let weakSelf = self {
+        tf.delegate = weakSelf
+        tf.placeholder = "John Slade, Alex Wallace"
+        weakSelf.authorsField = tf
+        tf.text = weakSelf.currentTextbookDetails["authors"]!
+      }
+    }
 
-    var editionInput = UPMSellInput(labelText: "Edition", placeholderText: "e.g. 4", valueText: currentTextbookDetails["authors"]!)
-    var professorInput = UPMSellInput(labelText: "Professor", placeholderText: "e.g. Dr. Johnson", valueText: currentTextbookDetails["professor"]!)
-    var authorsInput = UPMSellInput(labelText: "Authors", placeholderText: "John Slade, Alex Wallace", valueText: currentTextbookDetails["authors"]!)
     dataSource.rows = [editionInput, professorInput, authorsInput]
   }
   
+  override func viewDidAppear(animated: Bool) {
+    super.viewDidAppear(animated)
+    if let tf = editionField {
+      editionField.becomeFirstResponder()
+    }
+  }
   
   override func didPressDoneFromNavigation() {
     //TODO: Validate...
+    view.endEditing(true)
     var dict = [String: String]()
     for r in dataSource.rows {
       dict[r.labelText.lowercaseString] = r.valueText
@@ -43,27 +87,3 @@ class UPMSellTextbookOptionalDeatils: UPMSellSingleInput {
   }
   
 }
-
-//class UPMSellTextbookOptionalDeatils: UPMSellSingleInput {
-//  
-//  var currentTextbookDetails = [String: String?]()
-//  
-//  override func viewDidLoad() {
-//    super.viewDidLoad()
-//    navigationItem.title = "ISBN & Course"
-//    dataSource.rows = [UPMSellInput(labelText: "ISBN", placeholderText: "MEOW", valueText: currentTextbookDetails["isbn"]!), UPMSellInput(labelText: "Course", placeholderText: "e.g. CS301", valueText: currentTextbookDetails["course"]!)]
-//  }
-//  
-//  
-//  override func didPressDoneFromNavigation() {
-//    //TODO: Validate...
-//    view.endEditing(true)
-//    var dict = [String: String]()
-//    for r in dataSource.rows {
-//      dict[r.labelText.lowercaseString] = r.valueText
-//    }
-//    dataCollectedHandler!(dict)
-//    navigationController?.popViewControllerAnimated(true)
-//  }
-//  
-//}

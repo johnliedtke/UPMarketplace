@@ -12,4 +12,8 @@
 #import "Reachability.h"
 #import "SWRevealViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "SALQuickTutorialViewController.h"
+
+
+
 //#import "PFActivityIndicatorTableViewCell.h"

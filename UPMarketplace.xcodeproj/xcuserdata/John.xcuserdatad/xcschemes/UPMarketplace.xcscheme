@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "52AF3D4219E77BBF007E0D22"
-               BuildableName = "UPMarketplace.app"
-               BlueprintName = "UPMarketplace"
+               BuildableName = "UP Market.app"
+               BlueprintName = "UP Market"
                ReferencedContainer = "container:UPMarketplace.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -105,8 +105,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "52AF3D4219E77BBF007E0D22"
-            BuildableName = "UPMarketplace.app"
-            BlueprintName = "UPMarketplace"
+            BuildableName = "UP Market.app"
+            BlueprintName = "UP Market"
             ReferencedContainer = "container:UPMarketplace.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -120,12 +120,13 @@
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       allowLocationSimulation = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "52AF3D4219E77BBF007E0D22"
-            BuildableName = "UPMarketplace.app"
-            BlueprintName = "UPMarketplace"
+            BuildableName = "UP Market.app"
+            BlueprintName = "UP Market"
             ReferencedContainer = "container:UPMarketplace.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -138,12 +139,13 @@
       useCustomWorkingDirectory = "NO"
       buildConfiguration = "Release"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "52AF3D4219E77BBF007E0D22"
-            BuildableName = "UPMarketplace.app"
-            BlueprintName = "UPMarketplace"
+            BuildableName = "UP Market.app"
+            BlueprintName = "UP Market"
             ReferencedContainer = "container:UPMarketplace.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

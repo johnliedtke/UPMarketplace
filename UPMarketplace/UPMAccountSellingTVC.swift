@@ -27,7 +27,15 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
       return ""
     }
     super.viewDidLoad()
-    tableView.estimatedRowHeight = 50.0
+    
+    SALQuickTutorialViewController.showIfNeededForKey("AccountSelling123123636123", title: "Sellling", message: "Selling - Displays everything you are selling. Swipe for actions!", image: UIImage(named: "sellingTut.png"))
+    
+    tableView.estimatedRowHeight = 50.0 // auto-layout fix
+  }
+  
+  override func viewWillAppear(animated: Bool) {
+    super.viewWillAppear(animated)
+    refreshControlAction(self)
   }
   
   override func queries() -> [PFQuery]? {
@@ -35,11 +43,13 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
     query.whereKey("owner", equalTo: PFUser.currentUser()!)
     query.includeKey("reservations")
     query.includeKey("reservations.reserver")
+    query.includeKey("owner")
     var textbookListing = PFQuery(className: "UPMTextbookListing")
     textbookListing.whereKey("owner", equalTo: PFUser.currentUser()!)
     textbookListing.includeKey("reservations")
     textbookListing.includeKey("reservations.reserver")
     textbookListing.includeKey("textbook")
+    textbookListing.includeKey("owner")
     return [query, textbookListing]
   }
   
@@ -62,57 +72,27 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
     cell.statusLabel.text = listing.displaySellerReservationStatus()
     cell.changeStatusColor(listing.sellerReservationStatus())
     cell.titleLabel.text = listing.title
-    cell.displayImageView.file = listing.pictureThumbnail
-    cell.displayImageView.loadInBackground()
+//    cell.displayImageView.file = listing.pictureThumbnail
+    //cell.displayImageView.loadInBackground()
+    
+    // Grab the picture-file and retrieve it from parse
+    var imageFile = listing.pictureThumbnail
+    if let url = imageFile?.url {
+      cell.displayImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: nil, completed: { [unowned self, cell] (image, error, cache, url) in
+        })
+    }
+    
+    
+    
     cell.priceLabel.text = listing.displayPrice()
     
     // Add long press
-    var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
-    cell.addGestureRecognizer(gestureRecognizer)
+//    var gestureRecognizer = UILongPressGestureRecognizer(target: self, action: "handleLongPress:")
+//    cell.addGestureRecognizer(gestureRecognizer)
     
     return cell
   }
   
-  /**
-  Handle long press of cells.
-  */
-  func handleLongPress(sender: UILongPressGestureRecognizer) {
-    if sender.state == .Ended { // No second press
-      return
-    }
-    
-    // Grab the cell long pressed
-    var point = sender.locationInView(tableView)
-    var indexPath = tableView.indexPathForRowAtPoint(point)
-    var listing = objectAtIndexPath(indexPath!) as! UPMListing
-    
-    var actionSheet = UIAlertController(title: "Reservation Options", message: "", preferredStyle: .ActionSheet)
-    
-    // Contact action
-    var contactAction = UIAlertAction(title: "Contact Buyer", style: .Default) {
-      (action: UIAlertAction!) -> Void in
-      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(listing.title)")
-      self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
-    }
-    
-    // Delete reservation action
-    var deleteReservationAction = UIAlertAction(title: "Reject Reservation", style: .Default) {
-      (action: UIAlertAction!) -> Void in
-      
-    }
-    
-    // Dismiss action
-    var dismissAction = UIAlertAction(title: "Cancel", style: .Cancel, handler: nil)
-    
-    // Add actions
-    actionSheet.addAction(contactAction)
-    actionSheet.addAction(deleteReservationAction)
-    actionSheet.addAction(dismissAction)
-    
-    // Present
-    navigationController?.presentViewController(actionSheet, animated: true, completion: { () -> Void in
-    })
-  }
   
   // MARK: - Tableview Delegate
   
@@ -169,29 +149,32 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
           switch action {
           case .AcceptReservation, .RejectReservation, .DeleteListing:
             
-            if UPMReachabilityManager.isUnreachable() {
-              UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
-              return
-            }
-            
-            var hud = MBProgressHUD.showHUDAddedTo(self.tableView.superview, animated: true)
-            hud.labelText = action.description
-            
-            actionFunc().continueWithBlock() { [unowned self] (task: BFTask!) in
-              if task.error == nil {
-                hud.labelText = "Success"
-                sleep(1)
-                dispatch_async(dispatch_get_main_queue()) {
-                  MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
-                  self.performQuery()
-                }
-              } else {
-                hud.labelText = "Error"
-                dispatch_async(dispatch_get_main_queue()) {
-                  MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
-                }
+            self.displayConfirmationAlertWithTitle("Confirm", message: "Please confirm \(action.description.capitalizedString).") {
+              
+              if UPMReachabilityManager.isUnreachable() {
+                UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
+                return
               }
-              return nil
+              
+              var hud = MBProgressHUD.showHUDAddedTo(self.tableView.superview, animated: true)
+              hud.labelText = action.description
+              
+              actionFunc().continueWithBlock() { [unowned self] (task: BFTask!) in
+                if task.error == nil {
+                  hud.labelText = "Success"
+                  sleep(1)
+                  dispatch_async(dispatch_get_main_queue()) {
+                    MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
+                    self.performQuery()
+                  }
+                } else {
+                  hud.labelText = "Error"
+                  dispatch_async(dispatch_get_main_queue()) {
+                    MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
+                  }
+                }
+                return nil
+              }
             }
 
           case .ContactReserver:
@@ -206,11 +189,27 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
           }
         })
       }
-      let colors = [UIColor.flatLightOrangeColor(), UIColor.flatLightRedColor(), UIColor.flatLightGreenColor()]
+      let colors = [UIColor.flatLightOrangeColor(), UIColor.flatLightRedColor(), UIColor.flatLightGreenColor(), UIColor.blueColor()]
 
       for (index, editAction) in enumerate(editActions) {
-        editAction.backgroundColor = colors[index]
+        if editAction.title == UPMListing.SellerAction.AcceptReservation.description {
+          editAction.backgroundColor = UIColor.flatGreenColor()
+        } else if editAction.title == UPMListing.SellerAction.RejectReservation.description {
+          editAction.backgroundColor = UIColor.flatLightRedColor()
+        } else if editAction.title == UPMListing.SellerAction.ContactReserver.description {
+          editAction.backgroundColor = UIColor.flatLightOrangeColor()
+        }
       }
+      
+      let moreAction = UITableViewRowAction(style: .Normal, title: "More") {
+        [unowned self] (action, indexPath) in
+        let sellerActionsTVC = UPMAccountSellerActionsTVC()
+        sellerActionsTVC.listing = listing
+        self.presentViewController(UINavigationController(rootViewController: sellerActionsTVC), animated: true, completion: nil)
+      }
+      moreAction.backgroundColor = UIColor.flatDarkPurpleColor()
+      editActions.append(moreAction)
+
       return editActions
       
     } else {

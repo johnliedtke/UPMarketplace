@@ -58,7 +58,7 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
           
           dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
             var google = GoogleBooksAPI()
-            var url = google.searchByISBNURL(ISBN: isbn, fields: "kind,items(volumeInfo(title,authors,imageLinks,publishedDate,industryIdentifiers))")
+            var url = google.searchByISBNURL(ISBN: isbn, fields: "kind,items(volumeInfo(title,authors,imageLinks,publishedDate,industryIdentifiers,description))")
             var bookJSON = GoogleBooksAPI.getJSON(url!)
             
             var dict = GoogleBooksAPI.parseJSON(bookJSON!)
@@ -69,7 +69,7 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
               self.scannedTextbook = textbook
               bookTask.setResult(title + "\n" + authors + "\n" + isbns)
             } else {
-              bookTask.setResult("")
+              bookTask.setError(NSError.createError("Could not find textbok information.", failureReason: "Bad Read", suggestion: "Try again, or enter info manually"))
             }
           }
           return bookTask.task
@@ -85,14 +85,15 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
 
   func refreshDetailDescriptions() {
     // textbookListing.textbook.course != nil &&
-    didDetailsUpdate("", isComplete: textbookListing.textbook.iSBN13 != nil)
+    didDetailsUpdate("", isComplete: textbookListing.textbook.iSBN13 != nil && textbookListing.textbook.course != nil )
   }
-  
   
   func didReadBarcode(barcode: String, shouldUseBarCode: Bool) {
     if shouldUseBarCode {
       didUpdateTitle(scannedTextbook.title!)
       textbookListing.textbook = scannedTextbook
+      listing?.descriptionS = scannedTextbook.bookDescription
+      descriptionUpdated(scannedTextbook.bookDescription!)
       refreshDetailDescriptions()
       var manager = SDWebImageManager.sharedManager()
       if let url = NSURL(string: scannedTextbook.imageURL!) {

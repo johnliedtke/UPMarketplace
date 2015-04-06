@@ -31,4 +31,12 @@ class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
       cell.configureCell("Posted:", second:fixDateFormat((listingTextbook?.createdAt)!))
     }
   }
+  
+  
+  
+  
+  
+  
+  
+  
 }

@@ -35,14 +35,17 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
   override func viewDidLoad() {
     super.viewDidLoad()
     
+    // Tutorial
+    SALQuickTutorialViewController.showIfNeededForKey("FilteringOther", title: "Furniture and Other", message: "Browse what your fellow students are selling. FILTER if you would like to narrow your results to a certain category", image: UIImage(named: "filteringTut.png"))
+
+    
     // Add filter button
    var filterButton = UIBarButtonItem(title: "Filter", style: .Plain, target: self, action:Selector("goToRear"))
     revealViewController().navigationItem.rightBarButtonItem = filterButton
     revealViewController().navigationItem.title = "Furniture & Other Listings"
-
   }
   
-  func didFinishFiltering(sender: UPMCategoryFilterMainTVC, filter: Filter) {
+  func didFinishFiltering(sender: UIViewController, filter: Filter) {
     self.revealViewController().pushFrontViewController(self, animated: true)
     revealViewController().navigationController?.navigationBar.hidden = false
     collectionView?.userInteractionEnabled = true

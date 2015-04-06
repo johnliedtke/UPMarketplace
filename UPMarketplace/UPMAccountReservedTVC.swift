@@ -10,15 +10,14 @@ import UIKit
 
 class UPMAccountReservedTVC: UPMPFQueryTableVC {
 
+    // MARK: - Public Properties
     
-    // MARK: - Public Propertie
-    
-    // MARK: UPMPFQueryTableVC
-    
+    // MARK: Query
     override func queryForTable() -> PFQuery! {
       var query = PFQuery(className: "UPMReservation")
       query.whereKey("reserver", equalTo: PFUser.currentUser()!)
       query.includeKey("listing")
+      query.includeKey("listing.owner")
       query.whereKeyExists("listing")
       query.cachePolicy = .NetworkElseCache
       query.includeKey("pictureThumbnail")
@@ -40,19 +39,22 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     
     override init!(style: UITableViewStyle, className aClassName: String!) {
       super.init(style: style, className: "UPMOtherListing")
-      
     }
     
     required internal init(coder aDecoder: NSCoder) {
       super.init(coder: aDecoder)
     }
     
-    // MARK: - View Methods
+    // MARK: - View
     
     override func viewDidLoad() {
       super.viewDidLoad()
       tableView.estimatedRowHeight = 100.0
       noDataMessage = "You have not reserved anything.\nPull to refresh."
+      tableView.allowsSelection = false
+      
+      SALQuickTutorialViewController.showIfNeededForKey("AccountReserved11331", title: "Reserved Listings", message: "Reserved - Displays all the listings that you have reserved. Swipe for actions.", image: UIImage(named: "reservedTut.png"))
+      
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -64,11 +66,11 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       super.viewWillDisappear(animated)
       tableView.userInteractionEnabled = false
     }
-    
-    
-    // MARK - Private Methods
-    var isDisplayingActionSheet = false
-
+  
+    // MARK - Private 
+  
+    /// Currently displaying an action sheet
+    private var isDisplayingActionSheet = false
     
     // MARK: - Table view data source
     
@@ -87,8 +89,13 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       cell.statusLabel.text = reservation.displayStatus()
       cell.titleLabel.text = reservation.getListing().title
       cell.priceLabel.text = reservation.getListing().displayPrice()
-      cell.displayImageView.file = reservation.getListing().pictureThumbnail
-      cell.displayImageView.loadInBackground()
+
+      // Grab the picture-file and retrieve it from parse
+      var imageFile = reservation.getListing().pictureThumbnail
+      if let url = imageFile?.url {
+        cell.displayImageView.sd_setImageWithURL(NSURL(string: url), placeholderImage: nil, completed: { [unowned self, cell] (image, error, cache, url) in
+          })
+      }
       cell.changeStatusColor(ReservationStatus(rawValue: reservation.status)!)
       
       // Add long press
@@ -98,19 +105,16 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       return cell
     }
     
-    
     /**
     Handle long press of cells.
+  
+    :param: sender The gesture-recognizer that detected a long press.
     */
     func handleLongPress(sender: UILongPressGestureRecognizer) {
       if sender.state == .Ended { // No second press
         return
       }
       isDisplayingActionSheet = true
-      
-      
-      
-      
       
       // Grab the cell long pressed
       var point = sender.locationInView(tableView)
@@ -122,13 +126,13 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       // Contact action
       var contactAction = UIAlertAction(title: "Contact Seller", style: .Default) {
         (action: UIAlertAction!) -> Void in
-        var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(reservation.getListing().title)")
+        var contactVC = UPMContactVC.initWithNavigationController(reservation.getListing().owner, withSubject: "Question about: \(reservation.getListing().title!)")
         self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
       }
       
       // Delete reservation action
       var deleteReservationAction = UIAlertAction(title: "Delete Reservation", style: .Default) {
-        (action: UIAlertAction!) -> Void in
+        [unowned self] (action) in
         
         // Network connection
         if UPMReachabilityManager.isUnreachable() {
@@ -136,17 +140,21 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
           return
         }
         
+        self.APP().huddie(labelText: "Deleting...")
         MBProgressHUD.showHUDAddedTo(self.view, animated: true)
         
         // delete reservation
         reservation.getListing().deleteReservationInBackground(reservation, blackList: true).continueWithBlock {
-          (task: BFTask!) -> AnyObject! in
+          [unowned self] (task: BFTask!) in
 
-          MBProgressHUD.hideAllHUDsForView(self.view, animated: false)
-          if task.error == nil {
-            self.loadObjects()
+          if let error = task.error {
+            self.hideHuddieWithMessage("Error", delay: 0.1) {
+              self.displayErrorAlertWithMessage(error.localizedDescription)
+            }
           } else {
-            
+            self.hideHuddieWithMessage("Success", delay: 0.4) {
+              self.loadObjects()
+            }
           }
           return nil
         }
@@ -171,62 +179,65 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       self.progressHUD.show(true)
       
     }
-    
-    
-    
+
   override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
     var reservation = objectAtIndexPath(indexPath) as! UPMReservation
     
-    
     // Delete reservation
-    var deleteReservationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Delete", handler:{action, indexpath in
+    var deleteReservationAction = UITableViewRowAction(style: .Default, title: "Delete", handler:{ [unowned self] action, indexpath in
       
-      // Network connection
-      if UPMReachabilityManager.isUnreachable() {
-        UPMReachabilityManager.alertOfNoNetworkConnectionInController(self.navigationController!)
-        return
-      }
+      self.displayConfirmationAlertWithTitle("Confirm", message: "Please confirm the deletion of your reservation.") {
       
-      MBProgressHUD.showHUDAddedTo(self.view, animated: true)
-      
-      // delete reservation
-      reservation.getListing().deleteReservationInBackground(reservation, blackList: true).continueWithBlock {
-        (task: BFTask!) -> AnyObject! in
-        
-        MBProgressHUD.hideAllHUDsForView(self.view, animated: false)
-        if task.error == nil {
-          self.loadObjects()
-        } else {
-          
+        // Network connection
+        if UPMReachabilityManager.isUnreachable() {
+          UPMReachabilityManager.alertOfNoNetworkConnectionInController(self.navigationController!)
+          return
         }
-        return nil
+        
+        self.APP().huddie(labelText: "Deleting...")
+        
+        // delete reservation
+        reservation.getListing().deleteReservationInBackground(reservation, blackList: true).continueWithBlock {
+          [unowned self] (task: BFTask!) in
+          
+          if let error = task.error {
+            self.hideHuddieWithMessage("Error", delay: 0.1) {
+              self.displayErrorAlertWithMessage(error.localizedDescription)
+            }
+          } else {
+            self.hideHuddieWithMessage("Success", delay: 0.4) {
+              self.loadObjects()
+            }
+          }
+          return nil
+        }
       }
     });
     deleteReservationAction.backgroundColor = UIColor.flatLightRedColor()
+    // end delete
     
     // Contact
     var contactReservationAction = UITableViewRowAction(style: UITableViewRowActionStyle.Default, title: "Contact", handler:{action, indexpath in
-      var contactVC = UPMContactVC.initWithNavigationController(PFUser.currentUser()!, withSubject: "Question about: \(reservation.getListing().title)")
+      let owner = reservation.getListing()
+    //  reservation.getListing().owner.fetch()
+      var contactVC = UPMContactVC.initWithNavigationController(reservation.getListing().owner, withSubject: "Question about: \(reservation.getListing().title!)")
       self.navigationController?.presentViewController(contactVC, animated: true, completion: nil)
 
     });
     contactReservationAction.backgroundColor = UIColor.flatLightYellowColor()
     
     return [contactReservationAction, deleteReservationAction]
-    
   }
     
-    // Override to support editing the table view.
-    override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-    }
+  // Override to support editing the table view.
+  override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+  }
   
   // Override to support conditional editing of the table view.
   override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-
     return true
   }
-
-
+  
 }
 
 

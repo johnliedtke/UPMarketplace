@@ -32,6 +32,40 @@ class PFCloudExt: PFCloud {
       }
       return p.task
   }
+  
+  class func sendEmailTo(to: PFUser, from: PFUser?, subject: String, body: String, notification: Bool) -> BFTask {
+    let emailTask = BFTaskCompletionSource()
+
+    if !(UPMUserPrefs.userDefaults().objectForKey("emailNotifications") as! Bool) && notification {
+      emailTask.setResult(true)
+      return emailTask.task
+    }
+    
+    var fromEmail: String!
+    
+    if from != nil {
+      fromEmail = from!.email!
+    } else {
+      fromEmail = Constants.Email.kNoReplyAddress
+    }
+    
+    let email: [String: String] = ["to": to.email!, "from": fromEmail, "subject": subject, "message": body]
+    
+    
+    // if notifications enabled...
+    
+    PFCloud.callFunctionInBackground(PFCloudExtConstants.sendEmailFunction, withParameters: email).continueWithBlock {
+      (task) in
+      if let error = task.error {
+        emailTask.setError(error)
+      } else {
+        emailTask.setResult(task.result)
+      }
+      return nil
+    }
+
+    return emailTask.task
+  }
 
 }
 

@@ -24,14 +24,18 @@ public class UPMSellCell: UITableViewCell {
   @IBOutlet var detailsLabel: UILabel!
   
   public var title: String? {
-    didSet {
-      titleLabel.text = title
-    }
+    didSet { titleLabel.text = title }
   }
   
   public var details: String? {
+    didSet { detailsLabel.text = details }
+  }
+  
+  public var isEnabled: Bool = true {
     didSet {
-      detailsLabel.text = details
+      titleLabel.textColor = isEnabled ? UIColor.blackColor() : UIColor.lightGrayColor()
+      detailsLabel.textColor = isEnabled ? UIColor.darkGrayColor() : UIColor.lightGrayColor()
+      setNeedsDisplay()
     }
   }
     
@@ -47,17 +51,9 @@ public class UPMSellCell: UITableViewCell {
   
   override public func awakeFromNib() {
       super.awakeFromNib()
-    
-   // clipsToBounds = true
     if isComplete {
       circleView.circleColor = UIColor.redColor()
     }
-    
-
-    
-
-    
-      // Initialization code
   }
   
   override public func layoutSubviews() {
@@ -71,8 +67,6 @@ public class UPMSellCell: UITableViewCell {
 
   override public func setSelected(selected: Bool, animated: Bool) {
       super.setSelected(selected, animated: animated)
-
-      // Configure the view for the selected state
   }
     
 }

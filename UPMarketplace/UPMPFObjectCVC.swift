@@ -35,6 +35,9 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   
   /// Currently refreshing the data (pulled to refresh)
   var isRefreshing: Bool = false
+  
+  /// Message displayed when there is no data or network connection
+  var noDataMessage = "No data available"
 
   // MARK: - Private Properties
   
@@ -43,10 +46,9 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
   
   /// Pull to refresh control
   var refreshControl: UIRefreshControl!
-  
+
   /// Displayed when :objects: is empty
   private var noDataLabel = UILabel()
-
 
   // MARK: - View
   
@@ -78,16 +80,16 @@ class UPMPFObjectCVC: UICollectionViewController, UICollectionViewDataSource, UI
     noDataLabel.removeFromSuperview()
     if objects.isEmpty {
       noDataLabel = UILabel()
-      view.addSubview(noDataLabel)
       noDataLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterX, relatedBy: .Equal, toItem: collectionView, attribute: .CenterX, multiplier: 1.0, constant: 0))
-      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterY, relatedBy: .Equal, toItem: collectionView, attribute: .CenterY, multiplier: 1.0, constant: -100))
-      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .Width, relatedBy: .Equal, toItem: collectionView, attribute: .Width, multiplier: 1.0, constant: 0))
-      noDataLabel.text = "No network connection.\nPull down to refresh."
+        noDataLabel.text = noDataMessage
       noDataLabel.textColor = UIColor.darkGrayColor()
       noDataLabel.numberOfLines = 0
       noDataLabel.textAlignment = NSTextAlignment.Center
       noDataLabel.font = UIFont.standardBoldTitleFont()
+      view.addSubview(noDataLabel)
+      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterX, relatedBy: .Equal, toItem: collectionView, attribute: .CenterX, multiplier: 1.0, constant: 0))
+      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .CenterY, relatedBy: .Equal, toItem: collectionView, attribute: .CenterY, multiplier: 1.0, constant: -100))
+      view.addConstraint(NSLayoutConstraint(item: noDataLabel, attribute: .Width, relatedBy: .Equal, toItem: collectionView, attribute: .Width, multiplier: 1.0, constant: 0))
     }
   }
   

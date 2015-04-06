@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7525" systemVersion="14C1514" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="M9o-zQ-Cwq">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7516"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
+    </dependencies>
+    <scenes>
+        <!--Filter Container-->
+        <scene sceneID="JOo-wG-Jjc">
+            <objects>
+                <viewController id="M9o-zQ-Cwq" customClass="UPMFilterContainer" customModule="UPMarketplace" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ql1-MD-9ZP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Jsi-Gd-UTl"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="D1v-uI-E4Y">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uJd-nN-fKd">
+                                <rect key="frame" x="102" y="0.0" width="498" height="600"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="uJd-nN-fKd" firstAttribute="top" secondItem="D1v-uI-E4Y" secondAttribute="top" id="D3Y-z5-ypz"/>
+                            <constraint firstAttribute="trailing" secondItem="uJd-nN-fKd" secondAttribute="trailing" id="Fqg-8p-ykO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uJd-nN-fKd" secondAttribute="trailing" id="RIn-fx-CT0"/>
+                            <constraint firstItem="uJd-nN-fKd" firstAttribute="leading" secondItem="D1v-uI-E4Y" secondAttribute="leading" multiplier="0.5" id="Rvg-9j-ua5"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="uJd-nN-fKd" secondAttribute="trailing" constant="-16" id="Tmt-24-zbi"/>
+                            <constraint firstItem="uJd-nN-fKd" firstAttribute="width" secondItem="D1v-uI-E4Y" secondAttribute="width" multiplier="0.83" id="gvy-N8-3cT"/>
+                            <constraint firstItem="Jsi-Gd-UTl" firstAttribute="top" secondItem="uJd-nN-fKd" secondAttribute="bottom" id="h30-Vm-Mk9"/>
+                            <constraint firstItem="uJd-nN-fKd" firstAttribute="leading" secondItem="D1v-uI-E4Y" secondAttribute="leadingMargin" id="ind-be-IZE"/>
+                        </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="Fqg-8p-ykO"/>
+                                <exclude reference="RIn-fx-CT0"/>
+                                <exclude reference="Rvg-9j-ua5"/>
+                                <exclude reference="ind-be-IZE"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <connections>
+                        <outlet property="filterView" destination="uJd-nN-fKd" id="OxP-lq-gD5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="LMl-Z6-Am6" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="833" y="499"/>
+        </scene>
+    </scenes>
+</document>
