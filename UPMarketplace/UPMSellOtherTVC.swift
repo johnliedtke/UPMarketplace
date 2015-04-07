@@ -19,7 +19,7 @@ class UPMSellOtherTVC: UPMSellTVC, UPMSellDetailsTVCDelegate {
     get { return otherListng }
     set {
       if newValue is UPMOtherListing {
-        otherListng = newValue as! UPMOtherListing
+        otherListng = newValue as UPMOtherListing
       }
     }
   }

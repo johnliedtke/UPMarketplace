@@ -318,7 +318,8 @@
     toggleSeparatorStyle()
 
     
-    if sectionsEnabled, let secKey = sectionKey {
+    if sectionsEnabled  {
+      if let secKey = sectionKey {
       sectionIndices.removeAll(keepCapacity: false)
       sectionToKeyMap.removeAll(keepCapacity: false)
       var section = 0
@@ -330,7 +331,7 @@
           //FIXME: Do this better
           currentSectionKey = ReservationStatus(rawValue: numKey)?.description
         } else {
-          currentSectionKey = object.objectForKey(secKey) as! String
+          currentSectionKey = object.objectForKey(secKey) as String
         }
         }
         if let detKey = determineSectionKey {
@@ -348,7 +349,8 @@
         sectionIndices[currentSectionKey] = objectsInSection!
       }
     }
-    
+  }
+  
     // Reload that data
     tableView.reloadData()
   }

@@ -62,7 +62,7 @@ public class UPMReservation: PFObject, PFSubclassing  {
   convenience init(reserver: PFUser, listing: UPMListing, message: String) {
     self.init()
     var reservePointer = PFObject(withoutDataWithClassName:"_User", objectId: reserver.objectId)
-    self.reserver = reservePointer as! UPMUser
+    self.reserver = reservePointer as UPMUser
     self.message = message
     self.reserveTime = NSDate()
     self.status = ReservationStatus.Waiting.rawValue

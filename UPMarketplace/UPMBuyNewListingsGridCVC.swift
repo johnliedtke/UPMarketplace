@@ -103,14 +103,14 @@ class UPMBuyNewListingsGridCVC: UPMBuyGridCVC {
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
 
     if(object.parseClassName == "UPMOtherListing"){
-      var listing = object as! UPMOtherListing
+      var listing = object as UPMOtherListing
       let viewController = UPMBuyItemDetailsOtherTVC()
       viewController.listingOther = listing
       navigationController?.pushViewController(viewController, animated: true)
     }
     else if(object.parseClassName == "UPMTextbookListing"){
-      var listing = object as! UPMTextbookListing
-      let viewController = UPMBuyItemDetailsTextbookTVC()
+      var listing = object as UPMTextbookListing
+      let viewController = UPMBuyItemDetailsTextbookTVC(style: .Grouped)
       viewController.listingTextbook = listing
       navigationController?.pushViewController(viewController, animated: true)
 

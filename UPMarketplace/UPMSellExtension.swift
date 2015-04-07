@@ -23,7 +23,7 @@ extension UPMSellTVC {
   func pushDescriptionVC() {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
 
-    var sellDescriptionVC = storyboard.instantiateViewControllerWithIdentifier(SellDescriptionStoryboard) as! UPMSellDescriptionVC
+    var sellDescriptionVC = storyboard.instantiateViewControllerWithIdentifier(SellDescriptionStoryboard) as UPMSellDescriptionVC
     sellDescriptionVC.delegate = self
     if let desc = listing?.descriptionS {
       sellDescriptionVC.descriptionS = (desc)
@@ -33,20 +33,24 @@ extension UPMSellTVC {
   
   func pushPriceFormatVC() {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
-    var priceFormatVC = storyboard.instantiateViewControllerWithIdentifier(SellPriceFormatStoryboard) as! UPMSellPriceFormatTVC
+    var priceFormatVC = storyboard.instantiateViewControllerWithIdentifier(SellPriceFormatStoryboard) as UPMSellPriceFormatTVC
     priceFormatVC.delegate = self
     
-    if let price = listing?.price, let limit = listing?.limit, let oBO = listing?.oBO {
-      priceFormatVC.price = price
-      priceFormatVC.limit = limit
-      priceFormatVC.oBO = Bool(oBO)
+    if let price = listing?.price {
+      if let limit = listing?.limit {
+        if let oBO = listing?.oBO {
+          priceFormatVC.price = price
+          priceFormatVC.limit = limit
+          priceFormatVC.oBO = Bool(oBO)
+        }
+      }
     }
     navigationController?.pushViewController(priceFormatVC, animated: true)
   }
   
   func pushTitleVC() {
     let storyboard = UIStoryboard(name: SellStoryboard, bundle: nil)
-    var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as! UPMSellTitleTVC
+    var titleVC = storyboard.instantiateViewControllerWithIdentifier(SellTitleStoryboard) as UPMSellTitleTVC
     titleVC.delegate = self
     if let title = listing?.title {
       titleVC.titleS = title

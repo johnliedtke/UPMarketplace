@@ -10,7 +10,7 @@
 
 class UPMReachabilityManager {
   
-  static let reachabilityManager = Reachability(hostName: "www.parse.com")
+  let reachabilityManager = Reachability(hostName: "www.parse.com")
   
   class func alertOfNoNetworkConnectionInController(controller: UIViewController) {
     var alertController = UIAlertController(title: "No Network Connection", message: "The action cannot be completed because you have no network connection.", preferredStyle: .Alert)
@@ -20,25 +20,33 @@ class UPMReachabilityManager {
   
   // MARK: Class methods
   class func isReachable() -> Bool {
-    return reachabilityManager.isReachable()
+    let rm = Reachability(hostName: "www.parse.com")
+    return rm.isReachable()
   }
   
   class func isUnreachable() -> Bool {
-    return !reachabilityManager.isReachable()
+    let rm = Reachability(hostName: "www.parse.com")
+    return !rm.isReachable()
   }
   
   class func isReachableViaWWAN() -> Bool {
-    return reachabilityManager.isReachableViaWWAN()
+    let rm = Reachability(hostName: "www.parse.com")
+    return rm.isReachableViaWWAN()
   }
   
   class func isReachableViaWifi() -> Bool {
-    return reachabilityManager.isReachableViaWiFi()
+    let rm = Reachability(hostName: "www.parse.com")
+    return rm.isReachableViaWiFi()
   }
   
 }
 
 class UPMCategoryTag {
-  static let categoryTagManager = UPMCategoryTag()
+  //let categoryTagManager = UPMCategoryTag()
+  
+  class func categoryTagManager() -> UPMCategoryTag {
+    return UPMCategoryTag()
+  }
   
   func tags() -> [String: [String]] {
     return [

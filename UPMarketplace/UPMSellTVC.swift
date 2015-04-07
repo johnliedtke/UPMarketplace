@@ -21,7 +21,7 @@ import SellUI
   be removed by modifying the requiredItems container. Additional attributes can either be added in 
   the requiredItems and  optionalItems container or through the UPMSellDetailsTVC.
 */
-class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate, MBProgressHUDDelegate {
+class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewDelegate, UPMSellPriceFormatDelegate, UPMSellTitleDelegate, UPMSellImagePickerDelegate {
   
   // MARK: - Constants
   let SellCellIdentifier = "UPMSellCell"
@@ -92,14 +92,20 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   func didPressCancelButton(sender: AnyObject) {
     if requiredItems.completedCount > 0 && !isUpdatingListing {
       let cancelAlert = UIAlertController(title: "Cancel Confirmation", message: "Are you sure you want to discard your listing? Listing will not be saved.", preferredStyle: .Alert)
+      
       cancelAlert.addAction(UIAlertAction(title: "Discard", style: .Destructive, handler: {
-        (action) in
-          self.navigationController?.popToRootViewControllerAnimated(true)
+        [weak self](action) in
+        if let weakSelf = self {
+          weakSelf.navigationController?.popToRootViewControllerAnimated(true)
+          return
+        }
       }))
       cancelAlert.addAction(UIAlertAction(title: "Cancel", style: .Default, handler: nil))
       presentViewController(cancelAlert, animated: true, completion: nil)
     } else {
-      navigationController?.popToRootViewControllerAnimated(true)
+      if let navController = self.navigationController {
+        navController.popViewControllerAnimated(true)
+      }
     }
   }
   deinit {
@@ -126,16 +132,18 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   Used to set the sell items if being used to update a listing.
   */
   func initItemFields() {
-    if isUpdatingListing {
+    if isUpdatingListing { // 1
       navigationItem.rightBarButtonItem?.title = "Update"
       navigationItem.title = "Listing"
       self.didUpdateTitle((self.listing?.title)!)
       self.updatedPriceFormat((listing?.price)!, limit: 33.2, oBo: Bool((listing?.oBO)!))
       descriptionUpdated((listing?.descriptionS)!)
-      if let url = listing?.picture?.url, let imageURL = NSURL(string: url) {
+      if let url = listing?.picture?.url  { // 2
+        if let imageURL = NSURL(string: url) { // 3
         let sharedManager = SDWebImageManager.sharedManager()
         sharedManager.downloadImageWithURL(imageURL, options: nil, progress: nil, completed: { [weak self] (image, error, cache, finished, url) -> Void in
-          if let weakSelf = self where error == nil {
+          if let weakSelf = self  {
+            if error == nil {
               var imageItem = weakSelf.requiredItems.itemWithTitle(RequiredItems.Photos.rawValue)
               weakSelf.requiredItems.updateItemWithTitle(RequiredItems.Photos.rawValue, description: "Image Selected", isComplete: true)
             dispatch_async(dispatch_get_main_queue(), { () -> Void in
@@ -143,11 +151,11 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
               weakSelf.tableView.reloadData()
             })
           }
+          }
         })
-
-      }
-
-    }
+        } // end 3
+      } // end 2
+    } // end 1
   }
   
   /// Creates the default optional items, can be overriden to provide custom optional items.
@@ -195,6 +203,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
         } else {
           self.hideHuddieWithMessage("Success", delay: 0.4) {
             self.navigationController?.popToRootViewControllerAnimated(true)
+            return
           }
         }
         return nil
@@ -281,32 +290,38 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     
       switch Section {
       case CellSection.Title:
-        let cell = tableView.dequeueReusableCellWithIdentifier(SellTitleCelIdentifier, forIndexPath: indexPath) as! UPMSellTitleCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellTitleCelIdentifier, forIndexPath: indexPath) as UPMSellTitleCell
         var titleItem = requiredItems.itemWithTitle(RequiredItems.Title.rawValue)
         cell.titleLabel.text = titleItem?.itemDescription
         if listing?.photo != nil {
           cell.displayImageView.image = listing?.photo
         }
-        cell.displayImageViewTapped = { [unowned self] (sender: AnyObject) in
-          self.pushImagePickerVC()
+        cell.displayImageViewTapped = {
+          [weak self] (sender: AnyObject) in
+          if let weakSelf = self {
+            weakSelf.pushImagePickerVC()
+          }
           return
         }
-        cell.titleLabelTapped = { [unowned self] (sender: AnyObject) in
-          self.pushTitleVC()
+        cell.titleLabelTapped = {
+          [weak self] (sender: AnyObject) in
+          if let weakSelf = self {
+            weakSelf.pushTitleVC()
+          }
           return;
         }
         return cell
       case CellSection.Required:
-        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
         var i = requiredItems.itemAtIndex(indexPath.row)
-        if count(i.itemDescription) > 300 {
+        if countElements(i.itemDescription) > 300 {
           cell.configureCell(i.title, details: i.itemDescription.substringToIndex(advance(i.itemDescription.startIndex, 299)), isComplete: i.isComplete)
         } else {
           cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         }
         return cell
       case CellSection.Optional:
-        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
         var i = optionalItems.itemAtIndex(indexPath.row)
         cell.configureCell(i.title, details: i.itemDescription, isComplete: i.isComplete)
         return cell
@@ -396,8 +411,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
       
       }
       
-    default:
-      NSLog("")
+    default:break
     }
   }
   

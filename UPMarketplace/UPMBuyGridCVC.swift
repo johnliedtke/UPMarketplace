@@ -69,10 +69,10 @@ class UPMBuyGridCVC: UPMPFObjectCVC, UICollectionViewDelegateFlowLayout {
     if let newCell = collectionView.dequeueReusableCellWithReuseIdentifier(UPMBuyGridCellConstants.reuseIdentifier, forIndexPath: indexPath) as? UPMBuyGridCell {
       cell = newCell
     } else {
-    cell = collectionView.dequeueReusableCellWithReuseIdentifier(UPMBuyGridCellConstants.reuseIdentifier, forIndexPath: indexPath) as! UPMBuyGridCell
+    cell = collectionView.dequeueReusableCellWithReuseIdentifier(UPMBuyGridCellConstants.reuseIdentifier, forIndexPath: indexPath) as UPMBuyGridCell
     }
     
-    let listing = object as! UPMListing
+    let listing = object as UPMListing
     
     // Grab the picture-file and retrieve it from parse
     var imageFile = listing.pictureThumbnail

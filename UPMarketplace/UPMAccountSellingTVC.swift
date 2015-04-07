@@ -57,14 +57,14 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath, object: PFObject) -> UITableViewCell {
     
-    var listing = object as! UPMListing
+    var listing = object as UPMListing
     
     if indexPath.section == objects.count {
       var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-      return loadMoreCell as! PFTableViewCell
+      return loadMoreCell as PFTableViewCell
     }
     
-    var cell = tableView.dequeueReusableCellWithIdentifier("UPMAccountListingCell") as! UPMAccountListingCell!
+    var cell = tableView.dequeueReusableCellWithIdentifier("UPMAccountListingCell") as UPMAccountListingCell!
     if cell == nil {
       cell = UPMAccountListingCell(style: .Default, reuseIdentifier: "UPMAccountListingCell")
     }
@@ -138,7 +138,7 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
   
   override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
     
-    var listing = objectAtIndexPath(indexPath) as! UPMListing
+    var listing = objectAtIndexPath(indexPath) as UPMListing
     
     // Create the table actions...
     if let actions = listing.availableSellerActions() {
@@ -171,6 +171,7 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
                   hud.labelText = "Error"
                   dispatch_async(dispatch_get_main_queue()) {
                     MBProgressHUD.hideAllHUDsForView(self.view.superview, animated: true)
+                    return
                   }
                 }
                 return nil

@@ -38,19 +38,28 @@ class UPMBuyTextbookFilter: UITableViewController {
   weak var delegate: UPMFilterDelegate?
 
   /// Clear section
-  lazy private var clearSection = Section(rows: ["Clear"])
+  lazy private var clearSection = Section<String>(rows: ["Clear"])
   
   /// Tag section
   lazy private var isbnCourseSection = Section(header: "ISBN or Course", rows: [String]())
   
   /// Datasource
-  lazy private var dataSource: SectionedDataSource<String> = SectionedDataSource(sections: [self.clearSection,self.isbnCourseSection]) {
-    (cell, row) in
-    cell.textLabel?.text = row
-  }
+  private var dataSource: SectionedDataSource<String>!
   
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    self.dataSource = SectionedDataSource(sections: [self.clearSection, self.isbnCourseSection], cellConfigurator: { (cell, row) -> (Void) in
+      cell.textLabel?.text = row
+      return
+    })
+    
+
+    
+    
+    
+    
+    
     tableView = UITableView(frame: tableView.bounds, style: .Grouped)
     tableView.backgroundColor = UIColor.standardBackgroundColor()
     tableView.dataSource = dataSource.tableViewDataSource

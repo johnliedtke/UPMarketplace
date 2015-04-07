@@ -17,8 +17,8 @@ class UPMNewListingsFilter: UITableViewController {
   //button that may be used to go back to orig view and clear the filter
   //MARK: - Button Action
   @IBAction func doneButton(sender: AnyObject) {
-    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as! UINavigationController
-    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
+    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as UINavigationController
+    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as UPMBuyNewListingsGridCVC
    
     //change the filter back and change the title back to normal
     first.chosenCategory = -1
@@ -57,8 +57,8 @@ class UPMNewListingsFilter: UITableViewController {
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
 
     //instantiate the front controller as the collection view for new listings
-    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as! UINavigationController
-    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as! UPMBuyNewListingsGridCVC
+    var nav = storyboardS.instantiateViewControllerWithIdentifier("frontNav") as UINavigationController
+    var first: UPMBuyNewListingsGridCVC = nav.childViewControllers.first as UPMBuyNewListingsGridCVC
    
     //change the values of the query and title based on selected row
     first.chosenCategory = indexPath.row

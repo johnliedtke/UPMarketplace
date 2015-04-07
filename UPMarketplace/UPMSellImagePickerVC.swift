@@ -121,7 +121,7 @@ class UPMSellImagePickerVC: UIViewController, UIImagePickerControllerDelegate, U
   }
   
   func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [NSObject : AnyObject]) {
-    let image: UIImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+    let image: UIImage = info[UIImagePickerControllerOriginalImage] as UIImage
     self.image = image
     finishAndUpdate()
   }

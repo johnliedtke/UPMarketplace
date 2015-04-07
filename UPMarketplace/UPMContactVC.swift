@@ -209,11 +209,11 @@ public class UPMContactVC: UIViewController, MBProgressHUDDelegate {
     var error = ""
     view.endEditing(true)
     
-    if count(subjectField.text) <= 1 {
+    if countElements(subjectField.text) <= 1 {
       error += "Please enter a subject. "
     }
     
-    if count(bodyTextView.text) <= 1{
+    if countElements(bodyTextView.text) <= 1{
       error += "Please enter a message. "
     }
     return error == "" ? (false, nil) : (true, error)

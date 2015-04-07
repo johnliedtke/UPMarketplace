@@ -36,7 +36,7 @@ class PFCloudExt: PFCloud {
   class func sendEmailTo(to: PFUser, from: PFUser?, subject: String, body: String, notification: Bool) -> BFTask {
     let emailTask = BFTaskCompletionSource()
 
-    if !(UPMUserPrefs.userDefaults().objectForKey("emailNotifications") as! Bool) && notification {
+    if !(UPMUserPrefs.userDefaults().objectForKey("emailNotifications") as Bool) && notification {
       emailTask.setResult(true)
       return emailTask.task
     }

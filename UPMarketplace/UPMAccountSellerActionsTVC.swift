@@ -82,7 +82,8 @@ class UPMAccountSellerActionsTVC: UITableViewController {
   // MARK: - TableView Delegate
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if let resHeader = reservationSection?.header where dataSource.sections[indexPath.section].header == resHeader {
+    if let resHeader = reservationSection?.header {
+      if dataSource.sections[indexPath.section].header == resHeader {
       
       switch listing.sellerState() {
         
@@ -185,11 +186,13 @@ class UPMAccountSellerActionsTVC: UITableViewController {
         }
       default: break
       }
-      
+    }
+    
       /**
       Listing Actions
       */
-    } else if let resHeader = listingSection?.header where dataSource.sections[indexPath.section].header == resHeader {
+    } else if let resHeader = listingSection?.header  {
+      if dataSource.sections[indexPath.section].header == resHeader {
       if indexPath.row == 0 { // Delete Listing
         displayConfirmationAlertWithTitle("Confirm DELETION", message: "Please confirm the DELETION of your listing.") { [unowned self] in
 
@@ -212,6 +215,7 @@ class UPMAccountSellerActionsTVC: UITableViewController {
 
       }
       
+    }
     }
     tableView.deselectRowAtIndexPath(tableView.indexPathForSelectedRow()!, animated: true)
   }

@@ -24,8 +24,10 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
     var query = UPMOtherListing.displayQuery()
     if let category = filter.category {
       query.whereKey("category", equalTo: category)
-      if let tags = filter.tags where !tags.isEmpty {
-        query.whereKey("tag", containedIn: tags)
+      if let tags = filter.tags  {
+        if  !tags.isEmpty {
+          query.whereKey("tag", containedIn: tags)
+        }
       }
     }
     return query
@@ -55,8 +57,8 @@ class UPMBuyListItemsOtherCVC: UPMBuyGridCVC, UPMFilterDelegate {
   
   // MARK: - Data Source Methods
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
-      var listing = object as! UPMOtherListing
-      let viewController = UPMBuyItemDetailsOtherTVC()
+      var listing = object as UPMOtherListing
+    let viewController = UPMBuyItemDetailsOtherTVC(style: .Grouped)
       viewController.listingOther = listing
       navigationController?.pushViewController(viewController, animated: true)
   }

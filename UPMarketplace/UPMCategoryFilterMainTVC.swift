@@ -41,8 +41,10 @@ struct OtherFilter<T: Equatable>: Filter {
   }
   
   mutating func addTag(tag: T) {
-    if let ts = self.tags where ts.filter({ $0 == tag }).isEmpty {
-      tags?.append(tag)
+    if let ts = self.tags  {
+      if ts.filter({ $0 == tag }).isEmpty {
+        tags?.append(tag)
+      }
     }
   }
   
@@ -70,7 +72,8 @@ class UPMCategoryFilterMainTVC: UITableViewController, UPMTablePickerVCDelegate 
   /// Picker to choose category
   lazy private var categoryPickerTVC: UPMTablePickerVC = {
     var controller = UPMTablePickerVC()
-    controller.datasource = SingleSectionDataSource(rows: UPMCategoryTag.categoryTagManager.categories())
+    controller.navigationItem.title = "Category"
+    controller.datasource = SingleSectionDataSource(rows: UPMCategoryTag.categoryTagManager().categories())
     controller.delegate = self
     return controller
   }()
@@ -87,7 +90,9 @@ class UPMCategoryFilterMainTVC: UITableViewController, UPMTablePickerVCDelegate 
   /// Datasource
   lazy private var dataSource: SectionedDataSource<String> = SectionedDataSource(sections: [self.clearSection,self.categorySection, self.tagSection]) {
     (cell, row) in
-    cell.textLabel?.text = row
+    if cell != nil {
+      cell.textLabel?.text = row
+    }
   }
   
   /// The indexPaths of the selected tag cells
@@ -117,13 +122,15 @@ class UPMCategoryFilterMainTVC: UITableViewController, UPMTablePickerVCDelegate 
   
   // MARK: - Picker Delegate
   func didSelectItem(sender: UPMTablePickerVC, item: AnyObject?) {
-    if sender == categoryPickerTVC, let category = item as? String {
-      categorySection.rows[0] = category
-      filter.category = category
-      filter.tags?.removeAll(keepCapacity: false)
-      selectedCells.removeAll(keepCapacity: false)
-      tagSection.rows = UPMCategoryTag.categoryTagManager.tags()[category]!
-      tableView.reloadData()
+    if sender == categoryPickerTVC {
+      if let category = item as? String {
+        categorySection.rows[0] = category
+        filter.category = category
+        filter.tags?.removeAll(keepCapacity: false)
+        selectedCells.removeAll(keepCapacity: false)
+        tagSection.rows = (UPMCategoryTag.categoryTagManager().tags()[category])!.sorted(<)
+        tableView.reloadData()
+      }
     }
   }
 
@@ -146,15 +153,17 @@ class UPMCategoryFilterMainTVC: UITableViewController, UPMTablePickerVCDelegate 
     if dataSource.sections[indexPath.section].header == categorySection.header {
       self.navigationController?.pushViewController(categoryPickerTVC, animated: true)
       
-    } else if dataSource.sections[indexPath.section].header == tagSection.header, let cell = cell {
-      if cell.accessoryType == .Checkmark {
-        cell.accessoryType = .None
-        filter.removeTag(tagSection.rows[indexPath.row])
-        selectedCells.removeValueForKey(indexPath)
-      } else {
-        cell.accessoryType = .Checkmark
-        filter.addTag(tagSection.rows[indexPath.row])
-        selectedCells[indexPath] = true
+    } else if dataSource.sections[indexPath.section].header == tagSection.header {
+        if let cell = cell {
+        if cell.accessoryType == .Checkmark {
+          cell.accessoryType = .None
+          filter.removeTag(tagSection.rows[indexPath.row])
+          selectedCells.removeValueForKey(indexPath)
+        } else {
+          cell.accessoryType = .Checkmark
+          filter.addTag(tagSection.rows[indexPath.row])
+          selectedCells[indexPath] = true
+        }
       }
     } else if dataSource.sections[indexPath.section].header == clearSection.header {
       clearFilter()

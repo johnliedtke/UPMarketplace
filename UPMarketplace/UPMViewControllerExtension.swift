@@ -176,7 +176,7 @@ class UPMUserPrefs {
   }
   
   class func emailNotificationsEnabled() -> Bool {
-    return UPMUserPrefs.userDefaults().objectForKey("emailNotifications") as! Bool
+    return UPMUserPrefs.userDefaults().objectForKey("emailNotifications") as Bool
   }
 }
 

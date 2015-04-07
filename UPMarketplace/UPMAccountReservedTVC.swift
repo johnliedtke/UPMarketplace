@@ -75,11 +75,11 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     // MARK: - Table view data source
     
     override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
-      var reservation = object as! UPMReservation
+      var reservation = object as UPMReservation
       
       if indexPath.section == objects.count {
         var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-        return loadMoreCell as! PFTableViewCell
+        return loadMoreCell as PFTableViewCell
       }
       
       //var cell = UPMAccountActivityCell(style: .Default, reuseIdentifier: "Meow")
@@ -119,7 +119,7 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
       // Grab the cell long pressed
       var point = sender.locationInView(tableView)
       var indexPath = tableView.indexPathForRowAtPoint(point)
-      var reservation = objectAtIndexPath(indexPath) as! UPMReservation
+      var reservation = objectAtIndexPath(indexPath) as UPMReservation
       
       var actionSheet = UIAlertController(title: "Reservation Options", message: "", preferredStyle: .ActionSheet)
       
@@ -181,7 +181,7 @@ class UPMAccountReservedTVC: UPMPFQueryTableVC {
     }
 
   override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
-    var reservation = objectAtIndexPath(indexPath) as! UPMReservation
+    var reservation = objectAtIndexPath(indexPath) as UPMReservation
     
     // Delete reservation
     var deleteReservationAction = UITableViewRowAction(style: .Default, title: "Delete", handler:{ [unowned self] action, indexpath in

@@ -10,7 +10,7 @@ import UIKit
 
 extension UIViewController {
   func APP() -> AppDelegate {
-    return UIApplication.sharedApplication().delegate as! AppDelegate
+    return UIApplication.sharedApplication().delegate as AppDelegate
   }
   
   func hideHuddieWithMessage(message: String, delay: NSTimeInterval, action: (()->())?) {
@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Buy
     let BuyStoryboard = UIStoryboard(name: "UPMBuy", bundle: nil)
-    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as! UIViewController
+    var buyNewListingsVC = BuyStoryboard.instantiateInitialViewController() as UIViewController
     var buyNewListingsItem = buyNewListingsVC.tabBarItem
     buyNewListingsItem.title = "New Listings"
     buyNewListingsItem.image = UIImage(named: "new.png")!.imageWithRenderingMode(.AlwaysOriginal)
@@ -100,7 +100,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     //Buy Workflow
     let BuyWorkflowStoryboard = UIStoryboard(name: "UPMBuyWorkflow", bundle: nil)
-    var buyCategoryVC = BuyWorkflowStoryboard.instantiateInitialViewController() as! UINavigationController
+    var buyCategoryVC = BuyWorkflowStoryboard.instantiateInitialViewController() as UINavigationController
     var buyTabBarItem = buyCategoryVC.tabBarItem
     buyTabBarItem.title = "Buy"
     buyTabBarItem.image = UIImage(named: "buy.png")!.imageWithRenderingMode(UIImageRenderingMode.AlwaysOriginal)
@@ -109,8 +109,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     controllers.append(buyCategoryVC)
     
     // Sell
+    
+    
+    
     let SellStoryboard = UIStoryboard(name: Constants.SellStoryboard.MainStoryboard, bundle: nil)
-    var sellVC = SellStoryboard.instantiateInitialViewController() as! UINavigationController
+    var sellVC = SellStoryboard.instantiateInitialViewController() as UINavigationController
     controllers.append(sellVC)
     var sellTabBarItem = sellVC.tabBarItem
     sellTabBarItem.title = "Sell"
@@ -122,7 +125,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // Account
     var accountStoryboard = UIStoryboard(name: UPMAccountConstants.accountStoryboardIdentifier, bundle: nil)
-    var accountNavigation = accountStoryboard.instantiateInitialViewController() as! UINavigationController
+    var accountNavigation = accountStoryboard.instantiateInitialViewController() as UINavigationController
     controllers.append(accountNavigation)
     
     var accountItem = accountNavigation.tabBarItem

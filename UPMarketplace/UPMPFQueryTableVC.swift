@@ -75,7 +75,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     sectionToKeyMap.removeAll(keepCapacity: false)
     
     var section = 0
-    for (rowIndex, object) in enumerate(objects as! [PFObject]) {
+    for (rowIndex, object) in enumerate(objects as [PFObject]) {
       
       var currentSectionKey: String!
       
@@ -83,7 +83,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
         //FIXME: Do this better
         currentSectionKey = ReservationStatus(rawValue: secKey)?.description
       } else {
-        currentSectionKey = object.objectForKey(sectionKey) as! String
+        currentSectionKey = object.objectForKey(sectionKey) as String
       }
       
       var objectsInSection = sectionIndices[currentSectionKey]
@@ -109,7 +109,7 @@ public class UPMPFQueryTableVC: PFQueryTableViewController {
     var rowIndicesInSection = sectionIndices[currentSectionKey]!
     
     var rowIndex = rowIndicesInSection[indexPath.row]
-    return objects[rowIndex] as! PFObject
+    return objects[rowIndex] as PFObject
   }
   
   // MARK: - UITableViewDatasource

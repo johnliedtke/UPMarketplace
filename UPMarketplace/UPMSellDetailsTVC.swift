@@ -95,7 +95,7 @@ class UPMSellDetailsTVC: UITableViewController {
   }
   
   override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-      let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as! UPMSellCell
+      let cell = tableView.dequeueReusableCellWithIdentifier(SellCellIdentifier, forIndexPath: indexPath) as UPMSellCell
 
     if indexPath.section == CellSection.Required.rawValue {
       let item = requiredItems.itemAtIndex(indexPath.row)

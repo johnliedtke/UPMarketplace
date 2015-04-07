@@ -18,14 +18,14 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
   var otherListing: UPMOtherListing = UPMOtherListing()
   override var listing: UPMListing? {
     get { return otherListing }
-    set { if newValue is UPMOtherListing { otherListing = newValue as! UPMOtherListing } }
+    set { if newValue is UPMOtherListing { otherListing = newValue as UPMOtherListing } }
   }
   
   // MARK: - Pickers
   
   lazy private var categoryPickerTVC: UPMTablePickerVC = {
     var controller = UPMTablePickerVC()
-    controller.datasource = SingleSectionDataSource(rows: UPMCategoryTag.categoryTagManager.categories())
+    controller.datasource = SingleSectionDataSource(rows: UPMCategoryTag.categoryTagManager().categories())
     controller.delegate = self
     return controller
     }()
@@ -64,7 +64,7 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
     case Category:
       navigationController?.pushViewController(categoryPickerTVC, animated: true)
     case Tag:
-      tagPickerTVC.datasource = SingleSectionDataSource(rows: (UPMCategoryTag.categoryTagManager.tags()[self.otherListing.category!]!).sorted(<))
+      tagPickerTVC.datasource = SingleSectionDataSource(rows: (UPMCategoryTag.categoryTagManager().tags()[self.otherListing.category!]!).sorted(<))
       navigationController?.pushViewController(tagPickerTVC, animated: true)
     default: break
     }
@@ -95,17 +95,19 @@ class UPMSellCategoryTVC: UPMSellDetailsTVC, UPMTablePickerVCDelegate {
   // MARK: - Delegate
 
   func didSelectItem(sender: UPMTablePickerVC, item: AnyObject?) {
-    if let category = item as? String where sender == categoryPickerTVC {
-      otherListing.category = category
-      requiredItems.updateItemWithTitle(Category, description: category, isComplete: true)
-      requiredItems.updateItemWithTitle(Tag, description: "Select", isComplete: false)
-      otherListing.tag = nil
-      if let cell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: 1, inSection: 0)) as? UPMSellCell {
-        
+    if sender == categoryPickerTVC  {
+      if let category = item as? String {
+        otherListing.category = category
+        requiredItems.updateItemWithTitle(Category, description: category, isComplete: true)
+        requiredItems.updateItemWithTitle(Tag, description: "Select", isComplete: false)
+        otherListing.tag = nil
       }
-    } else if let tag = item as? String where sender == tagPickerTVC {
-      otherListing.tag = tag
-      requiredItems.updateItemWithTitle(Tag, description: tag, isComplete: true)
+    
+    } else if sender == tagPickerTVC {
+      if let tag = item as? String {
+        otherListing.tag = tag
+        requiredItems.updateItemWithTitle(Tag, description: tag, isComplete: true)
+      }
     }
     tableView.reloadData()
   }

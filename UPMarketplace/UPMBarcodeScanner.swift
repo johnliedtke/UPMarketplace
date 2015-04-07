@@ -153,7 +153,7 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
     var highlightViewRect = CGRectZero
     
     if metadataObjects != nil && metadataObjects.count > 0 {
-      var metaDataObject = metadataObjects.first as! AVMetadataMachineReadableCodeObject
+      var metaDataObject = metadataObjects.first as AVMetadataMachineReadableCodeObject
       highlightViewRect = metaDataObject.bounds
 
       if isAllowedType(metaDataObject.type) {
@@ -188,6 +188,7 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
                 alertController.addAction(UIAlertAction(title: "Rescan", style: .Default) {
                   (action) in
                   weakSelf.startReading()
+                  return
                 })
                 alertController.addAction(UIAlertAction(title: "Done", style: .Cancel) {
                   (action) in
@@ -256,9 +257,10 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
   }
   
   // Auto-focus on touch
-  override public func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+
+  override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
     
-    var touch = touches.first as! UITouch
+    var touch = event.allTouches()?.anyObject() as UITouch
     var pointInView = touch.locationInView(previewView)
     
     // Check if auto-focus is supported

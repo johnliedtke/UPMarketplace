@@ -19,7 +19,7 @@ class UPMSellOtherDetailsTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate
     }
     set {
       if newValue is UPMOtherListing {
-        otherListing = newValue as! UPMOtherListing
+        otherListing = newValue as UPMOtherListing
       }
     }
   }
@@ -49,7 +49,7 @@ class UPMSellOtherDetailsTVC: UPMSellDetailsTVC, UPMOtherListingCategoryDelegate
     switch item.title {
     case RequiredItem.Category.rawValue:
       let Storyboard = UIStoryboard(name: "SellMain", bundle: nil)
-      var categoryVC = Storyboard.instantiateViewControllerWithIdentifier(OtherListingCategoryStoryboard) as! UPMOtherListingCategoryTVC
+      var categoryVC = Storyboard.instantiateViewControllerWithIdentifier(OtherListingCategoryStoryboard) as UPMOtherListingCategoryTVC
       categoryVC.delegate = self
       navigationController?.pushViewController(categoryVC, animated: true)
     default: break

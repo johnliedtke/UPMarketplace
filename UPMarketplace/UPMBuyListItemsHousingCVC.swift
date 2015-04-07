@@ -33,8 +33,8 @@ class UPMBuyListItemsHousingCVC: UPMBuyGridCVC {
   // MARK: - Data Source Methods
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
     
-    var listing = object as! UPMHousingListing
-    let viewController = UPMBuyItemDetailsHousingTVC()
+    var listing = object as UPMHousingListing
+    let viewController = UPMBuyItemDetailsHousingTVC(style: .Grouped)
     viewController.listingHousing = listing
     navigationController?.pushViewController(viewController, animated: true)
     

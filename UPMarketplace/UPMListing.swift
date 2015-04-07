@@ -516,7 +516,7 @@ public class UPMListing: PFObject  {
       return contactTask.task
     }
     
-    var deleteTask = { return self.deleteListingAndRelatedInBackground() }
+    var deleteTask: () -> BFTask = { return self.deleteListingAndRelatedInBackground() }
     var deleteAction = (SellerAction.DeleteListing, deleteTask)
    
 
@@ -528,20 +528,28 @@ public class UPMListing: PFObject  {
       
     case .Waiting:
       if let waitingReservation = getWaitingReservation() {
-        var acceptAction = (SellerAction.AcceptReservation,
-          { return self.acceptReservationInBackground(waitingReservation) })
-        var rejectAction = (SellerAction.RejectReservation,
-          { return self.rejectReservationInBackground(waitingReservation, blackList: false) })
-        var contactAction = (SellerAction.ContactReserver, { return contactActionMeow(waitingReservation.reserver) })
+        let acceptTask: () -> BFTask = { return self.acceptReservationInBackground(waitingReservation) }
+        var acceptAction = (SellerAction.AcceptReservation, acceptTask)
+
+        let rejectTask: () -> BFTask = { return self.rejectReservationInBackground(waitingReservation, blackList: false) }
+        var rejectAction = (SellerAction.RejectReservation, rejectTask)
+        
+        let contactTask: () -> BFTask = { return contactActionMeow(waitingReservation.reserver) }
+        var contactAction = (SellerAction.ContactReserver, contactTask)
         
         return [rejectAction, acceptAction]
       }
       
     case .Accepted:
       if let acceptedReservation = getAcceptedReservation() {
-        var contactAction = (SellerAction.ContactReserver, { return contactActionMeow(acceptedReservation.reserver) })
-        var rejectAction = (SellerAction.RejectReservation,
-          { return self.rejectReservationInBackground(self.getAcceptedReservation()!, blackList: false) })
+        
+        
+        let contactTask: () -> BFTask = { return contactActionMeow(acceptedReservation.reserver) }
+        
+        var contactAction = (SellerAction.ContactReserver, contactTask)
+        
+        let rejectTask: () -> BFTask = { return self.rejectReservationInBackground(self.getAcceptedReservation()!, blackList: false) }
+        var rejectAction = (SellerAction.RejectReservation, rejectTask)
         
         return [contactAction, rejectAction]
       }
@@ -693,7 +701,7 @@ public class UPMListing: PFObject  {
     
     if oBO {
       for res in reservations! {
-        if res is UPMReservationObo && isBlackListed(res.getReserver()) && (res as! UPMReservationObo).offer >= limit {
+        if res is UPMReservationObo && isBlackListed(res.getReserver()) && (res as UPMReservationObo).offer >= limit {
           return true
         }
       }
@@ -719,10 +727,10 @@ public class UPMListing: PFObject  {
     if oBO {
       var max = 0.0
       for res in reservations! {
-        if res is UPMReservationObo && !isBlackListed(res.getReserver()) && (res as! UPMReservationObo).offer >= limit {
-          if max < (res as! UPMReservationObo).offer {
+        if res is UPMReservationObo && !isBlackListed(res.getReserver()) && (res as UPMReservationObo).offer >= limit {
+          if max < (res as UPMReservationObo).offer {
             curUser = res.getReserver()
-            max = (res as! UPMReservationObo).offer
+            max = (res as UPMReservationObo).offer
           }
         }
       }

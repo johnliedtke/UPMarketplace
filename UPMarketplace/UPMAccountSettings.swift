@@ -55,7 +55,7 @@ class UPMAccountSettings: UITableViewController {
       tabBarController?.selectedIndex = 0
     } else if row == about {
       let aboutStoryboard = UIStoryboard(name: "about", bundle: nil)
-      navigationController?.pushViewController(aboutStoryboard.instantiateInitialViewController() as! UIViewController, animated: true)
+      navigationController?.pushViewController(aboutStoryboard.instantiateInitialViewController() as UIViewController, animated: true)
     }
   }
 }

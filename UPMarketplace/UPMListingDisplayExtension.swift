@@ -24,7 +24,7 @@ extension UPMListing {
     listingQuery.orderByDescending("createdAt")
     listingQuery.whereKey("isHidden", equalTo: NSNumber(bool: false))
     listingQuery.includeKey("blackListedUsers")
-    listingQuery.includeKey(NSString(string: "reservations") as! String)
+    listingQuery.includeKey(NSString(string: "reservations") as String)
     listingQuery.includeKey("reservations.reserver")
     return listingQuery
   }

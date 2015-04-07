@@ -76,7 +76,7 @@ class UPMActivity: PFObject, PFSubclassing {
 
   
   // MARK: - Parse Subclassing
-  static func parseClassName() -> String {
+  class func parseClassName() -> String {
     return "UPMActivity"
     
   }
@@ -86,7 +86,7 @@ class UPMActivity: PFObject, PFSubclassing {
 
 class UPMUserData: PFObject, PFSubclassing {
   
-  static func parseClassName() -> String {
+  class func parseClassName() -> String {
     return "UPMUserData"
   }
   

@@ -54,7 +54,8 @@ class UPMSellDescriptionVC: UIViewController, UITextViewDelegate {
   func alertIfInputIsIncomplete() -> Bool {
     var error = false
     var errorMessage = ""
-    if count(descriptionS) < MIN_DESCRIPTOIN_LENGTH {
+   // let aCount =
+    if countElements(descriptionS) < MIN_DESCRIPTOIN_LENGTH {
       errorMessage += "Description must be longer than \(MIN_DESCRIPTOIN_LENGTH) characters."
       error = true
     }

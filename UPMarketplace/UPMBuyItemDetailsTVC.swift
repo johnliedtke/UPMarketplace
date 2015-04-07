@@ -59,6 +59,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     changeDefaults()
+    tableView = UITableView(frame: tableView.bounds, style: .Grouped)
     
     // Register table cells
     //tableView.registerNib(UINib(nibName: imageCellIdentifier, bundle: nil), forCellReuseIdentifier: imageCellIdentifier)
@@ -101,11 +102,6 @@ class UPMBuyItemDetailsTVC: UITableViewController {
   }
 
   // MARK: - Init
-  
-  override init(style: UITableViewStyle)
-  { super.init(style: .Grouped) }
-  
-  required init(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
   
   // MARK: - Private Methods
   
@@ -170,19 +166,23 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     
     switch Section{
       case tableCellSection.ImageSection:
-        let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemImageCell
+        let cell = tableView.dequeueReusableCellWithIdentifier(imageCellIdentifier, forIndexPath: indexPath) as UPMBuyItemImageCell
       
         var weakFile = listing?.picture
         
         weakFile?.getDataInBackground().continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
           [weak self, cell] (task)  in
-          if let weakSelf = self where task.error == nil, let imageData = task.result as? NSData {
-            cell.buyItemImage.image = UIImage(data: imageData)
-            cell.displayImageViewTapped = { [weak self, cell] (sender) in
-              var imageVC = UPMBuyItemDetailsImageVC()
-              imageVC.modalTransitionStyle = .CrossDissolve
-              imageVC.image = UIImage(data: imageData)
-              weakSelf.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
+          if let weakSelf = self {
+            if task.error == nil {
+              if let imageData = task.result as? NSData {
+                cell.buyItemImage.image = UIImage(data: imageData)
+                cell.displayImageViewTapped = { [weak self, cell] (sender) in
+                  var imageVC = UPMBuyItemDetailsImageVC()
+                  imageVC.modalTransitionStyle = .CrossDissolve
+                  imageVC.image = UIImage(data: imageData)
+                  weakSelf.navigationController?.presentViewController(imageVC, animated: false, completion: nil)
+                }
+              }
             }
           }
           return nil
@@ -191,23 +191,23 @@ class UPMBuyItemDetailsTVC: UITableViewController {
       return cell
       
     case tableCellSection.TitleSection:
-      let cell = tableView.dequeueReusableCellWithIdentifier(titleCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemTitleCell
+      let cell = tableView.dequeueReusableCellWithIdentifier(titleCellIdentifier, forIndexPath: indexPath) as UPMBuyItemTitleCell
       cell.configureCell(listing?.title, price: listing?.displayPrice())
       return cell
     case tableCellSection.FieldSection:
-       let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemFieldCell
+       let cell = tableView.dequeueReusableCellWithIdentifier(fieldCellIdentifier, forIndexPath: indexPath) as UPMBuyItemFieldCell
        
        configureFieldCells(cell, indexPath: indexPath)
 
       return cell
     
     case tableCellSection.DescriptionSection:
-      let cell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemDescriptionCell
+      let cell = tableView.dequeueReusableCellWithIdentifier(descriptionCellIdentifier, forIndexPath: indexPath) as UPMBuyItemDescriptionCell
       cell.setDescription(listing?.descriptionS)
       return cell
       
     case tableCellSection.SellerSection:
-      let cell = tableView.dequeueReusableCellWithIdentifier(sellerCellIdentifier, forIndexPath: indexPath) as! UPMBuyItemFieldCell
+      let cell = tableView.dequeueReusableCellWithIdentifier(sellerCellIdentifier, forIndexPath: indexPath) as UPMBuyItemFieldCell
       configureSellerCells(cell, indexPath: indexPath)
       return cell
       

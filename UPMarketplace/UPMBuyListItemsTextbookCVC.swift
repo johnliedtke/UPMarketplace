@@ -49,8 +49,8 @@ class UPMBuyListItemsTextbookCVC: UPMBuyGridCVC, UPMFilterDelegate {
   // MARK: - Data Source Methods
   override func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath, withObject object: PFObject) -> Void {
     
-    var listing = object as! UPMTextbookListing
-    let viewController = UPMBuyItemDetailsTextbookTVC()
+    var listing = object as UPMTextbookListing
+    let viewController = UPMBuyItemDetailsTextbookTVC(style: .Grouped)
     viewController.listingTextbook = listing
     navigationController?.pushViewController(viewController, animated: true)
     

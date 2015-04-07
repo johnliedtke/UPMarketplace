@@ -72,11 +72,11 @@ class UPMAccountActivityTVC: UPMPFQueryTableVC {
   // MARK: - Table view data source
   
   override func tableView(tableView: UITableView!, cellForRowAtIndexPath indexPath: NSIndexPath!, object: PFObject!) -> PFTableViewCell! {
-    var activity = object as! UPMActivity
+    var activity = object as UPMActivity
     
     if indexPath.section == objects.count {
       var loadMoreCell = tableView.cellForRowAtIndexPath(indexPath)
-      return loadMoreCell as! PFTableViewCell
+      return loadMoreCell as PFTableViewCell
     }
     
     var cell = tableView.dequeueReusableCellWithIdentifier("ActivityCell") as? UPMAccountActivityCell ?? UPMAccountActivityCell(style: .Default, reuseIdentifier: "ActivityCell")

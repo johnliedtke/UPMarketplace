@@ -9,25 +9,12 @@
 import Foundation
 
 struct UPMSellInput {
-  typealias ConfigureTextField = ((textField: UITextField) -> ())
   var labelText: String
   var placeholderText: String
   var valueText: String?
-  var textFieldConfigurer: ConfigureTextField?
-  init(labelText: String, placeholderText: String, valueText: String?, textFieldConfigurer: ConfigureTextField?) {
-    self.textFieldConfigurer = textFieldConfigurer
-    self.labelText = labelText
-    self.placeholderText = placeholderText
-    self.valueText = valueText
-  }
+  var textFieldConfigurer: ((textField: UITextField) -> ())?
   
-  init(labelText: String, textFieldConfigurer: ConfigureTextField?) {
-    self.labelText = labelText
-    self.placeholderText = ""
-    self.textFieldConfigurer = textFieldConfigurer
-  }
-  
-  init(labelText: String, valueText: String?, textFieldConfigurer: ConfigureTextField?) {
+  init(labelText: String, valueText: String?, textFieldConfigurer: ((textField: UITextField) -> ())?) {
     self.labelText = labelText
     self.valueText = valueText
     self.placeholderText = ""
@@ -85,7 +72,15 @@ class UPMSellInputCell: UITableViewCell {
 
 internal class UPMSellSingleInput: UITableViewController, UITextFieldDelegate {
 
-  lazy var dataSource: SingleSectionDataSource<UPMSellInput> = {
+  var dataSource: SingleSectionDataSource<UPMSellInput>!
+   
+  var dataCollectedHandler: (([String: String]) -> ())?
+  
+  // MARK: - View
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    
+    //*** dataSource compiler fix
     var ds = SingleSectionDataSource(rows: [UPMSellInput](), cellConfigurator: {
       [weak self] (cell, row) in
       if let inputCell = cell as? UPMSellInputCell {
@@ -100,14 +95,11 @@ internal class UPMSellSingleInput: UITableViewController, UITextFieldDelegate {
       }
     })
     ds.reuseIdentifier = "UPMSellInputCell"
-    return ds
-    }()
-  
-  var dataCollectedHandler: (([String: String]) -> ())?
-  
-  // MARK: - View
-  override func viewDidLoad() {
-    super.viewDidLoad()
+    dataSource = ds
+    
+    //***
+    
+    
     tableView = UITableView(frame: self.tableView.frame, style: .Grouped)
     tableView.registerClass(UPMSellInputCell.self, forCellReuseIdentifier: "UPMSellInputCell")
     tableView.dataSource = dataSource.tableViewDataSource

@@ -152,13 +152,13 @@ public class UPMContainerVC: UIViewController {
         "H:|[nextView]|",
         options: NSLayoutFormatOptions.DirectionLeftToRight,
         metrics: nil,
-        views: elementsDict as! [NSObject : AnyObject]))
+        views: elementsDict as [NSObject : AnyObject]))
       
       self.containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
         "V:|[nextView]|",
         options: NSLayoutFormatOptions.DirectionLeftToRight,
         metrics: nil,
-        views: elementsDict as! [NSObject : AnyObject]))
+        views: elementsDict as [NSObject : AnyObject]))
       
       
       if self.isLeftRightTransition {
@@ -196,13 +196,13 @@ public class UPMContainerVC: UIViewController {
       "H:|[acv]|",
       options: NSLayoutFormatOptions.DirectionLeftToRight,
       metrics: nil,
-      views: elementsDict as! [NSObject : AnyObject]))
+      views: elementsDict as [NSObject : AnyObject]))
     
     containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "V:|[acv]|",
       options: NSLayoutFormatOptions.DirectionLeftToRight,
       metrics: nil,
-      views: elementsDict as! [NSObject : AnyObject]))
+      views: elementsDict as [NSObject : AnyObject]))
     
   }
   

@@ -16,29 +16,44 @@ extension UPMTextbook {
     var jsonData = GoogleBooksAPI.parseJSON(inputData)
     
     // Some horrible parsing of JSONh
-    if let dict = jsonData.dictionary where jsonData.error == nil {
-      if let items = dict["items"] as? NSArray, let bookDict = items.firstObject as? NSDictionary {
-        if let volumeInfo = bookDict["volumeInfo"] as? NSDictionary, let title = volumeInfo["title"] as? String, let authors = volumeInfo["authors"] as? [String], let imageDict = volumeInfo["imageLinks"] as? [String: String], let description = volumeInfo["description"] as? String {//
-         if let isbns = volumeInfo["industryIdentifiers"] as? [[String: String]] {
-          if let isbn10 = isbns.filter({ $0["type"] == "ISBN_10"}).first!["identifier"] {
-            textbook.iSBN10 = isbn10
+    if let dict = jsonData.dictionary  { // 1
+      if jsonData.error == nil { // 2
+        if let items = dict["items"] as? NSArray  { // 3
+          if let bookDict = items.firstObject as? NSDictionary { // 4
+            
+            if let volumeInfo = bookDict["volumeInfo"] as? NSDictionary { // 5
+              if let title = volumeInfo["title"] as? String { // 6
+                if let authors = volumeInfo["authors"] as? [String] { // 7
+                  if let imageDict = volumeInfo["imageLinks"] as? [String: String] { //8
+                    if let description = volumeInfo["description"] as? String { // 9
+              
+             if let isbns = volumeInfo["industryIdentifiers"] as? [[String: String]] {
+              if let isbn10 = isbns.filter({ $0["type"] == "ISBN_10"}).first!["identifier"] {
+                textbook.iSBN10 = isbn10
+              }
+              if let isbn13 = isbns.filter({ $0["type"] == "ISBN_13"}).first!["identifier"] {
+                textbook.iSBN13 = isbn13
+              }
+              //if let imageURL =
+              if let imageURL = imageDict["thumbnail"] {
+                textbook.imageURL = imageURL
+              }
+              
+              textbook.title = title
+              textbook.bookDescription = description
+              textbook.authors = ", ".join(authors)
+              return textbook
           }
-          if let isbn13 = isbns.filter({ $0["type"] == "ISBN_13"}).first!["identifier"] {
-            textbook.iSBN13 = isbn13
-          }
-          //if let imageURL =
-          if let imageURL = imageDict["thumbnail"] {
-            textbook.imageURL = imageURL
-          }
-          
-          textbook.title = title
-          textbook.bookDescription = description
-          textbook.authors = ", ".join(authors)
-          return textbook
-        }
-      }
-      }
-    }
+                    }// end 9
+                  } // end 8
+                  
+                }// end 7
+              } // end 6
+        } // end 5
+        } // end 4
+      } // end 3
+      } // end 2
+    } // end 1
     return UPMTextbook(className: "UPMTextbook")
   }
 }
@@ -48,16 +63,16 @@ extension UPMTextbook {
 */
 class GoogleBooksAPI {
   
-  static private let baseURL = "https://www.googleapis.com/books/v1/volumes"
-  static private let key = "AIzaSyBRkLoyss25C1Rh65Q-mlTe-k-dXBt6ofw"
+  let baseURL = "https://www.googleapis.com/books/v1/volumes"
+  let key = "AIzaSyBRkLoyss25C1Rh65Q-mlTe-k-dXBt6ofw"
   
   func standardURL() -> String {
-    var url = GoogleBooksAPI.baseURL + "&key" + GoogleBooksAPI.key
+    var url = baseURL + "&key" + key
     return url
   }
   
   func searchByISBNURL(#ISBN: String) -> NSURL? {
-    return NSURL(string: GoogleBooksAPI.baseURL + "?q=isbn:" + ISBN + "&key" + GoogleBooksAPI.key)
+    return NSURL(string: baseURL + "?q=isbn:" + ISBN + "&key" + self.key)
   }
   
   func searchByISBNURL(#ISBN: String, fields: String) -> NSURL? {
@@ -80,7 +95,7 @@ class GoogleBooksAPI {
   
   class func parseJSON(inputData: NSData) -> (dictionary: NSDictionary?, error: NSError?) {
     var error: NSError?
-    var boardsDictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error) as! NSDictionary
+    var boardsDictionary: NSDictionary = NSJSONSerialization.JSONObjectWithData(inputData, options: NSJSONReadingOptions.MutableContainers, error: &error) as NSDictionary
     
     return (boardsDictionary, error)
   }

@@ -84,8 +84,8 @@ public class UPMLoginVC: UIViewController {
   public class func displayLoginInController(controller: UIViewController) {
     if PFUser.currentUser() == nil {
       var loginStoryboard = UIStoryboard(name: UPMLoginVCConstants.loginStoryboardIdentifier, bundle: nil)
-      var nav = loginStoryboard.instantiateInitialViewController() as! UINavigationController
-      var loginVc = nav.viewControllers.first as! UPMLoginVC
+      var nav = loginStoryboard.instantiateInitialViewController() as UINavigationController
+      var loginVc = nav.viewControllers.first as UPMLoginVC
       loginVc.logInSuccessfulHandler = { (sender) -> Void in
         controller.dismissViewControllerAnimated(true, completion: nil)
       }
@@ -152,7 +152,7 @@ public class UPMLoginVC: UIViewController {
       if task.error == nil {
         self.hideHuddieWithMessage("", delay: 0.1) {
 
-          let user = task.result as! PFUser
+          let user = task.result as PFUser
           
           // Confirm that the user has a verified email address
           if !user.isEmailVerified() {
@@ -170,7 +170,7 @@ public class UPMLoginVC: UIViewController {
         self.hideHuddieWithMessage("Error", delay: 0.1) {
           // Display error
           let error = task.error
-          var errorString = error.userInfo?[NSString(string: "error")] as! NSString
+          var errorString = error.userInfo?[NSString(string: "error")] as NSString
           var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle:.Alert)
           alertError.addAction(UIAlertAction(title: "Okay", style: .Default, handler:nil))
           self.presentViewController(alertError, animated: true, completion: nil)
@@ -259,7 +259,7 @@ public class UPMLoginVC: UIViewController {
         
       } else {
         // Display error
-        var errorString = error!.userInfo?[NSString(string: "error")] as! NSString
+        var errorString = error!.userInfo?[NSString(string: "error")] as NSString
         var alertError = UIAlertController(title: "Error", message: String(errorString), preferredStyle: UIAlertControllerStyle.Alert)
         var errorAction = UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: {
           (alert: UIAlertAction!) -> Void in
@@ -299,7 +299,7 @@ public class UPMLoginVC: UIViewController {
     
     // Meets minimum legnth requirements
     func validInputLength(input: String, minLength: Int) -> Bool {
-      return count(input) > minLength
+      return countElements(input) > minLength
     }
     
     if !validInputLength(fullName, UPMLoginVCConstants.minFullNameLength) {

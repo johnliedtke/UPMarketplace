@@ -88,9 +88,9 @@ class UPMSellTextbookRequiredDeatils: UPMSellSingleInput {
     shouldChangeCharactersInRange range: NSRange,
     replacementString string: String) -> Bool {
 
-      let newLength = count(textField.text) + count(string) - range.length
+      let newLength = countElements(textField.text) + countElements(string) - range.length
       
-      if range.length + range.location > count(textField.text) {
+      if range.length + range.location > countElements(textField.text) {
         return false
       }
 

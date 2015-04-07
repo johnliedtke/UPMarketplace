@@ -24,9 +24,10 @@ class UPMBuyItemDetailsTextbookTVC: UPMBuyItemDetailsTVC {
   }
 
   override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
-    if let fields = listingTextbook?.textbook.textbookDetails() where indexPath.row != tableView.numberOfRowsInSection(indexPath.section) - 1
-    {
-      cell.configureCell(fields[indexPath.row].0, second: fields[indexPath.row].1)
+    if let fields = listingTextbook?.textbook.textbookDetails() {
+      if indexPath.row != tableView.numberOfRowsInSection(indexPath.section) - 1 {
+        cell.configureCell(fields[indexPath.row].0, second: fields[indexPath.row].1)
+      }
     } else {
       cell.configureCell("Posted:", second:fixDateFormat((listingTextbook?.createdAt)!))
     }

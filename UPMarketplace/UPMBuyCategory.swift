@@ -47,7 +47,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
   }
 
   override func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-      let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseidentifer, forIndexPath: indexPath) as! UPMBuyCategoryCell
+      let cell = collectionView.dequeueReusableCellWithReuseIdentifier(reuseidentifer, forIndexPath: indexPath) as UPMBuyCategoryCell
       
       cell.pic = UIImage(named: pictures[indexPath.row])
       cell.title = categories[indexPath.row]
@@ -68,7 +68,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         let filterContainer = UPMFilterContainer()
         let filterContainerStoryboard = UIStoryboard(name: "UPMFilterContainer", bundle: nil)
-        let c = filterContainerStoryboard.instantiateInitialViewController() as! UPMFilterContainer
+        let c = filterContainerStoryboard.instantiateInitialViewController() as UPMFilterContainer
         c.filterVC = UINavigationController(rootViewController: buyOtherFilter)
         
         //set default behavior of reveal controller
@@ -122,7 +122,7 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         
         let filterContainer = UPMFilterContainer()
         let filterContainerStoryboard = UIStoryboard(name: "UPMFilterContainer", bundle: nil)
-        let c = filterContainerStoryboard.instantiateInitialViewController() as! UPMFilterContainer
+        let c = filterContainerStoryboard.instantiateInitialViewController() as UPMFilterContainer
         c.filterVC = UINavigationController(rootViewController: textbookFilterVC)
         
         //set default behavior of reveal controller
@@ -192,8 +192,8 @@ class UPMBuyCategory: UICollectionViewController,UICollectionViewDelegateFlowLay
         // add them to the array of subcategories
         if let objects = objects as? [PFObject] {
           for object in objects {
-            if(!contains(self.allCategory, object.objectForKey("category") as! String)){
-              self.allCategory.append(object.objectForKey("category") as! String)
+            if(!contains(self.allCategory, object.objectForKey("category") as String)){
+              self.allCategory.append(object.objectForKey("category") as String)
             }
           }
         } else {

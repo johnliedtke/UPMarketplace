@@ -94,7 +94,7 @@ extension PFUser {
   */
   func isEmailVerified() -> Bool {
     //self["emailVerified"].fetchIfNeeded()
-    return self.objectForKey("emailVerified") as! Bool
+    return self.objectForKey("emailVerified") as Bool
   }
   
   /**

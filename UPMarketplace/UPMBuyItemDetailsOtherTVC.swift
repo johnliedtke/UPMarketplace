@@ -23,6 +23,8 @@ class UPMBuyItemDetailsOtherTVC: UPMBuyItemDetailsTVC {
     //listing = nil
   }
   
+
+  
   
   override func configureFieldCells(cell: UPMBuyItemFieldCell!, indexPath: NSIndexPath) {
     switch(indexPath.row){
