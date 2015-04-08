@@ -14,6 +14,9 @@ pod 'ParseFacebookUtils', '~> 1.6'
 pod 'ParseUI'
 pod 'SALQuickTutorial', '~> 0.2'
 
+# TO REMOVE
+pod 'Touchpose', '~> 1.2'
+
 # Solves the keyboard hiding the textfield problem :)
 pod 'IQKeyboardManager'
 

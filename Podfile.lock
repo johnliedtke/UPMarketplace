@@ -24,6 +24,7 @@ PODS:
     - SDWebImage/Core (= 3.7.2)
   - SDWebImage/Core (3.7.2)
   - SWRevealViewController (2.3.0)
+  - Touchpose (1.2.0)
 
 DEPENDENCIES:
   - Bolts
@@ -36,6 +37,7 @@ DEPENDENCIES:
   - SALQuickTutorial (~> 0.2)
   - SDWebImage (~> 3.6)
   - SWRevealViewController (~> 2.3)
+  - Touchpose (~> 1.2)
 
 SPEC CHECKSUMS:
   Bolts: f8e2f94edbf9fec7bb8de5ecaaa3aa6b7de6f64e
@@ -51,5 +53,6 @@ SPEC CHECKSUMS:
   SALQuickTutorial: 4c2d07d3e5edef0a76b1b5f5a9b04c72e2a2ee5e
   SDWebImage: 71b7cdc1d1721d6a82ed62889030225f2c249e29
   SWRevealViewController: 6d3fd97f70112fd7cef9de14df4260eacce4c63a
+  Touchpose: 219ef3dc3d1932b384ea502ec6df2f003667129b
 
 COCOAPODS: 0.36.3

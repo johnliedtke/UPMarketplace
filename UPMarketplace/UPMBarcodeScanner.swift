@@ -158,19 +158,20 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
 
       if isAllowedType(metaDataObject.type) {
         let priority = DISPATCH_QUEUE_PRIORITY_DEFAULT
-        dispatch_async(dispatch_get_global_queue(priority, 0)) {
+        dispatch_async(dispatch_get_global_queue(priority, 0)) { [weak self] in
+        if let weakSelf = self {
+
           // do some task
-          self.isReading = false
-          self.isFound = true
+          weakSelf.isReading = false
+          weakSelf.isFound = true
           
           
-          self.stopReading()
+          weakSelf.stopReading()
           //self.delegate?.didReadBarcode(metaDataObject.stringValue)
-          if let handler = self.barcodeReadHandler {
+          if let handler = weakSelf.barcodeReadHandler {
             handler(isbn: metaDataObject.stringValue).continueWithExecutor(BFExecutor.mainThreadExecutor(), withBlock: {
-              [weak self] (task) in
+              (task) in
               
-              if let weakSelf = self {
               
                 var message = ""
                 if let msg = task.result as? String {
@@ -199,19 +200,16 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
                 })
                 
                 weakSelf.presentViewController(alertController, animated: true, completion: nil)
-              }
+              
               return nil
             })
            
           }
           
-          dispatch_async(dispatch_get_main_queue()) {
-            highlightViewRect = metaDataObject.bounds
-            //self.highlightView.frame = self.videoPreviewLayer.transformedMetadataObjectForMetadataObject(metaDataObject).bounds
-            //self.statusLabel.text = metaDataObject.stringValue
-          }
+          
         }
       }
+        }
     } else {
       isFound = false
       toggleBarCodeSquare()
@@ -258,27 +256,29 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
   
   // Auto-focus on touch
 
-  override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-    
-    var touch = event.allTouches()?.anyObject() as UITouch
-    var pointInView = touch.locationInView(previewView)
-    
-    // Check if auto-focus is supported
-    if !captureDevice.focusPointOfInterestSupported && !captureDevice.isFocusModeSupported(AVCaptureFocusMode.AutoFocus) {
-      return;
+    override public func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        
+        if let touch = event.allTouches()?.anyObject() as? UITouch {
+            
+            var pointInView = touch.locationInView(previewView)
+            
+            // Check if auto-focus is supported
+            if !captureDevice.focusPointOfInterestSupported && !captureDevice.isFocusModeSupported(AVCaptureFocusMode.AutoFocus) {
+                return;
+            }
+            
+            var error: NSError?
+            
+            if captureDevice.lockForConfiguration(&error) {
+                captureDevice.focusPointOfInterest = pointInView
+                captureDevice.focusMode = AVCaptureFocusMode.AutoFocus
+                
+                captureDevice.unlockForConfiguration()
+            } else {
+                // error
+            }
+            
+        }
     }
-    
-    var error: NSError?
-    
-    if captureDevice.lockForConfiguration(&error) {
-      captureDevice.focusPointOfInterest = pointInView
-      captureDevice.focusMode = AVCaptureFocusMode.AutoFocus
-      
-      captureDevice.unlockForConfiguration()
-    } else {
-      // error
-    }
-    
-  }
   
 }

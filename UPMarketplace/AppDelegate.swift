@@ -27,7 +27,7 @@ extension UIViewController {
     }
   }
 }
-@UIApplicationMain
+//@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
@@ -67,6 +67,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UPMTextbook.registerSubclass()
     UPMUser.registerSubclass()
     UPMActivity.registerSubclass()
+    
+//    /***
+    (application as QTouchposeApplication).alwaysShowTouches = true
+
+//    ***/
     
     
     //PFCloudExt.sendEmailTo(PFUser.currentUser()!, from: PFUser.currentUser()!, subject: "test", body: "test", notification: false)
@@ -194,6 +199,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
     }
+ 
 
 
 }

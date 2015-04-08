@@ -132,9 +132,9 @@ class UPMAccountSellingTVC: UPMPFQueryAllTVC {
       }
   }
   
-  override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
-    return UITableViewCellEditingStyle.Delete
-  }
+//  override func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCellEditingStyle {
+//    return UITableViewCellEditingStyle.Delete
+//  }
   
   override func tableView(tableView: UITableView, editActionsForRowAtIndexPath indexPath: NSIndexPath) -> [AnyObject]? {
     
