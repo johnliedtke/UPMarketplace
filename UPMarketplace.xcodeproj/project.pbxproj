@@ -136,7 +136,6 @@
 		52E5716E1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5716D1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift */; };
 		52E571701A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */; };
 		52F022C31AB64415003C58C6 /* UPMSellTextbookRequiredDeatils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F022C21AB64415003C58C6 /* UPMSellTextbookRequiredDeatils.swift */; };
-		52F4B55B1AD4DA3200A35A3F /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52F4B55A1AD4DA3200A35A3F /* main.swift */; };
 		52FBF94E1AA935BE00F7F96C /* UPMListingDisplayExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */; };
 		52FEAAE81A67094300240E25 /* UPMUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FEAAE71A67094300240E25 /* UPMUser.swift */; };
 		52FEE3361AB74F70007883C2 /* UPMPFQueryAllTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52FEE3351AB74F70007883C2 /* UPMPFQueryAllTVC.swift */; };
@@ -339,7 +338,6 @@
 		52E5716D1A1E9CA70056FCD8 /* UPMSellDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellDetailsTVC.swift; sourceTree = "<group>"; };
 		52E5716F1A1ED7BD0056FCD8 /* UPMSellOtherDetailsTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellOtherDetailsTVC.swift; sourceTree = "<group>"; };
 		52F022C21AB64415003C58C6 /* UPMSellTextbookRequiredDeatils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTextbookRequiredDeatils.swift; sourceTree = "<group>"; };
-		52F4B55A1AD4DA3200A35A3F /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		52FBF94D1AA935BE00F7F96C /* UPMListingDisplayExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMListingDisplayExtension.swift; sourceTree = "<group>"; };
 		52FEAAE71A67094300240E25 /* UPMUser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMUser.swift; sourceTree = "<group>"; };
 		52FEE3351AB74F70007883C2 /* UPMPFQueryAllTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMPFQueryAllTVC.swift; sourceTree = "<group>"; };
@@ -751,7 +749,6 @@
 				5284B4B61AD1E63400A420B3 /* Defaults.plist */,
 				521570D71AD2FAF9009C72F2 /* LaunchScreen.xib */,
 				52AF3D4A19E77BBF007E0D22 /* ViewController.swift */,
-				52F4B55A1AD4DA3200A35A3F /* main.swift */,
 				5284B4B81AD1F37900A420B3 /* SALQuickTutorialViewController.xib */,
 				52AF3D4F19E77BBF007E0D22 /* Images.xcassets */,
 				52AF3D4619E77BBF007E0D22 /* Supporting Files */,
@@ -1156,7 +1153,6 @@
 				521313171A70450500F67813 /* UPMLoginVC.swift in Sources */,
 				52CA49071A743F8400073F2F /* UPMCloud.swift in Sources */,
 				525DAAF81AB504C900943BEA /* UPMSellSingleInput.swift in Sources */,
-				52F4B55B1AD4DA3200A35A3F /* main.swift in Sources */,
 				525B89821A17FC9E00A7CB6D /* UPMSellDescriptionTextView.swift in Sources */,
 				52CA48FA1A743E4100073F2F /* UPMBuyItemDetailsTextbookTVC.swift in Sources */,
 				F12FCE3A1A68F7AA00D5A441 /* UPMBuyCategoryCell.swift in Sources */,

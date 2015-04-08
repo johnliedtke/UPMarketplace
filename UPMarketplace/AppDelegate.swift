@@ -27,7 +27,7 @@ extension UIViewController {
     }
   }
 }
-//@UIApplicationMain
+@UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UPMActivity.registerSubclass()
     
 //    /***
-    (application as QTouchposeApplication).alwaysShowTouches = true
+    //(application as QTouchposeApplication).alwaysShowTouches = true
 
 //    ***/
     
