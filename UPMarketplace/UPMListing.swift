@@ -512,7 +512,7 @@ public class UPMListing: PFObject  {
     // Helper closure to create contact action
     let contactActionMeow: (PFUser) -> BFTask = { (user: PFUser) in
       var contactTask = BFTaskCompletionSource()
-      contactTask.setResult(UPMContactVC.initWithNavigationController(user, withSubject: "Message about \(self.title)"))
+      contactTask.setResult(UPMContactVC.initWithNavigationController(user, withSubject: "Message about \(self.title!)"))
       return contactTask.task
     }
     

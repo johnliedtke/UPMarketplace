@@ -82,9 +82,8 @@ class UPMAccountSellerActionsTVC: UITableViewController {
   // MARK: - TableView Delegate
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-    if let resHeader = reservationSection?.header {
-      if dataSource.sections[indexPath.section].header == resHeader {
-      
+    let resHeader = reservationSection?.header
+    if dataSource.sections[indexPath.section].header == resHeader {
       switch listing.sellerState() {
         
       /**
@@ -186,7 +185,7 @@ class UPMAccountSellerActionsTVC: UITableViewController {
         }
       default: break
       }
-    }
+    
     
       /**
       Listing Actions

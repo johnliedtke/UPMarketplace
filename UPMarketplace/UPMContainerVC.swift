@@ -191,7 +191,6 @@ public class UPMContainerVC: UIViewController {
     currentViewController.view.setTranslatesAutoresizingMaskIntoConstraints(false)
     var elementsDict = NSDictionary(dictionary: ["acv": acv])
     
-    
     containerView.addConstraints(NSLayoutConstraint.constraintsWithVisualFormat(
       "H:|[acv]|",
       options: NSLayoutFormatOptions.DirectionLeftToRight,

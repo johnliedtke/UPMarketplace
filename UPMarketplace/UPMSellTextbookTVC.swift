@@ -27,6 +27,7 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
   override func viewDidLoad() {
     super.viewDidLoad()
     tableView.estimatedRowHeight = 100
+    navigationItem.title = "Textbook"
     refreshDetailDescriptions()
     self.scanISBNAlert()
   }
