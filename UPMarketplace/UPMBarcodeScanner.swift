@@ -204,11 +204,6 @@ public class UPMBarcodeScanner: UIViewController, AVCaptureMetadataOutputObjects
            
           }
           
-          dispatch_async(dispatch_get_main_queue()) {
-            highlightViewRect = metaDataObject.bounds
-            //self.highlightView.frame = self.videoPreviewLayer.transformedMetadataObjectForMetadataObject(metaDataObject).bounds
-            //self.statusLabel.text = metaDataObject.stringValue
-          }
         }
       }
     } else {

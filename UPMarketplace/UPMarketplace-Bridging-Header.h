@@ -13,6 +13,7 @@
 #import "SWRevealViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "SALQuickTutorialViewController.h"
+#import "QTouchposeApplication.h"
 
 
 

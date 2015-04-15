@@ -55,7 +55,7 @@ class UPMAccountSellerActionsTVC: UITableViewController {
     case .Accepted:
       let rejectRow = RowAction(action: .RejectReservation, title: "Reject")
       let contactRow = RowAction(action: .ContactReserver, title: "Contact Reserver")
-      let reserver = listing.getAcceptedReservation()?.reserver.username
+      let reserver = listing.getAcceptedReservation()?.reserver.fullNameOfUser()
       section = Section(header: "Reservation from \(reserver!)", rows: [rejectRow,contactRow])
       
     case .Waiting:

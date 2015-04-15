@@ -125,6 +125,23 @@ public class UPMListing: PFObject  {
     var reservation = UPMReservation(reserver: reserver, listing: self, message: "Test Reservation")
     var reserveTask = BFTaskCompletionSource()
     
+    
+    
+    
+    if self.isReserved() {
+      // Listing is already reserved
+      var error = NSError.createError("Listing is already reserved.",
+        failureReason: "Another user has a valid reservation.",
+        suggestion: "Wait")
+      return BFTask(error: error)
+      
+    } else if self.owner == reserver {
+      var error = NSError.createError("You cannot reserve your own listing",
+        failureReason: "Listing owned by self.",
+        suggestion: "Don't reserve own listing.")
+      return BFTask(error: error)
+    }
+    
     let savedAtomicCount = atomicCount
     self.incrementKey("atomicCount")
     

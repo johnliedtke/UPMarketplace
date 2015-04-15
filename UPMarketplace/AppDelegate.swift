@@ -27,11 +27,13 @@ extension UIViewController {
     }
   }
 }
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
   
   
   var hud = MBProgressHUD()
+  
   
   /**
   Displays a MBProgressHUD with a given status message.
@@ -48,6 +50,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
   }
   
+  /**
+  Display a MBProgessHUD with no label text.
+  */
   func huddie() {
     huddie(labelText: "")
   }
@@ -58,6 +63,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Parse initialization
     Parse.setApplicationId("6ZVQsgQNW5KpO6H5os6JxGOxZAFCEdfLua2T3PAm",
       clientKey: "5bsP9MYcxGGU1bZkKC2ovgySNyLkCk5223irCGG0")
+    (application as! QTouchposeApplication).alwaysShowTouches = true
+
 
     // Parse subclasses
     UPMTextbookListing.registerSubclass()
@@ -67,9 +74,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     UPMTextbook.registerSubclass()
     UPMUser.registerSubclass()
     UPMActivity.registerSubclass()
-    
-    
-    //PFCloudExt.sendEmailTo(PFUser.currentUser()!, from: PFUser.currentUser()!, subject: "test", body: "test", notification: false)
+
     
     // Global apperances
     UITabBarItem.appearance().setTitleTextAttributes([NSForegroundColorAttributeName: UIColor.tabBarUnselectedColor()], forState:.Normal)
@@ -141,33 +146,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     window?.rootViewController = mainTabBarController
     
-    /**
-    Parse Stuff
-    */
-    
-    // defaultACL.setPublicReadAccess(true)
-    //        PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
-    
-    //UPMListing.registerSubclass()
-    //UPMOtherListing.registerSubclass()
-    //   [[UIBarButtonItem appearance] setTintColor:[UIColor redColor]];
-    
-    
-      // If you would like all objects to be private by default, remove this line.
-//        var defaultACL = PFACL.def
-//      defaultACL.setPublicReadAccess(true)
-  //    PFACL.setDefaultACL(defaultACL, withAccessForCurrentUser: true)
-      
-      // Parse Push Notifications
-//        var userNotificationTypes: UIUserNotificationType = (UIUserNotificationType.Alert |
-//            UIUserNotificationType.Badge |
-//            UIUserNotificationType.Sound)
-//        var settings: UIUserNotificationSettings = UIUserNotificationSettings(forTypes: userNotificationTypes, categories: nil)
-//        
-//        application.registerUserNotificationSettings(settings)
-//        application.registerForRemoteNotifications()
-    
-      return true
+    return true
   }
 
     func applicationWillResignActive(application: UIApplication) {

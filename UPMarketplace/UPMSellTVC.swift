@@ -178,10 +178,6 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   /// * Uses post() to save to parse
   /// * When complete, pops the controller from navigation stack.
   func postWithProgressHUD() {
-    if UPMReachabilityManager.isUnreachable() {
-      UPMReachabilityManager.alertOfNoNetworkConnectionInController(self)
-      return
-    }
     
     if requiredItems.isItemsComplete() {
       APP().huddie(labelText: "Posting...")

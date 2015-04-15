@@ -50,13 +50,13 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
       let isbnSheet = UIAlertController(title: "Scan ISBN", message: "Do you want prefill fields by scanning your book's barcode?", preferredStyle:  .ActionSheet)
       
       isbnSheet.addAction(UIAlertAction(title: "Scan", style: .Default) {
-        [unowned self] (action) in
+        (action) in
         let barcodeScannerVC = UPMBarcodeScanner()
         barcodeScannerVC.delegate = self
-        barcodeScannerVC.barcodeReadHandler = { [unowned self] (isbn) in
+        barcodeScannerVC.barcodeReadHandler = { (isbn) in
           let bookTask = BFTaskCompletionSource()
           
-          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) { [unowned self] in
+          dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0)) {
             var google = GoogleBooksAPI()
             var url = google.searchByISBNURL(ISBN: isbn, fields: "kind,items(volumeInfo(title,authors,imageLinks,publishedDate,industryIdentifiers,description))")
             var bookJSON = GoogleBooksAPI.getJSON(url!)
@@ -98,15 +98,15 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
       var manager = SDWebImageManager.sharedManager()
       if let url = NSURL(string: scannedTextbook.imageURL!) {
       manager.downloadImageWithURL(url, options: nil, progress: nil, completed: {
-        [unowned self] (image, error, cacheType, finished, url) in
-        
-        dispatch_async(dispatch_get_main_queue(), { [unowned self] in
+        (image, error, cacheType, finished, url) in
+        dispatch_async(dispatch_get_main_queue(), {
           self.didUpdatePhoto(image)
           self.tableView.reloadData()
         })
+        
       })
       }
-         }
+    }
   }
 
 }
