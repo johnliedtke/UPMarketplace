@@ -108,6 +108,14 @@ class UPMSellTextbookTVC: UPMSellTVC, UPMSellDetailsTVCDelegate, UPMBarcodeScann
       }
     }
   }
+  
+  override func facebookDecription() -> String {
+    var desc = textbookListing.descriptionS!
+    if count(desc) > 50 {
+      desc = desc.substringToIndex(advance(desc.startIndex, 49))
+    }
+    return textbookListing.displayRequiredFields("") + "\n" + desc
+  }
 
 }
 

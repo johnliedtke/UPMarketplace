@@ -688,6 +688,7 @@ public class UPMListing: PFObject  {
   }
   
   /**
+  Returns the status 
   */
   internal func sellerReservationStatus() -> ReservationStatus  {
     if reservationCount().accepted > 0 {

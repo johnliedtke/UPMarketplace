@@ -178,26 +178,58 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   /// * Uses post() to save to parse
   /// * When complete, pops the controller from navigation stack.
   func postWithProgressHUD() {
-    
+
     if requiredItems.isItemsComplete() {
-      APP().huddie(labelText: "Posting...")
       
-      self.post().continueWithBlock({ [unowned self] (task: BFTask!) -> AnyObject! in
-        UIApplication.sharedApplication().endIgnoringInteractionEvents()
-        if let error = task.error {
-          self.hideHuddieWithMessage("Error", delay: 0.1) {
-            self.displayErrorAlertWithMessage(error.localizedDescription)
-          }
-        } else {
-          self.hideHuddieWithMessage("Success", delay: 0.4) {
-            self.navigationController?.popToRootViewControllerAnimated(true)
+      let facebookAlert = UIAlertController(title: "Post to facebook?", message: "Would you also like to post this to facebook?", preferredStyle: .Alert)
+      facebookAlert.addAction(UIAlertAction(title: "Yes", style: .Default) { [unowned self] (action) in
+        
+        let composeController = SLComposeViewController(forServiceType: SLServiceTypeFacebook)
+        composeController.setInitialText("\(self.listing!.title!) \n\(self.listing!.displayPrice())\n\(self.facebookDecription())")
+        composeController.addImage(self.listing?.photo)
+        
+        composeController.completionHandler = { (result) in
+          
+          if result == .Done {
+            self.postToParse()
           }
         }
-        return nil
+        
+        self.presentViewController(composeController, animated: true, completion: nil)
+        
       })
+      
+      facebookAlert.addAction(UIAlertAction(title: "No", style: .Default) {
+        [unowned self] (action) in
+        self.postToParse()
+      })
+      
+      facebookAlert.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+      
+      presentViewController(facebookAlert, animated: true, completion: nil)
+      
     } else {
       alertIfMissingRequiredItems()
     }
+  }
+  
+  private func postToParse() {
+    self.APP().huddie(labelText: "Posting...")
+    
+    self.post().continueWithBlock({
+      [unowned self] (task: BFTask!)  in
+      
+      if let error = task.error {
+        self.hideHuddieWithMessage("Error", delay: 0.1) {
+          self.displayErrorAlertWithMessage(error.localizedDescription)
+        }
+      } else {
+        self.hideHuddieWithMessage("Success", delay: 0.4) {
+          self.navigationController?.popToRootViewControllerAnimated(true)
+        }
+      }
+      return nil
+      })
   }
   
   /// Displays an alert if required items are not complete.
@@ -219,6 +251,7 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
   :returns: task indicating the status of the posting
   */
   func post() -> BFTask {
+    
     var postTask = BFTaskCompletionSource()
 
     listing?.saveInBackground().continueWithBlock({
@@ -395,6 +428,13 @@ class UPMSellTVC: UITableViewController, UPMSellDescriptionDelegate, UITextViewD
     default:
       NSLog("")
     }
+  }
+  
+  /**
+  Override to provice a custom description for the facebook post
+  */
+  func facebookDecription() -> String {
+    return (listing?.descriptionS)!
   }
   
   override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {

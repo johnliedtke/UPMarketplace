@@ -14,7 +14,11 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "SALQuickTutorialViewController.h"
 #import "QTouchposeApplication.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
+#import <Social/Social.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <ParseFacebookUtils/PFFacebookUtils.h>
 
-
-
-//#import "PFActivityIndicatorTableViewCell.h"
+//#import <FBSDKCoreKit/FBSDKCoreKit.h>
+//#import <FBSDKLoginKit/FBSDKLoginKit.h>

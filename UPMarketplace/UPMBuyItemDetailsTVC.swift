@@ -100,13 +100,7 @@ class UPMBuyItemDetailsTVC: UITableViewController {
     //listing.picture = nil
   }
 
-  // MARK: - Init
-  
-  override init(style: UITableViewStyle)
-  { super.init(style: .Grouped) }
-  
-  required init(coder aDecoder: NSCoder) {super.init(coder: aDecoder)}
-  
+
   // MARK: - Private Methods
   
   /**

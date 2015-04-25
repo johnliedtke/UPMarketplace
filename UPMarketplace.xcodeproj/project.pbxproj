@@ -57,6 +57,9 @@
 		524663891A3F683E00CB18B9 /* UPMTextbook.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524663881A3F683E00CB18B9 /* UPMTextbook.swift */; };
 		5246638F1A4365B100CB18B9 /* UPMSellCheckInput.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5246638E1A4365B100CB18B9 /* UPMSellCheckInput.swift */; };
 		524663911A43814F00CB18B9 /* UPMSellTextbookDetailsCourseTVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524663901A43814F00CB18B9 /* UPMSellTextbookDetailsCourseTVC.swift */; };
+		5246E23E1AE5C29D0029DFA4 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5246E23B1AE5C29D0029DFA4 /* FBSDKCoreKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		5246E23F1AE5C29D0029DFA4 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5246E23C1AE5C29D0029DFA4 /* FBSDKLoginKit.framework */; };
+		5246E2401AE5C29D0029DFA4 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5246E23D1AE5C29D0029DFA4 /* FBSDKShareKit.framework */; };
 		524CD42C1AC8AA3B00021A4A /* UPMFilterContainer.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 524CD42B1AC8AA3B00021A4A /* UPMFilterContainer.storyboard */; };
 		524F40AA1A104448002B47B6 /* UPMSellItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40A91A104448002B47B6 /* UPMSellItem.swift */; };
 		524F40AC1A104D54002B47B6 /* UPMSellItemContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 524F40AB1A104D54002B47B6 /* UPMSellItemContainer.swift */; };
@@ -258,6 +261,9 @@
 		524663881A3F683E00CB18B9 /* UPMTextbook.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMTextbook.swift; sourceTree = "<group>"; };
 		5246638E1A4365B100CB18B9 /* UPMSellCheckInput.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellCheckInput.swift; sourceTree = "<group>"; };
 		524663901A43814F00CB18B9 /* UPMSellTextbookDetailsCourseTVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellTextbookDetailsCourseTVC.swift; sourceTree = "<group>"; };
+		5246E23B1AE5C29D0029DFA4 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKCoreKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		5246E23C1AE5C29D0029DFA4 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKLoginKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		5246E23D1AE5C29D0029DFA4 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = FBSDKShareKit.framework; path = ../../../../../Documents/FacebookSDK/FBSDKShareKit.framework; sourceTree = "<group>"; };
 		524CD42B1AC8AA3B00021A4A /* UPMFilterContainer.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = UPMFilterContainer.storyboard; sourceTree = "<group>"; };
 		524F40A91A104448002B47B6 /* UPMSellItem.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellItem.swift; sourceTree = "<group>"; };
 		524F40AB1A104D54002B47B6 /* UPMSellItemContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UPMSellItemContainer.swift; sourceTree = "<group>"; };
@@ -401,6 +407,9 @@
 				52234A9419E77E9900E899B8 /* MobileCoreServices.framework in Frameworks */,
 				52234A9219E77E9000E899B8 /* libz.1.1.3.dylib in Frameworks */,
 				52234A9019E77E8200E899B8 /* CoreLocation.framework in Frameworks */,
+				5246E23E1AE5C29D0029DFA4 /* FBSDKCoreKit.framework in Frameworks */,
+				5246E23F1AE5C29D0029DFA4 /* FBSDKLoginKit.framework in Frameworks */,
+				5246E2401AE5C29D0029DFA4 /* FBSDKShareKit.framework in Frameworks */,
 				52234A8E19E77E7500E899B8 /* CoreGraphics.framework in Frameworks */,
 				52234A8C19E77E6A00E899B8 /* CFNetwork.framework in Frameworks */,
 				52234A8A19E77E6100E899B8 /* AudioToolbox.framework in Frameworks */,
@@ -782,6 +791,9 @@
 		52AF3D6819E77CED007E0D22 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				5246E23B1AE5C29D0029DFA4 /* FBSDKCoreKit.framework */,
+				5246E23C1AE5C29D0029DFA4 /* FBSDKLoginKit.framework */,
+				5246E23D1AE5C29D0029DFA4 /* FBSDKShareKit.framework */,
 				526937FF1A81AD8200C32401 /* libsqlite3.dylib */,
 				526937FD1A81AD4200C32401 /* libstdc++.6.dylib */,
 				526937F91A81AAD000C32401 /* ParseUI.framework */,
@@ -1435,6 +1447,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/UPMarketplace",
+					/Users/John/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = UPMarketplace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
@@ -1459,6 +1472,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/UPMarketplace",
+					/Users/John/Documents/FacebookSDK,
 				);
 				INFOPLIST_FILE = UPMarketplace/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.2;
